@@ -250,9 +250,9 @@ const littlefoot = function(options) {
       const contentContainer = popover.querySelector('.littlefoot-footnote__content')
 
       popoverStates[button.getAttribute('data-footnote-id')] = 'init'
-      popover.setAttribute('littlefoot-max-width', calculatePixelSize(popover, 'max-width'))
-      popover.style.maxWidth = '10000px'
+      popover.setAttribute('data-littlefoot-max-width', calculatePixelSize(popover, 'max-width'))
       popover.setAttribute('data-littlefoot-max-height', calculatePixelSize(contentContainer, 'max-height'))
+      popover.style.maxWidth = '10000px'
       repositionPopover()
       addClass(button, 'is-active')
       bindScrollHandler(popover.querySelector('.littlefoot-footnote__content'))
