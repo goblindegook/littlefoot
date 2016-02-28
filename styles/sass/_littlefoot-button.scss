@@ -1,0 +1,74 @@
+// The button that activates the footnote. By default, this will appear as a
+// flat button that has an ellipse contained inside of it.
+//
+// @state .is-active - The associated popover has been activated and is visible.
+
+.littlefoot-footnote__button {
+  position: relative;
+  z-index: 5;
+  top: $button-vertical-adjust;
+  box-sizing: border-box;
+  display: inline-block;
+  padding: $button-per-side-padding;
+  margin: 0 $button-right-margin 0 $button-left-margin;
+  border: none;
+  border-radius: $button-border-radius;
+  cursor: pointer;
+  background-color: rgba($button-color, $button-standard-opacity);
+  backface-visibility: hidden;
+  font-size: 1rem;
+  line-height: 0;
+  vertical-align: middle;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  transition-property: $button-transition-properties;
+  transition-duration: $popover-transition-default-duration;
+
+  &:hover,
+  &:focus {
+    outline: none;
+    background-color: rgba($button-hovered-color, $button-hovered-opacity);
+  }
+
+  &:active {
+    background-color: rgba($button-activating-color, $button-activating-opacity);
+  }
+
+  &.is-active {
+    background-color: rgba($button-active-color, $button-active-opacity);
+    transition-delay: $button-active-style-delay;
+  }
+
+  // Clearfix
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+// Each of the three circles forming the ellipse within the button.
+
+.littlefoot-footnote__button__circle {
+  // DISPLAY AND SIZING
+  display: inline-block;
+  width: $button-inner-circle-size;
+  height: $button-inner-circle-size;
+  margin-right: $button-inner-circle-left-margin;
+  float: left;
+
+  // Gets rid of margin on the last circle
+  &:last-child { margin-right: 0; }
+}
+
+// The container for the button and popover. This is required so that the popover
+// is guaranteed to have a relatively-positioned container, and to help with the
+// positioning calculation.
+
+.littlefoot-footnote__container {
+  display: inline-block;
+  position: relative;
+  text-indent: 0;
+}
+
+@include print-styles;

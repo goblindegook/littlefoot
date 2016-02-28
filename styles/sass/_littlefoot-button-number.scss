@@ -1,0 +1,34 @@
+// A button that has no ellipse, but instead shows the footnote's number on the
+// page. Note that the number will be reset to 1 depending on the selector passed
+// to littlefoot's `numberResetSelector` option.
+
+.littlefoot-footnote__button {
+  position: relative;
+  height: $button-height;
+  width: 1.5em;
+  border-radius: $button-height / 2;
+
+  &::after {
+    content: attr(data-footnote-number);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    font-size: $button-height * .6;
+    font-weight: bold;
+    color: rgba($button-color, .5);
+    transition: color $popover-transition-default-duration $popover-transition-default-timing-function;
+  }
+
+  &:hover,
+  &.is-active {
+    &::after {
+      color: white;
+    }
+  }
+}
+
+.littlefoot-footnote__button__circle {
+  display: none;
+}

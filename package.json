@@ -1,0 +1,44 @@
+{
+  "name": "littlefoot",
+  "version": "0.0.0",
+  "description": "Light-footed footnotes.",
+  "repository": "goblindegook/littlefoot",
+  "scripts": {
+    "build": "cd src; babel *.js **/*.js -d ../lib",
+    "docs": "esdoc -c esdoc.json",
+    "prepublish": "npm run build",
+    "pretest": "eslint src/**/*.js",
+    "test": "nyc ava",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls"
+  },
+  "ava": {
+    "require": [
+      "babel-core/register"
+    ]
+  },
+  "author": {
+    "name": "Luís Rodrigues",
+    "email": "hello@goblindegook.net",
+    "url": "https://goblindegook.com/"
+  },
+  "license": "MIT",
+  "main": "lib/index.js",
+  "devDependencies": {
+    "ava": "^0.11.0",
+    "babel": "^6.3.26",
+    "babel-cli": "^6.4.5",
+    "babel-core": "^6.4.5",
+    "babel-preset-es2015": "^6.3.13",
+    "coveralls": "^2.11.6",
+    "esdoc": "^0.4.3",
+    "eslint": "^1.10.3",
+    "nyc": "^5.5.0",
+    "sinon": "^1.17.3"
+  },
+  "dependencies": {
+    "dom-closest": "^0.2.0",
+    "dom-matches": "^2.0.0",
+    "dom-siblings": "^0.1.0",
+    "lodash": "^4.5.1"
+  }
+}
