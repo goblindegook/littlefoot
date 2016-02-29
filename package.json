@@ -8,7 +8,7 @@
     "docs": "esdoc -c esdoc.json",
     "prepublish": "npm run build",
     "pretest": "eslint src/**/*.js",
-    "test": "browserify test/*.js | testling | faucet"
+    "test": "testling | faucet"
   },
   "browserify": {
     "transform": [
