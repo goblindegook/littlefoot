@@ -11,7 +11,6 @@ import forEach from './dom/forEach'
 import hasClass from './dom/hasClass'
 import removeClass from './dom/removeClass'
 import triggerEvent from './dom/triggerEvent'
-import baseFontSize from './baseFontSize'
 import calculateAvailableRoom from './calculateAvailableRoom'
 import calculatePixelSize from './calculatePixelSize'
 import getClosestFootnote from './getClosestFootnote'
@@ -417,7 +416,7 @@ const littlefoot = function(options) {
       footnote.querySelector('.littlefoot-footnote__content').style.maxHeight = Math.min(maxHeightOnScreen, maxHeightInCSS) + 'px'
 
       if (type === 'resize') {
-        const maxWidthInCSS   = parseFloat(footnote.getAttribute('littlefoot-max-width'))
+        const maxWidthInCSS   = parseFloat(footnote.getAttribute('data-littlefoot-max-width'))
         const footnoteWrapper = footnote.querySelector('.littlefoot-footnote__wrapper')
         const footnoteContent = footnote.querySelector('.littlefoot-footnote__content')
         let maxWidth          = maxWidthInCSS

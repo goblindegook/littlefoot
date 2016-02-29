@@ -1,3 +1,5 @@
+import baseFontSize from './baseFontSize'
+
 /**
  * Calculates a pixel size (as a regular integer) based on a string with an unknown unit.
  *
