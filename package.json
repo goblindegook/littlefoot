@@ -1,19 +1,31 @@
 {
   "name": "littlefoot",
   "version": "0.0.0",
-  "description": "Light-footed footnotes.",
+  "description": "Footnotes without the footprint.",
   "repository": "goblindegook/littlefoot",
   "scripts": {
     "build": "cd src; babel *.js **/*.js -d ../lib",
     "docs": "esdoc -c esdoc.json",
     "prepublish": "npm run build",
     "pretest": "eslint src/**/*.js",
-    "test": "nyc ava",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls"
+    "test": "browserify test/*.js | testling"
   },
-  "ava": {
-    "require": [
-      "babel-core/register"
+  "browserify": {
+    "transform": [
+      "babelify"
+    ]
+  },
+  "testling": {
+    "files": "test/**/*.js",
+    "browsers": [
+      "ie/9..latest",
+      "chrome/22..latest",
+      "firefox/16..latest",
+      "safari/latest",
+      "opera/11.0..latest",
+      "iphone/6",
+      "ipad/6",
+      "android-browser/latest"
     ]
   },
   "author": {
@@ -24,16 +36,20 @@
   "license": "MIT",
   "main": "lib/index.js",
   "devDependencies": {
-    "ava": "^0.11.0",
     "babel": "^6.3.26",
     "babel-cli": "^6.4.5",
     "babel-core": "^6.4.5",
     "babel-preset-es2015": "^6.3.13",
+    "babel-tape-runner": "^2.0.1",
+    "babelify": "^7.2.0",
+    "browserify": "^13.0.0",
     "coveralls": "^2.11.6",
     "esdoc": "^0.4.3",
     "eslint": "^1.10.3",
     "nyc": "^5.5.0",
-    "sinon": "^1.17.3"
+    "sinon": "^1.17.3",
+    "tape": "^4.4.0",
+    "testling": "^1.7.1"
   },
   "dependencies": {
     "dom-closest": "^0.2.0",
