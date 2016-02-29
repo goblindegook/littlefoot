@@ -49,16 +49,13 @@
 
 // Each of the three circles forming the ellipse within the button.
 
-.littlefoot-footnote__button__circle {
+.littlefoot-footnote__button__ellipsis {
   // DISPLAY AND SIZING
   display: inline-block;
-  width: $button-inner-circle-size;
+  width: auto;
   height: $button-inner-circle-size;
-  margin-right: $button-inner-circle-left-margin;
+  margin: 0;
   float: left;
-
-  // Gets rid of margin on the last circle
-  &:last-child { margin-right: 0; }
 }
 
 // The container for the button and popover. This is required so that the popover

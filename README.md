@@ -19,7 +19,7 @@ This project includes both the script itself and a default style to apply to the
 Install using NPM:
 
 ```shell
-$ npm install --save goblindegook/littlefoot
+$ npm install --save littlefoot
 ```
 
 ## Usage
@@ -214,14 +214,10 @@ Default:
 ```html
 <div class="littlefoot-footnote__container">
   <button class="littlefoot-footnote__button" id="<%= reference %>" data-footnote-number="<%= number %>" data-footnote-id="<%= id %>" alt="See Footnote <%= number %>" rel="footnote" data-littlefoot-footnote="<%= content %>">
-    <svg class="littlefoot-footnote__button__circle" viewbox="0 0 6 6" preserveAspectRatio="xMinYMin">
+    <svg class="littlefoot-footnote__button__ellipsis" viewbox="0 0 30 6" preserveAspectRatio="xMidYMid">
       <circle r="3" cx="3" cy="3" fill="white"></circle>
-    </svg>
-    <svg class="littlefoot-footnote__button__circle" viewbox="0 0 6 6" preserveAspectRatio="xMinYMin">
-      <circle r="3" cx="3" cy="3" fill="white"></circle>
-    </svg>
-    <svg class="littlefoot-footnote__button__circle" viewbox="0 0 6 6" preserveAspectRatio="xMinYMin">
-      <circle r="3" cx="3" cy="3" fill="white"></circle>
+      <circle r="3" cx="15" cy="3" fill="white"></circle>
+      <circle r="3" cx="27" cy="3" fill="white"></circle>
     </svg>
   </button>
 </div>
