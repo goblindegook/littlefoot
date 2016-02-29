@@ -4,7 +4,9 @@
   "description": "Footnotes without the footprint.",
   "repository": "goblindegook/littlefoot",
   "scripts": {
-    "build": "cd src; babel *.js **/*.js -d ../lib",
+    "build": "npm run build-scripts && npm run build-styles",
+    "build-scripts": "cd src; babel *.js **/*.js -d ../lib",
+    "build-styles": "node-sass --include-path styles/sass -o styles/css/ styles/sass/",
     "docs": "esdoc -c esdoc.json",
     "prepublish": "npm run build",
     "pretest": "eslint src/**/*.js",
@@ -35,6 +37,7 @@
   },
   "license": "MIT",
   "main": "lib/index.js",
+  "style": "styles/css/littlefoot.css",
   "devDependencies": {
     "babel": "^6.3.26",
     "babel-cli": "^6.4.5",
@@ -46,6 +49,7 @@
     "esdoc": "^0.4.3",
     "eslint": "^1.10.3",
     "faucet": "0.0.1",
+    "node-sass": "^3.4.2",
     "sinon": "^1.17.3",
     "tape": "^4.4.0",
     "testling": "^1.7.1"
