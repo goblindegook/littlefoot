@@ -8,7 +8,7 @@
     "docs": "esdoc -c esdoc.json",
     "prepublish": "npm run build",
     "pretest": "eslint src/**/*.js",
-    "test": "browserify test/*.js | testling"
+    "test": "browserify test/*.js | testling | faucet"
   },
   "browserify": {
     "transform": [
@@ -46,7 +46,7 @@
     "coveralls": "^2.11.6",
     "esdoc": "^0.4.3",
     "eslint": "^1.10.3",
-    "nyc": "^5.5.0",
+    "faucet": "0.0.1",
     "sinon": "^1.17.3",
     "tape": "^4.4.0",
     "testling": "^1.7.1"
