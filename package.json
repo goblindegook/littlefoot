@@ -43,7 +43,6 @@
     "babel-tape-runner": "^2.0.1",
     "babelify": "^7.2.0",
     "browserify": "^13.0.0",
-    "coveralls": "^2.11.6",
     "esdoc": "^0.4.3",
     "eslint": "^1.10.3",
     "faucet": "0.0.1",
