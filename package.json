@@ -1,6 +1,6 @@
 {
   "name": "littlefoot",
-  "version": "0.0.0",
+  "version": "1.0.0-alpha.1",
   "description": "Footnotes without the footprint.",
   "repository": "goblindegook/littlefoot",
   "scripts": {
@@ -8,7 +8,7 @@
     "docs": "esdoc -c esdoc.json",
     "prepublish": "npm run build",
     "pretest": "eslint src/**/*.js",
-    "test": "browserify test/*.js | testling | faucet"
+    "test": "browserify test/*.js | testling"
   },
   "browserify": {
     "transform": [

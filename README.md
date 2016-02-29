@@ -19,7 +19,7 @@ This project includes both the script itself and a default style to apply to the
 Install using NPM:
 
 ```shell
-$ npm install --save goblindegook/littlefoot
+$ npm install --save littlefoot
 ```
 
 ## Usage
