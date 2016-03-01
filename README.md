@@ -214,7 +214,7 @@ Default:
 ```html
 <div class="littlefoot-footnote__container">
   <button class="littlefoot-footnote__button" id="<%= reference %>" data-footnote-number="<%= number %>" data-footnote-id="<%= id %>" alt="See Footnote <%= number %>" rel="footnote" data-littlefoot-footnote="<%= content %>">
-    <svg class="littlefoot-footnote__button__ellipsis" viewbox="0 0 30 6" preserveAspectRatio="xMidYMid">
+    <svg class="littlefoot-footnote__button__ellipsis" viewbox="0 0 31 6" preserveAspectRatio="xMidYMid">
       <circle r="3" cx="3" cy="3" fill="white"></circle>
       <circle r="3" cx="15" cy="3" fill="white"></circle>
       <circle r="3" cx="27" cy="3" fill="white"></circle>
