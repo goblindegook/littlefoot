@@ -12,7 +12,10 @@ import children from './dom/children'
  * @param {Boolean}    remove   Whether to remove the original DOM elements.
  */
 export default function hideOriginalFootnotes(footnote, remove = false) {
-  if (matches(footnote, ':empty') || children(footnote, ':not(.footnote-print-only)').length === 0) {
+  const visibleFootnotes  = children(footnote, ':not(.footnote-print-only)')
+  const visibleSeparators = children(footnote, 'hr:not(.footnote-print-only)')
+
+  if (matches(footnote, ':empty') || visibleFootnotes.length === 0) {
     if (remove) {
       footnote.parentNode.removeChild(footnote)
     } else {
@@ -21,7 +24,7 @@ export default function hideOriginalFootnotes(footnote, remove = false) {
 
     hideOriginalFootnotes(footnote.parentNode)
 
-  } else if (children(footnote, ':not(.footnote-print-only)').length === children(footnote, 'hr:not(.footnote-print-only)').length) {
+  } else if (visibleFootnotes.length === visibleSeparators.length) {
     if (remove) {
       footnote.parentNode.removeChild(footnote)
     } else {

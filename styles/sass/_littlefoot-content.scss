@@ -15,28 +15,25 @@
 // @state .is-fully-scrolled    - The popover content is scrolled to the bottom.
 
 .littlefoot-footnote {
-  position: absolute;
-  z-index: $popover-z-index;
-  top: 0;
-  left: 0;
-  display: inline-block;
-  box-sizing: border-box;
-  // Height is set in .footnote-content-wrapper
-  max-width: $popover-max-width;
-  // 1.414213... is to get the diagonal height of the tooltip using pythagorus, yo.
-  margin: ((1.4142135624 * $popover-tooltip-size / 2) + $button-height + $popover-margin-top) 0;
-  // fits the popover to the contents
   background: $popover-color-background;
-  opacity: $popover-inactive-opacity;
   border-radius: $popover-border-radius;
   border: $popover-border;
   box-shadow: $popover-box-shadow;
+  box-sizing: border-box;
+  display: inline-block;
+  left: 0;
   line-height: 0;
-  transition-property: $popover-transition-properties;
-  transition-duration: $popover-transition-default-duration;
-  transition-timing-function: $popover-transition-default-timing-function;
-  transform: $popover-initial-transform-state;
+  margin: ((1.4142135624 * $popover-tooltip-size / 2) + $button-height + $popover-margin-top) 0;
+  max-width: $popover-max-width;
+  opacity: $popover-inactive-opacity;
+  position: absolute;
+  top: 0;
   transform-origin: $popover-initial-transform-origin;
+  transform: $popover-initial-transform-state;
+  transition-duration: $popover-transition-default-duration;
+  transition-property: $popover-transition-properties;
+  transition-timing-function: $popover-transition-default-timing-function;
+  z-index: $popover-z-index;
 
   &.is-positioned-top {
     top: auto;
@@ -46,40 +43,6 @@
   &.is-active {
     transform: $popover-active-transform-state;
     opacity: $popover-active-opacity;
-  }
-
-  &.is-bottom-fixed {
-    border-radius: 0;
-    border-width: 1px 0 0;
-    bottom: 0;
-    left: 0;
-    margin: 0;
-    opacity: 1;
-    position: fixed;
-    right: auto;
-    top: auto;
-    transform: translateY(100%);
-    transition: transform .3s ease;
-    width: 100%;
-
-    &.is-active {
-      transform: translateY(0);
-    }
-
-    .littlefoot-footnote__wrapper {
-      margin: 0 0 0 50%;
-      max-width: 100%;
-      transform: translateX(-50%);
-    }
-
-    .littlefoot-footnote__wrapper,
-    .littlefoot-footnote__content {
-      border-radius: 0;
-    }
-
-    .littlefoot-footnote__tooltip {
-      display: none;
-    }
   }
 
   &.is-scrollable {
@@ -127,7 +90,9 @@
       }
     }
 
-    ::-webkit-scrollbar { display: none; }
+    ::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   &.is-fully-scrolled {
@@ -135,6 +100,41 @@
     &::before {
       opacity: 0;
       transition-delay: 0;
+    }
+  }
+
+  @media (max-width: 720px) {
+    border-radius: 0;
+    border-width: 1px 0 0;
+    bottom: 0;
+    left: 0 !important;
+    margin: 0;
+    opacity: 1;
+    position: fixed;
+    right: auto;
+    top: auto;
+    transform: translateY(100%);
+    transition: transform .3s ease;
+    width: 100%;
+
+    &.is-active {
+      transform: translateY(0);
+    }
+
+    .littlefoot-footnote__wrapper {
+      margin: 0 0 0 50%;
+      max-width: 100% !important;
+      transform: none;
+      width: 100% !important;
+    }
+
+    .littlefoot-footnote__wrapper,
+    .littlefoot-footnote__content {
+      border-radius: 0;
+    }
+
+    .littlefoot-footnote__tooltip {
+      display: none;
     }
   }
 }
@@ -179,12 +179,12 @@
     max-width: 100%;
   }
 
-  *:last-child {
-    margin-bottom: 0 !important;
+  *:first-child {
+    margin-top: 0;
   }
 
-  *:first-child {
-    margin-top: 0 !important;
+  *:last-child {
+    margin-bottom: 0;
   }
 }
 

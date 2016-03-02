@@ -5,11 +5,8 @@ import escape from 'lodash/escape'
 import template from 'lodash/template'
 import throttle from 'lodash/throttle'
 import addClass from './dom/addClass'
-import addEventListener from './dom/addEventListener'
-import children from './dom/children'
 import hasClass from './dom/hasClass'
 import removeClass from './dom/removeClass'
-import triggerEvent from './dom/triggerEvent'
 import calculateAvailableRoom from './calculateAvailableRoom'
 import calculatePixelSize from './calculatePixelSize'
 import getClosestFootnote from './getClosestFootnote'
@@ -19,6 +16,7 @@ import createSettings from './settings'
 import positionTooltip from './positionTooltip'
 import prepareContent from './prepareContent'
 import scrollHandler from './scrollHandler'
+import { addEventListener, dispatchEvent } from './events'
 
 /**
  * Littlefoot instance factory.
@@ -137,10 +135,10 @@ const littlefoot = function(options) {
       addClass(footnoteHovered, 'is-hover-instantiated')
 
       if (!settings.allowMultiple) {
-        removePopovers('.littlefoot-footnote:not(' + dataIdentifier + ')')
+        dismissFootnotes('.littlefoot-footnote:not(' + dataIdentifier + ')')
       }
 
-      const popovers = createPopover('.littlefoot-footnote__button' + dataIdentifier)
+      const popovers = displayFootnote('.littlefoot-footnote__button' + dataIdentifier)
 
       for (let popover of popovers) {
         addClass(popover, 'is-hover-instantiated')
@@ -160,25 +158,25 @@ const littlefoot = function(options) {
     const isActive       = hasClass(button, 'is-active')
     const isChanging     = hasClass(button, 'changing')
 
-    triggerEvent(button, 'blur')
+    dispatchEvent(button, 'blur')
 
     if (!isChanging && isActive && settings.allowMultiple) {
-      removePopovers('.littlefoot-footnote[' + dataIdentifier + ']')
+      dismissFootnotes('.littlefoot-footnote[' + dataIdentifier + ']')
     }
 
     if (!isChanging && isActive && !settings.allowMultiple) {
-      removePopovers()
+      dismissFootnotes()
     }
 
     if (!isChanging && !isActive) {
       addClass(button, 'changing')
       addClass(button, 'is-click-instantiated')
-      createPopover('.littlefoot-footnote__button[' + dataIdentifier + ']')
+      displayFootnote('.littlefoot-footnote__button[' + dataIdentifier + ']')
 
       setTimeout(() => removeClass(button, 'changing'), settings.popoverCreateDelay)
 
       if (!settings.allowMultiple) {
-        removePopovers('.littlefoot-footnote:not([' + dataIdentifier + '])')
+        dismissFootnotes('.littlefoot-footnote:not([' + dataIdentifier + '])')
       }
     }
   }
@@ -200,7 +198,7 @@ const littlefoot = function(options) {
     }
 
     if (!button && !footnote && document.querySelector('.littlefoot-footnote')) {
-      removePopovers()
+      dismissFootnotes()
     }
   }
 
@@ -213,7 +211,7 @@ const littlefoot = function(options) {
    * @param  {String} selector CSS selector of buttons that are to be activated.
    * @return {Array}           All footnotes activated by the function.
    */
-  function createPopover(selector) {
+  function displayFootnote(selector) {
     const contentTemplate = template(settings.contentTemplate)
     const popoversCreated = []
     const buttons         = []
@@ -316,7 +314,7 @@ const littlefoot = function(options) {
       if (related !== target) {
         setTimeout(() => {
           if (!document.querySelector('.littlefoot-footnote__button:hover, .littlefoot-footnote:hover')) {
-            removePopovers()
+            dismissFootnotes()
           }
         }, settings.hoverDelay)
       }
@@ -330,12 +328,12 @@ const littlefoot = function(options) {
    */
   function onEscapeKeypress(event) {
     if (event.keyCode === 27) {
-      removePopovers()
+      dismissFootnotes()
     }
   }
 
   /**
-   * Removes/ adds appropriate classes to the footnote content and button after
+   * Removes/adds appropriate classes to the footnote content and button after
    * a delay (to allow for transitions) it removes the actual footnote content.
    *
    * @param  {String} footnotes The CSS selector of the footnotes to be removed.
@@ -343,7 +341,7 @@ const littlefoot = function(options) {
    *                            actually removing the popover from the DOM.
    * @return {Array}            The buttons whose popovers were removed by the call.
    */
-  function removePopovers(footnoteSelector = '.littlefoot-footnote', timeout = settings.popoverDismissDelay) {
+  function dismissFootnotes(footnoteSelector = '.littlefoot-footnote', timeout = settings.popoverDismissDelay) {
     const buttonsClosed = []
     const footnoteElements = document.querySelectorAll(footnoteSelector);
 
@@ -378,11 +376,6 @@ const littlefoot = function(options) {
    * @param {Event} event The type of event that prompted the reposition function.
    */
   function repositionPopover(event) {
-
-    if (!settings.positionContent) {
-      return
-    }
-
     const type      = event ? event.type : 'resize'
     const footnotes = document.querySelectorAll('.littlefoot-footnote')
 
@@ -451,151 +444,6 @@ const littlefoot = function(options) {
     })
   }
 
-  /**
-   * Adds a breakpoint within the HTML at which a user-defined function. will be
-   * called. The minimum requirement is that a min/max size is provided; after
-   * that point, the footnote will stop being positioned (i.e., to allow for
-   * bottom-fixed footnotes on small screens).
-   *
-   * @param  {String|MediaQueryList} size         The size at which to break,
-   *                                              either as a simple string (like
-   *                                              `">10em"`), a mediq query
-   *                                              (`"(max-width: 35em)"`), or a
-   *                                              `MediaQueryList` object.
-   * @param  {Function}              onEnter      The function to call when the
-   *                                              media query is matched. It will
-   *                                              be passed the `removeOpen` option
-   *                                              and a copy of the `littlefoot` object.
-   * @param  {Function}              onLeave      The function to call when the
-   *                                              media query is not matched. It
-   *                                              will be passed the `removeOpen`
-   *                                              option and a copy of the `littlefoot`
-   *                                              object.
-   * @param  {Boolean}               removeOpen   Whether to remove open popups.
-   * @return {Object}                             Details on whether the breakpoint
-   *                                              was added and, if so, the
-   *                                              `MediaQueryList` object that was
-   *                                              created and the listener function.
-   */
-  function addBreakpoint(size, onEnter, onLeave, removeOpen = true) {
-    const dismissDelay = settings.popoverDismissDelay
-
-    let mq     = size
-    let minMax = null
-
-    if (typeof size === 'string') {
-      minMax = size.charAt(0) === '>' ? 'min' : size.charAt(0) === '<' ? 'max' : null
-      const query = minMax ? '(' + minMax + '-width: ' + (size.substring(1)) + ')' : size
-
-      mq     = window.matchMedia(query)
-      minMax = minMax || 'max'
-    }
-
-    if (mq.media && mq.media === 'invalid') {
-      return {
-        added:    false,
-        mq:       mq,
-        listener: null
-      }
-    }
-
-    onEnter = onEnter || createCallback(removeOpen, dismissDelay, false, popover => addClass(popover, 'is-bottom-fixed'))
-    onLeave = onLeave || createCallback(removeOpen, dismissDelay, true, () => null)
-
-    const listener = mq => (mq.matches ? onEnter : onLeave)(removeOpen, littlefoot)
-
-    mq.addListener(listener)
-    listener(mq)
-
-    settings.breakpoints[size] = {
-      added: true,
-      mq,
-      listener,
-    }
-
-    return settings.breakpoints[size]
-  }
-
-  /**
-   * Creates the default callbacks to attach to the MQ events.
-   *
-   * @param  {Boolean}  removeOpen  Whether or not to close (and reopen)
-   *                                footnotes that are open at the time of the
-   *                                breakpoint changes.
-   * @param  {Number}   dismissDelay The delay by which to wait when
-   *                                closing/reopening footnotes on breakpoint
-   *                                changes.
-   * @param  {Boolean}  position    Whether or not to position pops over when the
-   *                                media query is matched.
-   * @param  {Function} callback    The function to be assigned to
-   *                                `settings.activateCallback` when the media
-   *                                query is matched (this function is called
-   *                                when new footnotes are created).
-   * @return {Function}             The default media query callback function.
-   */
-  function createCallback(removeOpen, dismissDelay, position, callback) {
-    return function(removeOpen, littlefoot) {
-      const closedPopovers = []
-
-      if (removeOpen) {
-        closedPopovers.concat(removePopovers())
-        settings.activateCallback = callback
-      }
-
-      setTimeout(() => {
-        settings.positionContent = position
-
-        if (removeOpen) {
-          createPopover(closedPopovers)
-        }
-      }, dismissDelay)
-    }
-  }
-
-  /**
-   * Removes a previously-created breakpoint, calling the false condition before
-   * doing so (or, a user-provided function instead).
-   *
-   * @param  {String|MediaQueryList} target   The media query to remove,
-   *                                          referenced either through the string
-   *                                          used to create the breakpoint
-   *                                          initially or the associated
-   *                                          `MediaQueryList` object.
-   * @param  {Function}              callback The (optional) function to call
-   *                                          before removing the listener.
-   * @return {Boolean}                        `true` if the media query was found
-   *                                          and deleted, `false` otherwise.
-   */
-  function removeBreakpoint(target, callback) {
-    let found          = false
-    let breakpointName = null
-
-    if (typeof target === 'string') {
-      found = settings.breakpoints[target] !== undefined
-    } else {
-      for (breakpointName in settings.breakpoints) {
-        if (settings.breakpoints.hasOwnProperty(breakpointName) && settings.breakpoints[breakpointName].mq === target) {
-          found = true
-        }
-      }
-    }
-
-    if (found) {
-      const breakpoint = settings.breakpoints[breakpointName || target]
-
-      if (callback) {
-        callback({matches: false})
-      } else {
-        breakpoint.listener({matches: false})
-      }
-
-      breakpoint.mq.removeListener(breakpoint.listener)
-      delete settings.breakpoints[breakpointName || target]
-    }
-
-    return found
-  }
-
   footnoteInit()
 
   addEventListener(document, 'touchend', onTouchClick)
@@ -608,13 +456,10 @@ const littlefoot = function(options) {
   addEventListener(window, 'resize', throttle(repositionPopover))
 
   return {
-    createPopover:     createPopover,
-    removePopovers:    removePopovers,
-    repositionPopover: repositionPopover,
-    addBreakpoint:     addBreakpoint,
-    removeBreakpoint:  removeBreakpoint,
-    getSetting:        settings.get,
-    updateSetting:     settings.set,
+    activate: displayFootnote,
+    close:    dismissFootnotes,
+    get:      settings.get,
+    set:      settings.set,
   }
 }
 

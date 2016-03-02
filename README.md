@@ -181,16 +181,18 @@ Default: `null`
 
 ### `contentTemplate`
 
-A Lodash template for the markup of the footnote content popovers. It's best not to change this too much; the script relies on the class names and hierarchy of the default markup to do its work. However, you can add information to the rendered markup by adding string literals or one or more of the following variables:
+A [Lodash template](https://lodash.com/docs#template) for the markup of the footnote content popovers. It's best not to change this too much; the script relies on the class names and hierarchy of the default markup to do its work. However, you can add information to the rendered markup by adding string literals or one or more of the following variables:
 
 * `content`: The HTML markup of the original footnote.
 * `number`: The footnote number (sequential ordering of all footnotes within an element matching the `numberResetSelector` option).
 * `id`: The footnote identifier (sequential ordering of all footnotes on the page, starting from 1).
 
+Variables should be added between interpolation delimiters. For example, `<%= content %>`.
+
 Default:
 
 ```html
-<aside class="littlefoot-footnote is-positioned-bottom" data-footnote-number="<%= number %>" data-footnote-id="<%= id %>" alt="Footnote <%= number %>">
+<aside class="littlefoot-footnote is-positioned-bottom" data-footnote-id="<%= id %>" data-footnote-number="<%= number %>" alt="Footnote <%= number %>">
   <div class="littlefoot-footnote__wrapper">
     <div class="littlefoot-footnote__content">
       <%= content %>
@@ -202,18 +204,20 @@ Default:
 
 ### `buttonTemplate`
 
-A Lodash template for the markup of the footnote button. Again, try not to remove any elements from the markup, but add as much as you like. In addition to the first two variables shown in contentMarkup, the following variables are available:
+A [Lodash template](https://lodash.com/docs#template) for the markup of the footnote button. Again, try not to remove any elements from the markup, but add as much as you like.
 
-* `escaped`: The escaped HTML markup of the original footnote.
+* `content`: The escaped HTML markup of the original footnote.
 * `id`: The footnote identifier (sequential ordering of all footnotes on the page, starting from 1).
 * `number`: The footnote number (sequential ordering of all footnotes within an element matching the `numberResetSelector` option).
 * `reference`: The footnote reference used to populate the ID attribute.
+
+Variables should be added between interpolation delimiters. For example, `<%= content %>`.
 
 Default:
 
 ```html
 <div class="littlefoot-footnote__container">
-  <button class="littlefoot-footnote__button littlefoot-footnote__button__ellipsis" id="<%= reference %>" data-footnote-number="<%= number %>" data-footnote-id="<%= id %>" alt="See Footnote <%= number %>" rel="footnote" data-littlefoot-footnote="<%= content %>">
+  <button class="littlefoot-footnote__button littlefoot-footnote__button__ellipsis" id="<%= reference %>" data-footnote-id="<%= id %>" data-footnote-number="<%= number %>" alt="See Footnote <%= number %>" rel="footnote" data-littlefoot-footnote="<%= content %>">
     <svg viewbox="0 0 31 6" preserveAspectRatio="xMidYMid">
       <circle r="3" cx="3" cy="3" fill="white"></circle>
       <circle r="3" cx="15" cy="3" fill="white"></circle>
@@ -225,9 +229,9 @@ Default:
 
 ## Methods
 
-Running the function will return an object that can be stored and used to manipulate the footnote buttons/ content. The following methods are available in this return object:
+Running the function will return an object that can be stored and used to manipulate the footnote buttons/content. The following methods are available in this return object:
 
-### `close([footnotes, timeout])`
+### `dismiss([footnotes, timeout])`
 
 This function will close any footnote popovers matching the (string) selector provided for footnotes. timeout specifies the amount of time after the footnote's active class is removed before the element itself is removed. Either of these can be excluded; footnotes will default to all active footnotes, while timeout will default to the popoverDeleteDelay option.
 
@@ -235,35 +239,11 @@ This function will close any footnote popovers matching the (string) selector pr
 
 This will activate the footnote button (and its associated popover) matching the (string) selector provided for button. If the option to allow multiple footnotes is false, only the first matching footnote will be activated. By default, the first footnote button on the page will be activated.
 
-### `addBreakpoint(size, [onEnter, onLeave, removeOpen])`
-
-This method creates a breakpoint at which time a function is to be run. The most common use for this is to change the footnotes from being positioned by the script to being bottom-fixed to the page (as is the case for this page). As such, the function is meant to make this particular use case as simple as possible.
-
-Only the size parameter is required. You can pass it a simple string, like `'<2em'`, a string representing a valid media query, like `'(min-width: 300px)'`, or a `MediaQueryList` object.
-
-The `onEnter` and `onLeave` arguments are the callbacks to run when the media query changes to matching and non-matching status, respectively. These callbacks will be passed the `removeOpen` parameter and a copy of the littlefoot object (for further footnote manipulation). The defaults will simply change the `activateCallback` option to a function that adds the fixed-bottom class to all footnote popovers.
-
-`deleteDelay` determines how long (in milliseconds, as an integer) should be waited after removing an active popover on a breakpoint before reopening that footnote, and will default to the popoverDeleteDelay option value.
-
-`removeOpen` (boolean) specifies whether this removal should be performed at all.
-
-The method will return an object specifying whether the breakpoint was added, the MediaQueryList object that was created, and the function that was attached as a listener to the media query.
-
-### `removeBreakpoint(target[, callback])`
-
-This function will remove the specified breakpoint. Breakpoints are identified by the target parameter, which can be either the string with which the breakpoint was initially created, or the MediaQueryList object returned as part of the addBreakpoint function.
-
-Optionally, you can provide a callback to execute before the breakpoint is removed. If no callback is provided, the method will run the false callback function from when the breakpoint was initially created.
-
-### `reposition()`
-
-This function repositions all footnotes relative to their button.
-
-### `getSetting(key)`
+### `get(key)`
 
 Returns the script setting matching the string provided for setting, if such a setting exists.
 
-### `updateSetting(key, value)`
+### `set(key, value)`
 
 Updates the script setting matching the string provided for setting with newValue, or adds the option if none exists. In either case, the old value for the setting will be returned.
 
@@ -273,24 +253,42 @@ Users planning to migrate from Bigfoot should be aware of the following changes.
 
 ### Settings
 
-* `actionOriginalFN` renamed to `originalFootnotes`.
-* `allowMultipleFN` renamed to `allowMultiple`.
-* `anchorParentTagname` renamed to `anchorParentSelector`.
-* `deleteOnUnhover` renamed to `dismissOnUnhover`.
-* `footnoteTagname` renamed to `footnoteSelector`.
-* `popoverDeleteDelay` renamed to `popoverDismissDelay`.
-* `buttonMarkup` replaced with `buttonTemplate`. Refer to the documentation.
-* `contentMarkup` replaced with `contentTemplate`. Refer to the documentation.
-* `useFootnoteOnlyOnce` replaced with `allowDuplicates`. The truth value should be flipped.
+* `actionOriginalFN` was renamed to `originalFootnotes`.
+* `allowMultipleFN` was renamed to `allowMultiple`.
+* `anchorParentTagname` was renamed to `anchorParentSelector`.
+* `deleteOnUnhover` was renamed to `dismissOnUnhover`.
+* `footnoteTagname` was renamed to `footnoteSelector`.
+* `popoverDeleteDelay` was renamed to `popoverDismissDelay`.
+* `buttonMarkup` was replaced with `buttonTemplate`. Please refer to the documentation for a list of valid tokens.
+* `contentMarkup` was replaced with `contentTemplate`. Please refer to the documentation for a list of valid tokens.
+* `useFootnoteOnlyOnce` was replaced with `allowDuplicates`. The truth value should be flipped.
+* `positionContent` was removed.
 
 ### Breakpoints
 
-* The `addBreakpoint` and `removeBreakpoint` methods will not accept `'iphone'` and `'ipad'` strings as valid breakpoints.
-* The `addBreakpoint` method will not accept a `deleteDelay` parameter and will always use the `dismissDelay` setting provided on initialization or via the `updateSetting` method.
+Breakpoint methods were dropped in favour of a CSS-based approach. Override the stylesheets to customize the screen width limits.
 
-### Stylesheets
+### Methods
+
+Methods on the returning object were overhauled, removing breakpoint logic.
+
+#### Renamed methods
+
+* `close()` was renamed `dismiss()`.
+* `getSetting()` was renamed `get()`.
+* `updateSetting()` was renamed `set()`.
+
+#### Removed methods
+
+* `addBreakpoint()` and `removeBreakpoint()` were removed, set breakpoint-dependent styles using CSS.
+* The `createPopover()` alias was removed, use `activate()`.
+* The `removePopovers()` alias was removed, use `dismiss()`.
+* `reposition()` and `repositionFeet()` were removed.
+
+### Presentation
 
 * All style variants are folded into a single stylesheet.  Add a `is-bottom-fixed` class to the `contentTemplate` to fix the footnote popover to the bottom of the viewport. To use a number in the footnote button instead of the default ellipsis, add a `littlefoot-footnote__button__number` class in the `buttonTemplate`.
+* Breakpoint logic now relies on stylesheet media queries.
 * The markup for the ellipsis changed from three `<svg>` elements with a `<circle>` each to a single `<svg>` element containing all three `<circle>`s.
 
 ## License
