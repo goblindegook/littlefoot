@@ -57,8 +57,7 @@ You can also configure the available options by passing an object literal, and y
 var littlefoot = require('littlefoot')
 
 var lf = littlefoot({
-  deleteOnUnhover: false,
-  preventPageScroll: false,
+  activateOnHover: true,
   hoverDelay: 250
 })
 ```
@@ -67,7 +66,7 @@ You'll also want to include styles for the button and popovers, a number of whic
 
 ## Options
 
-The script has many configurable options from having popovers instantiated on hover, to allowing multiple active footnotes, to setting specific timeouts for popover creation/deletion. It also returns an object that allows you to activate, remove, add breakpoints, and reposition popovers properly. All of these options and return functions are shown in detail at the script's [project page](http://www.bigfootjs.com/). You can also see a [demo of the project in action](http://www.bigfootjs.com/#demo) on the same page.
+The script has many configurable options from having popovers instantiated on hover, to allowing multiple active footnotes, to setting specific timeouts for popover activation and dismissal. It also returns an object that allows you to activate and dismiss popovers.
 
 ### `activateCallback`
 
@@ -104,12 +103,6 @@ Default: `/(fn|footnote|note)[:\\-_\\d]/gi`
 The selector for the parent of the footnote link. This is really only necessary when you want to get rid of that element --- for instance, when the link is inside a `sup` tag. This tag and the link itself will be joined together for attribute from which you can drawn in your markup for footnotes/buttons.
 
 Default: `sup`
-
-### `breakpoints`
-
-An object containing information about breakpoints specified for your set of popovers. These breakpoints should be manipulated only by using the `addBreakpoint()` and `removeBreakpoint()` methods discussed in the methods section.
-
-Default: `{}`
 
 ### `dismissOnUnhover`
 
@@ -158,20 +151,6 @@ Default: `500`
 Sets a delay between the activation of the footnote button and the activation of the actual footnote content.
 
 Default: `100`
-
-### `positionContent`
-
-Specifies whether or not the footnote popovers (and the popover tooltip, if it is included in the markup) should be positioned by the script.
-
-If this option is true, the popover top of the footnote popover will be positioned at the middle (vertically) of the footnote button, while the left of the popover will be placed a distance from the (horizontal) middle of the button proportional to the footnote button's horizontal position in the window.
-
-Default: `true`
-
-### `preventPageScroll`
-
-Determines whether or not, when scrolling past the end of a footnote whose content is taller than the vertical space available, the scroll event will propagate to the window itself.
-
-Default: `true`
 
 ### `scope`
 
@@ -249,9 +228,13 @@ Updates the script setting matching the string provided for setting with newValu
 
 ## Changes from Bigfoot.js
 
-Users planning to migrate from Bigfoot should be aware of the following changes.
+In forking the Bigfoot.js project and adapting it for simplicity, I have embraced a [_Decisions, not options_](https://nacin.com/2011/12/18/in-open-source-learn-to-decide/) philosophy.  As such, some features provided by Bigfoot.js have been replaced with simpler alternatives, a sensible set of defaults, or in some cases removed altogether.
+
+Users planning to migrate from Bigfoot should therefore be aware of the following changes.
 
 ### Settings
+
+#### Changed settings
 
 * `actionOriginalFN` was renamed to `originalFootnotes`.
 * `allowMultipleFN` was renamed to `allowMultiple`.
@@ -262,17 +245,19 @@ Users planning to migrate from Bigfoot should be aware of the following changes.
 * `buttonMarkup` was replaced with `buttonTemplate`. Please refer to the documentation for a list of valid tokens.
 * `contentMarkup` was replaced with `contentTemplate`. Please refer to the documentation for a list of valid tokens.
 * `useFootnoteOnlyOnce` was replaced with `allowDuplicates`. The truth value should be flipped.
-* `positionContent` was removed.
 
-### Breakpoints
+#### Removed settings
 
-Breakpoint methods were dropped in favour of a CSS-based approach. Override the stylesheets to customize the screen width limits.
+* `breakpoints` was removed. All size-aware display changes should be declared via CSS `@media` queries.
+* `maxWidthRelativeTo` was removed.  It was undocumented and will not be missed.
+* `preventPageScroll` was removed. Scrolling inside a scrollable footnote will not trigger a page scroll.
+* `positionContent` was removed. Popover positioning is now always in effect.
 
 ### Methods
 
 Methods on the returning object were overhauled, removing breakpoint logic.
 
-#### Renamed methods
+#### Changed methods
 
 * `close()` was renamed `dismiss()`.
 * `getSetting()` was renamed `get()`.
@@ -287,9 +272,11 @@ Methods on the returning object were overhauled, removing breakpoint logic.
 
 ### Presentation
 
-* All style variants are folded into a single stylesheet.  Add a `is-bottom-fixed` class to the `contentTemplate` to fix the footnote popover to the bottom of the viewport. To use a number in the footnote button instead of the default ellipsis, add a `littlefoot-footnote__button__number` class in the `buttonTemplate`.
-* Breakpoint logic now relies on stylesheet media queries.
-* The markup for the ellipsis changed from three `<svg>` elements with a `<circle>` each to a single `<svg>` element containing all three `<circle>`s.
+All style variants have been folded into a single stylesheet.  The footnote popover is now automatically fixed to the bottom of the viewport on smaller screens, and you may alter this behaviour by overriding the CSS.
+
+Breakpoint methods were dropped in favour of a CSS-based approach. Override the stylesheets to customize screen width limits.
+
+The markup for the footnote button ellipsis changed from three `<svg>` elements with a `<circle>` each to a single `<svg>` element containing all three `<circle>`s.
 
 ## License
 

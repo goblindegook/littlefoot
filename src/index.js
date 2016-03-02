@@ -1,20 +1,18 @@
 import closest from 'dom-closest'
 import matches from 'dom-matches'
-import siblings from 'dom-siblings'
 import escape from 'lodash/escape'
 import template from 'lodash/template'
 import throttle from 'lodash/throttle'
 import addClass from './dom/addClass'
 import hasClass from './dom/hasClass'
 import removeClass from './dom/removeClass'
-import calculateAvailableRoom from './calculateAvailableRoom'
 import calculatePixelSize from './calculatePixelSize'
 import getClosestFootnote from './getClosestFootnote'
 import getFootnoteLinks from './getFootnoteLinks'
 import hideOriginalFootnotes from './hideOriginalFootnotes'
 import createSettings from './settings'
-import positionTooltip from './positionTooltip'
 import prepareContent from './prepareContent'
+import repositionPopover from './repositionPopover'
 import scrollHandler from './scrollHandler'
 import { addEventListener, dispatchEvent } from './events'
 
@@ -26,8 +24,7 @@ import { addEventListener, dispatchEvent } from './events'
  */
 const littlefoot = function(options) {
 
-  const settings      = createSettings(options)
-  const popoverStates = {}
+  const settings = createSettings(options)
 
   /**
    * Footnote button/ content initializer (run on doc.ready).
@@ -251,11 +248,11 @@ const littlefoot = function(options) {
       const popover          = button.nextElementSibling
       const contentContainer = popover.querySelector('.littlefoot-footnote__content')
 
-      popoverStates[button.getAttribute('data-footnote-id')] = 'init'
+      popover.setAttribute('data-littlefoot-state', 'init')
       popover.setAttribute('data-littlefoot-max-width', calculatePixelSize(popover, 'max-width'))
       popover.setAttribute('data-littlefoot-max-height', calculatePixelSize(contentContainer, 'max-height'))
       popover.style.maxWidth = '10000px'
-      repositionPopover()
+      repositionFootnotes()
       addClass(button, 'is-active')
       bindScrollHandler(popover.querySelector('.littlefoot-footnote__content'))
 
@@ -282,10 +279,8 @@ const littlefoot = function(options) {
    * @param {DOMElement} element The element on which the function was run.
    */
   function bindScrollHandler(element) {
-    if (settings.preventPageScroll) {
-      addEventListener(element, 'mousewheel', throttle(scrollHandler))
-      addEventListener(element, 'wheel', throttle(scrollHandler))
-    }
+    addEventListener(element, 'mousewheel', throttle(scrollHandler))
+    addEventListener(element, 'wheel', throttle(scrollHandler))
   }
 
   /**
@@ -352,16 +347,16 @@ const littlefoot = function(options) {
       if (!hasClass(linkedButton, 'changing')) {
         buttonsClosed.push(linkedButton)
 
+        addClass(linkedButton, 'changing')
         removeClass(linkedButton, 'is-active')
         removeClass(linkedButton, 'is-hover-instantiated')
         removeClass(linkedButton, 'is-click-instantiated')
-        removeClass(footnoteElement, 'is-active')
-        addClass(linkedButton, 'changing')
+
         addClass(footnoteElement, 'disapearing')
+        removeClass(footnoteElement, 'is-active')
 
         setTimeout(() => {
           footnoteElement.parentNode.removeChild(footnoteElement)
-          delete popoverStates[footnoteID]
           removeClass(linkedButton, 'changing')
         }, timeout)
       }
@@ -375,72 +370,11 @@ const littlefoot = function(options) {
    *
    * @param {Event} event The type of event that prompted the reposition function.
    */
-  function repositionPopover(event) {
-    const type      = event ? event.type : 'resize'
+  function repositionFootnotes(event) {
     const footnotes = document.querySelectorAll('.littlefoot-footnote')
 
     Array.prototype.forEach.call(footnotes, footnote => {
-      const identifier      = footnote.getAttribute('data-footnote-id')
-      const button          = siblings(footnote, '.littlefoot-footnote__button')[0]
-      const buttonStyle     = button.currentStyle || window.getComputedStyle(button)
-      const footnoteStyle   = footnote.currentStyle || window.getComputedStyle(footnote)
-      const roomLeft        = calculateAvailableRoom(button)
-      const marginSize      = parseFloat(footnoteStyle.marginTop)
-      const maxHeightInCSS  = parseFloat(footnote.getAttribute('data-littlefoot-max-height'))
-      const totalHeight     = 2 * marginSize + footnote.offsetHeight
-      const positionOnTop   = roomLeft.bottomRoom < totalHeight && roomLeft.topRoom > roomLeft.bottomRoom
-      const lastState       = popoverStates[identifier]
-      let maxHeightOnScreen = 10000
-
-      if (positionOnTop) {
-        if (lastState !== 'top') {
-          popoverStates[identifier] = 'top'
-          addClass(footnote, 'is-positioned-top')
-          removeClass(footnote, 'is-positioned-bottom')
-          footnote.style.transformOrigin = (roomLeft.leftRelative * 100) + '% 100%'
-        }
-
-        maxHeightOnScreen = roomLeft.topRoom - marginSize - 15
-
-      } else {
-        if (lastState !== 'bottom' || lastState === 'init') {
-          popoverStates[identifier] = 'bottom'
-          removeClass(footnote, 'is-positioned-top')
-          addClass(footnote, 'is-positioned-bottom')
-          footnote.style.transformOrigin = (roomLeft.leftRelative * 100) + '% 0'
-        }
-
-        maxHeightOnScreen = roomLeft.bottomRoom - marginSize - 15
-      }
-
-      footnote.querySelector('.littlefoot-footnote__content').style.maxHeight = Math.min(maxHeightOnScreen, maxHeightInCSS) + 'px'
-
-      if (type === 'resize') {
-        const maxWidthInCSS   = parseFloat(footnote.getAttribute('data-littlefoot-max-width'))
-        const footnoteWrapper = footnote.querySelector('.littlefoot-footnote__wrapper')
-        const footnoteContent = footnote.querySelector('.littlefoot-footnote__content')
-        let maxWidth          = maxWidthInCSS
-
-        if (maxWidthInCSS <= 1) {
-          const relative      = settings.maxWidthRelativeTo ? document.querySelector(settings.maxWidthRelativeTo) : null
-          const relativeWidth = Math.min(window.innerWidth, relative ? relative.offsetWidth : 10000)
-
-          maxWidth = relativeWidth * maxWidthInCSS
-        }
-
-        maxWidth = Math.min(maxWidth, footnoteContent.offsetWidth + 1)
-
-        const left = -roomLeft.leftRelative * maxWidth + parseFloat(buttonStyle.marginLeft) + button.offsetWidth / 2
-
-        footnoteWrapper.style.maxWidth = maxWidth + 'px'
-        footnote.style.left            = left + 'px'
-
-        positionTooltip(footnote, roomLeft.leftRelative)
-      }
-
-      if (parseInt(footnote.offsetHeight) < footnote.querySelector('.littlefoot-footnote__content').scrollHeight) {
-        addClass(footnote, 'is-scrollable')
-      }
+      repositionPopover(footnote, event)
     })
   }
 
@@ -451,9 +385,9 @@ const littlefoot = function(options) {
   addEventListener(document, 'keyup', onEscapeKeypress)
   addEventListener(document, 'mouseover', onHover)
   addEventListener(document, 'mouseout', onUnhover)
-  addEventListener(document, 'gestureend', repositionPopover)
-  addEventListener(window, 'scroll', throttle(repositionPopover))
-  addEventListener(window, 'resize', throttle(repositionPopover))
+  addEventListener(document, 'gestureend', repositionFootnotes)
+  addEventListener(window, 'scroll', throttle(repositionFootnotes))
+  addEventListener(window, 'resize', throttle(repositionFootnotes))
 
   return {
     activate: displayFootnote,
