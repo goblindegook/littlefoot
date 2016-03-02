@@ -7,7 +7,6 @@ import throttle from 'lodash/throttle'
 import addClass from './dom/addClass'
 import addEventListener from './dom/addEventListener'
 import children from './dom/children'
-import forEach from './dom/forEach'
 import hasClass from './dom/hasClass'
 import removeClass from './dom/removeClass'
 import triggerEvent from './dom/triggerEvent'
@@ -219,6 +218,10 @@ const littlefoot = function(options) {
     const popoversCreated = []
     const buttons         = []
 
+    if (!selector || selector.length === 0) {
+      return popoversCreated
+    }
+
     if (typeof selector !== 'string' && settings.allowMultiple) {
       buttons.concat(selector)
 
@@ -227,16 +230,18 @@ const littlefoot = function(options) {
 
     } else if (settings.allowMultiple) {
       const elements = document.querySelectorAll(selector)
-      forEach(elements, (element, i) => {
+      Array.prototype.forEach.call(elements, (element, i) => {
         buttons[i] = closest(element, '.littlefoot-footnote__button')
       })
 
     } else {
       const element = document.querySelector(selector)
-      buttons.push(closest(element, '.littlefoot-footnote__button'))
+      if (element) {
+        buttons.push(closest(element, '.littlefoot-footnote__button'))
+      }
     }
 
-    forEach(buttons, function(button) {
+    Array.prototype.forEach.call(buttons, function(button) {
       const content = contentTemplate({
         content: button.getAttribute('data-littlefoot-footnote'),
         id:      button.getAttribute('data-footnote-id'),
@@ -264,7 +269,7 @@ const littlefoot = function(options) {
     })
 
     setTimeout(() => {
-      forEach(popoversCreated, popover => {
+      Array.prototype.forEach.call(popoversCreated, popover => {
         addClass(popover, 'is-active')
       })
     }, settings.popoverCreateDelay)
@@ -342,7 +347,7 @@ const littlefoot = function(options) {
     const buttonsClosed = []
     const footnoteElements = document.querySelectorAll(footnoteSelector);
 
-    forEach(footnoteElements, footnoteElement => {
+    Array.prototype.forEach.call(footnoteElements, footnoteElement => {
       const footnoteID   = footnoteElement.getAttribute('data-footnote-id')
       const linkedButton = document.querySelector('.littlefoot-footnote__button[data-footnote-id="' + footnoteID + '"]')
 
@@ -373,13 +378,15 @@ const littlefoot = function(options) {
    * @param {Event} event The type of event that prompted the reposition function.
    */
   function repositionPopover(event) {
-    const type = event ? event.type : 'resize'
 
     if (!settings.positionContent) {
       return
     }
 
-    forEach(document.querySelectorAll('.littlefoot-footnote'), footnote => {
+    const type      = event ? event.type : 'resize'
+    const footnotes = document.querySelectorAll('.littlefoot-footnote')
+
+    Array.prototype.forEach.call(footnotes, footnote => {
       const identifier      = footnote.getAttribute('data-footnote-id')
       const button          = siblings(footnote, '.littlefoot-footnote__button')[0]
       const buttonStyle     = button.currentStyle || window.getComputedStyle(button)
@@ -455,32 +462,33 @@ const littlefoot = function(options) {
    *                                              `">10em"`), a mediq query
    *                                              (`"(max-width: 35em)"`), or a
    *                                              `MediaQueryList` object.
-   * @param  {Function}              onTrue       The function to call when the
+   * @param  {Function}              onEnter      The function to call when the
    *                                              media query is matched. It will
    *                                              be passed the `removeOpen` option
    *                                              and a copy of the `littlefoot` object.
-   * @param  {Function}              onFalse      The function to call when the
+   * @param  {Function}              onLeave      The function to call when the
    *                                              media query is not matched. It
    *                                              will be passed the `removeOpen`
    *                                              option and a copy of the `littlefoot`
    *                                              object.
-   * @param  {Number}                dismissDelay Popup removal delay.
    * @param  {Boolean}               removeOpen   Whether to remove open popups.
    * @return {Object}                             Details on whether the breakpoint
    *                                              was added and, if so, the
    *                                              `MediaQueryList` object that was
    *                                              created and the listener function.
    */
-  function addBreakpoint(size, onTrue, onFalse, dismissDelay, removeOpen = true) {
-    let mq = size
+  function addBreakpoint(size, onEnter, onLeave, removeOpen = true) {
+    const dismissDelay = settings.popoverDismissDelay
 
-    dismissDelay = dismissDelay || settings.popoverDismissDelay
+    let mq     = size
+    let minMax = null
 
     if (typeof size === 'string') {
-      const minMax = size.charAt(0) === '>' ? 'min' : size.charAt(0) === '<' ? 'max' : null
-      const query  = minMax ? '(' + minMax + '-width: ' + (size.substring(1)) + ')' : size
+      minMax = size.charAt(0) === '>' ? 'min' : size.charAt(0) === '<' ? 'max' : null
+      const query = minMax ? '(' + minMax + '-width: ' + (size.substring(1)) + ')' : size
 
-      mq = window.matchMedia(query)
+      mq     = window.matchMedia(query)
+      minMax = minMax || 'max'
     }
 
     if (mq.media && mq.media === 'invalid') {
@@ -491,10 +499,10 @@ const littlefoot = function(options) {
       }
     }
 
-    onTrue  = onTrue  || createCallback(removeOpen, dismissDelay, minMax === 'min', popover => addClass(popover, 'is-bottom-fixed'))
-    onFalse = onFalse || createCallback(removeOpen, dismissDelay, minMax === 'max', () => null)
+    onEnter = onEnter || createCallback(removeOpen, dismissDelay, false, popover => addClass(popover, 'is-bottom-fixed'))
+    onLeave = onLeave || createCallback(removeOpen, dismissDelay, true, () => null)
 
-    const listener = mq => mq.matches ? onTrue(removeOpen, littlefoot) : onFalse(removeOpen, littlefoot)
+    const listener = mq => (mq.matches ? onEnter : onLeave)(removeOpen, littlefoot)
 
     mq.addListener(listener)
     listener(mq)
@@ -517,7 +525,7 @@ const littlefoot = function(options) {
    * @param  {Number}   dismissDelay The delay by which to wait when
    *                                closing/reopening footnotes on breakpoint
    *                                changes.
-   * @param  {Boolean}  position    Whether or not to position popovers when the
+   * @param  {Boolean}  position    Whether or not to position pops over when the
    *                                media query is matched.
    * @param  {Function} callback    The function to be assigned to
    *                                `settings.activateCallback` when the media
@@ -560,7 +568,6 @@ const littlefoot = function(options) {
    */
   function removeBreakpoint(target, callback) {
     let found          = false
-    let mq             = null
     let breakpointName = null
 
     if (typeof target === 'string') {

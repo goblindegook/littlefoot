@@ -47,13 +47,43 @@
   }
 }
 
-// Each of the three circles forming the ellipse within the button.
-
 .littlefoot-footnote__button__ellipsis {
-  // DISPLAY AND SIZING
-  display: inline-block;
-  height: $button-inner-circle-size;
-  float: left;
+  svg {
+    display: inline-block;
+    height: $button-inner-circle-size;
+    float: left;
+  }
+}
+
+.littlefoot-footnote__button__number {
+  position: relative;
+  height: $button-height;
+  width: 1.5em;
+  border-radius: $button-height / 2;
+
+  &::after {
+    content: attr(data-footnote-number);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    font-size: $button-height * .6;
+    font-weight: bold;
+    color: rgba($button-color, .5);
+    transition: color $popover-transition-default-duration $popover-transition-default-timing-function;
+  }
+
+  &:hover,
+  &.is-active {
+    &::after {
+      color: white;
+    }
+  }
+
+  svg {
+    display: none;
+  }
 }
 
 // The container for the button and popover. This is required so that the popover
