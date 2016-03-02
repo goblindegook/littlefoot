@@ -74,23 +74,10 @@ const littlefoot = function(options) {
         reference: footnoteLink.getAttribute('data-footnote-backlink-ref'),
       }))
 
-      switch (settings.originalFootnotes.toLowerCase()) {
-        case 'hide':
-          addClass(footnoteLink, 'footnote-print-only')
-          addClass(footnote, 'footnote-print-only')
-          hideOriginalFootnotes(footnote.parentNode)
-          break
-
-        case 'delete':
-          footnoteLink.parentNode.removeChild(footnoteLink)
-          footnote.parentNode.removeChild(footnote)
-          hideOriginalFootnotes(footnote.parentNode, true)
-          break
-
-        default:
-          addClass(footnoteLink, 'footnote-print-only')
-          break
-      }
+      addClass(footnoteLink, 'footnote-print-only')
+      addClass(footnote, 'footnote-print-only')
+      
+      hideOriginalFootnotes(footnote.parentNode)
     })
   }
 

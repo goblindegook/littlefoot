@@ -112,7 +112,7 @@ Default: `false`
 
 ### `footnoteParentClass`
 
-The class name for the containing element of the original footnote content. Typically, this will be a class on an `li` that contained the footnote. This element may be removed/hidden, depending on the option specified for `originalFootnotes` This string does not have to be an exact match --- the class names will simply be tested for whether they include this string.
+The class name for the containing element of the original footnote content. Typically, this will be a class on an `li` that contained the footnote. This string does not have to be an exact match --- the class names will simply be tested for whether they include this string.
 
 Default: `'footnote'`
 
@@ -133,12 +133,6 @@ Default: `250`
 A string representing the selector at which you would like the numbering of footnotes to restart to 1. For example, you may be using the numbered style of footnote and wish to have the numbers restart for each `<article>` on your main page with a class of `'article-container'` In this case, you would set this option to `'article.article-container'` (or an equivalent CSS selector). Leaving the option as undefined will simply number all footnotes on a given page sequentially.
 
 Default: `null`
-
-### `originalFootnotes`
-
-Determines what action will be taken on the original footnote markup: `'hide'`, `'delete'`, or `'ignore'`.
-
-Default: `'hide'`
 
 ### `popoverDismissDelay`
 
@@ -236,7 +230,6 @@ Users planning to migrate from Bigfoot should therefore be aware of the followin
 
 #### Changed settings
 
-* `actionOriginalFN` was renamed to `originalFootnotes`.
 * `allowMultipleFN` was renamed to `allowMultiple`.
 * `anchorParentTagname` was renamed to `anchorParentSelector`.
 * `deleteOnUnhover` was renamed to `dismissOnUnhover`.
@@ -248,6 +241,7 @@ Users planning to migrate from Bigfoot should therefore be aware of the followin
 
 #### Removed settings
 
+* `actionOriginalFN` was removed. All original footnotes are only hidden, leaving you free to select footnote DOM elements for removal if you need them gone from the document.
 * `breakpoints` was removed. All size-aware display changes should be declared via CSS `@media` queries.
 * `maxWidthRelativeTo` was removed.  It was undocumented and will not be missed.
 * `preventPageScroll` was removed. Scrolling inside a scrollable footnote will not trigger a page scroll.

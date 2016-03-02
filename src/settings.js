@@ -15,7 +15,6 @@ const defaults = {
   footnoteSelector:     'li',
   hoverDelay:           250,
   numberResetSelector:  null,
-  originalFootnotes:    'hide',
   popoverCreateDelay:   100,
   popoverDismissDelay:  300,
   scope:                null,
