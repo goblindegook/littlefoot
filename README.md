@@ -96,7 +96,7 @@ Default: `false`
 
 Specifies the pattern that must be matched by the anchor element's `href` attribute for it to be considered a footnote link. This is used in filtering all links down to just those with a footnote.
 
-Default: `/(fn|footnote|note)[:\\-_\\d]/gi`
+Default: `/(fn|footnote|note)[:\-_\d]/gi`
 
 ### `anchorParentSelector`
 
@@ -118,7 +118,7 @@ Default: `'footnote'`
 
 ### `footnoteSelector`
 
-The element that contains the footnote content. As noted above, this element may be hidden or deleted, and will be given the footnote-processed class once littlefoot has finished with it.
+The element that contains the footnote content. This element will be hidden and given a `footnote-processed` class once littlefoot has finished with it.
 
 Default: `'li'`
 
@@ -130,7 +130,7 @@ Default: `250`
 
 ### `numberResetSelector`
 
-A string representing the selector at which you would like the numbering of footnotes to restart to 1. For example, you may be using the numbered style of footnote and wish to have the numbers restart for each `<article>` on your main page with a class of `'article-container'` In this case, you would set this option to `'article.article-container'` (or an equivalent CSS selector). Leaving the option as undefined will simply number all footnotes on a given page sequentially.
+A string representing the selector at which you would like the numbering of footnotes to restart at 1. For example, you may be using the numbered style of footnote and wish to have the numbers restart for each `<article>` on your main page with a class of `'article-container'` In this case, you would set this option to `'article.article-container'` (or an equivalent CSS selector). Leaving the option undefined will simply number all footnotes on a given page sequentially.
 
 Default: `null`
 
@@ -253,7 +253,7 @@ Methods on the returning object were overhauled, removing breakpoint logic.
 
 #### Changed methods
 
-* `close()` was renamed `dismiss()`.
+* `close()` was renamed `dismiss()` and will no longer return the list of deactivated buttons.
 * `getSetting()` was renamed `get()`.
 * `updateSetting()` was renamed `set()`.
 

@@ -12,6 +12,7 @@ import getFootnoteLinks from './getFootnoteLinks'
 import hideOriginalFootnotes from './hideOriginalFootnotes'
 import createSettings from './settings'
 import prepareContent from './prepareContent'
+import dismissPopover from './dismissPopover'
 import repositionPopover from './repositionPopover'
 import scrollHandler from './scrollHandler'
 import { addEventListener, dispatchEvent } from './events'
@@ -76,7 +77,7 @@ const littlefoot = function(options) {
 
       addClass(footnoteLink, 'footnote-print-only')
       addClass(footnote, 'footnote-print-only')
-      
+
       hideOriginalFootnotes(footnote.parentNode)
     })
   }
@@ -318,38 +319,16 @@ const littlefoot = function(options) {
    * Removes/adds appropriate classes to the footnote content and button after
    * a delay (to allow for transitions) it removes the actual footnote content.
    *
-   * @param  {String} footnotes The CSS selector of the footnotes to be removed.
+   * @param  {String} footnotes The CSS selector for the footnotes to be removed.
    * @param  {Number} timeout   The delay between adding the removal classes and
    *                            actually removing the popover from the DOM.
-   * @return {Array}            The buttons whose popovers were removed by the call.
    */
   function dismissFootnotes(footnoteSelector = '.littlefoot-footnote', timeout = settings.popoverDismissDelay) {
-    const buttonsClosed = []
-    const footnoteElements = document.querySelectorAll(footnoteSelector);
+    const footnotes = document.querySelectorAll(footnoteSelector)
 
-    Array.prototype.forEach.call(footnoteElements, footnoteElement => {
-      const footnoteID   = footnoteElement.getAttribute('data-footnote-id')
-      const linkedButton = document.querySelector('.littlefoot-footnote__button[data-footnote-id="' + footnoteID + '"]')
-
-      if (!hasClass(linkedButton, 'changing')) {
-        buttonsClosed.push(linkedButton)
-
-        addClass(linkedButton, 'changing')
-        removeClass(linkedButton, 'is-active')
-        removeClass(linkedButton, 'is-hover-instantiated')
-        removeClass(linkedButton, 'is-click-instantiated')
-
-        addClass(footnoteElement, 'disapearing')
-        removeClass(footnoteElement, 'is-active')
-
-        setTimeout(() => {
-          footnoteElement.parentNode.removeChild(footnoteElement)
-          removeClass(linkedButton, 'changing')
-        }, timeout)
-      }
+    Array.prototype.forEach.call(footnotes, footnote => {
+      dismissPopover(footnote, timeout)
     })
-
-    return buttonsClosed
   }
 
   /**
