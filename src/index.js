@@ -32,12 +32,12 @@ const littlefoot = function(options) {
    *
    * Finds the likely footnote links and then uses their target to find the content.
    */
-  function footnoteInit() {
+  function init() {
     const buttonTemplate = template(settings.buttonTemplate)
     const footnoteLinks  = getFootnoteLinks(settings)
     const footnotes      = []
 
-    const finalFNLinks = footnoteLinks.filter(footnoteLink => {
+    const closestFootnoteLinks = footnoteLinks.filter(footnoteLink => {
       const closestFootnote = getClosestFootnote(footnoteLink, settings.footnoteSelector, settings.allowDuplicates)
 
       if (closestFootnote) {
@@ -55,7 +55,7 @@ const littlefoot = function(options) {
     let footnoteNum               = 0
 
     footnotes.forEach((footnote, i) => {
-      const footnoteLink  = finalFNLinks[i]
+      const footnoteLink  = closestFootnoteLinks[i]
       const footnoteIDNum = footnoteNumStart + i + 1
       const backlinkRef   = footnoteLink.getAttribute('data-footnote-backlink-ref')
       const content       = prepareContent(footnote.innerHTML, backlinkRef)
@@ -114,13 +114,13 @@ const littlefoot = function(options) {
     }
 
     const footnoteHovered = closest(target, '.littlefoot-footnote__button')
-    const dataIdentifier  = '[data-footnote-id="' + footnoteHovered.getAttribute('data-footnote-id') + '"]'
+    const dataIdentifier  = `[data-footnote-id="${footnoteHovered.getAttribute('data-footnote-id')}"]`
 
     if (!hasClass(footnoteHovered, 'is-active')) {
       addClass(footnoteHovered, 'is-hover-instantiated')
 
       if (!settings.allowMultiple) {
-        dismissFootnotes('.littlefoot-footnote:not(' + dataIdentifier + ')')
+        dismissFootnotes(`.littlefoot-footnote:not(${dataIdentifier})`)
       }
 
       const popovers = displayFootnote('.littlefoot-footnote__button' + dataIdentifier)
@@ -139,14 +139,14 @@ const littlefoot = function(options) {
    * @param {DOMElement} button Button being clicked/pressed.
    */
   function activateButton(button) {
-    const dataIdentifier = 'data-footnote-id="' + button.getAttribute('data-footnote-id') + '"'
+    const dataIdentifier = `[data-footnote-id="${button.getAttribute('data-footnote-id')}"]`
     const isActive       = hasClass(button, 'is-active')
     const isChanging     = hasClass(button, 'changing')
 
     dispatchEvent(button, 'blur')
 
     if (!isChanging && isActive && settings.allowMultiple) {
-      dismissFootnotes('.littlefoot-footnote[' + dataIdentifier + ']')
+      dismissFootnotes('.littlefoot-footnote' + dataIdentifier)
     }
 
     if (!isChanging && isActive && !settings.allowMultiple) {
@@ -156,12 +156,12 @@ const littlefoot = function(options) {
     if (!isChanging && !isActive) {
       addClass(button, 'changing')
       addClass(button, 'is-click-instantiated')
-      displayFootnote('.littlefoot-footnote__button[' + dataIdentifier + ']')
+      displayFootnote('.littlefoot-footnote__button' + dataIdentifier)
 
       setTimeout(() => removeClass(button, 'changing'), settings.popoverCreateDelay)
 
       if (!settings.allowMultiple) {
-        dismissFootnotes('.littlefoot-footnote:not([' + dataIdentifier + '])')
+        dismissFootnotes('.littlefoot-footnote:not(' + dataIdentifier + ')')
       }
     }
   }
@@ -225,13 +225,11 @@ const littlefoot = function(options) {
     }
 
     Array.prototype.forEach.call(buttons, function(button) {
-      const content = contentTemplate({
+      button.insertAdjacentHTML('afterend', contentTemplate({
         content: button.getAttribute('data-littlefoot-footnote'),
         id:      button.getAttribute('data-footnote-id'),
         number:  button.getAttribute('data-footnote-number'),
-      })
-
-      button.insertAdjacentHTML('afterend', content)
+      }))
 
       const popover          = button.nextElementSibling
       const contentContainer = popover.querySelector('.littlefoot-footnote__content')
@@ -239,7 +237,9 @@ const littlefoot = function(options) {
       popover.setAttribute('data-littlefoot-state', 'init')
       popover.setAttribute('data-littlefoot-max-width', calculatePixelSize(popover, 'max-width'))
       popover.setAttribute('data-littlefoot-max-height', calculatePixelSize(contentContainer, 'max-height'))
+
       popover.style.maxWidth = '10000px'
+
       repositionFootnotes()
       addClass(button, 'is-active')
       bindScrollHandler(popover.querySelector('.littlefoot-footnote__content'))
@@ -344,7 +344,7 @@ const littlefoot = function(options) {
     })
   }
 
-  footnoteInit()
+  init()
 
   addEventListener(document, 'touchend', onTouchClick)
   addEventListener(document, 'click', onTouchClick)
