@@ -1,8 +1,21 @@
 import siblings from 'dom-siblings'
-import addClass from './dom/addClass'
-import removeClass from './dom/removeClass'
+import classList from 'dom-classlist'
 import calculateAvailableRoom from './calculateAvailableRoom'
-import positionTooltip from './positionTooltip'
+
+/**
+ * Positions the tooltip at the same relative horizontal position as the button.
+ *
+ * @param  {DOMElement} popover      Popover element.
+ * @param  {Number}     leftRelative Relative positioning to the left.
+ */
+function positionTooltip(popover, leftRelative) {
+  const tooltip = popover.querySelector('.littlefoot-footnote__tooltip')
+
+  if (tooltip) {
+    leftRelative = leftRelative != null ? leftRelative : 0.5
+    tooltip.style.left = (leftRelative * 100) + '%'
+  }
+}
 
 /**
  * Positions each footnote relative to its button.
@@ -28,8 +41,8 @@ export default function repositionPopover(footnote, event) {
   if (positionOnTop) {
     if (state !== 'top') {
       footnote.setAttribute('data-littlefoot-state', 'top')
-      addClass(footnote, 'is-positioned-top')
-      removeClass(footnote, 'is-positioned-bottom')
+      classList(footnote).add('is-positioned-top')
+      classList(footnote).remove('is-positioned-bottom')
       footnote.style.transformOrigin = (roomLeft.leftRelative * 100) + '% 100%'
     }
 
@@ -38,8 +51,8 @@ export default function repositionPopover(footnote, event) {
   } else {
     if (state !== 'bottom' || state === 'init') {
       footnote.setAttribute('data-littlefoot-state', 'bottom')
-      addClass(footnote, 'is-positioned-bottom')
-      removeClass(footnote, 'is-positioned-top')
+      classList(footnote).add('is-positioned-bottom')
+      classList(footnote).remove('is-positioned-top')
       footnote.style.transformOrigin = (roomLeft.leftRelative * 100) + '% 0'
     }
 
@@ -69,6 +82,6 @@ export default function repositionPopover(footnote, event) {
   }
 
   if (parseInt(footnote.offsetHeight) < footnote.querySelector('.littlefoot-footnote__content').scrollHeight) {
-    addClass(footnote, 'is-scrollable')
+    classList(footnote).add('is-scrollable')
   }
 }

@@ -1,6 +1,4 @@
-import addClass from './dom/addClass'
-import hasClass from './dom/hasClass'
-import removeClass from './dom/removeClass'
+import classList from 'dom-classlist'
 
 /**
  * Removes/adds appropriate classes to the footnote content and button after
@@ -14,18 +12,18 @@ export default function dismissPopover(footnote, timeout) {
   const footnoteID   = footnote.getAttribute('data-footnote-id')
   const linkedButton = document.querySelector('.littlefoot-footnote__button[data-footnote-id="' + footnoteID + '"]')
 
-  if (!hasClass(linkedButton, 'changing')) {
-    addClass(linkedButton, 'changing')
-    removeClass(linkedButton, 'is-active')
-    removeClass(linkedButton, 'is-hover-instantiated')
-    removeClass(linkedButton, 'is-click-instantiated')
+  if (!classList(linkedButton).contains('changing')) {
+    classList(linkedButton).add('changing')
+    classList(linkedButton).remove('is-active')
+    classList(linkedButton).remove('is-hover-instantiated')
+    classList(linkedButton).remove('is-click-instantiated')
 
-    addClass(footnote, 'disapearing')
-    removeClass(footnote, 'is-active')
+    classList(footnote).add('disapearing')
+    classList(footnote).remove('is-active')
 
     setTimeout(() => {
       footnote.parentNode.removeChild(footnote)
-      removeClass(linkedButton, 'changing')
+      classList(linkedButton).remove('changing')
     }, timeout)
   }
 }

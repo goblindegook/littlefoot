@@ -57,6 +57,7 @@
     "testling": "^1.7.1"
   },
   "dependencies": {
+    "dom-classlist": "^1.0.1",
     "dom-closest": "^0.2.0",
     "dom-matches": "^2.0.0",
     "dom-siblings": "^0.1.0",

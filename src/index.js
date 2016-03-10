@@ -1,11 +1,9 @@
 import closest from 'dom-closest'
 import matches from 'dom-matches'
+import classList from 'dom-classlist'
 import escape from 'lodash/escape'
 import template from 'lodash/template'
 import throttle from 'lodash/throttle'
-import addClass from './dom/addClass'
-import hasClass from './dom/hasClass'
-import removeClass from './dom/removeClass'
 import calculatePixelSize from './calculatePixelSize'
 import getClosestFootnote from './getClosestFootnote'
 import getFootnoteLinks from './getFootnoteLinks'
@@ -28,7 +26,7 @@ const littlefoot = function(options) {
   const settings = createSettings(options)
 
   /**
-   * Footnote button/ content initializer (run on doc.ready).
+   * Footnote button/content initializer (run on doc.ready).
    *
    * Finds the likely footnote links and then uses their target to find the content.
    */
@@ -41,7 +39,7 @@ const littlefoot = function(options) {
       const closestFootnote = getClosestFootnote(footnoteLink, settings.footnoteSelector, settings.allowDuplicates)
 
       if (closestFootnote) {
-        addClass(closestFootnote, 'footnote-processed')
+        classList(closestFootnote).add('footnote-processed')
         footnotes.push(closestFootnote)
       }
 
@@ -75,8 +73,8 @@ const littlefoot = function(options) {
         reference: footnoteLink.getAttribute('data-footnote-backlink-ref'),
       }))
 
-      addClass(footnoteLink, 'footnote-print-only')
-      addClass(footnote, 'footnote-print-only')
+      classList(footnoteLink).add('footnote-print-only')
+      classList(footnote).add('footnote-print-only')
 
       hideOriginalFootnotes(footnote.parentNode)
     })
@@ -116,8 +114,8 @@ const littlefoot = function(options) {
     const footnoteHovered = closest(target, '.littlefoot-footnote__button')
     const dataIdentifier  = `[data-footnote-id="${footnoteHovered.getAttribute('data-footnote-id')}"]`
 
-    if (!hasClass(footnoteHovered, 'is-active')) {
-      addClass(footnoteHovered, 'is-hover-instantiated')
+    if (!classList(footnoteHovered).contains('is-active')) {
+      classList(footnoteHovered).add('is-hover-instantiated')
 
       if (!settings.allowMultiple) {
         dismissFootnotes(`.littlefoot-footnote:not(${dataIdentifier})`)
@@ -126,7 +124,7 @@ const littlefoot = function(options) {
       const popovers = displayFootnote('.littlefoot-footnote__button' + dataIdentifier)
 
       for (let popover of popovers) {
-        addClass(popover, 'is-hover-instantiated')
+        classList(popover).add('is-hover-instantiated')
       }
     }
   }
@@ -140,8 +138,8 @@ const littlefoot = function(options) {
    */
   function activateButton(button) {
     const dataIdentifier = `[data-footnote-id="${button.getAttribute('data-footnote-id')}"]`
-    const isActive       = hasClass(button, 'is-active')
-    const isChanging     = hasClass(button, 'changing')
+    const isActive       = classList(button).contains('is-active')
+    const isChanging     = classList(button).contains('changing')
 
     dispatchEvent(button, 'blur')
 
@@ -154,11 +152,11 @@ const littlefoot = function(options) {
     }
 
     if (!isChanging && !isActive) {
-      addClass(button, 'changing')
-      addClass(button, 'is-click-instantiated')
+      classList(button).add('changing')
+      classList(button).add('is-click-instantiated')
       displayFootnote('.littlefoot-footnote__button' + dataIdentifier)
 
-      setTimeout(() => removeClass(button, 'changing'), settings.popoverCreateDelay)
+      setTimeout(() => classList(button).remove('changing'), settings.popoverCreateDelay)
 
       if (!settings.allowMultiple) {
         dismissFootnotes('.littlefoot-footnote:not(' + dataIdentifier + ')')
@@ -241,7 +239,7 @@ const littlefoot = function(options) {
       popover.style.maxWidth = '10000px'
 
       repositionFootnotes()
-      addClass(button, 'is-active')
+      classList(button).add('is-active')
       bindScrollHandler(popover.querySelector('.littlefoot-footnote__content'))
 
       popoversCreated.push(popover)
@@ -253,7 +251,7 @@ const littlefoot = function(options) {
 
     setTimeout(() => {
       Array.prototype.forEach.call(popoversCreated, popover => {
-        addClass(popover, 'is-active')
+        classList(popover).add('is-active')
       })
     }, settings.popoverCreateDelay)
 

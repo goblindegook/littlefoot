@@ -1,5 +1,4 @@
 import closest from 'dom-closest'
-import addClass from './dom/addClass'
 
 /**
  * Groups the ID and HREF of a superscript/anchor tag pair in data attributes.

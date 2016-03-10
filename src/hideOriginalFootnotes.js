@@ -1,6 +1,6 @@
 import matches from 'dom-matches'
-import addClass from './dom/addClass'
-import children from './dom/children'
+import classList from 'dom-classlist'
+import children from './children'
 
 /**
  * Propagates the decision of deleting/hiding the original footnotes up the
@@ -19,7 +19,7 @@ export default function hideOriginalFootnotes(footnote, remove = false) {
     if (remove) {
       footnote.parentNode.removeChild(footnote)
     } else {
-      addClass(footnote, 'footnote-print-only')
+      classList(footnote).add('footnote-print-only')
     }
 
     hideOriginalFootnotes(footnote.parentNode)
@@ -28,8 +28,8 @@ export default function hideOriginalFootnotes(footnote, remove = false) {
     if (remove) {
       footnote.parentNode.removeChild(footnote)
     } else {
-      children(footnote, 'hr').forEach(child => addClass(child, 'footnote-print-only'))
-      addClass(footnote, 'footnote-print-only')
+      children(footnote, 'hr').forEach(child => classList(child).add('footnote-print-only'))
+      classList(footnote).add('footnote-print-only')
     }
 
     hideOriginalFootnotes(footnote.parentNode)

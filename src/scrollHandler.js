@@ -1,7 +1,5 @@
 import closest from 'dom-closest'
-import addClass from './dom/addClass'
-import hasClass from './dom/hasClass'
-import removeClass from './dom/removeClass'
+import classList from 'dom-classlist'
 
 /**
  * Footnote content scroll handler.
@@ -17,26 +15,26 @@ export default function scrollHandler(event) {
   const up      = delta > 0
 
   if (target.scrollTop > 0 && target.scrollTop < 10) {
-    addClass(popover, 'is-scrollable')
+    classList(popover).add('is-scrollable')
   }
 
-  if (!hasClass(popover, 'is-scrollable')) {
+  if (!classList(popover).contains('is-scrollable')) {
     return
   }
 
   if (!up && delta < height + target.scrollTop - target.scrollHeight) {
     target.scrollTop = target.scrollHeight
-    addClass(popover, 'is-fully-scrolled')
+    classList(popover).add('is-fully-scrolled')
     event.stopPropagation()
     event.preventDefault()
 
   } else if (up && target.scrollTop < delta) {
     target.scrollTop = 0
-    removeClass(popover, 'is-fully-scrolled')
+    classList(popover).remove('is-fully-scrolled')
     event.stopPropagation()
     event.preventDefault()
 
   } else if (up) {
-    removeClass(popover, 'is-fully-scrolled')
+    classList(popover).remove('is-fully-scrolled')
   }
 }
