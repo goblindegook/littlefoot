@@ -10,7 +10,7 @@
     "docs": "esdoc -c esdoc.json",
     "prepublish": "npm run build",
     "pretest": "eslint src/**/*.js",
-    "test": "testling | faucet"
+    "test": "karma start --single-run"
   },
   "browserify": {
     "transform": [
@@ -50,11 +50,19 @@
     "browserify": "^13.0.0",
     "esdoc": "^0.4.3",
     "eslint": "^1.10.3",
-    "faucet": "0.0.1",
+    "karma": "^0.13.22",
+    "karma-browserify": "^5.0.2",
+    "karma-chrome-launcher": "^0.2.2",
+    "karma-coverage": "^0.5.5",
+    "karma-firefox-launcher": "^0.1.7",
+    "karma-ie-launcher": "^0.2.0",
+    "karma-safari-launcher": "^0.1.1",
+    "karma-sinon": "^1.0.4",
+    "karma-tap": "^1.0.4",
     "node-sass": "^3.4.2",
     "sinon": "^1.17.3",
     "tape": "^4.4.0",
-    "testling": "^1.7.1"
+    "watchify": "^3.7.0"
   },
   "dependencies": {
     "dom-classlist": "^1.0.1",

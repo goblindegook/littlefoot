@@ -1,5 +1,5 @@
 /**
- * Calculates the base font size for `em`- and `rem`-based sizing.
+ * Calculates the base font size for `rem`-based sizing.
  *
  * @return {Number} The base font size in pixels.
  */
