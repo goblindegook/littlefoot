@@ -1,8 +1,17 @@
+'use strict'
+
+var browsers = ['Chrome', 'Firefox', 'PhantomJS']
+
+if (process.env.TRAVIS) {
+  browsers = ['Firefox', 'PhantomJS']
+}
+
 module.exports = function(karma) {
   karma.set({
-    browsers: [
-      process.env.TRAVIS ? 'Firefox' : 'Chrome',
-    ],
+    browsers: browsers,
+    phantomjsLauncher: {
+      exitOnResourceError: true,
+    },
     frameworks: [
       'browserify',
       'tap',
