@@ -1,9 +1,9 @@
 'use strict'
 
-var browsers = ['Chrome', 'Firefox', 'PhantomJS']
+var browsers = ['Chrome', 'FirefoxDeveloper', 'PhantomJS']
 
 if (process.env.TRAVIS) {
-  browsers = ['Firefox', 'PhantomJS']
+  browsers = ['PhantomJS']
 }
 
 module.exports = function(karma) {
