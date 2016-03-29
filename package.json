@@ -15,8 +15,7 @@
   },
   "browserify": {
     "transform": [
-      "babelify",
-      "brfs"
+      "babelify"
     ]
   },
   "author": {
