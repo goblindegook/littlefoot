@@ -19,7 +19,13 @@ module.exports = function(karma) {
     ],
     browserify: {
       debug:     true,
-      transform: ['babelify', 'browserify-istanbul', 'brfs'],
+      transform: [
+        'babelify',
+        ['browserify-istanbul', {
+          instrumenter: require('babel-istanbul')
+        }],
+        'brfs',
+      ],
     },
     files: [
       'test/**/*.js',
@@ -33,8 +39,11 @@ module.exports = function(karma) {
       'coverage',
     ],
     coverageReporter: {
-      type: 'text',
-      dir:  'coverage/'
+      dir: 'coverage/',
+      reporters: [
+        { type: 'text' },
+        { type: 'html' },
+      ],
     },
   })
 }
