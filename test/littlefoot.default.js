@@ -1,8 +1,9 @@
 import test from 'tape'
 import littlefoot from '../src/'
 import { dispatchEvent } from '../src/events'
+import sleep from './helper/sleep'
 
-const fs = require('fs')
+const fs = require('fs') // brfs needs a require()
 
 /**
  * Setup fixtures.
@@ -23,8 +24,6 @@ function teardown() {
 }
 
 test('littlefoot setup with default options', t => {
-  t.plan(11)
-
   setup()
 
   const body             = document.body
@@ -62,25 +61,28 @@ test('littlefoot setup with default options', t => {
 
   const firstFootnote = body.querySelectorAll('button')[0]
 
+  t.comment('clicking footnote button')
   dispatchEvent(firstFootnote, 'click')
 
-  setTimeout(() => {
-    const content = body.querySelector('.littlefoot-footnote__content')
+  sleep(dismissDelay)
+    .then(() => {
+      const content = body.querySelector('.littlefoot-footnote__content')
 
-    t.ok(content, 'has one active popover on activating the footnote')
+      t.ok(content, 'has one active popover on activating footnote')
 
-    t.equal(content.innerHTML, firstFootnote.getAttribute('data-littlefoot-footnote'),
-      'has the popover content matching stored content')
+      t.equal(content.innerHTML, firstFootnote.getAttribute('data-littlefoot-footnote'),
+        'has the popover content matching stored content')
 
-    dispatchEvent(body, 'click')
+      t.comment('clicking outside footnote popover')
+      dispatchEvent(body, 'click')
 
-    setTimeout(() => {
+      return sleep(dismissDelay)
+    })
+    .then(() => {
       t.notOk(body.querySelector('.littlefoot-footnote__content'),
-        'dismisses footnote when clicking outside the popover')
+        'dismisses footnote when clicking outside popover')
 
       teardown()
-
-    }, dismissDelay)
-
-  }, createDelay)
+      t.end()
+    })
 })
