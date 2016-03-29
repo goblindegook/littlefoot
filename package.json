@@ -11,7 +11,7 @@
     "prepublish": "npm run build",
     "pretest": "eslint src/**/*.js",
     "test": "karma start --single-run",
-    "test-watch": "karma start --browsers PhantomJS"
+    "watch": "karma start --browsers PhantomJS"
   },
   "browserify": {
     "transform": [
@@ -38,9 +38,11 @@
     "babelify": "^7.2.0",
     "brfs": "^1.4.3",
     "browserify": "^13.0.0",
+    "browserify-istanbul": "^2.0.0",
     "es6-promise": "^3.1.2",
     "esdoc": "^0.4.3",
     "eslint": "^1.10.3",
+    "istanbul": "^0.4.2",
     "karma": "^0.13.22",
     "karma-browserify": "^5.0.2",
     "karma-chrome-launcher": "^0.2.2",

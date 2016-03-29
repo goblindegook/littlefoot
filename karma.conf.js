@@ -1,6 +1,6 @@
 'use strict'
 
-var browsers = ['Chrome', 'FirefoxDeveloper', 'PhantomJS']
+var browsers = ['ChromeCanary', 'FirefoxDeveloper', 'PhantomJS']
 
 if (process.env.TRAVIS) {
   browsers = ['PhantomJS']
@@ -17,14 +17,24 @@ module.exports = function(karma) {
       'tap',
       'sinon',
     ],
+    browserify: {
+      debug:     true,
+      transform: ['babelify', 'browserify-istanbul', 'brfs'],
+    },
     files: [
       'test/**/*.js',
     ],
     preprocessors: {
+      'src/**/*.js':  ['browserify', 'coverage'],
       'test/**/*.js': ['browserify'],
     },
     reporters: [
-      process.env.TRAVIS ? 'dots' : 'progress',
+      'dots',
+      'coverage',
     ],
+    coverageReporter: {
+      type: 'text',
+      dir:  'coverage/'
+    },
   })
 }
