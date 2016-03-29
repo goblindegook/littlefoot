@@ -1,5 +1,4 @@
 import test from 'tape'
-import escape from 'lodash/escape'
 import littlefoot from '../src/'
 import { dispatchEvent } from '../src/events'
 
@@ -10,7 +9,7 @@ const fs = require('fs')
  */
 function setup() {
   const content = document.createElement('div')
-  content.innerHTML = fs.readFileSync(__dirname + '/fixtures/content.html', 'utf8')
+  content.innerHTML = fs.readFileSync(__dirname + '/fixtures/default.html', 'utf8')
   document.body.appendChild(content)
 }
 
@@ -34,8 +33,8 @@ test('littlefoot setup with default options', t => {
 
   const lf = littlefoot()
 
-  const createDelay  = lf.get('popoverCreateDelay')
-  const dismissDelay = lf.get('popoverDismissDelay')
+  const createDelay  = 100 + lf.get('popoverCreateDelay')
+  const dismissDelay = 100 + lf.get('popoverDismissDelay')
 
   t.equal(body.querySelectorAll('.littlefoot-footnote__container').length, footnotes,
     'inserts footnote containers')
