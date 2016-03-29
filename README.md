@@ -210,7 +210,7 @@ Running the function will return an object that can be stored and used to manipu
 
 This function will close any footnote popovers matching the (string) selector provided for footnotes. timeout specifies the amount of time after the footnote's active class is removed before the element itself is removed. Either of these can be excluded; footnotes will default to all active footnotes, while timeout will default to the popoverDeleteDelay option.
 
-### `activate([button])`
+### `activate(buttonSelector)`
 
 This will activate the footnote button (and its associated popover) matching the (string) selector provided for button. If the option to allow multiple footnotes is false, only the first matching footnote will be activated. By default, the first footnote button on the page will be activated.
 

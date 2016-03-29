@@ -355,7 +355,7 @@ const littlefoot = function(options) {
 
   return {
     activate: displayFootnote,
-    close:    dismissFootnotes,
+    dismiss:  dismissFootnotes,
     get:      settings.get,
     set:      settings.set,
   }

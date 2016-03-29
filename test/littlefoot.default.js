@@ -1,30 +1,12 @@
 import test from 'tape'
 import littlefoot from '../src/'
 import { dispatchEvent } from '../src/events'
+import setup from './helper/setup'
+import teardown from './helper/teardown'
 import sleep from './helper/sleep'
 
-const fs = require('fs') // brfs needs a require()
-
-/**
- * Setup fixtures.
- */
-function setup() {
-  const content = document.createElement('div')
-  content.innerHTML = fs.readFileSync(__dirname + '/fixtures/default.html', 'utf8')
-  document.body.appendChild(content)
-}
-
-/**
- * Tear down fixtures.
- */
-function teardown() {
-  Array.prototype.forEach.call(document.body.children, child => {
-    document.body.removeChild(child)
-  })
-}
-
 test('littlefoot setup with default options', t => {
-  setup()
+  setup('default.html')
 
   const body             = document.body
   const footnotes        = body.querySelectorAll('.footnote').length
@@ -32,8 +14,8 @@ test('littlefoot setup with default options', t => {
 
   const lf = littlefoot()
 
-  const createDelay  = 100 + lf.get('popoverCreateDelay')
-  const dismissDelay = 100 + lf.get('popoverDismissDelay')
+  const createDelay  = lf.get('popoverCreateDelay')
+  const dismissDelay = lf.get('popoverDismissDelay')
 
   t.equal(body.querySelectorAll('.littlefoot-footnote__container').length, footnotes,
     'inserts footnote containers')
@@ -61,26 +43,40 @@ test('littlefoot setup with default options', t => {
 
   const firstFootnote = body.querySelectorAll('button')[0]
 
-  t.comment('clicking footnote button')
-  dispatchEvent(firstFootnote, 'click')
+  lf.activate('[data-footnote-id="1"]')
 
-  sleep(dismissDelay)
+  sleep(createDelay)
     .then(() => {
       const content = body.querySelector('.littlefoot-footnote__content')
 
-      t.ok(content, 'has one active popover on activating footnote')
+      t.ok(content, 'activates one popover on activate()')
 
       t.equal(content.innerHTML, firstFootnote.getAttribute('data-littlefoot-footnote'),
-        'has the popover content matching stored content')
+        'has popover content matching stored content')
 
-      t.comment('clicking outside footnote popover')
+      lf.dismiss()
+
+      return sleep(dismissDelay)
+    })
+    .then(() => {
+      t.notOk(body.querySelector('.littlefoot-footnote__content'), 'dismisses popovers on dismiss()')
+
+      dispatchEvent(firstFootnote, 'click')
+
+      return sleep(createDelay)
+    })
+    .then(() => {
+      const content = body.querySelector('.littlefoot-footnote__content')
+
+      t.ok(content, 'activates one popover on click event')
+
       dispatchEvent(body, 'click')
 
       return sleep(dismissDelay)
     })
     .then(() => {
       t.notOk(body.querySelector('.littlefoot-footnote__content'),
-        'dismisses footnote when clicking outside popover')
+        'dismisses popovers on click event')
 
       teardown()
       t.end()

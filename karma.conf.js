@@ -9,22 +9,19 @@ if (process.env.TRAVIS) {
 module.exports = function(karma) {
   karma.set({
     browsers: browsers,
-    phantomjsLauncher: {
-      exitOnResourceError: true,
-    },
     frameworks: [
       'browserify',
       'tap',
       'sinon',
     ],
     browserify: {
-      debug:     true,
+      debug: true,
       transform: [
         'babelify',
+        'stringify',
         ['browserify-istanbul', {
           instrumenter: require('babel-istanbul')
         }],
-        'brfs',
       ],
     },
     files: [

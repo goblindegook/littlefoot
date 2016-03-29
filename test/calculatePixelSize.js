@@ -1,5 +1,6 @@
 import test from 'tape'
 import calculatePixelSize from '../src/calculatePixelSize'
+import teardown from './helper/teardown'
 
 /**
  * Setup fixture.
@@ -10,15 +11,6 @@ function setup() {
   const fixture = document.createElement('div')
   document.body.appendChild(fixture)
   return fixture
-}
-
-/**
- * Tear down fixtures.
- */
-function teardown() {
-  Array.prototype.forEach.call(document.body.children, child => {
-    document.body.removeChild(child)
-  })
 }
 
 /**
