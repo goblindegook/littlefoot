@@ -16,13 +16,13 @@ test('littlefoot setup with activateOnHover=true', t => {
 
   dispatchEvent(footnote, 'mouseover')
 
-  t.ok(classList(footnote).contains('is-hover-instantiated'),
-    'transitions popover activation on hover')
-
   sleep(createDelay)
     .then(() => {
+      t.ok(classList(footnote).contains('is-hover-instantiated'),
+        'adds the is-hover-instantiated class to the popover')
+
       t.ok(classList(footnote).contains('is-active'),
-        'activates popover on button hover event')
+        'adds the is-active class to the popover')
 
       teardown()
       t.end()

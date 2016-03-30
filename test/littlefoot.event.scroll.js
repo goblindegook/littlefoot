@@ -6,6 +6,8 @@ import setup from './helper/setup'
 import teardown from './helper/teardown'
 import sleep from './helper/sleep'
 
+// FIXME: Test scroll events consistently across browsers.
+
 test.skip('scroll event handling', t => {
   setup('default.html')
 
@@ -17,12 +19,9 @@ test.skip('scroll event handling', t => {
 
   sleep(createDelay)
     .then(() => {
-      const content        = document.body.querySelector('.littlefoot-footnote__content')
-      const wheelEventDown = createWheelEvent('wheel', 0, 100)
-      const wheelEventUp   = createWheelEvent('wheel', 0, -50)
+      const content = document.body.querySelector('.littlefoot-footnote__content')
 
-      simulant.fire(content, 'wheel', { deltaX: 0, deltaY: 100, deltaZ: 0 })
-      simulant.fire(content, 'wheel', { deltaX: 0, deltaY: -100, deltaZ: 0 })
+      simulant.fire(content, 'wheel', { deltaY: 100 })
 
       if (content.scrollTop) {
         t.ok(document.body.querySelector('.is-scrollable'), 'is scrollable')
