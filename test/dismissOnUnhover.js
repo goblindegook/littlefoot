@@ -24,7 +24,7 @@ test('littlefoot setup with dismissOnUnhover=true', t => {
         'popover has is-active class before unhover event')
 
       dispatchEvent(footnote, 'mouseout')
-
+      
       return sleep(dismissDelay + hoverDelay)
     })
     .then(() => {
