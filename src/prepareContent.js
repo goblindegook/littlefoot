@@ -9,11 +9,8 @@
  *                               taken out.
  */
 export default function prepareContent(content, backlinkId) {
-  if (backlinkId.indexOf(' ') >= 0) {
-    backlinkId = backlinkId.trim().replace(/\s+/g, '|').replace(/(.*)/g, '($1)')
-  }
-
-  const regex = new RegExp('(\\s|&nbsp;)*<\\s*a[^#<]*#' + backlinkId + '[^>]*>(.*?)<\\s*/\\s*a>', 'g')
+  const pattern = backlinkId.trim().replace(/\s+/g, '|')
+  const regex   = new RegExp('(\\s|&nbsp;)*<\\s*a[^#<]*#(' + pattern + ')[^>]*>(.*?)<\\s*/\\s*a>', 'g')
 
   content = content.trim().replace(regex, '').replace('[]', '')
 
