@@ -203,16 +203,10 @@ const littlefoot = function(options) {
       return popoversCreated
     }
 
-    if (typeof selector !== 'string' && settings.allowMultiple) {
-      buttons.concat(selector)
-
-    } else if (typeof selector !== 'string') {
-      buttons.push(selector[0])
-
-    } else if (settings.allowMultiple) {
+    if (settings.allowMultiple) {
       const elements = document.querySelectorAll(selector)
-      Array.prototype.forEach.call(elements, (element, i) => {
-        buttons[i] = closest(element, '.littlefoot-footnote__button')
+      Array.prototype.forEach.call(elements, element => {
+        buttons.push(closest(element, '.littlefoot-footnote__button'))
       })
 
     } else {
