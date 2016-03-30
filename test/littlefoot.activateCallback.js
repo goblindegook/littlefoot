@@ -26,6 +26,5 @@ test('littlefoot setup with activateCallback', t => {
 
       teardown()
       t.end()
-      return true
     })
 })

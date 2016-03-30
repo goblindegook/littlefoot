@@ -15,22 +15,6 @@ export function addEventListener(element, type, listener, useCapture = false) {
 }
 
 /**
- * Remove an event listener.
- *
- * @param {DOMElement} element    Element to bind event to.
- * @param {String}     type       Event type.
- * @param {Function}   listener   Event handler.
- * @param {Boolean}    useCapture Use event capture (false by default).
- */
-export function removeEventListener(element, type, listener, useCapture = false) {
-  if (element.removeEventListener) {
-    element.removeEventListener(type, listener, useCapture)
-  } else if (element.detachEvent) {
-    element.detachEvent('on' + type, listener)
-  }
-}
-
-/**
  * Trigger an event.
  *
  * @param  {DOMElement} element [description]
@@ -51,6 +35,5 @@ export function dispatchEvent(element, type) {
  */
 export default {
   addEventListener,
-  removeEventListener,
   dispatchEvent,
 }

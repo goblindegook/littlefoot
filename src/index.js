@@ -137,14 +137,14 @@ const littlefoot = function(options) {
    * @param {DOMElement} button Button being clicked/pressed.
    */
   function activateButton(button) {
-    const dataIdentifier = `[data-footnote-id="${button.getAttribute('data-footnote-id')}"]`
-    const isActive       = classList(button).contains('is-active')
-    const isChanging     = classList(button).contains('changing')
+    const footnoteId = `[data-footnote-id="${button.getAttribute('data-footnote-id')}"]`
+    const isActive   = classList(button).contains('is-active')
+    const isChanging = classList(button).contains('changing')
 
     dispatchEvent(button, 'blur')
 
     if (!isChanging && isActive && settings.allowMultiple) {
-      dismissFootnotes('.littlefoot-footnote' + dataIdentifier)
+      dismissFootnotes('.littlefoot-footnote' + footnoteId)
     }
 
     if (!isChanging && isActive && !settings.allowMultiple) {
@@ -154,12 +154,12 @@ const littlefoot = function(options) {
     if (!isChanging && !isActive) {
       classList(button).add('changing')
       classList(button).add('is-click-instantiated')
-      displayFootnote('.littlefoot-footnote__button' + dataIdentifier)
+      displayFootnote('.littlefoot-footnote__button' + footnoteId)
 
       setTimeout(() => classList(button).remove('changing'), settings.popoverCreateDelay)
 
       if (!settings.allowMultiple) {
-        dismissFootnotes('.littlefoot-footnote:not(' + dataIdentifier + ')')
+        dismissFootnotes('.littlefoot-footnote:not(' + footnoteId + ')')
       }
     }
   }

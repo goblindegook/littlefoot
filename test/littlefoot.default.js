@@ -38,45 +38,48 @@ test('littlefoot setup with default options', t => {
   t.equal(body.querySelectorAll('li.footnote-print-only').length, reverseFootnotes,
     'hides all footnotes')
 
-  t.equal(body.querySelectorAll('.littlefoot-footnote__content').length, 0,
+  t.equal(body.querySelectorAll('button.is-active').length, 0,
     'has no active footnotes')
 
-  const firstFootnote = body.querySelectorAll('button')[0]
+  const footnote1 = body.querySelector('[data-footnote-id="1"]')
 
+  // these do nothing
+  lf.activate()
+  lf.activate('')
+
+  // activate button
   lf.activate('[data-footnote-id="1"]')
 
   sleep(createDelay)
     .then(() => {
       const content = body.querySelector('.littlefoot-footnote__content')
 
-      t.ok(content, 'activates one popover on activate()')
+      t.equal(content.innerHTML, footnote1.getAttribute('data-littlefoot-footnote'),
+        'injects content into popover')
 
-      t.equal(content.innerHTML, firstFootnote.getAttribute('data-littlefoot-footnote'),
-        'has popover content matching stored content')
+      t.equal(body.querySelectorAll('button.is-active').length, 1,
+        'activates one popover on activate()')
 
       lf.dismiss()
-
       return sleep(dismissDelay)
     })
     .then(() => {
-      t.notOk(body.querySelector('.littlefoot-footnote__content'), 'dismisses popovers on dismiss()')
+      t.notOk(body.querySelector('button.is-active'), 'dismisses popovers on dismiss()')
 
-      dispatchEvent(firstFootnote, 'click')
+      dispatchEvent(footnote1, 'click')
+
+      t.equal(body.querySelectorAll('button.changing').length, 1, 'transitions popover activation on click')
 
       return sleep(createDelay)
     })
     .then(() => {
-      const content = body.querySelector('.littlefoot-footnote__content')
-
-      t.ok(content, 'activates one popover on click event')
+      t.ok(body.querySelector('button.is-active'), 'activates one popover on button click event')
 
       dispatchEvent(body, 'click')
-
       return sleep(dismissDelay)
     })
     .then(() => {
-      t.notOk(body.querySelector('.littlefoot-footnote__content'),
-        'dismisses popovers on click event')
+      t.notOk(body.querySelector('button.is-active'), 'dismisses popovers on body click event')
 
       teardown()
       t.end()
