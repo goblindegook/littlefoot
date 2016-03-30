@@ -122,10 +122,10 @@ const littlefoot = function(options) {
       }
 
       const popovers = displayFootnote('.littlefoot-footnote__button' + dataIdentifier)
-
-      for (let popover of popovers) {
+      
+      popovers.forEach(popover => {
         classList(popover).add('is-hover-instantiated')
-      }
+      })
     }
   }
 

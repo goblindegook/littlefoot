@@ -1,9 +1,9 @@
 import test from 'tape'
+import simulant from 'simulant'
 import littlefoot from '../src/'
 import setup from './helper/setup'
 import teardown from './helper/teardown'
 import sleep from './helper/sleep'
-import { createKeyboardEvent } from './helper/events'
 
 test('keyboard event handling', t => {
   setup('default.html')
@@ -19,16 +19,13 @@ test('keyboard event handling', t => {
 
   sleep(createDelay)
     .then(() => {
-      const enterKeyboardEvent  = createKeyboardEvent('keyup', 13) // Enter
-      const escapeKeyboardEvent = createKeyboardEvent('keyup', 27) // Escape
-
       t.ok(body.querySelector('.littlefoot-footnote__content'), 'has active popover before escape keypress')
 
-      document.dispatchEvent(enterKeyboardEvent)
+      simulant.fire(document, 'keyup', { keyCode: 13 }) // enter
 
       t.ok(body.querySelector('.littlefoot-footnote__content'), 'has active popover unless escape keypress')
 
-      document.dispatchEvent(escapeKeyboardEvent)
+      simulant.fire(document, 'keyup', { keyCode: 27 }) // esc
 
       return sleep(dismissDelay)
     })

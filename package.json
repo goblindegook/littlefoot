@@ -54,6 +54,7 @@
     "karma-tap": "^1.0.4",
     "node-sass": "^3.4.2",
     "phantomjs-prebuilt": "^2.1.7",
+    "simulant": "^0.2.0",
     "sinon": "^1.17.3",
     "stringify": "^5.1.0",
     "tape": "^4.4.0",
