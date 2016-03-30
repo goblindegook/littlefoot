@@ -14,11 +14,10 @@ test('littlefoot setup with custom buttonTemplate', t => {
   const buttons   = document.body.querySelectorAll('button.custom')
 
   t.equal(buttons.length, footnotes.length, 'one custom button created per footnote')
-
-  t.ok(buttons[0].getAttribute('data-content'), 'replaces content token')
-  t.ok(buttons[0].getAttribute('data-id'), 'replaces id token')
-  t.ok(buttons[0].getAttribute('data-number'), 'replaces number token')
-  t.ok(buttons[0].getAttribute('data-reference'), 'replaces reference token')
+  t.equal(buttons[0].getAttribute('data-id'), '1', 'replaces id token')
+  t.equal(buttons[0].getAttribute('data-number'), '1', 'replaces number token')
+  t.equal(buttons[0].getAttribute('data-reference'), 'fnref:1', 'replaces reference token')
+  t.ok(/This is footnote 1/.test(buttons[0].getAttribute('data-content')), 'replaces content token')
 
   teardown()
   t.end()
