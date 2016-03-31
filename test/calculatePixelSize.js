@@ -34,7 +34,7 @@ test('calculatePixelSize (none)', t => {
   t.end()
 })
 
-test('calculatePixelSize (px)', t => {
+test.skip('calculatePixelSize (px)', t => {
   const fixture = setup()
 
   fixture.style.width = '100px'
@@ -51,7 +51,7 @@ test('calculatePixelSize (px)', t => {
   t.end()
 })
 
-test('calculatePixelSize (em)', t => {
+test.skip('calculatePixelSize (em)', t => {
   const fixture = setup()
 
   fixture.style.width = '10em'
@@ -68,7 +68,7 @@ test('calculatePixelSize (em)', t => {
   t.end()
 })
 
-test('calculatePixelSize (rem)', t => {
+test.skip('calculatePixelSize (rem)', t => {
   const fixture = setup()
 
   fixture.style.width = '10rem' // 160px assuming 16px default font size
@@ -83,7 +83,7 @@ test('calculatePixelSize (rem)', t => {
   t.end()
 })
 
-test('calculatePixelSize (%)', t => {
+test.skip('calculatePixelSize (%)', t => {
   const fixture = setup()
 
   fixture.style.width = '50%'

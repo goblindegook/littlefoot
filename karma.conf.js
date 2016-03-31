@@ -82,12 +82,12 @@ if (process.env.SAUCE_USERNAME) {
       browserName: 'safari',
       version:     '8',
     },
-    SL_Opera_12: {
-      base:        'SauceLabs',
-      platform:    'Windows 7',
-      browserName: 'opera',
-      version:     '12',
-    },
+    // SL_Opera_12: {
+    //   base:        'SauceLabs',
+    //   platform:    'Windows 7',
+    //   browserName: 'opera',
+    //   version:     '12',
+    // },
   }
 }
 
