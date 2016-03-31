@@ -14,8 +14,8 @@ test('littlefoot setup with default options', t => {
 
   const lf = littlefoot()
 
-  const createDelay  = lf.get('popoverCreateDelay')
-  const dismissDelay = lf.get('popoverDismissDelay')
+  const activateDelay  = lf.get('activateDelay')
+  const dismissDelay = lf.get('dismissDelay')
 
   t.equal(body.querySelectorAll('.littlefoot-footnote__container').length, footnotes,
     'inserts footnote containers')
@@ -50,7 +50,7 @@ test('littlefoot setup with default options', t => {
   // activate button
   lf.activate('[data-footnote-id="1"]')
 
-  sleep(createDelay)
+  sleep(activateDelay)
     .then(() => {
       const content = body.querySelector('.littlefoot-footnote__content')
 
@@ -70,7 +70,7 @@ test('littlefoot setup with default options', t => {
 
       t.equal(body.querySelectorAll('button.changing').length, 1, 'transitions popover activation on click')
 
-      return sleep(createDelay)
+      return sleep(activateDelay)
     })
     .then(() => {
       t.ok(body.querySelector('button.is-active'), 'activates one popover on button click event')

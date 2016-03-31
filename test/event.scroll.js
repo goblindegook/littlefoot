@@ -13,11 +13,11 @@ test.skip('scroll event handling', t => {
 
   const lf = littlefoot()
 
-  const createDelay = lf.get('popoverCreateDelay')
+  const activateDelay = lf.get('activateDelay')
 
   lf.activate('[data-footnote-id="4"]')
 
-  sleep(createDelay)
+  sleep(activateDelay)
     .then(() => {
       const content = document.body.querySelector('.littlefoot-footnote__content')
 

@@ -10,14 +10,14 @@ test('littlefoot setup with allowMultiple=true', t => {
 
   const lf = littlefoot({ allowMultiple: true })
 
-  const createDelay  = lf.get('popoverCreateDelay')
-  const dismissDelay = lf.get('popoverDismissDelay')
+  const activateDelay  = lf.get('activateDelay')
+  const dismissDelay = lf.get('dismissDelay')
   const buttons      = document.querySelectorAll('[data-footnote-id]')
 
   dispatchEvent(document.body.querySelector('[data-footnote-id="1"]'), 'click')
   dispatchEvent(document.body.querySelector('[data-footnote-id="2"]'), 'click')
 
-  sleep(createDelay)
+  sleep(activateDelay)
     .then(() => {
       t.equal(document.body.querySelectorAll('button.is-active').length, 2,
         'allows multiple active popovers')
@@ -30,7 +30,7 @@ test('littlefoot setup with allowMultiple=true', t => {
         'dismisses all popovers on dismiss()')
 
       lf.activate('[data-footnote-id]')
-      return sleep(createDelay)
+      return sleep(activateDelay)
     })
     .then(() => {
       t.equal(document.body.querySelectorAll('button.is-active').length, buttons.length,
@@ -48,14 +48,14 @@ test('littlefoot setup with allowMultiple=false', t => {
     allowMultiple: false
   })
 
-  const createDelay = lf.get('popoverCreateDelay')
+  const activateDelay = lf.get('activateDelay')
 
   dispatchEvent(document.body.querySelector('[data-footnote-id="1"]'), 'click')
 
-  sleep(createDelay)
+  sleep(activateDelay)
     .then(() => {
       dispatchEvent(document.body.querySelector('[data-footnote-id="2"]'), 'click')
-      return sleep(createDelay)
+      return sleep(activateDelay)
     })
     .then(() => {
       t.equal(document.body.querySelectorAll('button.is-active').length, 1,

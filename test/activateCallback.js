@@ -13,11 +13,11 @@ test('littlefoot setup with activateCallback', t => {
 
   const lf = littlefoot({ activateCallback: callback })
 
-  const createDelay = lf.get('popoverCreateDelay')
+  const activateDelay = lf.get('activateDelay')
 
   lf.activate('[data-footnote-id="1"]')
 
-  sleep(createDelay)
+  sleep(activateDelay)
     .then(() => {
       t.ok(callback.called, 'activateCallback called')
 

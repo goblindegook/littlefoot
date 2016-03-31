@@ -76,6 +76,12 @@ Specifies a function to call on a footnote popover that is being activated (afte
 
 Default: `null`
 
+### `activateDelay`
+
+Sets a delay between the activation of the footnote button and the activation of the actual footnote content.
+
+Default: `100`
+
 ### `activateOnHover`
 
 Specifies whether or not the footnote content will be activated when the associated button is hovered over.
@@ -106,6 +112,12 @@ The selector for the parent of the footnote link. This is really only necessary 
 
 Default: `sup`
 
+### `dismissDelay`
+
+When the footnote content is being removed this option specifies how long after the active class is removed from the footnote before the element is actually removed from the DOM.
+
+Default: `500`
+
 ### `dismissOnUnhover`
 
 Determines whether footnotes that were presented when hovering on a footnote button are removed once the footnote button or footnote popover is un-hovered.
@@ -135,18 +147,6 @@ Default: `250`
 A string representing the selector at which you would like the numbering of footnotes to restart at 1. For example, you may be using the numbered style of footnote and wish to have the numbers restart for each `<article>` on your main page with a class of `'article-container'` In this case, you would set this option to `'article.article-container'` (or an equivalent CSS selector). Leaving the option undefined will simply number all footnotes on a given page sequentially.
 
 Default: `null`
-
-### `popoverDismissDelay`
-
-When the footnote content is being removed this option specifies how long after the active class is removed from the footnote before the element is actually removed from the DOM.
-
-Default: `500`
-
-### `popoverCreateDelay`
-
-Sets a delay between the activation of the footnote button and the activation of the actual footnote content.
-
-Default: `100`
 
 ### `scope`
 
@@ -206,13 +206,13 @@ Default:
 
 Running the function will return an object that can be stored and used to manipulate the footnote buttons/content. The following methods are available in this return object:
 
-### `dismiss([footnotes, timeout])`
+### `dismiss([footnoteSelector[, timeout]])`
 
-This function will close any footnote popovers matching the (string) selector provided for footnotes. timeout specifies the amount of time after the footnote's active class is removed before the element itself is removed. Either of these can be excluded; footnotes will default to all active footnotes, while timeout will default to the popoverDeleteDelay option.
+This function will close any footnote popovers matching the (string) selector provided for footnotes. `timeout` specifies the amount of time after the footnote's active class is removed before the element itself is removed. Either of these can be excluded; `footnoteSelector` will default to all active footnotes, while `timeout` will default to the `dismissDelay` option.
 
 ### `activate(buttonSelector)`
 
-This will activate the footnote button (and its associated popover) matching the (string) selector provided for button. If the option to allow multiple footnotes is false, only the first matching footnote will be activated. By default, the first footnote button on the page will be activated.
+This will activate the footnote button (and its associated popover) matching the (string) selector provided for button. If the option to allow multiple footnotes is false, only the first matching footnote will be activated.
 
 ### `get(key)`
 
@@ -236,7 +236,8 @@ Users planning to migrate from Bigfoot should therefore be aware of the followin
 * `anchorParentTagname` was renamed to `anchorParentSelector`.
 * `deleteOnUnhover` was renamed to `dismissOnUnhover`.
 * `footnoteTagname` was renamed to `footnoteSelector`.
-* `popoverDeleteDelay` was renamed to `popoverDismissDelay`.
+* `popoverCreateDelay` was renamed to `activateDelay`.
+* `popoverDeleteDelay` was renamed to `dismissDelay`.
 * `buttonMarkup` was replaced with `buttonTemplate`. Please refer to the documentation for a list of valid tokens.
 * `contentMarkup` was replaced with `contentTemplate`. Please refer to the documentation for a list of valid tokens.
 * `useFootnoteOnlyOnce` was replaced with `allowDuplicates`. The truth value should be flipped.
@@ -255,6 +256,7 @@ Methods on the returning object were overhauled, removing breakpoint logic.
 
 #### Changed methods
 
+* `activate()` will not activate any footnotes if called without a selector.
 * `close()` was renamed `dismiss()` and will no longer return the list of deactivated buttons.
 * `getSetting()` was renamed `get()`.
 * `updateSetting()` was renamed `set()`.

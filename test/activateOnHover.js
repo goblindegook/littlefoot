@@ -11,12 +11,12 @@ test('littlefoot setup with activateOnHover=true', t => {
 
   const lf = littlefoot({ activateOnHover: true })
 
-  const createDelay = lf.get('popoverCreateDelay')
+  const activateDelay = lf.get('activateDelay')
   const footnote    = document.body.querySelector('[data-footnote-id="1"]')
 
   dispatchEvent(footnote, 'mouseover')
 
-  sleep(createDelay)
+  sleep(activateDelay)
     .then(() => {
       t.ok(classList(footnote).contains('is-hover-instantiated'),
         'adds the is-hover-instantiated class to the popover')

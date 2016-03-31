@@ -11,14 +11,14 @@ test('littlefoot setup with dismissOnUnhover=true', t => {
 
   const lf = littlefoot({ activateOnHover: true, dismissOnUnhover: true })
 
-  const createDelay  = lf.get('popoverCreateDelay')
-  const dismissDelay = lf.get('popoverDismissDelay')
+  const activateDelay  = lf.get('activateDelay')
+  const dismissDelay = lf.get('dismissDelay')
   const hoverDelay   = lf.get('hoverDelay')
   const footnote     = document.body.querySelector('[data-footnote-id="1"]')
 
   dispatchEvent(footnote, 'mouseover')
 
-  sleep(createDelay)
+  sleep(activateDelay)
     .then(() => {
       t.ok(classList(footnote).contains('is-active'),
         'popover has is-active class before unhover event')

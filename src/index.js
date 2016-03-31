@@ -156,7 +156,7 @@ const littlefoot = function(options) {
       classList(button).add('is-click-instantiated')
       displayFootnote('.littlefoot-footnote__button' + footnoteId)
 
-      setTimeout(() => classList(button).remove('changing'), settings.popoverCreateDelay)
+      setTimeout(() => classList(button).remove('changing'), settings.activateDelay)
 
       if (!settings.allowMultiple) {
         dismissFootnotes('.littlefoot-footnote:not(' + footnoteId + ')')
@@ -247,7 +247,7 @@ const littlefoot = function(options) {
       Array.prototype.forEach.call(popoversCreated, popover => {
         classList(popover).add('is-active')
       })
-    }, settings.popoverCreateDelay)
+    }, settings.activateDelay)
 
     return popoversCreated
   }
@@ -315,7 +315,7 @@ const littlefoot = function(options) {
    * @param  {Number} timeout   The delay between adding the removal classes and
    *                            actually removing the popover from the DOM.
    */
-  function dismissFootnotes(footnoteSelector = '.littlefoot-footnote', timeout = settings.popoverDismissDelay) {
+  function dismissFootnotes(footnoteSelector = '.littlefoot-footnote', timeout = settings.dismissDelay) {
     const footnotes = document.querySelectorAll(footnoteSelector)
 
     Array.prototype.forEach.call(footnotes, footnote => {

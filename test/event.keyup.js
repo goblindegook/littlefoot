@@ -12,12 +12,12 @@ test('keyboard event handling', t => {
 
   const lf = littlefoot()
 
-  const createDelay  = lf.get('popoverCreateDelay')
-  const dismissDelay = lf.get('popoverDismissDelay')
+  const activateDelay  = lf.get('activateDelay')
+  const dismissDelay = lf.get('dismissDelay')
 
   lf.activate('[data-footnote-id="1"]')
 
-  sleep(createDelay)
+  sleep(activateDelay)
     .then(() => {
       t.ok(body.querySelector('.littlefoot-footnote__content'), 'has active popover before escape keypress')
 
