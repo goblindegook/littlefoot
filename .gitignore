@@ -5,3 +5,4 @@ styles/css/
 node_modules/
 .DS_Store
 .nyc_output
+sauce.json
