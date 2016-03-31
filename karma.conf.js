@@ -7,7 +7,7 @@ var customLaunchers = {}
 var reporters       = ['dots', 'coverage', 'saucelabs']
 
 if (process.env.TRAVIS) {
-  browsers = ['PhantomJS']
+  browsers = []
   reporters.push('coveralls')
 }
 
@@ -121,7 +121,7 @@ module.exports = function(karma) {
       dir: 'coverage/',
       reporters: [
         { type: 'text' },
-        { type: 'html' },
+        { type: process.env.TRAVIS ? 'lcov' : 'html' },
       ],
     },
     sauceLabs: {
