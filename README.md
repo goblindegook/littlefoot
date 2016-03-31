@@ -1,6 +1,6 @@
 # littlefoot.js
 
-[![Build Status](https://travis-ci.org/goblindegook/littlefoot.svg?branch=master)](https://travis-ci.org/goblindegook/littlefoot)
+[![Build Status](https://travis-ci.org/goblindegook/littlefoot.svg?branch=master)](https://travis-ci.org/goblindegook/littlefoot) [![Coverage Status](https://coveralls.io/repos/github/goblindegook/littlefoot/badge.svg?branch=master)](https://coveralls.io/github/goblindegook/littlefoot?branch=master)
 
 [![Sauce Test Status](https://saucelabs.com/browser-matrix/littlefoot.svg)](https://saucelabs.com/u/littlefoot)
 

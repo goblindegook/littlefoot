@@ -2,9 +2,9 @@
 
 var fs = require('fs')
 
-var browsers        = ['PhantomJS']
+var browsers        = []
 var customLaunchers = {}
-var reporters       = ['dots', 'coverage']
+var reporters       = ['dots', 'coverage', 'saucelabs']
 
 if (process.env.TRAVIS) {
   browsers = ['PhantomJS']
@@ -122,7 +122,6 @@ module.exports = function(karma) {
       reporters: [
         { type: 'text' },
         { type: 'html' },
-        { type: 'lcov' },
       ],
     },
     sauceLabs: {
