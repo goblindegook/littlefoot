@@ -13,7 +13,7 @@ function setup() {
   return fixture
 }
 
-test('calculatePixelSize (none)', t => {
+test('calculatePixelSize (none)', (t) => {
   const fixture = setup()
 
   fixture.style.display = 'none'
@@ -23,7 +23,7 @@ test('calculatePixelSize (none)', t => {
   t.end()
 })
 
-test('calculatePixelSize (em|rem)', t => {
+test('calculatePixelSize (em|rem)', (t) => {
   const fixture = setup()
   const sizes   = ['10em', '10rem']
 
@@ -43,7 +43,7 @@ test('calculatePixelSize (em|rem)', t => {
   t.end()
 })
 
-test('calculatePixelSize (cm|in|mm|pc|pt|px)', t => {
+test('calculatePixelSize (cm|in|mm|pc|pt|px)', (t) => {
   const fixture = setup()
   const sizes   = ['100cm', '100in', '100mm', '100pc', '100pt', '100px']
 
@@ -57,7 +57,7 @@ test('calculatePixelSize (cm|in|mm|pc|pt|px)', t => {
   t.end()
 })
 
-test('calculatePixelSize (%)', t => {
+test('calculatePixelSize (%)', (t) => {
   const fixture = setup()
 
   fixture.style.width = '50%'

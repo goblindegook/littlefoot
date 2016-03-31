@@ -5,7 +5,7 @@ import setup from './helper/setup'
 import teardown from './helper/teardown'
 import sleep from './helper/sleep'
 
-test('littlefoot setup with default options', t => {
+test('littlefoot setup with default options', (t) => {
   setup('default.html')
 
   const body             = document.body

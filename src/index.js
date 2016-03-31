@@ -123,7 +123,7 @@ const littlefoot = function(options) {
 
       const popovers = displayFootnote('.littlefoot-footnote__button' + dataIdentifier)
 
-      popovers.forEach(popover => {
+      popovers.forEach((popover) => {
         classList(popover).add('is-hover-instantiated')
       })
     }
@@ -205,7 +205,7 @@ const littlefoot = function(options) {
 
     if (settings.allowMultiple) {
       const elements = document.querySelectorAll(selector)
-      Array.prototype.forEach.call(elements, element => {
+      Array.prototype.forEach.call(elements, (element) => {
         buttons.push(closest(element, '.littlefoot-footnote__button'))
       })
 
@@ -216,7 +216,7 @@ const littlefoot = function(options) {
       }
     }
 
-    Array.prototype.forEach.call(buttons, function(button) {
+    Array.prototype.forEach.call(buttons, (button) => {
       button.insertAdjacentHTML('afterend', contentTemplate({
         content: button.getAttribute('data-littlefoot-footnote'),
         id:      button.getAttribute('data-footnote-id'),
@@ -244,7 +244,7 @@ const littlefoot = function(options) {
     })
 
     setTimeout(() => {
-      Array.prototype.forEach.call(popoversCreated, popover => {
+      Array.prototype.forEach.call(popoversCreated, (popover) => {
         classList(popover).add('is-active')
       })
     }, settings.activateDelay)
@@ -318,7 +318,7 @@ const littlefoot = function(options) {
   function dismissFootnotes(footnoteSelector = '.littlefoot-footnote', timeout = settings.dismissDelay) {
     const footnotes = document.querySelectorAll(footnoteSelector)
 
-    Array.prototype.forEach.call(footnotes, footnote => {
+    Array.prototype.forEach.call(footnotes, (footnote) => {
       dismissPopover(footnote, timeout)
     })
   }
@@ -331,7 +331,7 @@ const littlefoot = function(options) {
   function repositionFootnotes(event) {
     const footnotes = document.querySelectorAll('.littlefoot-footnote')
 
-    Array.prototype.forEach.call(footnotes, footnote => {
+    Array.prototype.forEach.call(footnotes, (footnote) => {
       repositionPopover(footnote, event)
     })
   }

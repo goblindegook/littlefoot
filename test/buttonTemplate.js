@@ -3,7 +3,7 @@ import littlefoot from '../src/'
 import setup from './helper/setup'
 import teardown from './helper/teardown'
 
-test('littlefoot setup with custom buttonTemplate', t => {
+test('littlefoot setup with custom buttonTemplate', (t) => {
   setup('default.html')
 
   littlefoot({ buttonTemplate: require('./fixtures/buttonTemplate.html') })

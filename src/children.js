@@ -10,6 +10,6 @@ import matches from 'dom-matches'
 export default function children(element, selector = null) {
   return Array.prototype.filter.call(
     element.children,
-    child => child.nodeType !== 8 && (!selector || matches(child, selector))
+    (child) => child.nodeType !== 8 && (!selector || matches(child, selector))
   )
 }

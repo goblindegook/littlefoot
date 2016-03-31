@@ -7,7 +7,7 @@ import sleep from './helper/sleep'
 
 // FIXME: Test scroll events consistently across browsers.
 
-test.skip('scroll event handling', t => {
+test.skip('scroll event handling', (t) => {
   setup('default.html')
 
   const lf = littlefoot()

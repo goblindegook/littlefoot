@@ -1,7 +1,7 @@
 import test from 'tape'
 import littlefoot from '../src/'
 
-test('littlefoot settings', t => {
+test('littlefoot settings', (t) => {
   const lf = littlefoot()
 
   lf.set('test', 'boop')

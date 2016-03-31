@@ -6,7 +6,7 @@ import setup from './helper/setup'
 import teardown from './helper/teardown'
 import sleep from './helper/sleep'
 
-test('littlefoot setup with activateOnHover=true', t => {
+test('littlefoot setup with activateOnHover=true', (t) => {
   setup('default.html')
 
   const lf = littlefoot({ activateOnHover: true })

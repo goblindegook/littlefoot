@@ -5,7 +5,7 @@ import setup from './helper/setup'
 import teardown from './helper/teardown'
 import sleep from './helper/sleep'
 
-test('keyboard event handling', t => {
+test('keyboard event handling', (t) => {
   setup('default.html')
 
   const body = document.body

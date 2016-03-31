@@ -19,7 +19,7 @@ export default function hideOriginalFootnotes(footnote) {
     hideOriginalFootnotes(footnote.parentNode)
 
   } else if (visibleFootnotes.length === visibleSeparators.length) {
-    children(footnote, 'hr').forEach(child => classList(child).add('footnote-print-only'))
+    children(footnote, 'hr').forEach((child) => classList(child).add('footnote-print-only'))
     classList(footnote).add('footnote-print-only')
     hideOriginalFootnotes(footnote.parentNode)
   }

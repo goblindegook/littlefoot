@@ -5,7 +5,7 @@ import setup from './helper/setup'
 import teardown from './helper/teardown'
 import sleep from './helper/sleep'
 
-test('littlefoot setup with allowMultiple=true', t => {
+test('littlefoot setup with allowMultiple=true', (t) => {
   setup('default.html')
 
   const lf = littlefoot({ allowMultiple: true })
@@ -41,7 +41,7 @@ test('littlefoot setup with allowMultiple=true', t => {
     })
 })
 
-test('littlefoot setup with allowMultiple=false', t => {
+test('littlefoot setup with allowMultiple=false', (t) => {
   setup('default.html')
 
   const lf = littlefoot({

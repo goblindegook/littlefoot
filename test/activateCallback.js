@@ -5,7 +5,7 @@ import setup from './helper/setup'
 import teardown from './helper/teardown'
 import sleep from './helper/sleep'
 
-test('littlefoot setup with activateCallback', t => {
+test('littlefoot setup with activateCallback', (t) => {
   setup('default.html')
 
   const callback = sinon.spy()

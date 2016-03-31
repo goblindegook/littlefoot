@@ -15,7 +15,7 @@ export default function prepareContent(content, backlinkId) {
   content = content.trim().replace(regex, '').replace('[]', '')
 
   if (content.indexOf('<') !== 0) {
-    content = '<p>' + content + '</p>';
+    content = '<p>' + content + '</p>'
   }
 
   return content
