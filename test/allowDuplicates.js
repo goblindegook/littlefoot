@@ -6,7 +6,8 @@ import teardown from './helper/teardown'
 test('littlefoot setup with allowDuplicates=false', t => {
   setup('default.html')
 
-  const lf        = littlefoot({ allowDuplicates: false })
+  littlefoot({ allowDuplicates: false })
+
   const buttons   = document.body.querySelectorAll('[data-littlefoot-footnote]')
   const processed = document.body.querySelectorAll('.footnote-processed')
 
@@ -20,7 +21,8 @@ test('littlefoot setup with allowDuplicates=false', t => {
 test('littlefoot setup with allowDuplicates=true', t => {
   setup('default.html')
 
-  const lf        = littlefoot({ allowDuplicates: true })
+  littlefoot({ allowDuplicates: true })
+
   const buttons   = document.body.querySelectorAll('[data-littlefoot-footnote]')
   const processed = document.body.querySelectorAll('.footnote-processed')
 
@@ -34,7 +36,8 @@ test('littlefoot setup with allowDuplicates=true', t => {
 test('littlefoot setup with allowDuplicates=true', t => {
   setup('multiple.html')
 
-  const lf        = littlefoot({ allowDuplicates: false })
+  littlefoot({ allowDuplicates: false })
+  
   const buttons   = document.body.querySelectorAll('[data-littlefoot-footnote]')
   const processed = document.body.querySelectorAll('.footnote-processed')
 

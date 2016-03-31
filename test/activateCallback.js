@@ -8,8 +8,7 @@ import sleep from './helper/sleep'
 test('littlefoot setup with activateCallback', t => {
   setup('default.html')
 
-  const body        = document.body
-  const callback    = sinon.spy()
+  const callback = sinon.spy()
 
   const lf = littlefoot({ activateCallback: callback })
 

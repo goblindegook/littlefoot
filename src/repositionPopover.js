@@ -26,7 +26,6 @@ function positionTooltip(popover, leftRelative) {
  */
 export default function repositionPopover(footnote, event) {
   const type            = event ? event.type : 'resize'
-  const identifier      = footnote.getAttribute('data-footnote-id')
   const button          = siblings(footnote, '.littlefoot-footnote__button')[0]
   const buttonStyle     = getStyle(button)
   const footnoteStyle   = getStyle(footnote)

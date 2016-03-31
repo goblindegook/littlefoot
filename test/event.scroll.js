@@ -1,6 +1,5 @@
 import test from 'tape'
 import simulant from 'simulant'
-import classList from 'dom-classlist'
 import littlefoot from '../src/'
 import setup from './helper/setup'
 import teardown from './helper/teardown'

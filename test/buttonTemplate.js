@@ -6,9 +6,7 @@ import teardown from './helper/teardown'
 test('littlefoot setup with custom buttonTemplate', t => {
   setup('default.html')
 
-  const lf = littlefoot({
-    buttonTemplate: require('./fixtures/buttonTemplate.html')
-  })
+  littlefoot({ buttonTemplate: require('./fixtures/buttonTemplate.html') })
 
   const footnotes = document.body.querySelectorAll('.footnote')
   const buttons   = document.body.querySelectorAll('button.custom')
