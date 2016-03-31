@@ -3,7 +3,7 @@
  *
  * @return {Number} The base font size in pixels.
  */
-export function baseFontSize() {
+function baseFontSize() {
   const element = document.createElement('div')
 
   element.style.cssText = 'display:inline-block;padding:0;line-height:1;position:absolute;visibility:hidden;font-size:1em;'
@@ -20,35 +20,54 @@ export function baseFontSize() {
 /**
  * Calculates a pixel size (as a regular integer) based on a string with an unknown unit.
  *
- * @param  {DOMElement} element      Element that is being measured.
- * @param  {String}     propertyName CSS property to be evaluated.
- * @return {Number}                  The string representation of the actual size.
+ * Adapted from Jonathan Neal's getComputedStylePixel() polyfill.
+ *
+ * @param  {DOMElement} element  Element that is being measured.
+ * @param  {String}     property CSS property to be evaluated.
+ * @return {Number}              The string representation of the actual size.
  */
-export default function calculatePixelSize(element, propertyName) {
-  const style    = element.currentStyle || window.getComputedStyle(element)
-  const property = style[propertyName]
-  const size     = parseFloat(property)
+export default function calculatePixelSize(element, property, fontSize = null) {
+  // Internet Explorer sometimes struggles to read currentStyle until the element's document is accessed.
+  element.document;
 
-  if (property === 'none') {
+  const style = window.getComputedStyle ? window.getComputedStyle(element) : element.currentStyle
+  const value = style[property] != null ? style[property] : 'none'
+  const size  = parseFloat(value)
+  const unit  = value.replace(/[\d\.]+(%|cm|em|in|mm|pc|pt|px|rem|)/, '$1') || ''
+
+  if (value === 'none') {
     return 10000
   }
 
-  if (property.indexOf('rem') >= 0) {
-    return size * baseFontSize()
-  }
+  fontSize = !fontSize ? fontSize : /%|em/.test(unit) && element.parentElement ? calculatePixelSize(element.parentElement, 'font-size') : 16
 
-  if (property.indexOf('em') >= 0) {
-    return size * parseFloat(style['font-size'])
-  }
+  switch (unit) {
+    case '%':
+      const rootSize = property === 'fontSize' ? fontSize : /width/i.test(property) ? element.clientWidth : element.clientHeight
+      return size / 100 * rootSize
 
-  if (property.indexOf('px') >= 0) {
-    const parentStyle = element.parentNode.currentStyle || window.getComputedStyle(element.parentNode)
-    return size <= 60 ? size / parseFloat(parentStyle.width) : size
-  }
+    case 'rem':
+      return size * baseFontSize()
 
-  if (property.indexOf('%') >= 0) {
-    return size / 100
-  }
+    case 'em':
+      return size * fontSize
 
-  return property
+    case 'cm':
+      return size * 0.3937 * 96
+
+    case 'in':
+      return size * 96
+
+    case 'mm':
+      return size * 0.3937 * 96 / 10
+
+    case 'pc':
+      return size * 12 * 96 / 72
+
+    case 'pt':
+      return size * 96 / 72
+
+    default:
+      return size
+  }
 }

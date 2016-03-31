@@ -8,7 +8,7 @@ import classList from 'dom-classlist'
  */
 export default function scrollHandler(event) {
   const target  = event.currentTarget
-  const style   = target.currentStyle || window.getComputedStyle(target)
+  const style   = window.getComputedStyle ? window.getComputedStyle(target) : target.currentStyle
   const height  = parseInt(style.height, 10)
   const popover = closest(target, '.littlefoot-footnote')
   const delta   = event.type === 'wheel' ? -event.deltaY : event.wheelDelta

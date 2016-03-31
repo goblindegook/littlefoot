@@ -13,17 +13,6 @@ function setup() {
   return fixture
 }
 
-/**
- * Get element style property.
- * @param  {DOMElement} element  DOM element to inspect.
- * @param  {String}     property Name of the CSS property to get.
- * @return {String}              CSS property value.
- */
-function getElementStyle(element, property) {
-  const style = element.currentStyle || window.getComputedStyle(element)
-  return style[property]
-}
-
 test('calculatePixelSize (none)', t => {
   const fixture = setup()
 
@@ -34,62 +23,57 @@ test('calculatePixelSize (none)', t => {
   t.end()
 })
 
-test.skip('calculatePixelSize (px)', t => {
+test('calculatePixelSize (px)', t => {
   const fixture = setup()
 
   fixture.style.width = '100px'
 
-  t.equal(calculatePixelSize(fixture, 'width'), 100, 'fixture property in px')
-
-  fixture.style.width = '50px'
-
-  t.equal(calculatePixelSize(fixture, 'width'),
-    50 / parseFloat(getElementStyle(fixture.parentNode, 'width')),
-    'fixture property <= 60px')
+  t.equal(calculatePixelSize(fixture, 'width'), fixture.clientWidth,
+    'fixture property in px')
 
   teardown()
   t.end()
 })
 
-test.skip('calculatePixelSize (em)', t => {
+test('calculatePixelSize (em)', t => {
   const fixture = setup()
 
-  fixture.style.width = '10em'
+  fixture.style.width = '10em' // 160px assuming 16px default font size
 
-  t.equal(calculatePixelSize(fixture, 'width'), 160,
+  t.equal(calculatePixelSize(fixture, 'width'), fixture.clientWidth,
     'fixture property in em with default font size')
 
   fixture.style.fontSize = '200%'
 
-  t.equal(calculatePixelSize(fixture, 'width'), 320,
+  t.equal(calculatePixelSize(fixture, 'width'), fixture.clientWidth,
     'fixture property in em with 200% font size')
 
   teardown()
   t.end()
 })
 
-test.skip('calculatePixelSize (rem)', t => {
+test('calculatePixelSize (rem)', t => {
   const fixture = setup()
 
   fixture.style.width = '10rem' // 160px assuming 16px default font size
-  t.equal(calculatePixelSize(fixture, 'width'), 160,
+  t.equal(calculatePixelSize(fixture, 'width'), fixture.clientWidth,
     'fixture property in rem')
 
   fixture.style.fontSize = '200%'
-  t.equal(calculatePixelSize(fixture, 'width'), 160,
+  t.equal(calculatePixelSize(fixture, 'width'), fixture.clientWidth,
     'fixture property in rem with 200% font size')
 
   teardown()
   t.end()
 })
 
-test.skip('calculatePixelSize (%)', t => {
+test('calculatePixelSize (%)', t => {
   const fixture = setup()
 
   fixture.style.width = '50%'
 
   t.equal(calculatePixelSize(fixture, 'width'),
-    parseFloat(getElementStyle(fixture, 'width')),
+    Math.ceil(fixture.parentElement.clientWidth / 2),
     'fixture property in %')
 
   teardown()

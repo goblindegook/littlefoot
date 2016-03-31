@@ -27,8 +27,8 @@ export default function repositionPopover(footnote, event) {
   const type            = event ? event.type : 'resize'
   const identifier      = footnote.getAttribute('data-footnote-id')
   const button          = siblings(footnote, '.littlefoot-footnote__button')[0]
-  const buttonStyle     = button.currentStyle || window.getComputedStyle(button)
-  const footnoteStyle   = footnote.currentStyle || window.getComputedStyle(footnote)
+  const buttonStyle     = window.getComputedStyle ? window.getComputedStyle(button) : button.currentStyle
+  const footnoteStyle   = window.getComputedStyle ? window.getComputedStyle(footnote) : footnote.currentStyle
   const roomLeft        = calculateAvailableRoom(button)
   const marginSize      = parseFloat(footnoteStyle.marginTop)
   const maxHeightInCSS  = parseFloat(footnote.getAttribute('data-littlefoot-max-height'))

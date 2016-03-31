@@ -4,7 +4,7 @@
  * @return {Object}             Available room.
  */
 export default function calculateAvailableRoom(element) {
-  const style      = element.currentStyle || window.getComputedStyle(element)
+  const style      = window.getComputedStyle ? window.getComputedStyle(element) : element.currentStyle
   const leftMargin = parseFloat(style.marginLeft)
   const width      = parseFloat(element.offsetWidth) - leftMargin
   const height     = parseFloat(element.offsetHeight)
