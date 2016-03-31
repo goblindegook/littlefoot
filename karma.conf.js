@@ -52,12 +52,12 @@ if (process.env.SAUCE_USERNAME) {
       browserName: 'internet explorer',
       version:     '9',
     },
-    SL_InternetExplorer_8: {
-      base:        'SauceLabs',
-      platform:    'Windows 7',
-      browserName: 'internet explorer',
-      version:     '8',
-    },
+    // SL_InternetExplorer_8: {
+    //   base:        'SauceLabs',
+    //   platform:    'Windows 7',
+    //   browserName: 'internet explorer',
+    //   version:     '8',
+    // },
     SL_Firefox_45: {
       base:        'SauceLabs',
       platform:    'Windows 7',
@@ -82,19 +82,20 @@ if (process.env.SAUCE_USERNAME) {
       browserName: 'safari',
       version:     '8',
     },
-    SL_Opera_latest: {
+    SL_Opera_12: {
       base:        'SauceLabs',
       platform:    'Windows 7',
       browserName: 'opera',
-      version:     'latest',
+      version:     '12',
     },
   }
 }
 
 module.exports = function(karma) {
   karma.set({
-    browsers:        browsers.concat(Object.keys(customLaunchers)),
-    customLaunchers: customLaunchers,
+    browsers:                 browsers.concat(Object.keys(customLaunchers)),
+    customLaunchers:          customLaunchers,
+    browserNoActivityTimeout: 60000,
     frameworks: [
       'browserify',
       'tap',
@@ -130,6 +131,7 @@ module.exports = function(karma) {
     },
     sauceLabs: {
       testName:          'littlefoot',
+      passed:            'true',
       recordScreenshots: false,
     },
   })
