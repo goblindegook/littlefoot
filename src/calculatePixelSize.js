@@ -5,7 +5,7 @@ import getStyle from './getStyle'
  *
  * @return {Number} The base font size in pixels.
  */
-function baseFontSize() {
+function getBaseFontSize() {
   const element = document.createElement('div')
 
   element.style.cssText = 'display:inline-block;padding:0;line-height:1;position:absolute;visibility:hidden;font-size:1em;'
@@ -20,6 +20,17 @@ function baseFontSize() {
 }
 
 /**
+ * Get font size for element.
+ * @param  {DOMElement} element Element.
+ * @param  {String}     unit    Element property size unit.
+ * @return {Number}             Font size in pixels.
+ */
+function getFontSize(element, unit) {
+  return /%|em|rem/.test(unit) && element.parentElement
+    ? calculatePixelSize(element.parentElement, 'font-size') : 16
+}
+
+/**
  * Calculates a pixel size (as a regular integer) based on a string with an unknown unit.
  *
  * Adapted from Jonathan Neal's getComputedStylePixel() polyfill.
@@ -31,26 +42,24 @@ function baseFontSize() {
 export default function calculatePixelSize(element, property) {
   const style = getStyle(element)
   const value = style[property] != null ? style[property] : 'none'
+  const size  = parseFloat(value)
+  const unit  = value.replace(/[\d\.]+(%|cm|em|in|mm|pc|pt|px|rem|)/, '$1') || ''
 
   if (value === 'none') {
     return 10000
   }
 
-  const size     = parseFloat(value)
-  const unit     = value.replace(/[\d\.]+(%|cm|em|in|mm|pc|pt|px|rem|)/, '$1') || ''
-  const fontSize = /%|em|rem/.test(unit) && element.parentElement ? calculatePixelSize(element.parentElement, 'font-size') : 16
-
   switch (unit) {
     case '%':
       const widthOrHeight = /width/i.test(property) ? element.clientWidth : element.clientHeight
-      const rootSize      = property === 'font-size' ? fontSize : widthOrHeight
+      const rootSize      = property === 'font-size' ? getFontSize(element, unit) : widthOrHeight
       return Math.round(size / 100 * rootSize)
 
     case 'rem':
-      return Math.round(size * baseFontSize())
+      return Math.round(size * getBaseFontSize())
 
     case 'em':
-      return Math.round(size * fontSize)
+      return Math.round(size * getFontSize(element, unit))
 
     case 'cm':
       return Math.round(size * 0.3937 * 96)
