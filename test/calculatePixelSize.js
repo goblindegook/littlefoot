@@ -73,7 +73,7 @@ test('calculatePixelSize (%)', t => {
   fixture.style.width = '50%'
 
   t.equal(calculatePixelSize(fixture, 'width'),
-    Math.ceil(fixture.parentElement.clientWidth / 2),
+    fixture.parentElement.clientWidth / 2,
     'fixture property in %')
 
   teardown()
