@@ -1,5 +1,6 @@
 import closest from 'dom-closest'
 import classList from 'dom-classlist'
+import getStyle from './getStyle'
 
 /**
  * Footnote content scroll handler.
@@ -8,7 +9,7 @@ import classList from 'dom-classlist'
  */
 export default function scrollHandler(event) {
   const target  = event.currentTarget
-  const style   = window.getComputedStyle ? window.getComputedStyle(target) : target.currentStyle
+  const style   = getStyle(target)
   const height  = parseInt(style.height, 10)
   const popover = closest(target, '.littlefoot-footnote')
   const delta   = event.type === 'wheel' ? -event.deltaY : event.wheelDelta

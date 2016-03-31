@@ -1,10 +1,12 @@
+import getStyle from './getStyle'
+
 /**
  * Calculate the room available around a button element.
  * @param  {DOMElement} element Button element.
  * @return {Object}             Available room.
  */
 export default function calculateAvailableRoom(element) {
-  const style      = window.getComputedStyle ? window.getComputedStyle(element) : element.currentStyle
+  const style      = getStyle(element)
   const leftMargin = parseFloat(style.marginLeft)
   const width      = parseFloat(element.offsetWidth) - leftMargin
   const height     = parseFloat(element.offsetHeight)

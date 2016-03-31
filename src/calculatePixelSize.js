@@ -1,3 +1,5 @@
+import getStyle from './getStyle'
+
 /**
  * Calculates the base font size for `rem`-based sizing.
  *
@@ -26,24 +28,22 @@ function baseFontSize() {
  * @param  {String}     property CSS property to be evaluated.
  * @return {Number}              The string representation of the actual size.
  */
-export default function calculatePixelSize(element, property, fontSize = null) {
-  // Internet Explorer sometimes struggles to read currentStyle until the element's document is accessed.
-  element.document;
-
-  const style = window.getComputedStyle ? window.getComputedStyle(element) : element.currentStyle
+export default function calculatePixelSize(element, property) {
+  const style = getStyle(element)
   const value = style[property] != null ? style[property] : 'none'
-  const size  = parseFloat(value)
-  const unit  = value.replace(/[\d\.]+(%|cm|em|in|mm|pc|pt|px|rem|)/, '$1') || ''
 
   if (value === 'none') {
     return 10000
   }
 
-  fontSize = !fontSize ? fontSize : /%|em/.test(unit) && element.parentElement ? calculatePixelSize(element.parentElement, 'font-size') : 16
+  const size     = parseFloat(value)
+  const unit     = value.replace(/[\d\.]+(%|cm|em|in|mm|pc|pt|px|rem|)/, '$1') || ''
+  const fontSize = /%|em|rem/.test(unit) && element.parentElement ? calculatePixelSize(element.parentElement, 'font-size') : 16
 
   switch (unit) {
     case '%':
-      const rootSize = property === 'fontSize' ? fontSize : /width/i.test(property) ? element.clientWidth : element.clientHeight
+      const widthOrHeight = /width/i.test(property) ? element.clientWidth : element.clientHeight
+      const rootSize      = property === 'font-size' ? fontSize : widthOrHeight
       return Math.round(size / 100 * rootSize)
 
     case 'rem':
