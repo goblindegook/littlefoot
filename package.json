@@ -11,7 +11,7 @@
     "prepublish": "npm run build",
     "pretest": "eslint src/**/*.js",
     "test": "karma start --single-run",
-    "watch": "karma start --browsers PhantomJS"
+    "watch": "karma start --browsers ChromeCanary"
   },
   "browserify": {
     "transform": [

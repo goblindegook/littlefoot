@@ -6,7 +6,7 @@ var browsers        = ['PhantomJS']
 var customLaunchers = {}
 
 if (process.env.TRAVIS) {
-  browsers = []
+  browsers = ['PhantomJS']
 }
 
 if (!process.env.SAUCE_USERNAME && fs.existsSync('sauce.json')) {
