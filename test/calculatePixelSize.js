@@ -23,45 +23,35 @@ test('calculatePixelSize (none)', t => {
   t.end()
 })
 
-test('calculatePixelSize (px)', t => {
+test('calculatePixelSize (em|rem)', t => {
   const fixture = setup()
+  const sizes   = ['10em', '10rem']
 
-  fixture.style.width = '100px'
+  sizes.forEach(width => {
+    fixture.style.width = width
 
-  t.equal(calculatePixelSize(fixture, 'width'), fixture.clientWidth,
-    'fixture property in px')
+    t.equal(calculatePixelSize(fixture, 'width'), fixture.clientWidth,
+      width + ' width with default font size')
+
+    fixture.style.fontSize = '200%'
+
+    t.equal(calculatePixelSize(fixture, 'width'), fixture.clientWidth,
+      width + ' width with 200% font size')
+  })
 
   teardown()
   t.end()
 })
 
-test('calculatePixelSize (em)', t => {
+test('calculatePixelSize (cm|in|mm|pc|pt|px)', t => {
   const fixture = setup()
+  const sizes   = ['100cm', '100in', '100mm', '100pc', '100pt', '100px']
 
-  fixture.style.width = '10em' // 160px assuming 16px default font size
+  sizes.forEach(width => {
+    fixture.style.width = width
 
-  t.equal(calculatePixelSize(fixture, 'width'), fixture.clientWidth,
-    'fixture property in em with default font size')
-
-  fixture.style.fontSize = '200%'
-
-  t.equal(calculatePixelSize(fixture, 'width'), fixture.clientWidth,
-    'fixture property in em with 200% font size')
-
-  teardown()
-  t.end()
-})
-
-test('calculatePixelSize (rem)', t => {
-  const fixture = setup()
-
-  fixture.style.width = '10rem' // 160px assuming 16px default font size
-  t.equal(calculatePixelSize(fixture, 'width'), fixture.clientWidth,
-    'fixture property in rem')
-
-  fixture.style.fontSize = '200%'
-  t.equal(calculatePixelSize(fixture, 'width'), fixture.clientWidth,
-    'fixture property in rem with 200% font size')
+    t.equal(calculatePixelSize(fixture, 'width'), fixture.clientWidth, width + ' width')
+  })
 
   teardown()
   t.end()
@@ -73,7 +63,7 @@ test('calculatePixelSize (%)', t => {
   fixture.style.width = '50%'
 
   t.equal(calculatePixelSize(fixture, 'width'),
-    fixture.parentElement.clientWidth / 2,
+    Math.round(fixture.parentElement.clientWidth / 2),
     'fixture property in %')
 
   teardown()

@@ -4,9 +4,11 @@ var fs = require('fs')
 
 var browsers        = ['PhantomJS']
 var customLaunchers = {}
+var reporters       = ['dots', 'coverage']
 
 if (process.env.TRAVIS) {
   browsers = ['PhantomJS']
+  reporters.push('coveralls')
 }
 
 if (!process.env.SAUCE_USERNAME && fs.existsSync('sauce.json')) {
@@ -95,12 +97,9 @@ module.exports = function(karma) {
   karma.set({
     browsers:                 browsers.concat(Object.keys(customLaunchers)),
     customLaunchers:          customLaunchers,
+    reporters:                reporters,
     browserNoActivityTimeout: 60000,
-    frameworks: [
-      'browserify',
-      'tap',
-      'sinon',
-    ],
+    frameworks:               ['browserify', 'tap', 'sinon' ],
     browserify: {
       debug: true,
       transform: [
@@ -118,15 +117,12 @@ module.exports = function(karma) {
       'src/**/*.js':  ['browserify', 'coverage'],
       'test/**/*.js': ['browserify'],
     },
-    reporters: [
-      'dots',
-      'coverage',
-    ],
     coverageReporter: {
       dir: 'coverage/',
       reporters: [
         { type: 'text' },
         { type: 'html' },
+        { type: 'lcov' },
       ],
     },
     sauceLabs: {

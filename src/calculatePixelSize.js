@@ -44,30 +44,30 @@ export default function calculatePixelSize(element, property, fontSize = null) {
   switch (unit) {
     case '%':
       const rootSize = property === 'fontSize' ? fontSize : /width/i.test(property) ? element.clientWidth : element.clientHeight
-      return size / 100 * rootSize
+      return Math.round(size / 100 * rootSize)
 
     case 'rem':
-      return size * baseFontSize()
+      return Math.round(size * baseFontSize())
 
     case 'em':
-      return size * fontSize
+      return Math.round(size * fontSize)
 
     case 'cm':
-      return size * 0.3937 * 96
+      return Math.round(size * 0.3937 * 96)
 
     case 'in':
-      return size * 96
+      return Math.round(size * 96)
 
     case 'mm':
-      return size * 0.3937 * 96 / 10
+      return Math.round(size * 0.3937 * 96 / 10)
 
     case 'pc':
-      return size * 12 * 96 / 72
+      return Math.round(size * 12 * 96 / 72)
 
     case 'pt':
-      return size * 96 / 72
+      return Math.round(size * 96 / 72)
 
     default:
-      return size
+      return Math.round(size)
   }
 }
