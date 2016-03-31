@@ -35,7 +35,7 @@ const littlefoot = function(options) {
     const footnoteLinks  = getFootnoteLinks(settings)
     const footnotes      = []
 
-    const closestFootnoteLinks = footnoteLinks.filter(footnoteLink => {
+    const closestFootnoteLinks = footnoteLinks.filter((footnoteLink) => {
       const closestFootnote = getClosestFootnote(footnoteLink, settings.footnoteSelector, settings.allowDuplicates)
 
       if (closestFootnote) {
@@ -78,6 +78,113 @@ const littlefoot = function(options) {
 
       hideOriginalFootnotes(footnote.parentNode)
     })
+  }
+
+  /**
+   * Removes/adds appropriate classes to the footnote content and button after
+   * a delay (to allow for transitions) it removes the actual footnote content.
+   *
+   * @param  {String} footnotes The CSS selector for the footnotes to be removed.
+   * @param  {Number} timeout   The delay between adding the removal classes and
+   *                            actually removing the popover from the DOM.
+   */
+  function dismissFootnotes(footnoteSelector = '.littlefoot-footnote', timeout = settings.dismissDelay) {
+    const footnotes = document.querySelectorAll(footnoteSelector)
+
+    Array.prototype.forEach.call(footnotes, (footnote) => {
+      dismissPopover(footnote, timeout)
+    })
+  }
+
+  /**
+   * Positions each footnote relative to its button.
+   *
+   * @param {Event} event The type of event that prompted the reposition function.
+   */
+  function repositionFootnotes(event) {
+    const footnotes = document.querySelectorAll('.littlefoot-footnote')
+
+    Array.prototype.forEach.call(footnotes, (footnote) => {
+      repositionPopover(footnote, event)
+    })
+  }
+
+  /**
+   * Prevents scrolling of the page when you reach the top/ bottom of scrolling
+   * a scrollable footnote popover.
+   *
+   * @param {DOMElement} element The element on which the function was run.
+   */
+  function bindScrollHandler(element) {
+    addEventListener(element, 'mousewheel', throttle(scrollHandler))
+    addEventListener(element, 'wheel', throttle(scrollHandler))
+  }
+
+  /**
+   * Instantiates the footnote popover of the buttons matching the passed
+   * selector. This includes replacing any variables in the content template,
+   * decoding any special characters, adding the new element to the page,
+   * calling the position function, and adding the scroll handler.
+   *
+   * @param  {String} selector CSS selector of buttons that are to be activated.
+   * @return {Array}           All footnotes activated by the function.
+   */
+  function displayFootnote(selector) {
+    const contentTemplate = template(settings.contentTemplate)
+    const popoversCreated = []
+    const buttons         = []
+
+    if (!selector || selector.length === 0) {
+      return popoversCreated
+    }
+
+    if (settings.allowMultiple) {
+      const elements = document.querySelectorAll(selector)
+      Array.prototype.forEach.call(elements, (element) => {
+        buttons.push(closest(element, '.littlefoot-footnote__button'))
+      })
+
+    } else {
+      const element = document.querySelector(selector)
+      if (element) {
+        buttons.push(closest(element, '.littlefoot-footnote__button'))
+      }
+    }
+
+    Array.prototype.forEach.call(buttons, (button) => {
+      button.insertAdjacentHTML('afterend', contentTemplate({
+        content: button.getAttribute('data-littlefoot-footnote'),
+        id:      button.getAttribute('data-footnote-id'),
+        number:  button.getAttribute('data-footnote-number'),
+      }))
+
+      const popover          = button.nextElementSibling
+      const contentContainer = popover.querySelector('.littlefoot-footnote__content')
+
+      popover.setAttribute('data-littlefoot-state', 'init')
+      popover.setAttribute('data-littlefoot-max-width', calculatePixelSize(popover, 'max-width'))
+      popover.setAttribute('data-littlefoot-max-height', calculatePixelSize(contentContainer, 'max-height'))
+
+      popover.style.maxWidth = '10000px'
+
+      repositionFootnotes()
+      classList(button).add('is-active')
+      bindScrollHandler(popover.querySelector('.littlefoot-footnote__content'))
+
+      popoversCreated.push(popover)
+
+      if (typeof settings.activateCallback === 'function') {
+        settings.activateCallback(popover, button)
+      }
+    })
+
+    setTimeout(() => {
+      Array.prototype.forEach.call(popoversCreated, (popover) => {
+        classList(popover).add('is-active')
+      })
+    }, settings.activateDelay)
+
+    return popoversCreated
   }
 
   /**
@@ -186,84 +293,6 @@ const littlefoot = function(options) {
   }
 
   /**
-   * Instantiates the footnote popover of the buttons matching the passed
-   * selector. This includes replacing any variables in the content template,
-   * decoding any special characters, adding the new element to the page,
-   * calling the position function, and adding the scroll handler.
-   *
-   * @param  {String} selector CSS selector of buttons that are to be activated.
-   * @return {Array}           All footnotes activated by the function.
-   */
-  function displayFootnote(selector) {
-    const contentTemplate = template(settings.contentTemplate)
-    const popoversCreated = []
-    const buttons         = []
-
-    if (!selector || selector.length === 0) {
-      return popoversCreated
-    }
-
-    if (settings.allowMultiple) {
-      const elements = document.querySelectorAll(selector)
-      Array.prototype.forEach.call(elements, (element) => {
-        buttons.push(closest(element, '.littlefoot-footnote__button'))
-      })
-
-    } else {
-      const element = document.querySelector(selector)
-      if (element) {
-        buttons.push(closest(element, '.littlefoot-footnote__button'))
-      }
-    }
-
-    Array.prototype.forEach.call(buttons, (button) => {
-      button.insertAdjacentHTML('afterend', contentTemplate({
-        content: button.getAttribute('data-littlefoot-footnote'),
-        id:      button.getAttribute('data-footnote-id'),
-        number:  button.getAttribute('data-footnote-number'),
-      }))
-
-      const popover          = button.nextElementSibling
-      const contentContainer = popover.querySelector('.littlefoot-footnote__content')
-
-      popover.setAttribute('data-littlefoot-state', 'init')
-      popover.setAttribute('data-littlefoot-max-width', calculatePixelSize(popover, 'max-width'))
-      popover.setAttribute('data-littlefoot-max-height', calculatePixelSize(contentContainer, 'max-height'))
-
-      popover.style.maxWidth = '10000px'
-
-      repositionFootnotes()
-      classList(button).add('is-active')
-      bindScrollHandler(popover.querySelector('.littlefoot-footnote__content'))
-
-      popoversCreated.push(popover)
-
-      if (typeof settings.activateCallback === 'function') {
-        settings.activateCallback(popover, button)
-      }
-    })
-
-    setTimeout(() => {
-      Array.prototype.forEach.call(popoversCreated, (popover) => {
-        classList(popover).add('is-active')
-      })
-    }, settings.activateDelay)
-
-    return popoversCreated
-  }
-
-  /**
-   * Prevents scrolling of the page when you reach the top/ bottom of scrolling
-   * a scrollable footnote popover.
-   *
-   * @param {DOMElement} element The element on which the function was run.
-   */
-  function bindScrollHandler(element) {
-    addEventListener(element, 'mousewheel', throttle(scrollHandler))
-    addEventListener(element, 'wheel', throttle(scrollHandler))
-  }
-
-  /**
    * Removes the unhovered footnote content if dismissOnUnhover is true.
    *
    * @param {Event} event Event that contains the target of the mouseout event.
@@ -305,35 +334,6 @@ const littlefoot = function(options) {
     if (event.keyCode === 27) {
       dismissFootnotes()
     }
-  }
-
-  /**
-   * Removes/adds appropriate classes to the footnote content and button after
-   * a delay (to allow for transitions) it removes the actual footnote content.
-   *
-   * @param  {String} footnotes The CSS selector for the footnotes to be removed.
-   * @param  {Number} timeout   The delay between adding the removal classes and
-   *                            actually removing the popover from the DOM.
-   */
-  function dismissFootnotes(footnoteSelector = '.littlefoot-footnote', timeout = settings.dismissDelay) {
-    const footnotes = document.querySelectorAll(footnoteSelector)
-
-    Array.prototype.forEach.call(footnotes, (footnote) => {
-      dismissPopover(footnote, timeout)
-    })
-  }
-
-  /**
-   * Positions each footnote relative to its button.
-   *
-   * @param {Event} event The type of event that prompted the reposition function.
-   */
-  function repositionFootnotes(event) {
-    const footnotes = document.querySelectorAll('.littlefoot-footnote')
-
-    Array.prototype.forEach.call(footnotes, (footnote) => {
-      repositionPopover(footnote, event)
-    })
   }
 
   init()

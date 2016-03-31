@@ -22,7 +22,7 @@ export function addEventListener(element, type, listener, useCapture = false) {
  */
 export function dispatchEvent(element, type) {
   if (document.createEvent) {
-    var event = document.createEvent('HTMLEvents')
+    const event = document.createEvent('HTMLEvents')
     event.initEvent(type, true, false)
     element.dispatchEvent(event)
   } else {
