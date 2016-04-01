@@ -10,8 +10,8 @@ import getFootnoteLinks from './getFootnoteLinks'
 import hideOriginalFootnotes from './hideOriginalFootnotes'
 import createSettings from './settings'
 import prepareContent from './prepareContent'
-import dismissPopover from './dismissPopover'
-import repositionPopover from './repositionPopover'
+import dismissFootnote from './dismissFootnote'
+import repositionFootnote from './repositionFootnote'
 import scrollHandler from './scrollHandler'
 import { addEventListener, dispatchEvent } from './dom/events'
 
@@ -88,11 +88,11 @@ const littlefoot = function(options) {
    * @param  {Number} timeout   The delay between adding the removal classes and
    *                            actually removing the popover from the DOM.
    */
-  function dismissFootnotes(footnoteSelector = '.littlefoot-footnote', timeout = settings.dismissDelay) {
+  function dismissAllFootnotes(footnoteSelector = '.littlefoot-footnote', timeout = settings.dismissDelay) {
     const footnotes = document.querySelectorAll(footnoteSelector)
 
     Array.prototype.forEach.call(footnotes, (footnote) => {
-      dismissPopover(footnote, timeout)
+      dismissFootnote(footnote, timeout)
     })
   }
 
@@ -101,11 +101,11 @@ const littlefoot = function(options) {
    *
    * @param {Event} event The type of event that prompted the reposition function.
    */
-  function repositionFootnotes(event) {
+  function repositionAllFootnotes(event) {
     const footnotes = document.querySelectorAll('.littlefoot-footnote')
 
     Array.prototype.forEach.call(footnotes, (footnote) => {
-      repositionPopover(footnote, event)
+      repositionFootnote(footnote, event)
     })
   }
 
@@ -167,7 +167,7 @@ const littlefoot = function(options) {
 
       popover.style.maxWidth = '10000px'
 
-      repositionFootnotes()
+      repositionAllFootnotes()
       classList(button).add('is-active')
       bindScrollHandler(popover.querySelector('.littlefoot-footnote__content'))
 
@@ -225,7 +225,7 @@ const littlefoot = function(options) {
       classList(footnoteHovered).add('is-hover-instantiated')
 
       if (!settings.allowMultiple) {
-        dismissFootnotes(`.littlefoot-footnote:not(${dataIdentifier})`)
+        dismissAllFootnotes(`.littlefoot-footnote:not(${dataIdentifier})`)
       }
 
       const popovers = displayFootnote('.littlefoot-footnote__button' + dataIdentifier)
@@ -251,11 +251,11 @@ const littlefoot = function(options) {
     dispatchEvent(button, 'blur')
 
     if (!isChanging && isActive && settings.allowMultiple) {
-      dismissFootnotes('.littlefoot-footnote' + footnoteId)
+      dismissAllFootnotes('.littlefoot-footnote' + footnoteId)
     }
 
     if (!isChanging && isActive && !settings.allowMultiple) {
-      dismissFootnotes()
+      dismissAllFootnotes()
     }
 
     if (!isChanging && !isActive) {
@@ -266,7 +266,7 @@ const littlefoot = function(options) {
       setTimeout(() => classList(button).remove('changing'), settings.activateDelay)
 
       if (!settings.allowMultiple) {
-        dismissFootnotes('.littlefoot-footnote:not(' + footnoteId + ')')
+        dismissAllFootnotes('.littlefoot-footnote:not(' + footnoteId + ')')
       }
     }
   }
@@ -288,7 +288,7 @@ const littlefoot = function(options) {
     }
 
     if (!button && !footnote && document.querySelector('.littlefoot-footnote')) {
-      dismissFootnotes()
+      dismissAllFootnotes()
     }
   }
 
@@ -318,7 +318,7 @@ const littlefoot = function(options) {
       if (related !== target) {
         setTimeout(() => {
           if (!document.querySelector('.littlefoot-footnote__button:hover, .littlefoot-footnote:hover')) {
-            dismissFootnotes()
+            dismissAllFootnotes()
           }
         }, settings.hoverDelay)
       }
@@ -332,7 +332,7 @@ const littlefoot = function(options) {
    */
   function onEscapeKeypress(event) {
     if (event.keyCode === 27) {
-      dismissFootnotes()
+      dismissAllFootnotes()
     }
   }
 
@@ -343,13 +343,13 @@ const littlefoot = function(options) {
   addEventListener(document, 'keyup', onEscapeKeypress)
   addEventListener(document, 'mouseover', onHover)
   addEventListener(document, 'mouseout', onUnhover)
-  addEventListener(document, 'gestureend', repositionFootnotes)
-  addEventListener(window, 'scroll', throttle(repositionFootnotes))
-  addEventListener(window, 'resize', throttle(repositionFootnotes))
+  addEventListener(document, 'gestureend', repositionAllFootnotes)
+  addEventListener(window, 'scroll', throttle(repositionAllFootnotes))
+  addEventListener(window, 'resize', throttle(repositionAllFootnotes))
 
   return {
     activate: displayFootnote,
-    dismiss:  dismissFootnotes,
+    dismiss:  dismissAllFootnotes,
     get:      settings.get,
     set:      settings.set,
   }

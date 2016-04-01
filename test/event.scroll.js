@@ -1,9 +1,9 @@
 import test from 'tape'
 import simulant from 'simulant'
+import sleep from 'then-sleep'
 import littlefoot from '../src/'
 import setup from './helper/setup'
 import teardown from './helper/teardown'
-import sleep from './helper/sleep'
 
 // FIXME: Test scroll events consistently across browsers.
 
@@ -14,7 +14,7 @@ test.skip('scroll event handling', (t) => {
 
   const activateDelay = lf.get('activateDelay')
 
-  lf.activate('[data-footnote-id="4"]')
+  lf.activate('button[data-footnote-id="4"]')
 
   sleep(activateDelay)
     .then(() => {

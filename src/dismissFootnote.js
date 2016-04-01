@@ -8,7 +8,7 @@ import classList from 'dom-classlist'
  * @param {Number}     timeout  The delay between adding the removal classes and
  *                              actually removing the popover from the DOM.
  */
-export default function dismissPopover(footnote, timeout) {
+export default function dismissFootnote(footnote, timeout) {
   const footnoteID   = footnote.getAttribute('data-footnote-id')
   const linkedButton = document.querySelector('.littlefoot-footnote__button[data-footnote-id="' + footnoteID + '"]')
 
@@ -21,7 +21,7 @@ export default function dismissPopover(footnote, timeout) {
     classList(footnote).add('disapearing')
     classList(footnote).remove('is-active')
 
-    setTimeout(() => {
+    window.setTimeout(() => {
       footnote.parentNode.removeChild(footnote)
       classList(linkedButton).remove('changing')
     }, timeout)

@@ -24,7 +24,7 @@ function positionTooltip(popover, leftRelative) {
  * @param {DOMElement} footnote The footnote element.
  * @param {Event}      event    The type of event that prompted the reposition function.
  */
-export default function repositionPopover(footnote, event) {
+export default function repositionFootnote(footnote, event) {
   const type            = event ? event.type : 'resize'
   const button          = siblings(footnote, '.littlefoot-footnote__button')[0]
   const buttonStyle     = getStyle(button)

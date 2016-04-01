@@ -1,6 +1,6 @@
 import closest from 'dom-closest'
 import classList from 'dom-classlist'
-import getStyle from './dom/getStyle'
+import getStylePropertyInPixels from './dom/getStylePropertyInPixels'
 
 /**
  * Footnote content scroll handler.
@@ -8,12 +8,11 @@ import getStyle from './dom/getStyle'
  * @param {Event} event Scroll or mousewheel event.
  */
 export default function scrollHandler(event) {
-  const target  = event.currentTarget
-  const style   = getStyle(target)
-  const height  = parseInt(style.height, 10)
-  const popover = closest(target, '.littlefoot-footnote')
-  const delta   = event.type === 'wheel' ? -event.deltaY : event.wheelDelta
-  const up      = delta > 0
+  const target     = event.currentTarget
+  const delta      = event.type === 'wheel' ? -event.deltaY : event.wheelDelta
+  const isScrollUp = delta > 0
+  const height     = getStylePropertyInPixels(target, 'height')
+  const popover    = closest(target, '.littlefoot-footnote')
 
   if (target.scrollTop > 0 && target.scrollTop < 10) {
     classList(popover).add('is-scrollable')
@@ -23,19 +22,22 @@ export default function scrollHandler(event) {
     return
   }
 
-  if (!up && delta < height + target.scrollTop - target.scrollHeight) {
-    target.scrollTop = target.scrollHeight
+  if (!isScrollUp && delta < height + target.scrollTop - target.scrollHeight) {
     classList(popover).add('is-fully-scrolled')
+
+    target.scrollTop = target.scrollHeight
     event.stopPropagation()
     event.preventDefault()
+    return
+  }
 
-  } else if (up && target.scrollTop < delta) {
-    target.scrollTop = 0
+  if (isScrollUp) {
     classList(popover).remove('is-fully-scrolled')
-    event.stopPropagation()
-    event.preventDefault()
 
-  } else if (up) {
-    classList(popover).remove('is-fully-scrolled')
+    if (target.scrollTop < delta) {
+      target.scrollTop = 0
+      event.stopPropagation()
+      event.preventDefault()
+    }
   }
 }

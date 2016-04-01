@@ -1,10 +1,10 @@
 import test from 'tape'
 import classList from 'dom-classlist'
+import sleep from 'then-sleep'
 import littlefoot from '../src/'
 import { dispatchEvent } from '../src/dom/events'
 import setup from './helper/setup'
 import teardown from './helper/teardown'
-import sleep from './helper/sleep'
 
 test('littlefoot setup with dismissOnUnhover=true', (t) => {
   setup('default.html')
@@ -14,7 +14,7 @@ test('littlefoot setup with dismissOnUnhover=true', (t) => {
   const activateDelay  = lf.get('activateDelay')
   const dismissDelay = lf.get('dismissDelay')
   const hoverDelay   = lf.get('hoverDelay')
-  const footnote     = document.body.querySelector('[data-footnote-id="1"]')
+  const footnote     = document.body.querySelector('button[data-footnote-id="1"]')
 
   dispatchEvent(footnote, 'mouseover')
 

@@ -1,9 +1,9 @@
 import test from 'tape'
+import sleep from 'then-sleep'
 import littlefoot from '../src/'
 import { dispatchEvent } from '../src/dom/events'
 import setup from './helper/setup'
 import teardown from './helper/teardown'
-import sleep from './helper/sleep'
 
 test('littlefoot setup with allowMultiple=true', (t) => {
   setup('default.html')
@@ -12,10 +12,10 @@ test('littlefoot setup with allowMultiple=true', (t) => {
 
   const activateDelay  = lf.get('activateDelay')
   const dismissDelay = lf.get('dismissDelay')
-  const buttons      = document.querySelectorAll('[data-footnote-id]')
+  const buttons      = document.querySelectorAll('button[data-footnote-id]')
 
-  dispatchEvent(document.body.querySelector('[data-footnote-id="1"]'), 'click')
-  dispatchEvent(document.body.querySelector('[data-footnote-id="2"]'), 'click')
+  dispatchEvent(document.body.querySelector('button[data-footnote-id="1"]'), 'click')
+  dispatchEvent(document.body.querySelector('button[data-footnote-id="2"]'), 'click')
 
   sleep(activateDelay)
     .then(() => {
@@ -29,7 +29,7 @@ test('littlefoot setup with allowMultiple=true', (t) => {
       t.equal(document.body.querySelectorAll('button.is-active').length, 0,
         'dismisses all popovers on dismiss()')
 
-      lf.activate('[data-footnote-id]')
+      lf.activate('button[data-footnote-id]')
       return sleep(activateDelay)
     })
     .then(() => {
@@ -50,11 +50,11 @@ test('littlefoot setup with allowMultiple=false', (t) => {
 
   const activateDelay = lf.get('activateDelay')
 
-  dispatchEvent(document.body.querySelector('[data-footnote-id="1"]'), 'click')
+  dispatchEvent(document.body.querySelector('button[data-footnote-id="1"]'), 'click')
 
   sleep(activateDelay)
     .then(() => {
-      dispatchEvent(document.body.querySelector('[data-footnote-id="2"]'), 'click')
+      dispatchEvent(document.body.querySelector('button[data-footnote-id="2"]'), 'click')
       return sleep(activateDelay)
     })
     .then(() => {

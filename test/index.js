@@ -1,9 +1,9 @@
 import test from 'tape'
+import sleep from 'then-sleep'
 import littlefoot from '../src/'
 import { dispatchEvent } from '../src/dom/events'
 import setup from './helper/setup'
 import teardown from './helper/teardown'
-import sleep from './helper/sleep'
 
 test('littlefoot setup with default options', (t) => {
   setup('default.html')
@@ -41,14 +41,14 @@ test('littlefoot setup with default options', (t) => {
   t.equal(body.querySelectorAll('button.is-active').length, 0,
     'has no active footnotes')
 
-  const footnote1 = body.querySelector('[data-footnote-id="1"]')
+  const footnote1 = body.querySelector('button[data-footnote-id="1"]')
 
   // these do nothing
   lf.activate()
   lf.activate('')
 
   // activate button
-  lf.activate('[data-footnote-id="1"]')
+  lf.activate('button[data-footnote-id="1"]')
 
   sleep(activateDelay)
     .then(() => {

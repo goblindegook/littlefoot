@@ -1,10 +1,10 @@
 import test from 'tape'
 import classList from 'dom-classlist'
+import sleep from 'then-sleep'
 import littlefoot from '../src/'
 import { dispatchEvent } from '../src/dom/events'
 import setup from './helper/setup'
 import teardown from './helper/teardown'
-import sleep from './helper/sleep'
 
 test('littlefoot setup with activateOnHover=true', (t) => {
   setup('default.html')
@@ -12,7 +12,7 @@ test('littlefoot setup with activateOnHover=true', (t) => {
   const lf = littlefoot({ activateOnHover: true })
 
   const activateDelay = lf.get('activateDelay')
-  const footnote    = document.body.querySelector('[data-footnote-id="1"]')
+  const footnote    = document.body.querySelector('button[data-footnote-id="1"]')
 
   dispatchEvent(footnote, 'mouseover')
 

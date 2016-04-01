@@ -1,9 +1,9 @@
 import test from 'tape'
 import simulant from 'simulant'
+import sleep from 'then-sleep'
 import littlefoot from '../src/'
 import setup from './helper/setup'
 import teardown from './helper/teardown'
-import sleep from './helper/sleep'
 
 test('keyboard event handling', (t) => {
   setup('default.html')
@@ -15,7 +15,7 @@ test('keyboard event handling', (t) => {
   const activateDelay  = lf.get('activateDelay')
   const dismissDelay = lf.get('dismissDelay')
 
-  lf.activate('[data-footnote-id="1"]')
+  lf.activate('button[data-footnote-id="1"]')
 
   sleep(activateDelay)
     .then(() => {
