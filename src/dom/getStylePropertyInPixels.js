@@ -20,17 +20,6 @@ function getBaseFontSize() {
 }
 
 /**
- * Get font size for element.
- * @param  {DOMElement} element Element.
- * @param  {String}     unit    Element property size unit.
- * @return {Number}             Font size in pixels.
- */
-function getFontSize(element, unit) {
-  return /%|em|rem/.test(unit) && element.parentElement
-    ? getStylePropertyInPixels(element.parentElement, 'font-size') : 16
-}
-
-/**
  * Calculates a pixel size (as a regular integer) based on a string with an unknown unit.
  *
  * Adapted from Jonathan Neal's getComputedStylePixel() polyfill.
@@ -49,17 +38,18 @@ export default function getStylePropertyInPixels(element, property) {
     return 10000
   }
 
+  console.log(property, value, size, unit)
+
   switch (unit) {
     case '%':
-      const widthOrHeight = /width/i.test(property) ? element.clientWidth : element.clientHeight
-      const rootSize      = property === 'font-size' ? getFontSize(element, unit) : widthOrHeight
-      return Math.round(size / 100 * rootSize)
+      return Math.round(size / 100)
 
     case 'rem':
       return Math.round(size * getBaseFontSize())
 
     case 'em':
-      return Math.round(size * getFontSize(element, unit))
+      const fontSize = element.parentElement ? getStylePropertyInPixels(element.parentElement, 'font-size') : 16
+      return Math.round(size * fontSize)
 
     case 'cm':
       return Math.round(size * 0.3937 * 96)
