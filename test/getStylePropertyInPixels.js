@@ -27,16 +27,16 @@ test('getStylePropertyInPixels (em|rem)', (t) => {
   const fixture = setup()
   const sizes   = ['10em', '10rem']
 
-  sizes.forEach(width => {
-    fixture.style.width = width
+  sizes.forEach((size) => {
+    fixture.style.width = size
 
     t.equal(getStylePropertyInPixels(fixture, 'width'), fixture.clientWidth,
-      width + ' width with default font size')
+      size + ' width with default font size')
 
     fixture.style.fontSize = '200%'
 
     t.equal(getStylePropertyInPixels(fixture, 'width'), fixture.clientWidth,
-      width + ' width with 200% font size')
+      size + ' width with 200% font size')
   })
 
   teardown()
@@ -47,10 +47,11 @@ test('getStylePropertyInPixels (cm|in|mm|pc|pt|px)', (t) => {
   const fixture = setup()
   const sizes   = ['100cm', '100in', '100mm', '100pc', '100pt', '100px']
 
-  sizes.forEach(width => {
-    fixture.style.width = width
+  sizes.forEach((size) => {
+    fixture.style.width  = size
+    fixture.style.height = size
 
-    t.equal(getStylePropertyInPixels(fixture, 'width'), fixture.clientWidth, width + ' width')
+    t.equal(getStylePropertyInPixels(fixture, 'width'), fixture.clientWidth, size + ' width')
   })
 
   teardown()
