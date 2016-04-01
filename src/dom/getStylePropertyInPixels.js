@@ -38,8 +38,6 @@ export default function getStylePropertyInPixels(element, property) {
     return 10000
   }
 
-  console.log(property, value, size, unit)
-
   switch (unit) {
     case '%':
       return Math.round(size / 100)
