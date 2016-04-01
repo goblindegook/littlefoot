@@ -13,8 +13,8 @@ function positionTooltip(popover, leftRelative) {
   const tooltip = popover.querySelector('.littlefoot-footnote__tooltip')
 
   if (tooltip) {
-    leftRelative = leftRelative != null ? leftRelative : 0.5
-    tooltip.style.left = (leftRelative * 100) + '%'
+    const tooltipLeft = leftRelative != null ? leftRelative : 0.5
+    tooltip.style.left = (tooltipLeft * 100) + '%'
   }
 }
 

@@ -12,11 +12,11 @@ export default function prepareContent(content, backlinkId) {
   const pattern = backlinkId.trim().replace(/\s+/g, '|')
   const regex   = new RegExp('(\\s|&nbsp;)*<\\s*a[^#<]*#(' + pattern + ')[^>]*>(.*?)<\\s*/\\s*a>', 'g')
 
-  content = content.trim().replace(regex, '').replace('[]', '')
+  let preparedContent = content.trim().replace(regex, '').replace('[]', '')
 
-  if (content.indexOf('<') !== 0) {
-    content = '<p>' + content + '</p>'
+  if (preparedContent.indexOf('<') !== 0) {
+    preparedContent = '<p>' + preparedContent + '</p>'
   }
 
-  return content
+  return preparedContent
 }
