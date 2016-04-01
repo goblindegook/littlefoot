@@ -1,11 +1,15 @@
 {
   "preset": "airbnb",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
   "ecmaFeatures": {
     "modules": true
   },
   "env": {
-    "es6": true,
-    "node": true
+    "browser": true,
+    "es6": true
   },
   "rules": {
     "no-unexpected-multiline": 2
