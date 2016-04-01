@@ -1,7 +1,7 @@
 import siblings from 'dom-siblings'
 import classList from 'dom-classlist'
-import calculateAvailableRoom from './calculateAvailableRoom'
-import getStyle from './getStyle'
+import getAvailableRoom from './dom/getAvailableRoom'
+import getStyle from './dom/getStyle'
 
 /**
  * Positions the tooltip at the same relative horizontal position as the button.
@@ -29,7 +29,7 @@ export default function repositionPopover(footnote, event) {
   const button          = siblings(footnote, '.littlefoot-footnote__button')[0]
   const buttonStyle     = getStyle(button)
   const footnoteStyle   = getStyle(footnote)
-  const roomLeft        = calculateAvailableRoom(button)
+  const roomLeft        = getAvailableRoom(button)
   const marginSize      = parseFloat(footnoteStyle.marginTop)
   const maxHeightInCSS  = parseFloat(footnote.getAttribute('data-littlefoot-max-height'))
   const totalHeight     = 2 * marginSize + footnote.offsetHeight

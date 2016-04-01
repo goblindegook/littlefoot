@@ -4,7 +4,7 @@ import classList from 'dom-classlist'
 import escape from 'lodash/escape'
 import template from 'lodash/template'
 import throttle from 'lodash/throttle'
-import calculatePixelSize from './calculatePixelSize'
+import getStylePropertyInPixels from './dom/getStylePropertyInPixels'
 import getClosestFootnote from './getClosestFootnote'
 import getFootnoteLinks from './getFootnoteLinks'
 import hideOriginalFootnotes from './hideOriginalFootnotes'
@@ -13,7 +13,7 @@ import prepareContent from './prepareContent'
 import dismissPopover from './dismissPopover'
 import repositionPopover from './repositionPopover'
 import scrollHandler from './scrollHandler'
-import { addEventListener, dispatchEvent } from './events'
+import { addEventListener, dispatchEvent } from './dom/events'
 
 /**
  * Littlefoot instance factory.
@@ -162,8 +162,8 @@ const littlefoot = function(options) {
       const contentContainer = popover.querySelector('.littlefoot-footnote__content')
 
       popover.setAttribute('data-littlefoot-state', 'init')
-      popover.setAttribute('data-littlefoot-max-width', calculatePixelSize(popover, 'max-width'))
-      popover.setAttribute('data-littlefoot-max-height', calculatePixelSize(contentContainer, 'max-height'))
+      popover.setAttribute('data-littlefoot-max-width', getStylePropertyInPixels(popover, 'max-width'))
+      popover.setAttribute('data-littlefoot-max-height', getStylePropertyInPixels(contentContainer, 'max-height'))
 
       popover.style.maxWidth = '10000px'
 

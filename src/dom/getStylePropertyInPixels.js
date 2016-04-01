@@ -27,7 +27,7 @@ function getBaseFontSize() {
  */
 function getFontSize(element, unit) {
   return /%|em|rem/.test(unit) && element.parentElement
-    ? calculatePixelSize(element.parentElement, 'font-size') : 16
+    ? getStylePropertyInPixels(element.parentElement, 'font-size') : 16
 }
 
 /**
@@ -39,7 +39,7 @@ function getFontSize(element, unit) {
  * @param  {String}     property CSS property to be evaluated.
  * @return {Number}              The string representation of the actual size.
  */
-export default function calculatePixelSize(element, property) {
+export default function getStylePropertyInPixels(element, property) {
   const style = getStyle(element)
   const value = style[property] != null ? style[property] : 'none'
   const size  = parseFloat(value)

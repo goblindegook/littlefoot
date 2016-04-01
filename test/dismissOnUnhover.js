@@ -1,7 +1,7 @@
 import test from 'tape'
 import classList from 'dom-classlist'
 import littlefoot from '../src/'
-import { dispatchEvent } from '../src/events'
+import { dispatchEvent } from '../src/dom/events'
 import setup from './helper/setup'
 import teardown from './helper/teardown'
 import sleep from './helper/sleep'
@@ -24,7 +24,7 @@ test('littlefoot setup with dismissOnUnhover=true', (t) => {
         'popover has is-active class before unhover event')
 
       dispatchEvent(footnote, 'mouseout')
-      
+
       return sleep(dismissDelay + hoverDelay)
     })
     .then(() => {

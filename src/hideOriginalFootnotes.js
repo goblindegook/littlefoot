@@ -1,6 +1,6 @@
 import matches from 'dom-matches'
 import classList from 'dom-classlist'
-import children from './children'
+import children from './dom/children'
 
 /**
  * Propagates the decision of deleting/hiding the original footnotes up the

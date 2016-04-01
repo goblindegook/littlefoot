@@ -1,6 +1,6 @@
 import test from 'tape'
 import littlefoot from '../src/'
-import { dispatchEvent } from '../src/events'
+import { dispatchEvent } from '../src/dom/events'
 import setup from './helper/setup'
 import teardown from './helper/teardown'
 import sleep from './helper/sleep'

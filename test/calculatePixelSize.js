@@ -1,5 +1,5 @@
 import test from 'tape'
-import calculatePixelSize from '../src/calculatePixelSize'
+import getStylePropertyInPixels from '../src/dom/getStylePropertyInPixels'
 import teardown from './helper/teardown'
 
 /**
@@ -13,29 +13,29 @@ function setup() {
   return fixture
 }
 
-test('calculatePixelSize (none)', (t) => {
+test('getStylePropertyInPixels (none)', (t) => {
   const fixture = setup()
 
   fixture.style.display = 'none'
-  t.equal(calculatePixelSize(fixture, 'display'), 10000, 'fixture property is none')
+  t.equal(getStylePropertyInPixels(fixture, 'display'), 10000, 'fixture property is none')
 
   teardown()
   t.end()
 })
 
-test('calculatePixelSize (em|rem)', (t) => {
+test('getStylePropertyInPixels (em|rem)', (t) => {
   const fixture = setup()
   const sizes   = ['10em', '10rem']
 
   sizes.forEach(width => {
     fixture.style.width = width
 
-    t.equal(calculatePixelSize(fixture, 'width'), fixture.clientWidth,
+    t.equal(getStylePropertyInPixels(fixture, 'width'), fixture.clientWidth,
       width + ' width with default font size')
 
     fixture.style.fontSize = '200%'
 
-    t.equal(calculatePixelSize(fixture, 'width'), fixture.clientWidth,
+    t.equal(getStylePropertyInPixels(fixture, 'width'), fixture.clientWidth,
       width + ' width with 200% font size')
   })
 
@@ -43,26 +43,26 @@ test('calculatePixelSize (em|rem)', (t) => {
   t.end()
 })
 
-test('calculatePixelSize (cm|in|mm|pc|pt|px)', (t) => {
+test('getStylePropertyInPixels (cm|in|mm|pc|pt|px)', (t) => {
   const fixture = setup()
   const sizes   = ['100cm', '100in', '100mm', '100pc', '100pt', '100px']
 
   sizes.forEach(width => {
     fixture.style.width = width
 
-    t.equal(calculatePixelSize(fixture, 'width'), fixture.clientWidth, width + ' width')
+    t.equal(getStylePropertyInPixels(fixture, 'width'), fixture.clientWidth, width + ' width')
   })
 
   teardown()
   t.end()
 })
 
-test('calculatePixelSize (%)', (t) => {
+test('getStylePropertyInPixels (%)', (t) => {
   const fixture = setup()
 
   fixture.style.width = '50%'
 
-  t.equal(calculatePixelSize(fixture, 'width'),
+  t.equal(getStylePropertyInPixels(fixture, 'width'),
     Math.round(fixture.parentElement.clientWidth / 2),
     'fixture property in %')
 

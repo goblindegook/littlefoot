@@ -1,6 +1,6 @@
 import closest from 'dom-closest'
 import classList from 'dom-classlist'
-import getStyle from './getStyle'
+import getStyle from './dom/getStyle'
 
 /**
  * Footnote content scroll handler.
