@@ -194,9 +194,7 @@ const littlefoot = function(options) {
    * @param {Event} event Event that contains the target of the mouseenter event.
    */
   function onHover(event) {
-    let target  = event.target || event.srcElement
-    let related = event.relatedTarget || event.toElement
-    let match   = false
+    let target = event.target || event.srcElement
 
     if (!settings.activateOnHover) {
       return
@@ -239,7 +237,7 @@ const littlefoot = function(options) {
     }
 
     if (isActive) {
-      const dismissSelector = settings.allowMultiple ? '.littlefoot-footnote' + selector : undefined
+      const dismissSelector = settings.allowMultiple ? '.littlefoot-footnote' + selector : null
       dismissAllFootnotes(dismissSelector)
       return
     }
@@ -284,10 +282,6 @@ const littlefoot = function(options) {
    * @param {Event} event Event that contains the target of the mouseout event.
    */
   function onUnhover(event) {
-    let target  = event.target || event.srcElement
-    let related = event.relatedTarget || event.fromElement
-    let match   = false
-
     if (!settings.dismissOnUnhover || !settings.activateOnHover) {
       return
     }

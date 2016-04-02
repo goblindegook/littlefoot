@@ -1,4 +1,5 @@
 import 'core-js/es6/promise'
+import classList from 'dom-classlist'
 import delay from 'core-js/library/core/delay'
 import test from 'tape'
 import littlefoot from '../src/'
@@ -12,10 +13,7 @@ test('littlefoot setup with default options', (t) => {
   const footnotes        = body.querySelectorAll('.footnote').length
   const reverseFootnotes = body.querySelectorAll('.reversefootnote').length
 
-  const lf = littlefoot()
-
-  const activateDelay  = lf.get('activateDelay')
-  const dismissDelay = lf.get('dismissDelay')
+  littlefoot()
 
   t.equal(body.querySelectorAll('.littlefoot-footnote__container').length, footnotes,
     'inserts footnote containers')
@@ -41,7 +39,18 @@ test('littlefoot setup with default options', (t) => {
   t.equal(body.querySelectorAll('button.is-active').length, 0,
     'has no active footnotes')
 
-  const footnote1 = body.querySelector('button[data-footnote-id="1"]')
+  teardown()
+  t.end()
+})
+
+test('footnote activation and dismissal', (t) => {
+  setup('default.html')
+
+  const lf = littlefoot()
+
+  const activateDelay = lf.get('activateDelay')
+  const dismissDelay  = lf.get('dismissDelay')
+  const footnote      = document.body.querySelector('button[data-footnote-id="1"]')
 
   // these do nothing
   lf.activate()
@@ -52,45 +61,49 @@ test('littlefoot setup with default options', (t) => {
 
   delay(activateDelay)
     .then(() => {
-      const content = body.querySelector('.littlefoot-footnote__content')
+      const content = document.body.querySelector('.littlefoot-footnote__content')
 
-      t.equal(content.innerHTML, footnote1.getAttribute('data-littlefoot-footnote'),
+      t.equal(content.innerHTML, footnote.getAttribute('data-littlefoot-footnote'),
         'injects content into popover')
 
-      t.equal(body.querySelectorAll('button.is-active').length, 1,
+      t.equal(document.body.querySelectorAll('button.is-active').length, 1,
         'activates one popover on activate()')
 
       lf.dismiss()
       return delay(dismissDelay)
     })
     .then(() => {
-      t.notOk(body.querySelector('button.is-active'), 'dismisses popovers on dismiss()')
+      t.notOk(classList(footnote).contains('is-active'),
+        'dismisses popovers on dismiss()')
 
-      dispatchEvent(footnote1, 'click')
+      dispatchEvent(footnote, 'click')
 
-      t.equal(body.querySelectorAll('button.changing').length, 1,
+      t.ok(classList(footnote).contains('changing'),
         'transitions popover activation on click')
 
       return delay(activateDelay)
     })
     .then(() => {
-      t.ok(body.querySelector('button.is-active'), 'activates one popover on button click event')
+      t.ok(classList(footnote).contains('is-active'),
+        'activates one popover on button click event')
 
-      dispatchEvent(body, 'click')
+      dispatchEvent(document.body, 'click')
       return delay(dismissDelay)
     })
     .then(() => {
-      t.notOk(body.querySelector('button.is-active'), 'dismisses popovers on body click event')
+      t.notOk(classList(footnote).contains('is-active'),
+        'dismisses popovers on body click event')
 
-      dispatchEvent(footnote1, 'click')
+      dispatchEvent(footnote, 'click')
       return delay(activateDelay)
     })
     .then(() => {
-      dispatchEvent(footnote1, 'click')
+      dispatchEvent(footnote, 'click')
       return delay(dismissDelay)
     })
     .then(() => {
-      t.notOk(body.querySelector('button.is-active'), 'dismisses popovers on activating twice')
+      t.notOk(classList(footnote).contains('is-active'),
+        'dismisses popovers on activating twice')
 
       teardown()
       t.end()
