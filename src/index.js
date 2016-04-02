@@ -194,28 +194,30 @@ const littlefoot = function(options) {
    * @param {Event} event Event that contains the target of the mouseenter event.
    */
   function onHover(event) {
-    let target = event.target || event.srcElement
-
     if (!settings.activateOnHover) {
       return
     }
 
-    const footnoteHovered = closest(target, '.littlefoot-footnote__button')
-    const dataIdentifier  = `[data-footnote-id="${footnoteHovered.getAttribute('data-footnote-id')}"]`
+    const target           = event.target || event.srcElement
+    const footnote         = closest(target, '.littlefoot-footnote__button')
+    const footnoteId       = footnote.getAttribute('data-footnote-id')
+    const footnoteSelector = `[data-footnote-id="${footnoteId}"]`
 
-    if (!classList(footnoteHovered).contains('is-active')) {
-      classList(footnoteHovered).add('is-hover-instantiated')
-
-      if (!settings.allowMultiple) {
-        dismissAllFootnotes(`.littlefoot-footnote:not(${dataIdentifier})`)
-      }
-
-      const popovers = displayFootnote('.littlefoot-footnote__button' + dataIdentifier)
-
-      popovers.forEach((popover) => {
-        classList(popover).add('is-hover-instantiated')
-      })
+    if (classList(footnote).contains('is-active')) {
+      return
     }
+
+    if (!settings.allowMultiple) {
+      dismissAllFootnotes(`.littlefoot-footnote:not(${footnoteSelector})`)
+    }
+
+    classList(footnote).add('is-hover-instantiated')
+
+    const popovers = displayFootnote('.littlefoot-footnote__button' + footnoteSelector)
+
+    popovers.forEach((popover) => {
+      classList(popover).add('is-hover-instantiated')
+    })
   }
 
   /**
@@ -243,7 +245,6 @@ const littlefoot = function(options) {
     }
 
     if (!settings.allowMultiple) {
-      // Dismiss all other footnotes:
       dismissAllFootnotes('.littlefoot-footnote:not(' + selector + ')')
     }
 
@@ -278,10 +279,8 @@ const littlefoot = function(options) {
 
   /**
    * Removes the unhovered footnote content if dismissOnUnhover is true.
-   *
-   * @param {Event} event Event that contains the target of the mouseout event.
    */
-  function onUnhover(event) {
+  function onUnhover() {
     if (!settings.dismissOnUnhover || !settings.activateOnHover) {
       return
     }
