@@ -1,3 +1,5 @@
+coverage/
 docs/
 .DS_Store
 .nyc_output
+sauce.json
