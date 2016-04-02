@@ -6,10 +6,8 @@
  * @return {String}              Computed style property.
  */
 export default function getStyle(element, property) {
-  // Internet Explorer sometimes struggles to read currentStyle until the element's document is accessed.
-  element.document;
+  // Internet Explorer sometimes struggles to read element.currentStyle until element.document is accessed.
+  const style = !element.document && window.getComputedStyle ? window.getComputedStyle(element) : element.currentStyle
 
-  const style = window.getComputedStyle ? window.getComputedStyle(element) : element.currentStyle
-
-  return style ? style[property] : null
+  return style ? style[property] : ''
 }

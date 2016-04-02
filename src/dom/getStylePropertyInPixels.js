@@ -43,13 +43,13 @@ export default function getStylePropertyInPixels(element, property) {
   switch (unit) {
     case '%':
       const sizes = {
-        'fontSize':  fontSize,
-        'height':    element.clientHeight,
-        'maxHeight': document.body.clientHeight,
-        'maxWidth':  document.body.clientWidth,
-        'minHeight': document.body.clientHeight,
-        'minWidth':  document.body.clientWidth,
-        'width':     element.clientWidth,
+        fontSize,
+        height:    element.clientHeight,
+        maxHeight: document.body.clientHeight,
+        maxWidth:  document.body.clientWidth,
+        minHeight: document.body.clientHeight,
+        minWidth:  document.body.clientWidth,
+        width:     element.clientWidth,
       }
 
       return Math.round(size / 100 * (sizes[property] || 1))

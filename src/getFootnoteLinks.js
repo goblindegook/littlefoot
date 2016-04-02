@@ -17,7 +17,7 @@ export default function mapFootnoteReferences(footnoteLinks, anchorParentSelecto
     const parentId = parent && parent.getAttribute('id') || ''
     const childId  = child && child.getAttribute('id') || ''
     const linkId   = link.getAttribute('id') || ''
-    const id       = parent ? parentId : (child ? childId : '')
+    const id       = parent ? parentId : childId
     const href     = '#' + link.getAttribute('href').split('#')[1]
 
     link.setAttribute('data-footnote-backlink-ref', id + linkId)
@@ -41,7 +41,7 @@ export default function getFootnoteLinks(settings) {
 
   const footnoteLinks = Array.prototype.filter.call(
     document.querySelectorAll(footnoteLinkSelector),
-    link => {
+    (link) => {
       const href   = link.getAttribute('href')
       const rel    = link.getAttribute('rel')
       const anchor = '' + href + (rel != null && rel !== 'null' ? rel : '')
