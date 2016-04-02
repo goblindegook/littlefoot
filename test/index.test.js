@@ -68,7 +68,8 @@ test('littlefoot setup with default options', (t) => {
 
       dispatchEvent(footnote1, 'click')
 
-      t.equal(body.querySelectorAll('button.changing').length, 1, 'transitions popover activation on click')
+      t.equal(body.querySelectorAll('button.changing').length, 1,
+        'transitions popover activation on click')
 
       return delay(activateDelay)
     })
@@ -80,6 +81,16 @@ test('littlefoot setup with default options', (t) => {
     })
     .then(() => {
       t.notOk(body.querySelector('button.is-active'), 'dismisses popovers on body click event')
+
+      dispatchEvent(footnote1, 'click')
+      return delay(activateDelay)
+    })
+    .then(() => {
+      dispatchEvent(footnote1, 'click')
+      return delay(dismissDelay)
+    })
+    .then(() => {
+      t.notOk(body.querySelector('button.is-active'), 'dismisses popovers on activating twice')
 
       teardown()
       t.end()
