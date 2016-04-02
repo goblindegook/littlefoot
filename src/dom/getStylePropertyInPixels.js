@@ -1,25 +1,6 @@
 import getStyle from './getStyle'
 
 /**
- * Calculates the base font size for `rem`-based sizing.
- *
- * @return {Number} The base font size in pixels.
- */
-function getBaseFontSize() {
-  const element = document.createElement('div')
-
-  element.style.cssText = 'display:inline-block;padding:0;line-height:1;position:absolute;visibility:hidden;font-size:1em;'
-  element.appendChild(document.createElement('M'))
-  document.body.appendChild(element)
-
-  const size = element.offsetHeight
-
-  document.body.removeChild(element)
-
-  return size
-}
-
-/**
  * Calculates a pixel size (as a regular integer) based on a string with an unknown unit.
  *
  * Adapted from Jonathan Neal's getComputedStylePixel() polyfill.
@@ -40,7 +21,7 @@ export default function getStylePropertyInPixels(element, property) {
   const fontSize = element.parentElement && /%|em/.test(unit)
     ? getStylePropertyInPixels(element.parentElement, 'fontSize') : 16
 
-  const baseFontSize = unit === 'rem' ? getBaseFontSize() : 16
+  const baseFontSize = unit === 'rem' ? getStylePropertyInPixels(document.body, 'fontSize') : 16
 
   const sizes = {
     fontSize,

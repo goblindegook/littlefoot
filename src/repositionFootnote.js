@@ -39,40 +39,40 @@ function setFootnoteState(footnote, state) {
 export default function repositionFootnote(footnote, event) {
   const type           = event ? event.type : 'resize'
   const button         = siblings(footnote, '.littlefoot-footnote__button')[0]
-  const roomLeft       = getAvailableRoom(button)
-  const marginSize     = parseFloat(getStyle(footnote, 'margin-top'))
+  const room           = getAvailableRoom(button)
+  const marginSize     = parseFloat(getStyle(footnote, 'marginTop'))
   const totalHeight    = 2 * marginSize + footnote.offsetHeight
-  const isTop          = roomLeft.bottomRoom < totalHeight && roomLeft.topRoom > roomLeft.bottomRoom
-  const maxHeight      = roomLeft[isTop ? 'topRoom' : 'bottomRoom'] - marginSize - 15
+  const isTop          = room.bottom < totalHeight && room.bottom < room.top
+  const maxHeight      = room[isTop ? 'top' : 'bottom'] - marginSize - 15
   const styleMaxHeight = parseInt(footnote.getAttribute('data-littlefoot-max-height'), 10)
   const state          = footnote.getAttribute('data-littlefoot-state')
+  const content        = footnote.querySelector('.littlefoot-footnote__content')
 
   if (isTop && state !== 'top') {
     setFootnoteState(footnote, 'top')
-    footnote.style.transformOrigin = (roomLeft.leftRelative * 100) + '% 100%'
+    footnote.style.transformOrigin = `${room.leftRelative * 100}% 100%`
   }
 
   if (!isTop && state !== 'bottom') {
     setFootnoteState(footnote, 'bottom')
-    footnote.style.transformOrigin = (roomLeft.leftRelative * 100) + '% 0'
+    footnote.style.transformOrigin = `${room.leftRelative * 100}% 0`
   }
 
-  footnote.querySelector('.littlefoot-footnote__content').style.maxHeight = Math.min(maxHeight, styleMaxHeight) + 'px'
+  content.style.maxHeight = Math.min(maxHeight, styleMaxHeight) + 'px'
 
   if (type === 'resize') {
     const styleMaxWidth = parseFloat(footnote.getAttribute('data-littlefoot-max-width'))
     const wrapper       = footnote.querySelector('.littlefoot-footnote__wrapper')
-    const content       = footnote.querySelector('.littlefoot-footnote__content')
     const maxWidth      = Math.min(styleMaxWidth, content.offsetWidth + 1)
-    const left          = -roomLeft.leftRelative * maxWidth + parseFloat(getStyle(button, 'marginLeft')) + button.offsetWidth / 2
+    const left          = -room.leftRelative * maxWidth + parseFloat(getStyle(button, 'marginLeft')) + button.offsetWidth / 2
 
     footnote.style.left    = left + 'px'
     wrapper.style.maxWidth = maxWidth + 'px'
 
-    positionTooltip(footnote, roomLeft.leftRelative)
+    positionTooltip(footnote, room.leftRelative)
   }
 
-  if (parseInt(footnote.offsetHeight) < footnote.querySelector('.littlefoot-footnote__content').scrollHeight) {
+  if (parseInt(footnote.offsetHeight, 10) < content.scrollHeight) {
     classList(footnote).add('is-scrollable')
   }
 }
