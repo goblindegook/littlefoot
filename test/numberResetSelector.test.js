@@ -1,7 +1,6 @@
 import 'core-js/es6/set'
 import test from 'tape'
 import littlefoot from '../src/'
-import { dispatchEvent } from '../src/dom/events'
 import { setup, teardown } from './helper'
 
 test('littlefoot setup with numberResetSelector', (t) => {

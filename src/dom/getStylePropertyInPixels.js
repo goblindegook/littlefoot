@@ -40,42 +40,29 @@ export default function getStylePropertyInPixels(element, property) {
   const fontSize = element.parentElement && /%|em/.test(unit)
     ? getStylePropertyInPixels(element.parentElement, 'fontSize') : 16
 
-  switch (unit) {
-    case '%':
-      const sizes = {
-        fontSize,
-        height:    element.clientHeight,
-        maxHeight: document.body.clientHeight,
-        maxWidth:  document.body.clientWidth,
-        minHeight: document.body.clientHeight,
-        minWidth:  document.body.clientWidth,
-        width:     element.clientWidth,
-      }
+  const baseFontSize = unit === 'rem' ? getBaseFontSize() : 16
 
-      return Math.round(size / 100 * (sizes[property] || 1))
-
-    case 'rem':
-      return Math.round(size * getBaseFontSize())
-
-    case 'em':
-      return Math.round(size * fontSize)
-
-    case 'cm':
-      return Math.round(size * 0.3937 * 96)
-
-    case 'in':
-      return Math.round(size * 96)
-
-    case 'mm':
-      return Math.round(size * 0.3937 * 96 / 10)
-
-    case 'pc':
-      return Math.round(size * 12 * 96 / 72)
-
-    case 'pt':
-      return Math.round(size * 96 / 72)
-
-    default:
-      return Math.round(size)
+  const sizes = {
+    fontSize,
+    height:    element.clientHeight,
+    maxHeight: document.body.clientHeight,
+    maxWidth:  document.body.clientWidth,
+    minHeight: document.body.clientHeight,
+    minWidth:  document.body.clientWidth,
+    width:     element.clientWidth,
   }
+
+  const pixelSizes = {
+    '%': size / 100 * (sizes[property] || 1),
+    cm:  size * 0.3937 * 96,
+    em:  size * fontSize,
+    in:  size * 96,
+    mm:  size * 0.3937 * 96 / 10,
+    pc:  size * 12 * 96 / 72,
+    pt:  size * 96 / 72,
+    px:  size,
+    rem: size * baseFontSize,
+  }
+
+  return Math.round(pixelSizes.hasOwnProperty(unit) ? pixelSizes[unit] : size)
 }

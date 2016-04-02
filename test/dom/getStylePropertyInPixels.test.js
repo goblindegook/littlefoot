@@ -32,18 +32,18 @@ test('getStylePropertyInPixels (em|rem)', (t) => {
     fixture.style.minWidth = size
 
     t.equal(getStylePropertyInPixels(fixture, 'width'), fixture.clientWidth,
-      'width: ' + size + 'with default font size')
+      'width: ' + size + ' with default font size')
 
     t.equal(getStylePropertyInPixels(fixture, 'minWidth'), fixture.clientWidth,
-      'min-width: ' + size + 'with default font size')
+      'min-width: ' + size + ' with default font size')
 
     fixture.style.fontSize = '200%'
 
     t.equal(getStylePropertyInPixels(fixture, 'width'), fixture.clientWidth,
-      'min-width: ' + size + 'with 200% font size')
+      'min-width: ' + size + ' with 200% font size')
 
     t.equal(getStylePropertyInPixels(fixture, 'minWidth'), fixture.clientWidth,
-      'width: ' + size + 'with 200% font size')
+      'width: ' + size + ' with 200% font size')
   })
 
   teardown()
