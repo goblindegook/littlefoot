@@ -37,15 +37,27 @@ export default function getStylePropertyInPixels(element, property) {
     return 10000
   }
 
+  const fontSize = element.parentElement && /%|em/.test(unit)
+    ? getStylePropertyInPixels(element.parentElement, 'fontSize') : 16
+
   switch (unit) {
     case '%':
-      return Math.round(size / 100)
+      const sizes = {
+        'fontSize':  fontSize,
+        'height':    element.clientHeight,
+        'maxHeight': document.body.clientHeight,
+        'maxWidth':  document.body.clientWidth,
+        'minHeight': document.body.clientHeight,
+        'minWidth':  document.body.clientWidth,
+        'width':     element.clientWidth,
+      }
+
+      return Math.round(size / 100 * (sizes[property] || 1))
 
     case 'rem':
       return Math.round(size * getBaseFontSize())
 
     case 'em':
-      const fontSize = element.parentElement ? getStylePropertyInPixels(element.parentElement, 'font-size') : 16
       return Math.round(size * fontSize)
 
     case 'cm':

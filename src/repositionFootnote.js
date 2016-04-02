@@ -63,16 +63,8 @@ export default function repositionFootnote(footnote, event) {
     const styleMaxWidth = parseFloat(footnote.getAttribute('data-littlefoot-max-width'))
     const wrapper       = footnote.querySelector('.littlefoot-footnote__wrapper')
     const content       = footnote.querySelector('.littlefoot-footnote__content')
-
-    let maxWidth = styleMaxWidth
-
-    if (styleMaxWidth <= 1) {
-      maxWidth = Math.min(window.innerWidth, 10000) * styleMaxWidth
-    }
-
-    maxWidth = Math.min(maxWidth, content.offsetWidth + 1)
-
-    const left = -roomLeft.leftRelative * maxWidth + parseFloat(getStyle(button, 'margin-left')) + button.offsetWidth / 2
+    const maxWidth      = Math.min(styleMaxWidth, content.offsetWidth + 1)
+    const left          = -roomLeft.leftRelative * maxWidth + parseFloat(getStyle(button, 'marginLeft')) + button.offsetWidth / 2
 
     footnote.style.left    = left + 'px'
     wrapper.style.maxWidth = maxWidth + 'px'

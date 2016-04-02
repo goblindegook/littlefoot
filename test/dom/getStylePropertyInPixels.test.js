@@ -17,7 +17,7 @@ test('getStylePropertyInPixels (none)', (t) => {
   const fixture = setup()
 
   fixture.style.display = 'none'
-  t.equal(getStylePropertyInPixels(fixture, 'display'), 10000, 'fixture property is none')
+  t.equal(getStylePropertyInPixels(fixture, 'display'), 10000, 'display: none')
 
   teardown()
   t.end()
@@ -29,14 +29,21 @@ test('getStylePropertyInPixels (em|rem)', (t) => {
 
   sizes.forEach((size) => {
     fixture.style.width = size
+    fixture.style.minWidth = size
 
     t.equal(getStylePropertyInPixels(fixture, 'width'), fixture.clientWidth,
-      size + ' width with default font size')
+      'width: ' + size + 'with default font size')
+
+    t.equal(getStylePropertyInPixels(fixture, 'minWidth'), fixture.clientWidth,
+      'min-width: ' + size + 'with default font size')
 
     fixture.style.fontSize = '200%'
 
     t.equal(getStylePropertyInPixels(fixture, 'width'), fixture.clientWidth,
-      size + ' width with 200% font size')
+      'min-width: ' + size + 'with 200% font size')
+
+    t.equal(getStylePropertyInPixels(fixture, 'minWidth'), fixture.clientWidth,
+      'width: ' + size + 'with 200% font size')
   })
 
   teardown()
@@ -48,10 +55,11 @@ test('getStylePropertyInPixels (cm|in|mm|pc|pt|px)', (t) => {
   const sizes   = ['100cm', '100in', '100mm', '100pc', '100pt', '100px']
 
   sizes.forEach((size) => {
-    fixture.style.width  = size
-    fixture.style.height = size
+    fixture.style.width    = size
+    fixture.style.minWidth = size
 
-    t.equal(getStylePropertyInPixels(fixture, 'width'), fixture.clientWidth, size + ' width')
+    t.equal(getStylePropertyInPixels(fixture, 'width'), fixture.clientWidth, 'width: ' + size)
+    t.equal(getStylePropertyInPixels(fixture, 'minWidth'), fixture.clientWidth, 'min-width: ' + size)
   })
 
   teardown()
@@ -64,8 +72,14 @@ test('getStylePropertyInPixels (%)', (t) => {
   fixture.style.width = '50%'
 
   t.equal(getStylePropertyInPixels(fixture, 'width'),
-    Math.round(fixture.parentElement.clientWidth / 2),
-    'fixture property in %')
+    fixture.clientWidth,
+    'width: 50%')
+
+  fixture.style.minWidth = '50%'
+
+  t.equal(getStylePropertyInPixels(fixture, 'minWidth'),
+    Math.round(document.body.clientWidth / 2),
+    'min-width: 50%')
 
   teardown()
   t.end()

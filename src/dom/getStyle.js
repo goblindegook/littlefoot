@@ -11,7 +11,5 @@ export default function getStyle(element, property) {
 
   const style = window.getComputedStyle ? window.getComputedStyle(element) : element.currentStyle
 
-  if (style) {
-    return style[property.replace(/-(\w)/gi, (word, letter) => letter.toUpperCase())]
-  }
+  return style ? style[property] : null
 }
