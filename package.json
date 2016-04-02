@@ -62,6 +62,7 @@
     "watchify": "^3.7.0"
   },
   "dependencies": {
+    "delegate": "^3.0.1",
     "dom-classlist": "^1.0.1",
     "dom-closest": "^0.2.0",
     "dom-matches": "^2.0.0",

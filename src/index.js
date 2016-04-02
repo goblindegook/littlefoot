@@ -1,6 +1,6 @@
 import closest from 'dom-closest'
-import matches from 'dom-matches'
 import classList from 'dom-classlist'
+import delegate from 'delegate'
 import escape from 'lodash/escape'
 import template from 'lodash/template'
 import throttle from 'lodash/throttle'
@@ -202,22 +202,6 @@ const littlefoot = function(options) {
       return
     }
 
-    while (target !== document && !(match = matches(target, '.littlefoot-footnote__button'))) {
-      target = target.parentNode
-    }
-
-    if (!match) {
-      return
-    }
-
-    while (related && related !== target && related !== document) {
-      related = related.parentNode
-    }
-
-    if (related === target) {
-      return
-    }
-
     const footnoteHovered = closest(target, '.littlefoot-footnote__button')
     const dataIdentifier  = `[data-footnote-id="${footnoteHovered.getAttribute('data-footnote-id')}"]`
 
@@ -306,23 +290,11 @@ const littlefoot = function(options) {
       return
     }
 
-    while (target !== document && !(match = matches(target, '.is-hover-instantiated'))) {
-      target = target.parentNode
-    }
-
-    if (match) {
-      while (related && related !== target && related !== document) {
-        related = related.parentNode
+    setTimeout(() => {
+      if (!document.querySelector('.littlefoot-footnote__button:hover, .littlefoot-footnote:hover')) {
+        dismissAllFootnotes()
       }
-
-      if (related !== target) {
-        setTimeout(() => {
-          if (!document.querySelector('.littlefoot-footnote__button:hover, .littlefoot-footnote:hover')) {
-            dismissAllFootnotes()
-          }
-        }, settings.hoverDelay)
-      }
-    }
+    }, settings.hoverDelay)
   }
 
   /**
@@ -341,11 +313,11 @@ const littlefoot = function(options) {
   addEventListener(document, 'touchend', onTouchClick)
   addEventListener(document, 'click', onTouchClick)
   addEventListener(document, 'keyup', onEscapeKeypress)
-  addEventListener(document, 'mouseover', onHover)
-  addEventListener(document, 'mouseout', onUnhover)
   addEventListener(document, 'gestureend', repositionAllFootnotes)
   addEventListener(window, 'scroll', throttle(repositionAllFootnotes))
   addEventListener(window, 'resize', throttle(repositionAllFootnotes))
+  delegate(document, '.littlefoot-footnote__button', 'mouseover', onHover)
+  delegate(document, '.is-hover-instantiated', 'mouseout', onUnhover)
 
   return {
     activate: displayFootnote,
