@@ -1,7 +1,6 @@
 import test from 'tape'
 import littlefoot from '../src/'
-import setup from './helper/setup'
-import teardown from './helper/teardown'
+import { setup, teardown } from './helper'
 
 test('littlefoot setup with allowDuplicates=false', (t) => {
   setup('default.html')
@@ -37,7 +36,7 @@ test('littlefoot setup with allowDuplicates=true', (t) => {
   setup('multiple.html')
 
   littlefoot({ allowDuplicates: false })
-  
+
   const buttons   = document.body.querySelectorAll('[data-littlefoot-footnote]')
   const processed = document.body.querySelectorAll('.footnote-processed')
 

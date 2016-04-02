@@ -29,17 +29,17 @@ function getBaseFontSize() {
  * @return {Number}              The string representation of the actual size.
  */
 export default function getStylePropertyInPixels(element, property) {
-  const style = getStyle(element)
-  const value = style[property] != null ? style[property] : 'none'
+  const value = getStyle(element, property)
   const size  = parseFloat(value)
   const unit  = value.replace(/[\d\.]+(%|cm|em|in|mm|pc|pt|px|rem|)/, '$1') || ''
 
-  if (value === 'none') {
+  if (value == null || value === 'none') {
     return 10000
   }
 
   switch (unit) {
     case '%':
+      console.log('******', Math.round(size / 100))
       return Math.round(size / 100)
 
     case 'rem':

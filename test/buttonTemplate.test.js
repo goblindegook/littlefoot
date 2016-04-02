@@ -1,7 +1,6 @@
 import test from 'tape'
 import littlefoot from '../src/'
-import setup from './helper/setup'
-import teardown from './helper/teardown'
+import { setup, teardown } from './helper'
 
 test('littlefoot setup with custom buttonTemplate', (t) => {
   setup('default.html')

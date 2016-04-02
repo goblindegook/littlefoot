@@ -58,10 +58,10 @@
     "sinon": "^1.17.3",
     "stringify": "^5.1.0",
     "tape": "^4.4.0",
-    "then-sleep": "^1.0.1",
     "watchify": "^3.7.0"
   },
   "dependencies": {
+    "core-js": "^2.2.1",
     "dom-classlist": "^1.0.1",
     "dom-closest": "^0.2.0",
     "dom-matches": "^2.0.0",

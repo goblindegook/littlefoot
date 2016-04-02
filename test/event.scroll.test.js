@@ -1,9 +1,9 @@
+import 'core-js/es6/promise'
+import delay from 'core-js/library/core/delay'
 import test from 'tape'
 import simulant from 'simulant'
-import sleep from 'then-sleep'
 import littlefoot from '../src/'
-import setup from './helper/setup'
-import teardown from './helper/teardown'
+import { setup, teardown } from './helper'
 
 // FIXME: Test scroll events consistently across browsers.
 
@@ -16,7 +16,7 @@ test.skip('scroll event handling', (t) => {
 
   lf.activate('button[data-footnote-id="4"]')
 
-  sleep(activateDelay)
+  delay(activateDelay)
     .then(() => {
       const content = document.body.querySelector('.littlefoot-footnote__content')
 

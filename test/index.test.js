@@ -1,9 +1,9 @@
+import 'core-js/es6/promise'
+import delay from 'core-js/library/core/delay'
 import test from 'tape'
-import sleep from 'then-sleep'
 import littlefoot from '../src/'
 import { dispatchEvent } from '../src/dom/events'
-import setup from './helper/setup'
-import teardown from './helper/teardown'
+import { setup, teardown } from './helper'
 
 test('littlefoot setup with default options', (t) => {
   setup('default.html')
@@ -50,7 +50,7 @@ test('littlefoot setup with default options', (t) => {
   // activate button
   lf.activate('button[data-footnote-id="1"]')
 
-  sleep(activateDelay)
+  delay(activateDelay)
     .then(() => {
       const content = body.querySelector('.littlefoot-footnote__content')
 
@@ -61,7 +61,7 @@ test('littlefoot setup with default options', (t) => {
         'activates one popover on activate()')
 
       lf.dismiss()
-      return sleep(dismissDelay)
+      return delay(dismissDelay)
     })
     .then(() => {
       t.notOk(body.querySelector('button.is-active'), 'dismisses popovers on dismiss()')
@@ -70,13 +70,13 @@ test('littlefoot setup with default options', (t) => {
 
       t.equal(body.querySelectorAll('button.changing').length, 1, 'transitions popover activation on click')
 
-      return sleep(activateDelay)
+      return delay(activateDelay)
     })
     .then(() => {
       t.ok(body.querySelector('button.is-active'), 'activates one popover on button click event')
 
       dispatchEvent(body, 'click')
-      return sleep(dismissDelay)
+      return delay(dismissDelay)
     })
     .then(() => {
       t.notOk(body.querySelector('button.is-active'), 'dismisses popovers on body click event')

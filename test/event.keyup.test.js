@@ -1,9 +1,9 @@
+import 'core-js/es6/promise'
+import delay from 'core-js/library/core/delay'
 import test from 'tape'
 import simulant from 'simulant'
-import sleep from 'then-sleep'
 import littlefoot from '../src/'
-import setup from './helper/setup'
-import teardown from './helper/teardown'
+import { setup, teardown } from './helper'
 
 test('keyboard event handling', (t) => {
   setup('default.html')
@@ -17,7 +17,7 @@ test('keyboard event handling', (t) => {
 
   lf.activate('button[data-footnote-id="1"]')
 
-  sleep(activateDelay)
+  delay(activateDelay)
     .then(() => {
       t.ok(body.querySelector('.littlefoot-footnote__content'), 'has active popover before escape keypress')
 
@@ -27,7 +27,7 @@ test('keyboard event handling', (t) => {
 
       simulant.fire(document, 'keyup', { keyCode: 27 }) // esc
 
-      return sleep(dismissDelay)
+      return delay(dismissDelay)
     })
     .then(() => {
       t.notOk(body.querySelector('.littlefoot-footnote__content'), 'dismisses popovers on escape keypress')

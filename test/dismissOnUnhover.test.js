@@ -1,10 +1,10 @@
+import 'core-js/es6/promise'
+import delay from 'core-js/library/core/delay'
 import test from 'tape'
 import classList from 'dom-classlist'
-import sleep from 'then-sleep'
 import littlefoot from '../src/'
 import { dispatchEvent } from '../src/dom/events'
-import setup from './helper/setup'
-import teardown from './helper/teardown'
+import { setup, teardown } from './helper'
 
 test('littlefoot setup with dismissOnUnhover=true', (t) => {
   setup('default.html')
@@ -18,14 +18,14 @@ test('littlefoot setup with dismissOnUnhover=true', (t) => {
 
   dispatchEvent(footnote, 'mouseover')
 
-  sleep(activateDelay)
+  delay(activateDelay)
     .then(() => {
       t.ok(classList(footnote).contains('is-active'),
         'popover has is-active class before unhover event')
 
       dispatchEvent(footnote, 'mouseout')
 
-      return sleep(dismissDelay + hoverDelay)
+      return delay(dismissDelay + hoverDelay)
     })
     .then(() => {
       t.notOk(classList(footnote).contains('is-active'),

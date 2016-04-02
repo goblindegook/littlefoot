@@ -1,9 +1,9 @@
+import 'core-js/es6/promise'
+import delay from 'core-js/library/core/delay'
 import test from 'tape'
 import sinon from 'sinon'
-import sleep from 'then-sleep'
+import { setup, teardown } from './helper'
 import littlefoot from '../src/'
-import setup from './helper/setup'
-import teardown from './helper/teardown'
 
 test('littlefoot setup with activateCallback', (t) => {
   setup('default.html')
@@ -16,7 +16,7 @@ test('littlefoot setup with activateCallback', (t) => {
 
   lf.activate('button[data-footnote-id="1"]')
 
-  sleep(activateDelay)
+  delay(activateDelay)
     .then(() => {
       t.ok(callback.called, 'activateCallback called')
 

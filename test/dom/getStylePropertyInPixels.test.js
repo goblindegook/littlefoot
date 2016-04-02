@@ -1,6 +1,6 @@
 import test from 'tape'
-import getStylePropertyInPixels from '../src/dom/getStylePropertyInPixels'
-import teardown from './helper/teardown'
+import getStylePropertyInPixels from '../../src/dom/getStylePropertyInPixels'
+import { teardown } from '../helper'
 
 /**
  * Setup fixture.

@@ -7,8 +7,7 @@ import getStyle from './getStyle'
  * @return {Object}             Available room.
  */
 export default function getAvailableRoom(element) {
-  const style      = getStyle(element)
-  const leftMargin = parseFloat(style.marginLeft)
+  const leftMargin = parseFloat(getStyle(element, 'margin-left'))
   const width      = parseFloat(element.offsetWidth) - leftMargin
   const height     = parseFloat(element.offsetHeight)
   const rect       = element.getBoundingClientRect()
