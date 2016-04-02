@@ -39,7 +39,6 @@ export default function getStylePropertyInPixels(element, property) {
 
   switch (unit) {
     case '%':
-      console.log('******', Math.round(size / 100))
       return Math.round(size / 100)
 
     case 'rem':
