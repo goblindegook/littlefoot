@@ -1,6 +1,5 @@
-import 'core-js/es6/promise'
-import delay from 'core-js/library/core/delay'
 import test from 'tape'
+
 import simulant from 'simulant'
 import littlefoot from '../src/'
 import { setup, teardown } from './helper'

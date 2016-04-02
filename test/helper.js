@@ -29,8 +29,18 @@ export function teardown() {
   }
 }
 
+/**
+ * Delay function, returning a Promise after the provided number of seconds.
+ * @param  {Number}  timeout Sleep delay.
+ * @return {Promise}         Promise.
+ */
+export function sleep(timeout) {
+  return new Promise((resolve) => setTimeout(resolve, timeout))
+}
+
 const helper = {
   setup,
+  sleep,
   teardown,
 }
 

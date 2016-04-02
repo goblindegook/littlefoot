@@ -1,4 +1,3 @@
-import 'core-js/es6/set'
 import test from 'tape'
 import littlefoot from '../src/'
 import { setup, teardown } from './helper'

@@ -4,6 +4,7 @@
   "description": "Footnotes without the footprint.",
   "repository": "goblindegook/littlefoot",
   "scripts": {
+    "clean": "rm -rf coverage lib styles/css",
     "build": "npm run build-scripts && npm run build-styles",
     "build-scripts": "cd src; babel *.js **/*.js -d ../lib",
     "build-styles": "node-sass --include-path styles/sass -o styles/css/ styles/sass/",
@@ -33,12 +34,13 @@
     "babel-istanbul": "^0.7.0",
     "babel-plugin-object-assign": "^1.2.1",
     "babel-plugin-transform-object-assign": "^6.5.0",
+    "babel-plugin-transform-runtime": "^6.6.0",
+    "babel-plugin-transform-strict-mode": "^6.6.5",
     "babel-preset-es2015": "^6.3.13",
     "babel-tape-runner": "^2.0.1",
     "babelify": "^7.2.0",
     "browserify": "^13.0.0",
     "browserify-istanbul": "^2.0.0",
-    "core-js": "^2.2.1",
     "esdoc": "^0.4.3",
     "eslint": "^2.5.3",
     "istanbul": "^0.4.2",
@@ -62,6 +64,7 @@
     "watchify": "^3.7.0"
   },
   "dependencies": {
+    "babel-runtime": "^6.6.1",
     "delegate": "^3.0.1",
     "dom-classlist": "^1.0.1",
     "dom-closest": "^0.2.0",

@@ -1,10 +1,8 @@
-import 'core-js/es6/promise'
 import classList from 'dom-classlist'
-import delay from 'core-js/library/core/delay'
 import test from 'tape'
 import littlefoot from '../src/'
 import { dispatchEvent } from '../src/dom/events'
-import { setup, teardown } from './helper'
+import { setup, sleep, teardown } from './helper'
 
 test('littlefoot setup with default options', (t) => {
   setup('default.html')
@@ -59,7 +57,7 @@ test('footnote activation and dismissal', (t) => {
   // activate button
   lf.activate('button[data-footnote-id="1"]')
 
-  delay(activateDelay)
+  sleep(activateDelay)
     .then(() => {
       const content = document.body.querySelector('.littlefoot-footnote__content')
 
@@ -70,7 +68,7 @@ test('footnote activation and dismissal', (t) => {
         'activates one popover on activate()')
 
       lf.dismiss()
-      return delay(dismissDelay)
+      return sleep(dismissDelay)
     })
     .then(() => {
       t.notOk(classList(footnote).contains('is-active'),
@@ -81,25 +79,25 @@ test('footnote activation and dismissal', (t) => {
       t.ok(classList(footnote).contains('changing'),
         'transitions popover activation on click')
 
-      return delay(activateDelay)
+      return sleep(activateDelay)
     })
     .then(() => {
       t.ok(classList(footnote).contains('is-active'),
         'activates one popover on button click event')
 
       dispatchEvent(document.body, 'click')
-      return delay(dismissDelay)
+      return sleep(dismissDelay)
     })
     .then(() => {
       t.notOk(classList(footnote).contains('is-active'),
         'dismisses popovers on body click event')
 
       dispatchEvent(footnote, 'click')
-      return delay(activateDelay)
+      return sleep(activateDelay)
     })
     .then(() => {
       dispatchEvent(footnote, 'click')
-      return delay(dismissDelay)
+      return sleep(dismissDelay)
     })
     .then(() => {
       t.notOk(classList(footnote).contains('is-active'),
