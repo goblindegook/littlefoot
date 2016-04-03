@@ -1,8 +1,7 @@
 import test from 'tape'
-
 import simulant from 'simulant'
 import littlefoot from '../src/'
-import { setup, teardown } from './helper'
+import { setup, sleep, teardown } from './helper'
 
 // FIXME: Test scroll events consistently across browsers.
 
@@ -15,7 +14,7 @@ test.skip('scroll event handling', (t) => {
 
   lf.activate('button[data-footnote-id="4"]')
 
-  delay(activateDelay)
+  sleep(activateDelay)
     .then(() => {
       const content = document.body.querySelector('.littlefoot-footnote__content')
 
