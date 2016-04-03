@@ -9,7 +9,7 @@ test('littlefoot setup with activateOnHover=true', (t) => {
 
   const lf = littlefoot({ activateOnHover: true })
 
-  const activateDelay = lf.get('activateDelay')
+  const activateDelay = lf.getSetting('activateDelay')
   const footnote    = document.body.querySelector('button[data-footnote-id="1"]')
 
   dispatchEvent(footnote, 'mouseover')

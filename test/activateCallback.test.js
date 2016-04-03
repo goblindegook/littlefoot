@@ -10,7 +10,7 @@ test('littlefoot setup with activateCallback', (t) => {
 
   const lf = littlefoot({ activateCallback: callback })
 
-  const activateDelay = lf.get('activateDelay')
+  const activateDelay = lf.getSetting('activateDelay')
 
   lf.activate('button[data-footnote-id="1"]')
 

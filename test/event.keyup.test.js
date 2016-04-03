@@ -10,8 +10,8 @@ test('keyboard event handling', (t) => {
 
   const lf = littlefoot()
 
-  const activateDelay  = lf.get('activateDelay')
-  const dismissDelay = lf.get('dismissDelay')
+  const activateDelay  = lf.getSetting('activateDelay')
+  const dismissDelay = lf.getSetting('dismissDelay')
 
   lf.activate('button[data-footnote-id="1"]')
 

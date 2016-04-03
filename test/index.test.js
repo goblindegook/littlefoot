@@ -46,8 +46,8 @@ test('footnote activation and dismissal', (t) => {
 
   const lf = littlefoot()
 
-  const activateDelay = lf.get('activateDelay')
-  const dismissDelay  = lf.get('dismissDelay')
+  const activateDelay = lf.getSetting('activateDelay')
+  const dismissDelay  = lf.getSetting('dismissDelay')
   const footnote      = document.body.querySelector('button[data-footnote-id="1"]')
 
   // these do nothing

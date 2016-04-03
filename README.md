@@ -264,8 +264,6 @@ Methods on the returning object were overhauled, removing breakpoint logic.
 
 * `activate()` will not activate any footnotes if called without a selector.
 * `close()` was renamed `dismiss()` and will no longer return the list of deactivated buttons.
-* `getSetting()` was renamed `get()`.
-* `updateSetting()` was renamed `set()`.
 
 #### Removed methods
 

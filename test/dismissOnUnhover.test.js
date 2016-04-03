@@ -9,9 +9,9 @@ test('littlefoot setup with dismissOnUnhover=true', (t) => {
 
   const lf = littlefoot({ activateOnHover: true, dismissOnUnhover: true })
 
-  const activateDelay  = lf.get('activateDelay')
-  const dismissDelay = lf.get('dismissDelay')
-  const hoverDelay   = lf.get('hoverDelay')
+  const activateDelay  = lf.getSetting('activateDelay')
+  const dismissDelay = lf.getSetting('dismissDelay')
+  const hoverDelay   = lf.getSetting('hoverDelay')
   const footnote     = document.body.querySelector('button[data-footnote-id="1"]')
 
   dispatchEvent(footnote, 'mouseover')

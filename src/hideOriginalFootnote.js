@@ -32,7 +32,8 @@ function hideFootnoteContainer(container) {
  * Hides the original footnote. Optionally hides the footnote container if all
  * footnotes inside it are already hidden.
  *
- * @param   {DOMElement} footnote Container of the footnote that was deleted/hidden.
+ * @param   {DOMElement} footnote Hidden footnote container element.
+ * @param   {DOMElement} link     Footnote link element.
  * @returns {null}
  */
 export default function hideOriginalFootnote(footnote, link) {

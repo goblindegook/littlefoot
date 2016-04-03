@@ -10,7 +10,7 @@ test.skip('scroll event handling', (t) => {
 
   const lf = littlefoot()
 
-  const activateDelay = lf.get('activateDelay')
+  const activateDelay = lf.getSetting('activateDelay')
 
   lf.activate('button[data-footnote-id="4"]')
 

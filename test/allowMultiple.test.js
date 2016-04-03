@@ -8,8 +8,8 @@ test('littlefoot setup with allowMultiple=true', (t) => {
 
   const lf = littlefoot({ allowMultiple: true })
 
-  const activateDelay  = lf.get('activateDelay')
-  const dismissDelay = lf.get('dismissDelay')
+  const activateDelay  = lf.getSetting('activateDelay')
+  const dismissDelay = lf.getSetting('dismissDelay')
   const buttons      = document.querySelectorAll('button[data-footnote-id]')
 
   dispatchEvent(document.body.querySelector('button[data-footnote-id="1"]'), 'click')
@@ -44,7 +44,7 @@ test('littlefoot setup with allowMultiple=false', (t) => {
 
   const lf = littlefoot({ allowMultiple: false })
 
-  const activateDelay = lf.get('activateDelay')
+  const activateDelay = lf.getSetting('activateDelay')
 
   dispatchEvent(document.body.querySelector('button[data-footnote-id="1"]'), 'click')
 

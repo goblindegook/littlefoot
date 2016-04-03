@@ -249,10 +249,10 @@ const littlefoot = function(options) {
   delegate(document, '.is-hover-instantiated', 'mouseout', onUnhover)
 
   return {
-    activate: displayFootnote,
-    dismiss:  dismissFootnotes,
-    get:      settings.get,
-    set:      settings.set,
+    activate:      displayFootnote,
+    dismiss:       dismissFootnotes,
+    getSetting:    settings.get,
+    updateSetting: settings.set,
   }
 }
 
