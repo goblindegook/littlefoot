@@ -10,7 +10,7 @@ import closest from 'dom-closest'
  * @param  {String} anchorParentSelector Anchor parent selector.
  * @return {Array}                       Anchors with footnote references added.
  */
-export default function mapFootnoteReferences(footnoteLinks, anchorParentSelector) {
+function mapFootnoteReferences(footnoteLinks, anchorParentSelector) {
   return footnoteLinks.map((link) => {
     const parent   = closest(link, anchorParentSelector)
     const child    = link.querySelector(anchorParentSelector)
