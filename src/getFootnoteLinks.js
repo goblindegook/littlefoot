@@ -9,11 +9,12 @@ import closest from 'dom-closest'
  */
 function getFootnoteBacklinkId(link, anchorParentSelector) {
   const parent = closest(link, anchorParentSelector)
-  const child  = link.querySelector(anchorParentSelector)
 
   if (parent) {
     return parent.getAttribute('id')
   }
+
+  const child  = link.querySelector(anchorParentSelector)
 
   if (child) {
     return child.getAttribute('id')
