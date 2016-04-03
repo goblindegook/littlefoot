@@ -9,12 +9,11 @@ import getStyle from './dom/getStyle'
  * @param  {DOMElement} popover      Popover element.
  * @param  {Number}     leftRelative Relative positioning to the left.
  */
-function positionTooltip(popover, leftRelative) {
+function positionTooltip(popover, leftRelative = 0.5) {
   const tooltip = popover.querySelector('.littlefoot-footnote__tooltip')
 
   if (tooltip) {
-    const tooltipLeft = leftRelative != null ? leftRelative : 0.5
-    tooltip.style.left = (tooltipLeft * 100) + '%'
+    tooltip.style.left = (leftRelative * 100) + '%'
   }
 }
 
@@ -115,9 +114,10 @@ export default function repositionFootnote(footnote, event) {
   content.style.maxHeight = maxHeight + 'px'
 
   if (type === 'resize') {
-    const wrapper  = footnote.querySelector('.littlefoot-footnote__wrapper')
-    const maxWidth = getFootnoteMaxWidth(footnote, content)
-    const left     = -room.leftRelative * maxWidth + parseInt(getStyle(button, 'marginLeft'), 10) + button.offsetWidth / 2
+    const wrapper          = footnote.querySelector('.littlefoot-footnote__wrapper')
+    const maxWidth         = getFootnoteMaxWidth(footnote, content)
+    const buttonMarginLeft = parseInt(getStyle(button, 'marginLeft'), 10)
+    const left             = -room.leftRelative * maxWidth + buttonMarginLeft + button.offsetWidth / 2
 
     footnote.style.left    = left + 'px'
     wrapper.style.maxWidth = maxWidth + 'px'
