@@ -19,18 +19,6 @@ function positionTooltip(popover, leftRelative) {
 }
 
 /**
- * Set footnote state attributes.
- * @param {DOMElement} footnote Footnote DOM element.
- * @param {String}     state    State to set, one of 'top' or 'bottom'.
- */
-function setFootnoteState(footnote, state) {
-  const previous = state === 'top' ? 'bottom' : 'top'
-  footnote.setAttribute('data-littlefoot-state', state)
-  classList(footnote).add('is-positioned-' + state)
-  classList(footnote).remove('is-positioned-' + previous)
-}
-
-/**
  * Checks whether there is enough available room to position the footnote
  * on top of the button.
  *
@@ -43,6 +31,40 @@ function isFootnoteOnTop(footnote, room) {
   const totalHeight = 2 * marginSize + footnote.offsetHeight
 
   return room.bottom < totalHeight && room.bottom < room.top
+}
+
+/**
+ * Set footnote state attributes.
+ * @param {DOMElement} footnote Footnote DOM element.
+ * @param {String}     state    State to set, one of 'top' or 'bottom'.
+ */
+function setFootnoteState(footnote, state) {
+  const previous = state === 'top' ? 'bottom' : 'top'
+  footnote.setAttribute('data-littlefoot-state', state)
+  classList(footnote).add('is-positioned-' + state)
+  classList(footnote).remove('is-positioned-' + previous)
+}
+
+/**
+ * Update footnote state according to available room.
+ *
+ * @param  {DOMElement} footnote Footnote element.
+ * @param  {Object}     room     Available room object.
+ * @return {null}
+ */
+function updateFootnoteState(footnote, room) {
+  const isTop = isFootnoteOnTop(footnote, room)
+  const state = footnote.getAttribute('data-littlefoot-state')
+
+  if (isTop && state !== 'top') {
+    setFootnoteState(footnote, 'top')
+    footnote.style.transformOrigin = `${room.leftRelative * 100}% 100%`
+  }
+
+  if (!isTop && state !== 'bottom') {
+    setFootnoteState(footnote, 'bottom')
+    footnote.style.transformOrigin = `${room.leftRelative * 100}% 0`
+  }
 }
 
 /**
@@ -86,19 +108,9 @@ export default function repositionFootnote(footnote, event) {
   const button    = siblings(footnote, '.littlefoot-footnote__button')[0]
   const room      = getAvailableRoom(button)
   const maxHeight = getFootnoteMaxHeight(footnote, room)
-  const isTop     = isFootnoteOnTop(footnote, room)
-  const state     = footnote.getAttribute('data-littlefoot-state')
   const content   = footnote.querySelector('.littlefoot-footnote__content')
 
-  if (isTop && state !== 'top') {
-    setFootnoteState(footnote, 'top')
-    footnote.style.transformOrigin = `${room.leftRelative * 100}% 100%`
-  }
-
-  if (!isTop && state !== 'bottom') {
-    setFootnoteState(footnote, 'bottom')
-    footnote.style.transformOrigin = `${room.leftRelative * 100}% 0`
-  }
+  updateFootnoteState(footnote, room)
 
   content.style.maxHeight = maxHeight + 'px'
 
