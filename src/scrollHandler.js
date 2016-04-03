@@ -5,7 +5,8 @@ import getStylePropertyInPixels from './dom/getStylePropertyInPixels'
 /**
  * Footnote content scroll handler.
  *
- * @param {Event} event Scroll or mousewheel event.
+ * @param   {Event} event Scroll or mousewheel event.
+ * @returns {null}
  */
 export default function scrollHandler(event) {
   const target     = event.currentTarget

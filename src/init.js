@@ -67,7 +67,8 @@ function prepareContent(content, backlinkId) {
  *
  * Finds the likely footnote links and then uses their target to find the content.
  *
- * @param {Object} settings littlefoot settings object.
+ * @param   {Object} settings littlefoot settings object.
+ * @returns {null}
  */
 export default function init(settings) {
   const buttonTemplate   = template(settings.buttonTemplate)

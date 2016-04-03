@@ -66,7 +66,7 @@ export default function getFootnoteLinks(settings) {
       const anchor = '' + href + (rel != null && rel !== 'null' ? rel : '')
 
       return anchor.match(anchorPattern)
-        && !closest(link, '[class*=' + footnoteParentClass + ']:not(a):not(' + anchorParentSelector + ')')
+        && !closest(link, `[class*="${footnoteParentClass}"]:not(a):not(${anchorParentSelector})`)
     }
   )
 

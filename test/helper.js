@@ -1,7 +1,8 @@
 /**
  * Setup fixtures.
  *
- * @param {String} fixture Fixture file to load (defaults to default.html).
+ * @param   {String} fixture Fixture file to load (defaults to default.html).
+ * @returns {null}
  */
 export function setup(fixture) {
   const content = document.createElement('div')
@@ -22,6 +23,8 @@ export function setup(fixture) {
 
 /**
  * Tear down fixtures.
+ *
+ * @returns {null}
  */
 export function teardown() {
   while (document.body.firstChild) {
@@ -31,6 +34,7 @@ export function teardown() {
 
 /**
  * Delay function, returning a Promise after the provided number of seconds.
+ *
  * @param  {Number}  timeout Sleep delay.
  * @return {Promise}         Promise.
  */

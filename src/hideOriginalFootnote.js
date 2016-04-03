@@ -10,7 +10,8 @@ const printOnly = 'footnote-print-only'
  * footnotes and any horizontal rules used to denote the start of the footnote
  * section.
  *
- * @param {DOMElement} footnote Container of the footnote that was deleted/hidden.
+ * @param   {DOMElement} footnote Container of the footnote that was deleted/hidden.
+ * @returns {null}
  */
 function hideFootnoteContainer(container) {
   const visibleFootnotes  = children(container, `:not(.${printOnly})`)
@@ -31,7 +32,8 @@ function hideFootnoteContainer(container) {
  * Hides the original footnote. Optionally hides the footnote container if all
  * footnotes inside it are already hidden.
  *
- * @param {DOMElement} footnote Container of the footnote that was deleted/hidden.
+ * @param   {DOMElement} footnote Container of the footnote that was deleted/hidden.
+ * @returns {null}
  */
 export default function hideOriginalFootnote(footnote, link) {
   classList(footnote).add(printOnly)
