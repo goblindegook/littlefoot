@@ -2,6 +2,8 @@ import matches from 'dom-matches'
 import classList from 'dom-classlist'
 import children from './dom/children'
 
+const printOnly = 'footnote-print-only'
+
 /**
  * Propagates the decision of deleting/hiding the original footnotes up the
  * hierarchy, eliminating any empty/fully-hidden elements containing the
@@ -11,16 +13,16 @@ import children from './dom/children'
  * @param {DOMElement} footnote Container of the footnote that was deleted/hidden.
  */
 function hideFootnoteContainer(container) {
-  const visibleFootnotes  = children(container, ':not(.footnote-print-only)')
-  const visibleSeparators = children(container, 'hr:not(.footnote-print-only)')
+  const visibleFootnotes  = children(container, `:not(.${printOnly})`)
+  const visibleSeparators = children(container, `hr:not(.${printOnly})`)
 
   if (matches(container, ':empty') || visibleFootnotes.length === 0) {
-    classList(container).add('footnote-print-only')
+    classList(container).add(printOnly)
     hideFootnoteContainer(container.parentNode)
 
   } else if (visibleFootnotes.length === visibleSeparators.length) {
-    children(container, 'hr').forEach((child) => classList(child).add('footnote-print-only'))
-    classList(container).add('footnote-print-only')
+    children(container, 'hr').forEach((child) => classList(child).add(printOnly))
+    classList(container).add(printOnly)
     hideFootnoteContainer(container.parentNode)
   }
 }
@@ -32,8 +34,8 @@ function hideFootnoteContainer(container) {
  * @param {DOMElement} footnote Container of the footnote that was deleted/hidden.
  */
 export default function hideOriginalFootnote(footnote, link) {
-  classList(footnote).add('footnote-print-only')
-  classList(link).add('footnote-print-only')
+  classList(footnote).add(printOnly)
+  classList(link).add(printOnly)
 
   hideFootnoteContainer(footnote.parentNode)
 }

@@ -1,7 +1,6 @@
 import closest from 'dom-closest'
 import classList from 'dom-classlist'
 import delegate from 'delegate'
-import escape from 'lodash/escape'
 import template from 'lodash/template'
 import throttle from 'lodash/throttle'
 import { addEventListener, dispatchEvent } from './dom/events'

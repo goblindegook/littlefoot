@@ -1,6 +1,28 @@
 import closest from 'dom-closest'
 
 /**
+ * Obtain the ID attribute from a footnote link element's closest parent or child.
+ *
+ * @param  {DOMElement} link                 Footnote link element.
+ * @param  {String}     anchorParentSelector Anchor parent selector.
+ * @return {String}                          Link ID.
+ */
+function getFootnoteBacklinkId(link, anchorParentSelector) {
+  const parent = closest(link, anchorParentSelector)
+  const child  = link.querySelector(anchorParentSelector)
+
+  if (parent) {
+    return parent.getAttribute('id')
+  }
+
+  if (child) {
+    return child.getAttribute('id')
+  }
+
+  return null
+}
+
+/**
  * Groups the ID and HREF of a superscript/anchor tag pair in data attributes.
  *
  * This resolves the issue of the href and backlink id being separated between
@@ -12,13 +34,9 @@ import closest from 'dom-closest'
  */
 function mapFootnoteReferences(footnoteLinks, anchorParentSelector) {
   return footnoteLinks.map((link) => {
-    const parent   = closest(link, anchorParentSelector)
-    const child    = link.querySelector(anchorParentSelector)
-    const parentId = parent && parent.getAttribute('id') || ''
-    const childId  = child && child.getAttribute('id') || ''
-    const linkId   = link.getAttribute('id') || ''
-    const id       = parent ? parentId : childId
-    const href     = '#' + link.getAttribute('href').split('#')[1]
+    const id     = getFootnoteBacklinkId(link, anchorParentSelector) || ''
+    const linkId = link.getAttribute('id') || ''
+    const href   = '#' + link.getAttribute('href').split('#')[1]
 
     link.setAttribute('data-footnote-backlink-ref', id + linkId)
     link.setAttribute('data-footnote-ref', href)
