@@ -220,11 +220,11 @@ This function will close any footnote popovers matching the (string) selector pr
 
 This will activate the footnote button (and its associated popover) matching the (string) selector provided for button. If the option to allow multiple footnotes is false, only the first matching footnote will be activated.
 
-### `get(key)`
+### `getSetting(key)`
 
 Returns the script setting matching the string provided for setting, if such a setting exists.
 
-### `set(key, value)`
+### `updateSetting(key, value)`
 
 Updates the script setting matching the string provided for setting with newValue, or adds the option if none exists. In either case, the old value for the setting will be returned.
 
