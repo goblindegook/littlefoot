@@ -6,9 +6,8 @@
  * @return {String}              Computed style property.
  */
 export default function getStyle(element, property) {
-  element.document; // IE sometimes struggles to read element.currentStyle until element.document is accessed.
+  const view  = element.ownerDocument.defaultView || window
+  const style = view.getComputedStyle ? view.getComputedStyle(element) : element.currentStyle
 
-  const style = window.getComputedStyle ? window.getComputedStyle(element) : element.currentStyle
-
-  return style ? style[property] : ''
+  return style.getPropertyValue(property) || style[property] || ''
 }

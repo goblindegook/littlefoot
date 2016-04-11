@@ -83,19 +83,6 @@ function getFootnoteMaxHeight(footnote, room) {
 }
 
 /**
- * Get a footnote's maximum width in the allowed space.
- *
- * @param  {DOMElement} footnote Footnote element.
- * @param  {DOMElement} content  Content element.
- * @return {Number}              Maximum footnote width.
- */
-function getFootnoteMaxWidth(footnote, content) {
-  const maxWidth = parseInt(footnote.getAttribute('data-littlefoot-max-width'), 10)
-
-  return Math.min(maxWidth, content.offsetWidth + 1)
-}
-
-/**
  * Positions each footnote relative to its button.
  *
  * @param   {DOMElement} footnote The footnote element.
@@ -106,8 +93,8 @@ export default function repositionFootnote(footnote, event) {
   const type      = event ? event.type : 'resize'
   const button    = siblings(footnote, '.littlefoot-footnote__button')[0]
   const room      = getAvailableRoom(button)
-  const maxHeight = getFootnoteMaxHeight(footnote, room)
   const content   = footnote.querySelector('.littlefoot-footnote__content')
+  const maxHeight = getFootnoteMaxHeight(footnote, room)
 
   updateFootnoteState(footnote, room)
 
@@ -115,7 +102,7 @@ export default function repositionFootnote(footnote, event) {
 
   if (type === 'resize') {
     const wrapper          = footnote.querySelector('.littlefoot-footnote__wrapper')
-    const maxWidth         = getFootnoteMaxWidth(footnote, content)
+    const maxWidth         = content.offsetWidth
     const buttonMarginLeft = parseInt(getStyle(button, 'marginLeft'), 10)
     const left             = -room.leftRelative * maxWidth + buttonMarginLeft + button.offsetWidth / 2
 

@@ -93,8 +93,6 @@ const littlefoot = function(options) {
       const popover = button.nextElementSibling
       const content = popover.querySelector('.littlefoot-footnote__content')
 
-      popover.setAttribute('data-littlefoot-state', 'init')
-      popover.setAttribute('data-littlefoot-max-width', getStylePropertyInPixels(popover, 'maxWidth'))
       popover.setAttribute('data-littlefoot-max-height', getStylePropertyInPixels(content, 'maxHeight'))
 
       popover.style.maxWidth = '10000px'

@@ -2,6 +2,7 @@ import classList from 'dom-classlist'
 import test from 'tape'
 import littlefoot from '../src/'
 import { dispatchEvent } from '../src/dom/events'
+import getStylePropertyInPixels from '../src/dom/getStylePropertyInPixels'
 import { setup, sleep, teardown } from './helper'
 
 test('littlefoot setup with default options', (t) => {
@@ -59,6 +60,8 @@ test('footnote activation and dismissal', (t) => {
 
   sleep(activateDelay)
     .then(() => {
+      const popover = document.body.querySelector('.littlefoot-footnote')
+      const wrapper = document.body.querySelector('.littlefoot-footnote__wrapper')
       const content = document.body.querySelector('.littlefoot-footnote__content')
 
       t.equal(content.innerHTML, footnote.getAttribute('data-littlefoot-footnote'),
@@ -66,6 +69,12 @@ test('footnote activation and dismissal', (t) => {
 
       t.equal(document.body.querySelectorAll('button.is-active').length, 1,
         'activates one popover on activate()')
+
+      t.equal(parseFloat(popover.style.maxWidth), 10000,
+        'sets maximum popover width to 10000px')
+
+      t.equal(parseFloat(content.offsetWidth), parseFloat(wrapper.style.maxWidth),
+        'fits wrapper to content width')
 
       lf.dismiss()
       return sleep(dismissDelay)
