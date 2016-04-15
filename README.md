@@ -54,7 +54,7 @@ The script will work with a wide array of markup, but you will need to make sure
 Once you've set up the appropriate markup, all you need to do is include the following in your code:
 
 ```javascript
-var littlefoot = require('littlefoot')
+var littlefoot = require('littlefoot').default
 
 littlefoot()
 ```
@@ -62,7 +62,7 @@ littlefoot()
 You can also configure the available options by passing an object literal, and you can store the return object to make use of some of the methods it makes available:
 
 ```javascript
-var littlefoot = require('littlefoot')
+var littlefoot = require('littlefoot').default
 
 var lf = littlefoot({
   activateOnHover: true,
