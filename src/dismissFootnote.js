@@ -12,18 +12,20 @@ export default function dismissFootnote(footnote, timeout) {
   const footnoteID   = footnote.getAttribute('data-footnote-id')
   const linkedButton = document.querySelector('.littlefoot-footnote__button[data-footnote-id="' + footnoteID + '"]')
 
-  if (!classList(linkedButton).contains('changing')) {
-    classList(linkedButton).add('changing')
-    classList(linkedButton).remove('is-active')
-    classList(linkedButton).remove('is-hover-instantiated')
-    classList(linkedButton).remove('is-click-instantiated')
-
-    classList(footnote).add('disapearing')
-    classList(footnote).remove('is-active')
-
-    window.setTimeout(() => {
-      footnote.parentNode.removeChild(footnote)
-      classList(linkedButton).remove('changing')
-    }, timeout)
+  if (classList(linkedButton).contains('changing')) {
+    return
   }
+
+  classList(linkedButton).add('changing')
+  classList(linkedButton).remove('is-active')
+  classList(linkedButton).remove('is-hover-instantiated')
+  classList(linkedButton).remove('is-click-instantiated')
+
+  classList(footnote).add('disapearing')
+  classList(footnote).remove('is-active')
+
+  window.setTimeout(() => {
+    footnote.parentNode.removeChild(footnote)
+    classList(linkedButton).remove('changing')
+  }, timeout)
 }

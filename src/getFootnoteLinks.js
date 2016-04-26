@@ -14,13 +14,13 @@ function getFootnoteBacklinkId(link, anchorParentSelector) {
     return parent.getAttribute('id')
   }
 
-  const child  = link.querySelector(anchorParentSelector)
+  const child = link.querySelector(anchorParentSelector)
 
   if (child) {
     return child.getAttribute('id')
   }
 
-  return null
+  return ''
 }
 
 /**

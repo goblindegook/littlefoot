@@ -2,7 +2,6 @@ import classList from 'dom-classlist'
 import test from 'tape'
 import littlefoot from '../src/'
 import { dispatchEvent } from '../src/dom/events'
-import getStylePropertyInPixels from '../src/dom/getStylePropertyInPixels'
 import { setup, sleep, teardown } from './helper'
 
 test('littlefoot setup with default options', (t) => {

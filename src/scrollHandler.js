@@ -1,6 +1,5 @@
 import closest from 'dom-closest'
 import classList from 'dom-classlist'
-import getStylePropertyInPixels from './dom/getStylePropertyInPixels'
 
 /**
  * Footnote content scroll handler.
@@ -12,7 +11,7 @@ export default function scrollHandler(event) {
   const target     = event.currentTarget
   const delta      = event.type === 'wheel' ? -event.deltaY : event.wheelDelta
   const isScrollUp = delta > 0
-  const height     = getStylePropertyInPixels(target, 'height')
+  const height     = target.clientHeight
   const popover    = closest(target, '.littlefoot-footnote')
 
   if (target.scrollTop > 0 && target.scrollTop < 10) {

@@ -4,7 +4,7 @@ import delegate from 'delegate'
 import template from 'lodash/template'
 import throttle from 'lodash/throttle'
 import { addEventListener, dispatchEvent } from './dom/events'
-import getStylePropertyInPixels from './dom/getStylePropertyInPixels'
+import getMaxHeight from './dom/getMaxHeight'
 import createSettings from './settings'
 import dismissFootnote from './dismissFootnote'
 import init from './init'
@@ -93,7 +93,7 @@ const littlefoot = function(options) {
       const popover = button.nextElementSibling
       const content = popover.querySelector('.littlefoot-footnote__content')
 
-      popover.setAttribute('data-littlefoot-max-height', getStylePropertyInPixels(content, 'maxHeight'))
+      popover.setAttribute('data-littlefoot-max-height', getMaxHeight(content))
 
       popover.style.maxWidth = '10000px'
       classList(button).add('is-active')
@@ -186,7 +186,9 @@ const littlefoot = function(options) {
     classList(button).add('is-click-instantiated')
     displayFootnote('.littlefoot-footnote__button' + selector)
 
-    setTimeout(() => classList(button).remove('changing'), settings.activateDelay)
+    setTimeout(() => {
+      classList(button).remove('changing')
+    }, settings.activateDelay)
   }
 
   /**
