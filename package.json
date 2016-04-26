@@ -12,6 +12,7 @@
     "prepublish": "npm run build",
     "pretest": "eslint {src,test}/**/*.js",
     "test": "karma start --single-run",
+    "test-local": "karma start --single-run --browsers ChromeCanary",
     "watch": "karma start --browsers ChromeCanary"
   },
   "browserify": {
@@ -38,7 +39,7 @@
     "babel-plugin-transform-strict-mode": "^6.6.5",
     "babel-preset-es2015": "^6.3.13",
     "babel-tape-runner": "^2.0.1",
-    "babelify": "^7.2.0",
+    "babelify": "^7.3.0",
     "browserify": "^13.0.0",
     "browserify-istanbul": "^2.0.0",
     "esdoc": "^0.4.3",
