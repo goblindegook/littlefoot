@@ -13,6 +13,17 @@ function setup() {
   return fixture
 }
 
+test('getMaxHeight (none)', (t) => {
+  const fixture = setup()
+
+  fixture.style.maxHeight = 'none'
+
+  t.equal(getMaxHeight(fixture), 10000, 'max-height: none')
+
+  teardown()
+  t.end()
+})
+
 test('getMaxHeight (em|rem)', (t) => {
   const fixture = setup()
   const sizes   = ['10em', '10rem']
@@ -21,18 +32,15 @@ test('getMaxHeight (em|rem)', (t) => {
     fixture.style.height    = size
     fixture.style.maxHeight = size
 
-    t.equal(getMaxHeight(fixture, 'maxHeight'), fixture.clientHeight,
-      'max-height: ' + size + ' with default font size')
+    t.equal(getMaxHeight(fixture), fixture.clientHeight, 'max-height: ' + size + ' with default font size')
 
     fixture.style.fontSize = '200%'
 
-    t.equal(getMaxHeight(fixture, 'maxHeight'), fixture.clientHeight,
-      'max-height: ' + size + ' with 200% font size')
+    t.equal(getMaxHeight(fixture), fixture.clientHeight, 'max-height: ' + size + ' with 200% font size')
 
     fixture.style.fontSize = '2em'
 
-    t.equal(getMaxHeight(fixture, 'maxHeight'), fixture.clientHeight,
-      'max-height: ' + size + ' with 2em font size')
+    t.equal(getMaxHeight(fixture), fixture.clientHeight, 'max-height: ' + size + ' with 2em font size')
   })
 
   teardown()
@@ -47,7 +55,7 @@ test('getMaxHeight (cm|in|mm|pc|pt|px)', (t) => {
     fixture.style.height    = size
     fixture.style.maxHeight = size
 
-    t.equal(getMaxHeight(fixture, 'maxHeight'), fixture.clientHeight, 'max-height: ' + size)
+    t.equal(getMaxHeight(fixture), fixture.clientHeight, 'max-height: ' + size)
   })
 
   teardown()
@@ -60,9 +68,7 @@ test('getMaxHeight (%)', (t) => {
   fixture.style.height    = '50%'
   fixture.style.maxHeight = '50%'
 
-  t.equal(getMaxHeight(fixture, 'maxHeight'),
-    Math.round(document.body.clientHeight / 2),
-    'max-height: 50%')
+  t.equal(getMaxHeight(fixture), Math.round(document.body.clientHeight / 2), 'max-height: 50%')
 
   teardown()
   t.end()
