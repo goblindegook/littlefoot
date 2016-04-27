@@ -18,7 +18,7 @@ test('getMaxHeight (none)', (t) => {
 
   fixture.style.maxHeight = 'none'
 
-  t.equal(getMaxHeight(fixture), 10000, 'max-height: none')
+  t.equal(getMaxHeight(fixture), fixture.clientHeight, 'max-height: none')
 
   teardown()
   t.end()
@@ -47,9 +47,9 @@ test('getMaxHeight (em|rem)', (t) => {
   t.end()
 })
 
-test('getMaxHeight (cm|in|mm|pc|pt|px)', (t) => {
+test('getMaxHeight (cm|in|mm|pc|pt|px|vh)', (t) => {
   const fixture = setup()
-  const sizes   = ['100cm', '100in', '100mm', '100pc', '100pt', '100px']
+  const sizes   = ['100cm', '100in', '100mm', '100pc', '100pt', '100px', '100vh']
 
   sizes.forEach((size) => {
     fixture.style.height    = size
@@ -65,7 +65,7 @@ test('getMaxHeight (cm|in|mm|pc|pt|px)', (t) => {
 test('getMaxHeight (%)', (t) => {
   const fixture = setup()
 
-  fixture.style.height    = '50%'
+  fixture.style.height    = '100%'
   fixture.style.maxHeight = '50%'
 
   t.equal(getMaxHeight(fixture), Math.round(document.body.clientHeight / 2), 'max-height: 50%')

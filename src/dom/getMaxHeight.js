@@ -11,7 +11,7 @@ export default function getMaxHeight(element) {
   const size  = parseFloat(value)
 
   if (value == null || value === 'none') {
-    return 10000
+    return element.clientHeight
   }
 
   if (/%/.test(value)) {

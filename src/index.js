@@ -95,7 +95,7 @@ const littlefoot = function(options) {
 
       popover.setAttribute('data-littlefoot-max-height', getMaxHeight(content))
 
-      popover.style.maxWidth = '10000px'
+      popover.style.maxWidth = document.body.clientWidth + 'px'
       classList(button).add('is-active')
 
       addEventListener(content, 'mousewheel', throttle(scrollHandler))

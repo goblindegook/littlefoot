@@ -69,8 +69,8 @@ test('footnote activation and dismissal', (t) => {
       t.equal(document.body.querySelectorAll('button.is-active').length, 1,
         'activates one popover on activate()')
 
-      t.equal(parseFloat(popover.style.maxWidth), 10000,
-        'sets maximum popover width to 10000px')
+      t.equal(parseFloat(popover.style.maxWidth), document.body.clientWidth,
+        'sets maximum popover width to document width')
 
       t.equal(parseFloat(content.offsetWidth), parseFloat(wrapper.style.maxWidth),
         'fits wrapper to content width')
