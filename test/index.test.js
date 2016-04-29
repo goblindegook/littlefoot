@@ -50,14 +50,22 @@ test('footnote activation and dismissal', (t) => {
   const dismissDelay  = lf.getSetting('dismissDelay')
   const footnote      = document.body.querySelector('button[data-footnote-id="1"]')
 
-  // these do nothing
+  // these should do nothing
   lf.activate()
   lf.activate('')
-
-  // activate button
-  lf.activate('button[data-footnote-id="1"]')
+  lf.activate('#invalid')
 
   sleep(activateDelay)
+    .then(() => {
+
+      t.equal(document.body.querySelectorAll('button.is-active').length, 0,
+        'displays no popovers on invalid activate()')
+
+      // activate button
+      lf.activate('button[data-footnote-id="1"]')
+
+      return sleep(activateDelay)
+    })
     .then(() => {
       const popover = document.body.querySelector('.littlefoot-footnote')
       const wrapper = document.body.querySelector('.littlefoot-footnote__wrapper')
@@ -67,7 +75,7 @@ test('footnote activation and dismissal', (t) => {
         'injects content into popover')
 
       t.equal(document.body.querySelectorAll('button.is-active').length, 1,
-        'activates one popover on activate()')
+        'displays one popover on activate()')
 
       t.equal(parseFloat(popover.style.maxWidth), document.body.clientWidth,
         'sets maximum popover width to document width')

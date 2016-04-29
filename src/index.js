@@ -7,6 +7,7 @@ import { addEventListener, dispatchEvent } from './dom/events'
 import getMaxHeight from './dom/getMaxHeight'
 import createSettings from './settings'
 import dismissFootnote from './dismissFootnote'
+import getClosestFootnoteButtons from './getClosestFootnoteButtons'
 import init from './init'
 import repositionFootnote from './repositionFootnote'
 import scrollHandler from './scrollHandler'
@@ -63,27 +64,10 @@ const littlefoot = function(options) {
    */
   function displayFootnote(selector) {
     const contentTemplate = template(settings.contentTemplate)
+    const buttons         = getClosestFootnoteButtons(selector, settings.allowMultiple)
     const popoversCreated = []
-    const buttons         = []
 
-    if (!selector || selector.length === 0) {
-      return popoversCreated
-    }
-
-    if (settings.allowMultiple) {
-      const elements = document.querySelectorAll(selector)
-      Array.prototype.forEach.call(elements, (element) => {
-        buttons.push(closest(element, '.littlefoot-footnote__button'))
-      })
-
-    } else {
-      const element = document.querySelector(selector)
-      if (element) {
-        buttons.push(closest(element, '.littlefoot-footnote__button'))
-      }
-    }
-
-    Array.prototype.forEach.call(buttons, (button) => {
+    buttons.forEach((button) => {
       button.insertAdjacentHTML('afterend', contentTemplate({
         content: button.getAttribute('data-littlefoot-footnote'),
         id:      button.getAttribute('data-footnote-id'),
@@ -94,8 +78,8 @@ const littlefoot = function(options) {
       const content = popover.querySelector('.littlefoot-footnote__content')
 
       popover.setAttribute('data-littlefoot-max-height', getMaxHeight(content))
-
       popover.style.maxWidth = document.body.clientWidth + 'px'
+
       classList(button).add('is-active')
 
       addEventListener(content, 'mousewheel', throttle(scrollHandler))
@@ -111,7 +95,7 @@ const littlefoot = function(options) {
     })
 
     setTimeout(() => {
-      Array.prototype.forEach.call(popoversCreated, (popover) => {
+      popoversCreated.forEach((popover) => {
         classList(popover).add('is-active')
       })
     }, settings.activateDelay)
