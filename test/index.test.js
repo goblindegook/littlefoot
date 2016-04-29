@@ -71,11 +71,14 @@ test('footnote activation and dismissal', (t) => {
       const wrapper = document.body.querySelector('.littlefoot-footnote__wrapper')
       const content = document.body.querySelector('.littlefoot-footnote__content')
 
-      t.equal(content.innerHTML, footnote.getAttribute('data-littlefoot-footnote'),
+      t.equal(content.innerHTML.trim(), footnote.getAttribute('data-littlefoot-footnote').trim(),
         'injects content into popover')
 
       t.equal(document.body.querySelectorAll('button.is-active').length, 1,
         'displays one popover on activate()')
+
+      t.ok(popover.getAttribute('data-littlefoot-max-height'),
+        'sets a data-littlefoot-max-height')
 
       t.equal(parseFloat(popover.style.maxWidth), document.body.clientWidth,
         'sets maximum popover width to document width')
