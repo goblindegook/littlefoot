@@ -1,6 +1,5 @@
 import test from 'tape'
 import littlefoot from '../src/'
-import classList from 'dom-classlist'
 import { setup, sleep, teardown } from './helper'
 
 test('littlefoot setup with custom contentTemplate', (t) => {

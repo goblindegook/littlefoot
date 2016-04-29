@@ -90,7 +90,7 @@ function getFootnoteMaxHeight(footnote, room) {
  * @returns {null}
  */
 export default function repositionFootnote(footnote, event) {
-  const type      = event ? event.type : 'resize'
+  const eventType = event ? event.type : 'resize'
   const button    = siblings(footnote, '.littlefoot-footnote__button')[0]
   const room      = getAvailableRoom(button)
   const content   = footnote.querySelector('.littlefoot-footnote__content')
@@ -100,7 +100,7 @@ export default function repositionFootnote(footnote, event) {
 
   content.style.maxHeight = maxHeight + 'px'
 
-  if (type === 'resize') {
+  if (eventType === 'resize') {
     const wrapper          = footnote.querySelector('.littlefoot-footnote__wrapper')
     const maxWidth         = content.offsetWidth
     const buttonMarginLeft = parseInt(getStyle(button, 'marginLeft'), 10)
