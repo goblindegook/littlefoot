@@ -4,8 +4,8 @@ import classList from 'dom-classlist'
 /**
  * Footnote content scroll handler.
  *
- * @param   {Event} event Scroll or mousewheel event.
- * @returns {null}
+ * @param  {Event} event Scroll or mousewheel event.
+ * @return {void}
  */
 export default function scrollHandler(event) {
   const target     = event.currentTarget

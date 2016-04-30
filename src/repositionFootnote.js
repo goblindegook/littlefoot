@@ -8,6 +8,7 @@ import getStyle from './dom/getStyle'
  *
  * @param  {DOMElement} popover      Popover element.
  * @param  {Number}     leftRelative Relative positioning to the left.
+ * @return {void}
  */
 function positionTooltip(popover, leftRelative = 0.5) {
   const tooltip = popover.querySelector('.littlefoot-footnote__tooltip')
@@ -34,8 +35,10 @@ function isFootnoteOnTop(footnote, room) {
 
 /**
  * Set footnote state attributes.
- * @param {DOMElement} footnote Footnote DOM element.
- * @param {String}     state    State to set, one of 'top' or 'bottom'.
+ *
+ * @param  {DOMElement} footnote Footnote DOM element.
+ * @param  {String}     state    State to set, one of 'top' or 'bottom'.
+ * @return {void}
  */
 function setFootnoteState(footnote, state) {
   const previous = state === 'top' ? 'bottom' : 'top'
@@ -49,7 +52,7 @@ function setFootnoteState(footnote, state) {
  *
  * @param  {DOMElement} footnote Footnote element.
  * @param  {Object}     room     Available room object.
- * @return {null}
+ * @return {void}
  */
 function updateFootnoteState(footnote, room) {
   const isTop = isFootnoteOnTop(footnote, room)
@@ -85,9 +88,9 @@ function getFootnoteMaxHeight(footnote, room) {
 /**
  * Positions each footnote relative to its button.
  *
- * @param   {DOMElement} footnote The footnote element.
- * @param   {Event}      event    The type of event that prompted the reposition function.
- * @returns {null}
+ * @param  {DOMElement} footnote The footnote element.
+ * @param  {Event}      event    The type of event that prompted the reposition function.
+ * @return {void}
  */
 export default function repositionFootnote(footnote, event) {
   const eventType = event ? event.type : 'resize'

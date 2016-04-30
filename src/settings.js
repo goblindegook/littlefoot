@@ -53,7 +53,7 @@ function createSettings(options) {
      * @param   {String} key   The setting name as a string or an object containing
      *                         setting-new value pairs.
      * @param   {*}      value The new value, if the first argument was a string.
-     * @returns {null}
+     * @return {void}
      */
     set(key, value) {
       store[key] = value

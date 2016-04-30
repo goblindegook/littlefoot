@@ -43,7 +43,8 @@ const littlefoot = function(options) {
   /**
    * Positions each footnote relative to its button.
    *
-   * @param {Event} event The type of event that prompted the reposition function.
+   * @param  {Event} event The type of event that prompted the reposition function.
+   * @return {void}
    */
   function repositionFootnotes(event) {
     const footnotes = document.querySelectorAll('.littlefoot-footnote')
@@ -107,7 +108,8 @@ const littlefoot = function(options) {
    * To activate the popover of a hovered footnote button. Also removes other
    * popovers, if allowMultiple is false.
    *
-   * @param {Event} event Event that contains the target of the mouseenter event.
+   * @param  {Event} event Event that contains the target of the mouseenter event.
+   * @return {void}
    */
   function onHover(event) {
     if (!settings.activateOnHover) {
@@ -141,7 +143,8 @@ const littlefoot = function(options) {
    * activates the popover if it isn't already active (+ deactivate others, if
    * appropriate) or, deactivates the popover if it is already active.
    *
-   * @param {DOMElement} button Button being clicked/pressed.
+   * @param  {DOMElement} button Button being clicked/pressed.
+   * @return {void}
    */
   function activateButton(button) {
     const isActive   = classList(button).contains('is-active')
@@ -180,7 +183,8 @@ const littlefoot = function(options) {
    * allowMultiple is false. Finally, removes all popovers if something non-fn
    * related was clicked/tapped.
    *
-   * @param {Event} event Event that contains the target of the tap/click event.
+   * @param  {Event} event Event that contains the target of the tap/click event.
+   * @return {void}
    */
   function onTouchClick(event) {
     const button   = closest(event.target, '.littlefoot-footnote__button')
@@ -198,6 +202,8 @@ const littlefoot = function(options) {
 
   /**
    * Removes the unhovered footnote content if dismissOnUnhover is true.
+   *
+   * @return {void}
    */
   function onUnhover() {
     if (!settings.dismissOnUnhover || !settings.activateOnHover) {
@@ -214,7 +220,8 @@ const littlefoot = function(options) {
   /**
    * Remove all popovers on keypress.
    *
-   * @param {Event} event Event that contains the key that was pressed.
+   * @param  {Event} event Event that contains the key that was pressed.
+   * @return {void}
    */
   function onEscapeKeypress(event) {
     if (event.keyCode === 27) {

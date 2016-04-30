@@ -6,8 +6,8 @@ const printOnly = 'footnote-print-only'
 /**
  * Mark an element for hiding by setting a print-only class.
  *
- * @param   {DOMElement} element Element to make print-only.
- * @returns {null}
+ * @param  {DOMElement} element Element to make print-only.
+ * @return {void}
  */
 function hideElement(element) {
   classList(element).add(printOnly)
@@ -18,8 +18,8 @@ function hideElement(element) {
  * marking any empty or hidden containers or any horizontal rules used to
  * denote the start of the footnote section.
  *
- * @param   {DOMElement} footnote Container of the footnote that was hidden.
- * @returns {null}
+ * @param  {DOMElement} footnote Container of the footnote that was hidden.
+ * @return {void}
  */
 function hideFootnoteContainer(container) {
   const visibleElements   = children(container, `:not(.${printOnly})`)
@@ -36,9 +36,9 @@ function hideFootnoteContainer(container) {
  * Hides the original footnote. Optionally hides the footnote container if all
  * footnotes inside it are already hidden.
  *
- * @param   {DOMElement} footnote Hidden footnote container element.
- * @param   {DOMElement} link     Footnote link element.
- * @returns {null}
+ * @param  {DOMElement} footnote Hidden footnote container element.
+ * @param  {DOMElement} link     Footnote link element.
+ * @return {void}
  */
 export default function hideOriginalFootnote(footnote, link) {
   hideElement(footnote)

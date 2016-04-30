@@ -1,8 +1,8 @@
 /**
  * Setup fixtures.
  *
- * @param   {String} fixture Fixture file to load (defaults to default.html).
- * @returns {null}
+ * @param  {String} fixture Fixture file to load (defaults to default.html).
+ * @return {void}
  */
 export function setup(fixture) {
   const content = document.createElement('div')
@@ -24,7 +24,7 @@ export function setup(fixture) {
 /**
  * Tear down fixtures.
  *
- * @returns {null}
+ * @return {void}
  */
 export function teardown() {
   while (document.body.firstChild) {

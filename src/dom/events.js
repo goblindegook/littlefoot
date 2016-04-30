@@ -1,11 +1,11 @@
 /**
  * Add an event listener.
  *
- * @param   {DOMElement} element    Element to bind event to.
- * @param   {String}     type       Event type.
- * @param   {Function}   listener   Event listener.
- * @param   {Boolean}    useCapture Use event capture (false by default).
- * @returns {null}
+ * @param  {DOMElement} element    Element to bind event to.
+ * @param  {String}     type       Event type.
+ * @param  {Function}   listener   Event listener.
+ * @param  {Boolean}    useCapture Use event capture (false by default).
+ * @return {void}
  */
 export function addEventListener(element, type, listener, useCapture = false) {
   if (element.addEventListener) {
@@ -20,7 +20,7 @@ export function addEventListener(element, type, listener, useCapture = false) {
  *
  * @param   {DOMElement} element Element the event is bound to.
  * @param   {String}     type    Event type.
- * @returns {null}
+ * @return {void}
  */
 export function dispatchEvent(element, type) {
   if (document.createEvent) {
