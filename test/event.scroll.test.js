@@ -30,7 +30,7 @@ test.skip('scroll event handling', (t) => {
       t.ok(classList(popover).contains('is-positioned-top'),
         'popover is above the button')
 
-      // FIXME: Scroll content.
+      // FIXME: Fix document body scroll handling test.
       simulant.fire(document.body, 'wheel', { deltaY: document.body.scrollHeight })
 
       t.ok(classList(popover).contains('is-positioned-bottom'),
@@ -42,7 +42,7 @@ test.skip('scroll event handling', (t) => {
 })
 
 test('content scroll event handling', {
-  skip: isIE()
+  skip: isIE() // FIXME: Fix content scroll handling tests on IE and Edge.
 }, (t) => {
   setup('scroll.html')
   setupStylesheet()
@@ -62,12 +62,12 @@ test('content scroll event handling', {
       t.notOk(classList(popover).contains('is-fully-scrolled'),
         'long popover content starts out not fully scrolled')
 
-      simulant.fire(content, 'wheel', { deltaY: content.scrollHeight + 100 })
+      simulant.fire(content, 'wheel', { deltaY: content.scrollHeight })
 
       t.ok(classList(popover).contains('is-fully-scrolled'),
         'long popover content is fully scrolled after scroll to bottom')
 
-      simulant.fire(content, 'wheel', { deltaY: - content.scrollHeight - 100 })
+      simulant.fire(content, 'wheel', { deltaY: - content.scrollHeight })
 
       t.notOk(classList(popover).contains('is-fully-scrolled'),
         'popover content is not fully scrolled after scroll to top')
