@@ -9,7 +9,7 @@ import classList from 'dom-classlist'
  *                               actually removing the popover from the DOM.
  * @return {void}
  */
-export default function dismissFootnote(footnote, timeout) {
+export default function dismissFootnote(footnote, timeout = 0) {
   const footnoteID   = footnote.getAttribute('data-footnote-id')
   const linkedButton = document.querySelector('.littlefoot-footnote__button[data-footnote-id="' + footnoteID + '"]')
 

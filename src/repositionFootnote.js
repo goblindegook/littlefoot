@@ -55,17 +55,13 @@ function setFootnoteState(footnote, state) {
  * @return {void}
  */
 function updateFootnoteState(footnote, room) {
-  const isTop = isFootnoteOnTop(footnote, room)
-  const state = footnote.getAttribute('data-littlefoot-state')
+  const isTop    = isFootnoteOnTop(footnote, room)
+  const state    = footnote.getAttribute('data-littlefoot-state')
+  const newState = isTop ? 'top' : 'bottom'
 
-  if (isTop && state !== 'top') {
-    setFootnoteState(footnote, 'top')
-    footnote.style.transformOrigin = `${room.leftRelative * 100}% 100%`
-  }
-
-  if (!isTop && state !== 'bottom') {
-    setFootnoteState(footnote, 'bottom')
-    footnote.style.transformOrigin = `${room.leftRelative * 100}% 0`
+  if (state !== newState) {
+    setFootnoteState(footnote, newState)
+    footnote.style.transformOrigin = `${room.leftRelative * 100}% ${isTop ? '100%' : '0'}`
   }
 }
 
