@@ -51,12 +51,12 @@ test('content scroll event handling', (t) => {
       t.notOk(classList(popover).contains('is-fully-scrolled'),
         'long popover content starts out not fully scrolled')
 
-      simulant.fire(content, 'wheel', { deltaY: content.scrollHeight })
+      simulant.fire(content, 'wheel', { deltaY: content.scrollHeight + 100 })
 
       t.ok(classList(popover).contains('is-fully-scrolled'),
         'long popover content is fully scrolled after scroll to bottom')
 
-      simulant.fire(content, 'wheel', { deltaY: -content.scrollHeight })
+      simulant.fire(content, 'wheel', { deltaY: - content.scrollHeight - 100 })
 
       t.notOk(classList(popover).contains('is-fully-scrolled'),
         'popover content is not fully scrolled after scroll to top')
