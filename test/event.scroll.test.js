@@ -5,7 +5,7 @@ import simulant from 'simulant'
 import littlefoot from '../src/'
 import { setup, setupStylesheet, sleep, teardown } from './helper'
 
-test('scroll event handling', (t) => {
+test.skip('scroll event handling', (t) => {
   setup('scroll.html')
 
   const lf    = littlefoot()
@@ -24,7 +24,7 @@ test('scroll event handling', (t) => {
       // FIXME: Scroll content.
       simulant.fire(document.body, 'wheel', { deltaY: document.body.scrollHeight })
 
-      t.skip(classList(popover).contains('is-positioned-bottom'),
+      t.ok(classList(popover).contains('is-positioned-bottom'),
         'popover is repositioned below the button')
 
       teardown()
