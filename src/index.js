@@ -10,7 +10,7 @@ import dismissFootnote from './dismissFootnote'
 import getClosestFootnoteButtons from './getClosestFootnoteButtons'
 import init from './init'
 import repositionFootnote from './repositionFootnote'
-import scrollHandler from './scrollHandler'
+import scrollContent from './scrollContent'
 
 /**
  * Littlefoot instance factory.
@@ -83,8 +83,8 @@ const littlefoot = function(options) {
 
       classList(button).add('is-active')
 
-      addEventListener(content, 'mousewheel', throttle(scrollHandler))
-      addEventListener(content, 'wheel', throttle(scrollHandler))
+      addEventListener(content, 'mousewheel', throttle(scrollContent))
+      addEventListener(content, 'wheel', throttle(scrollContent))
 
       repositionFootnotes()
 

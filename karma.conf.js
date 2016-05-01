@@ -111,6 +111,7 @@ module.exports = function(karma) {
       ],
     },
     files: [
+      'styles/css/**/*.css',
       'test/**/*.test.js',
     ],
     preprocessors: {

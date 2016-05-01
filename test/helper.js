@@ -5,7 +5,7 @@
  * @return {void}
  */
 export function setup(fixture) {
-  const content = document.createElement('div')
+  const content    = document.createElement('div')
 
   content.id = 'root'
 
@@ -14,11 +14,27 @@ export function setup(fixture) {
       content.innerHTML = require('./fixtures/multiple.html')
       break
 
+    case 'scroll.html':
+      content.innerHTML = require('./fixtures/scroll.html')
+      break
+
     default:
       content.innerHTML = require('./fixtures/default.html')
   }
 
   document.body.appendChild(content)
+}
+
+/**
+ * Load littlefoot stylesheet.
+ * @return {void}
+ */
+export function setupStylesheet() {
+  const stylesheet = document.createElement('link')
+  stylesheet.rel   = 'stylesheet'
+  stylesheet.href  = 'base/styles/css/littlefoot.css'
+
+  document.body.appendChild(stylesheet)
 }
 
 /**

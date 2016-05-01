@@ -111,7 +111,7 @@ export default function repositionFootnote(footnote, event) {
     positionTooltip(footnote, room.leftRelative)
   }
 
-  if (parseInt(footnote.offsetHeight, 10) < content.scrollHeight) {
+  if (parseFloat(footnote.offsetHeight) <= content.scrollHeight) {
     classList(footnote).add('is-scrollable')
   }
 }

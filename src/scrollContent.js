@@ -7,17 +7,13 @@ import classList from 'dom-classlist'
  * @param  {Event} event Scroll or mousewheel event.
  * @return {void}
  */
-export default function scrollHandler(event) {
+export default function scrollContent(event) {
   const target     = event.currentTarget
   const delta      = event.type === 'wheel' ? -event.deltaY : event.wheelDelta
   const isScrollUp = delta > 0
   const height     = target.clientHeight
   const popover    = closest(target, '.littlefoot-footnote')
-
-  if (target.scrollTop > 0 && target.scrollTop < 10) {
-    classList(popover).add('is-scrollable')
-  }
-
+  
   if (!classList(popover).contains('is-scrollable')) {
     return
   }
