@@ -11,7 +11,7 @@
     "docs": "esdoc -c esdoc.json",
     "lint": "eslint {src,test}/**/*.js",
     "prepublish": "npm run build",
-    "pretest": "npm run lint && npm run build",
+    "pretest": "npm run lint && npm run build-styles",
     "test": "karma start --single-run",
     "test-local": "karma start --single-run --browsers ChromeCanary",
     "watch": "karma start --browsers ChromeCanary"

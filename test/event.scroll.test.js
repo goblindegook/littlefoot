@@ -5,6 +5,15 @@ import simulant from 'simulant'
 import littlefoot from '../src/'
 import { setup, setupStylesheet, sleep, teardown } from './helper'
 
+/**
+ * Checks if a Microsoft browser is in use.
+ * @return {Boolean} Whether IE or Edge is in use.
+ */
+function isIE() {
+  const ua = window.navigator.userAgent
+  return ua.indexOf('MSIE ') > 0 || ua.indexOf('Trident/') > 0 || ua.indexOf('Edge/') > 0
+}
+
 test.skip('scroll event handling', (t) => {
   setup('scroll.html')
 
@@ -32,7 +41,9 @@ test.skip('scroll event handling', (t) => {
     })
 })
 
-test('content scroll event handling', (t) => {
+test('content scroll event handling', {
+  skip: isIE()
+}, (t) => {
   setup('scroll.html')
   setupStylesheet()
 
