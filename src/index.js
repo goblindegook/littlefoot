@@ -31,6 +31,7 @@ const littlefoot = function(options) {
    * @param  {String} footnotes The CSS selector for the footnotes to be removed.
    * @param  {Number} timeout   The delay between adding the removal classes and
    *                            actually removing the popover from the DOM.
+   * @return {void}
    */
   function dismissFootnotes(selector = '.littlefoot-footnote', timeout = settings.dismissDelay) {
     const footnotes = document.querySelectorAll(selector)

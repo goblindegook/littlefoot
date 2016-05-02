@@ -13,10 +13,6 @@ export default function scrollContent(event) {
   const isScrollUp = delta > 0
   const height     = target.clientHeight
   const popover    = closest(target, '.littlefoot-footnote')
-  
-  if (!classList(popover).contains('is-scrollable')) {
-    return
-  }
 
   if (!isScrollUp && delta < height + target.scrollTop - target.scrollHeight) {
     classList(popover).add('is-fully-scrolled')
