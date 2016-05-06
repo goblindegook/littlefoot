@@ -41,10 +41,10 @@ function isFootnoteOnTop(footnote, room) {
  * @return {void}
  */
 function setFootnoteState(footnote, state) {
-  const previous = state === 'top' ? 'bottom' : 'top';
+  const alternative = state === 'top' ? 'bottom' : 'top';
   footnote.setAttribute('data-littlefoot-state', state);
   classList(footnote).add('is-positioned-' + state);
-  classList(footnote).remove('is-positioned-' + previous);
+  classList(footnote).remove('is-positioned-' + alternative);
 }
 
 /**

@@ -1,19 +1,19 @@
-'use strict'
+'use strict';
 
-var fs = require('fs')
+var fs = require('fs');
 
-var browsers        = []
-var customLaunchers = {}
-var reporters       = ['dots', 'coverage', 'saucelabs']
+var browsers        = [];
+var customLaunchers = {};
+var reporters       = ['dots', 'coverage', 'saucelabs'];
 
 if (process.env.TRAVIS) {
-  browsers = []
-  reporters.push('coveralls')
+  browsers = [];
+  reporters.push('coveralls');
 }
 
 if (!process.env.SAUCE_USERNAME && fs.existsSync('sauce.json')) {
-  process.env.SAUCE_USERNAME   = require('./sauce').username
-  process.env.SAUCE_ACCESS_KEY = require('./sauce').accessKey
+  process.env.SAUCE_USERNAME   = require('./sauce').username;
+  process.env.SAUCE_ACCESS_KEY = require('./sauce').accessKey;
 }
 
 if (process.env.SAUCE_USERNAME) {
@@ -90,7 +90,7 @@ if (process.env.SAUCE_USERNAME) {
     //   browserName: 'opera',
     //   version:     '12',
     // },
-  }
+  };
 }
 
 module.exports = function(karma) {
@@ -130,5 +130,5 @@ module.exports = function(karma) {
       passed:            'true',
       recordScreenshots: false,
     },
-  })
-}
+  });
+};
