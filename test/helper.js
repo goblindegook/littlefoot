@@ -5,24 +5,24 @@
  * @return {void}
  */
 export function setup(fixture) {
-  const content    = document.createElement('div')
+  const content = document.createElement('div')
 
-  content.id = 'root'
+  content.id = 'root';
 
   switch (fixture) {
     case 'multiple.html':
-      content.innerHTML = require('./fixtures/multiple.html')
-      break
+      content.innerHTML = require('./fixtures/multiple.html');
+      break;
 
     case 'scroll.html':
-      content.innerHTML = require('./fixtures/scroll.html')
-      break
+      content.innerHTML = require('./fixtures/scroll.html');
+      break;
 
     default:
-      content.innerHTML = require('./fixtures/default.html')
+      content.innerHTML = require('./fixtures/default.html');
   }
 
-  document.body.appendChild(content)
+  document.body.appendChild(content);
 }
 
 /**
@@ -30,11 +30,11 @@ export function setup(fixture) {
  * @return {void}
  */
 export function setupStylesheet() {
-  const stylesheet = document.createElement('link')
-  stylesheet.rel   = 'stylesheet'
-  stylesheet.href  = 'base/styles/css/littlefoot.css'
+  const stylesheet = document.createElement('link');
+  stylesheet.rel   = 'stylesheet';
+  stylesheet.href  = 'base/styles/css/littlefoot.css';
 
-  document.body.appendChild(stylesheet)
+  document.body.appendChild(stylesheet);
 }
 
 /**
@@ -44,7 +44,7 @@ export function setupStylesheet() {
  */
 export function teardown() {
   while (document.body.firstChild) {
-    document.body.removeChild(document.body.firstChild)
+    document.body.removeChild(document.body.firstChild);
   }
 }
 
@@ -55,13 +55,11 @@ export function teardown() {
  * @return {Promise}         Promise.
  */
 export function sleep(timeout) {
-  return new Promise((resolve) => setTimeout(resolve, timeout))
+  return new Promise((resolve) => setTimeout(resolve, timeout));
 }
 
-const helper = {
+export default {
   setup,
   sleep,
   teardown,
-}
-
-export default helper
+};

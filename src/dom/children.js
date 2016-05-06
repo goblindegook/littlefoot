@@ -1,4 +1,4 @@
-import matches from 'dom-matches'
+import matches from 'dom-matches';
 
 /**
  * Fetch children elements.
@@ -7,9 +7,11 @@ import matches from 'dom-matches'
  * @param  {String}     selector Sibling selector.
  * @return {Array}               Sibling elements.
  */
-export default function children(element, selector = null) {
+function children(element, selector = null) {
   return Array.prototype.filter.call(
     element.children,
     (child) => child.nodeType !== 8 && (!selector || matches(child, selector))
-  )
+  );
 }
+
+export default children;

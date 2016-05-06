@@ -1,16 +1,16 @@
-import closest from 'dom-closest'
-import classList from 'dom-classlist'
-import delegate from 'delegate'
-import template from 'lodash/template'
-import throttle from 'lodash/throttle'
-import { addEventListener, dispatchEvent } from './dom/events'
-import getMaxHeight from './dom/getMaxHeight'
-import createSettings from './settings'
-import dismissFootnote from './dismissFootnote'
-import getClosestFootnoteButtons from './getClosestFootnoteButtons'
-import init from './init'
-import repositionFootnote from './repositionFootnote'
-import scrollContent from './scrollContent'
+import closest from 'dom-closest';
+import classList from 'dom-classlist';
+import delegate from 'delegate';
+import template from 'lodash/template';
+import throttle from 'lodash/throttle';
+import { addEventListener, dispatchEvent } from './dom/events';
+import getMaxHeight from './dom/getMaxHeight';
+import createSettings from './settings';
+import dismissFootnote from './dismissFootnote';
+import getClosestFootnoteButtons from './getClosestFootnoteButtons';
+import init from './init';
+import repositionFootnote from './repositionFootnote';
+import scrollContent from './scrollContent';
 
 /**
  * Littlefoot instance factory.
@@ -20,9 +20,9 @@ import scrollContent from './scrollContent'
  */
 const littlefoot = function(options) {
 
-  const settings = createSettings(options)
+  const settings = createSettings(options);
 
-  init(settings)
+  init(settings);
 
   /**
    * Removes/adds appropriate classes to the footnote content and button after
@@ -34,11 +34,11 @@ const littlefoot = function(options) {
    * @return {void}
    */
   function dismissFootnotes(selector = '.littlefoot-footnote', timeout = settings.dismissDelay) {
-    const footnotes = document.querySelectorAll(selector)
+    const footnotes = document.querySelectorAll(selector);
 
     Array.prototype.forEach.call(footnotes, (footnote) => {
-      dismissFootnote(footnote, timeout)
-    })
+      dismissFootnote(footnote, timeout);
+    });
   }
 
   /**
@@ -48,11 +48,11 @@ const littlefoot = function(options) {
    * @return {void}
    */
   function repositionFootnotes(event) {
-    const footnotes = document.querySelectorAll('.littlefoot-footnote')
+    const footnotes = document.querySelectorAll('.littlefoot-footnote');
 
     Array.prototype.forEach.call(footnotes, (footnote) => {
-      repositionFootnote(footnote, event)
-    })
+      repositionFootnote(footnote, event);
+    });
   }
 
   /**
@@ -65,44 +65,44 @@ const littlefoot = function(options) {
    * @return {Array}           All footnotes activated by the function.
    */
   function displayFootnote(selector) {
-    const contentTemplate = template(settings.contentTemplate)
-    const buttons         = getClosestFootnoteButtons(selector, settings.allowMultiple)
-    const popoversCreated = []
+    const contentTemplate = template(settings.contentTemplate);
+    const buttons         = getClosestFootnoteButtons(selector, settings.allowMultiple);
+    const popoversCreated = [];
 
     buttons.forEach((button) => {
       button.insertAdjacentHTML('afterend', contentTemplate({
         content: button.getAttribute('data-littlefoot-footnote'),
         id:      button.getAttribute('data-footnote-id'),
         number:  button.getAttribute('data-footnote-number'),
-      }))
+      }));
 
-      const popover = button.nextElementSibling
-      const content = popover.querySelector('.littlefoot-footnote__content')
+      const popover = button.nextElementSibling;
+      const content = popover.querySelector('.littlefoot-footnote__content');
 
-      popover.setAttribute('data-littlefoot-max-height', getMaxHeight(content))
-      popover.style.maxWidth = document.body.clientWidth + 'px'
+      popover.setAttribute('data-littlefoot-max-height', getMaxHeight(content));
+      popover.style.maxWidth = document.body.clientWidth + 'px';
 
-      classList(button).add('is-active')
+      classList(button).add('is-active');
 
-      addEventListener(content, 'mousewheel', throttle(scrollContent))
-      addEventListener(content, 'wheel', throttle(scrollContent))
+      addEventListener(content, 'mousewheel', throttle(scrollContent));
+      addEventListener(content, 'wheel', throttle(scrollContent));
 
-      repositionFootnotes()
+      repositionFootnotes();
 
-      popoversCreated.push(popover)
+      popoversCreated.push(popover);
 
       if (typeof settings.activateCallback === 'function') {
-        settings.activateCallback(popover, button)
+        settings.activateCallback(popover, button);
       }
-    })
+    });
 
     setTimeout(() => {
       popoversCreated.forEach((popover) => {
-        classList(popover).add('is-active')
-      })
-    }, settings.activateDelay)
+        classList(popover).add('is-active');
+      });
+    }, settings.activateDelay);
 
-    return popoversCreated
+    return popoversCreated;
   }
 
   /**
@@ -114,29 +114,29 @@ const littlefoot = function(options) {
    */
   function onHover(event) {
     if (!settings.activateOnHover) {
-      return
+      return;
     }
 
-    const target     = event.target || event.srcElement
-    const footnote   = closest(target, '.littlefoot-footnote__button')
-    const footnoteId = footnote.getAttribute('data-footnote-id')
-    const selector   = `[data-footnote-id="${footnoteId}"]`
+    const target     = event.target || event.srcElement;
+    const footnote   = closest(target, '.littlefoot-footnote__button');
+    const footnoteId = footnote.getAttribute('data-footnote-id');
+    const selector   = `[data-footnote-id="${footnoteId}"]`;
 
     if (classList(footnote).contains('is-active')) {
-      return
+      return;
     }
 
     if (!settings.allowMultiple) {
-      dismissFootnotes(`.littlefoot-footnote:not(${selector})`)
+      dismissFootnotes(`.littlefoot-footnote:not(${selector})`);
     }
 
-    classList(footnote).add('is-hover-instantiated')
+    classList(footnote).add('is-hover-instantiated');
 
-    const popovers = displayFootnote('.littlefoot-footnote__button' + selector)
+    const popovers = displayFootnote('.littlefoot-footnote__button' + selector);
 
     popovers.forEach((popover) => {
-      classList(popover).add('is-hover-instantiated')
-    })
+      classList(popover).add('is-hover-instantiated');
+    });
   }
 
   /**
@@ -148,35 +148,35 @@ const littlefoot = function(options) {
    * @return {void}
    */
   function activateButton(button) {
-    const isActive   = classList(button).contains('is-active')
-    const isChanging = classList(button).contains('changing')
-    const footnoteId = button.getAttribute('data-footnote-id')
-    const selector   = `[data-footnote-id="${footnoteId}"]`
+    const isActive   = classList(button).contains('is-active');
+    const isChanging = classList(button).contains('changing');
+    const footnoteId = button.getAttribute('data-footnote-id');
+    const selector   = `[data-footnote-id="${footnoteId}"]`;
 
-    dispatchEvent(button, 'blur')
+    dispatchEvent(button, 'blur');
 
     if (isChanging) {
-      return
+      return;
     }
 
     if (isActive) {
-      const dismissSelector = settings.allowMultiple ? '.littlefoot-footnote' + selector : null
-      dismissFootnotes(dismissSelector)
-      return
+      const dismissSelector = settings.allowMultiple ? '.littlefoot-footnote' + selector : null;
+      dismissFootnotes(dismissSelector);
+      return;
     }
 
     if (!settings.allowMultiple) {
-      dismissFootnotes('.littlefoot-footnote:not(' + selector + ')')
+      dismissFootnotes('.littlefoot-footnote:not(' + selector + ')');
     }
 
     // Activate footnote:
-    classList(button).add('changing')
-    classList(button).add('is-click-instantiated')
-    displayFootnote('.littlefoot-footnote__button' + selector)
+    classList(button).add('changing');
+    classList(button).add('is-click-instantiated');
+    displayFootnote('.littlefoot-footnote__button' + selector);
 
     setTimeout(() => {
-      classList(button).remove('changing')
-    }, settings.activateDelay)
+      classList(button).remove('changing');
+    }, settings.activateDelay);
   }
 
   /**
@@ -188,16 +188,16 @@ const littlefoot = function(options) {
    * @return {void}
    */
   function onTouchClick(event) {
-    const button   = closest(event.target, '.littlefoot-footnote__button')
-    const footnote = closest(event.target, '.littlefoot-footnote')
+    const button   = closest(event.target, '.littlefoot-footnote__button');
+    const footnote = closest(event.target, '.littlefoot-footnote');
 
     if (button) {
-      event.preventDefault()
-      activateButton(button)
+      event.preventDefault();
+      activateButton(button);
     }
 
     if (!button && !footnote && document.querySelector('.littlefoot-footnote')) {
-      dismissFootnotes()
+      dismissFootnotes();
     }
   }
 
@@ -208,14 +208,14 @@ const littlefoot = function(options) {
    */
   function onUnhover() {
     if (!settings.dismissOnUnhover || !settings.activateOnHover) {
-      return
+      return;
     }
 
     setTimeout(() => {
       if (!document.querySelector('.littlefoot-footnote__button:hover, .littlefoot-footnote:hover')) {
-        dismissFootnotes()
+        dismissFootnotes();
       }
-    }, settings.hoverDelay)
+    }, settings.hoverDelay);
   }
 
   /**
@@ -226,26 +226,26 @@ const littlefoot = function(options) {
    */
   function onEscapeKeypress(event) {
     if (event.keyCode === 27) {
-      dismissFootnotes()
+      dismissFootnotes();
     }
   }
 
-  addEventListener(document, 'touchend', onTouchClick)
-  addEventListener(document, 'click', onTouchClick)
-  addEventListener(document, 'keyup', onEscapeKeypress)
-  addEventListener(document, 'gestureend', repositionFootnotes)
-  addEventListener(window, 'scroll', throttle(repositionFootnotes))
-  addEventListener(window, 'resize', throttle(repositionFootnotes))
+  addEventListener(document, 'touchend', onTouchClick);
+  addEventListener(document, 'click', onTouchClick);
+  addEventListener(document, 'keyup', onEscapeKeypress);
+  addEventListener(document, 'gestureend', repositionFootnotes);
+  addEventListener(window, 'scroll', throttle(repositionFootnotes));
+  addEventListener(window, 'resize', throttle(repositionFootnotes));
 
-  delegate(document, '.littlefoot-footnote__button', 'mouseover', onHover)
-  delegate(document, '.is-hover-instantiated', 'mouseout', onUnhover)
+  delegate(document, '.littlefoot-footnote__button', 'mouseover', onHover);
+  delegate(document, '.is-hover-instantiated', 'mouseout', onUnhover);
 
   return {
     activate:      displayFootnote,
     dismiss:       dismissFootnotes,
     getSetting:    settings.get,
     updateSetting: settings.set,
-  }
-}
+  };
+};
 
-export default littlefoot
+export default littlefoot;

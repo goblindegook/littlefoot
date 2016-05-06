@@ -9,33 +9,30 @@
  */
 export function addEventListener(element, type, listener, useCapture = false) {
   if (element.addEventListener) {
-    element.addEventListener(type, listener, useCapture)
+    element.addEventListener(type, listener, useCapture);
   } else if (element.attachEvent) {
-    element.attachEvent('on' + type, () => listener.call(element))
+    element.attachEvent('on' + type, () => listener.call(element));
   }
 }
 
 /**
  * Trigger an event.
  *
- * @param   {DOMElement} element Element the event is bound to.
- * @param   {String}     type    Event type.
+ * @param  {DOMElement} element Element the event is bound to.
+ * @param  {String}     type    Event type.
  * @return {void}
  */
 export function dispatchEvent(element, type) {
   if (document.createEvent) {
-    const event = document.createEvent('HTMLEvents')
-    event.initEvent(type, true, false)
-    element.dispatchEvent(event)
+    const event = document.createEvent('HTMLEvents');
+    event.initEvent(type, true, false);
+    element.dispatchEvent(event);
   } else {
-    element.fireEvent('on' + type)
+    element.fireEvent('on' + type);
   }
 }
 
-/**
- * Default export.
- */
 export default {
   addEventListener,
   dispatchEvent,
-}
+};

@@ -1,7 +1,7 @@
-import siblings from 'dom-siblings'
-import classList from 'dom-classlist'
-import getAvailableRoom from './dom/getAvailableRoom'
-import getStyle from './dom/getStyle'
+import siblings from 'dom-siblings';
+import classList from 'dom-classlist';
+import getAvailableRoom from './dom/getAvailableRoom';
+import getStyle from './dom/getStyle';
 
 /**
  * Positions the tooltip at the same relative horizontal position as the button.
@@ -11,10 +11,10 @@ import getStyle from './dom/getStyle'
  * @return {void}
  */
 function positionTooltip(popover, leftRelative = 0.5) {
-  const tooltip = popover.querySelector('.littlefoot-footnote__tooltip')
+  const tooltip = popover.querySelector('.littlefoot-footnote__tooltip');
 
   if (tooltip) {
-    tooltip.style.left = (leftRelative * 100) + '%'
+    tooltip.style.left = (leftRelative * 100) + '%';
   }
 }
 
@@ -27,10 +27,10 @@ function positionTooltip(popover, leftRelative = 0.5) {
  * @return {Boolean}              Is footnote allowed on top.
  */
 function isFootnoteOnTop(footnote, room) {
-  const marginSize  = parseInt(getStyle(footnote, 'marginTop'), 10)
-  const totalHeight = 2 * marginSize + footnote.offsetHeight
+  const marginSize  = parseInt(getStyle(footnote, 'marginTop'), 10);
+  const totalHeight = 2 * marginSize + footnote.offsetHeight;
 
-  return room.bottom < totalHeight && room.bottom < room.top
+  return room.bottom < totalHeight && room.bottom < room.top;
 }
 
 /**
@@ -41,10 +41,10 @@ function isFootnoteOnTop(footnote, room) {
  * @return {void}
  */
 function setFootnoteState(footnote, state) {
-  const previous = state === 'top' ? 'bottom' : 'top'
-  footnote.setAttribute('data-littlefoot-state', state)
-  classList(footnote).add('is-positioned-' + state)
-  classList(footnote).remove('is-positioned-' + previous)
+  const previous = state === 'top' ? 'bottom' : 'top';
+  footnote.setAttribute('data-littlefoot-state', state);
+  classList(footnote).add('is-positioned-' + state);
+  classList(footnote).remove('is-positioned-' + previous);
 }
 
 /**
@@ -55,13 +55,13 @@ function setFootnoteState(footnote, state) {
  * @return {void}
  */
 function updateFootnoteState(footnote, room) {
-  const isTop    = isFootnoteOnTop(footnote, room)
-  const state    = footnote.getAttribute('data-littlefoot-state')
-  const newState = isTop ? 'top' : 'bottom'
+  const isTop    = isFootnoteOnTop(footnote, room);
+  const state    = footnote.getAttribute('data-littlefoot-state');
+  const newState = isTop ? 'top' : 'bottom';
 
   if (state !== newState) {
-    setFootnoteState(footnote, newState)
-    footnote.style.transformOrigin = `${room.leftRelative * 100}% ${isTop ? '100%' : '0'}`
+    setFootnoteState(footnote, newState);
+    footnote.style.transformOrigin = `${room.leftRelative * 100}% ${isTop ? '100%' : '0'}`;
   }
 }
 
@@ -73,12 +73,12 @@ function updateFootnoteState(footnote, room) {
  * @return {Number}              Maximum footnote height.
  */
 function getFootnoteMaxHeight(footnote, room) {
-  const maxHeight       = parseInt(footnote.getAttribute('data-littlefoot-max-height'), 10)
-  const isTop           = isFootnoteOnTop(footnote, room)
-  const marginSize      = parseInt(getStyle(footnote, 'marginTop'), 10)
-  const availableHeight = room[isTop ? 'top' : 'bottom'] - marginSize - 15
+  const maxHeight       = parseInt(footnote.getAttribute('data-littlefoot-max-height'), 10);
+  const isTop           = isFootnoteOnTop(footnote, room);
+  const marginSize      = parseInt(getStyle(footnote, 'marginTop'), 10);
+  const availableHeight = room[isTop ? 'top' : 'bottom'] - marginSize - 15;
 
-  return Math.min(maxHeight, availableHeight)
+  return Math.min(maxHeight, availableHeight);
 }
 
 /**
@@ -88,30 +88,32 @@ function getFootnoteMaxHeight(footnote, room) {
  * @param  {Event}      event    The type of event that prompted the reposition function.
  * @return {void}
  */
-export default function repositionFootnote(footnote, event) {
-  const eventType = event ? event.type : 'resize'
-  const button    = siblings(footnote, '.littlefoot-footnote__button')[0]
-  const room      = getAvailableRoom(button)
-  const content   = footnote.querySelector('.littlefoot-footnote__content')
-  const maxHeight = getFootnoteMaxHeight(footnote, room)
+function repositionFootnote(footnote, event) {
+  const eventType = event ? event.type : 'resize';
+  const button    = siblings(footnote, '.littlefoot-footnote__button')[0];
+  const room      = getAvailableRoom(button);
+  const content   = footnote.querySelector('.littlefoot-footnote__content');
+  const maxHeight = getFootnoteMaxHeight(footnote, room);
 
-  updateFootnoteState(footnote, room)
+  updateFootnoteState(footnote, room);
 
-  content.style.maxHeight = maxHeight + 'px'
+  content.style.maxHeight = maxHeight + 'px';
 
   if (eventType === 'resize') {
-    const wrapper          = footnote.querySelector('.littlefoot-footnote__wrapper')
-    const maxWidth         = content.offsetWidth
-    const buttonMarginLeft = parseInt(getStyle(button, 'marginLeft'), 10)
-    const left             = -room.leftRelative * maxWidth + buttonMarginLeft + button.offsetWidth / 2
+    const wrapper          = footnote.querySelector('.littlefoot-footnote__wrapper');
+    const maxWidth         = content.offsetWidth;
+    const buttonMarginLeft = parseInt(getStyle(button, 'marginLeft'), 10);
+    const left             = -room.leftRelative * maxWidth + buttonMarginLeft + button.offsetWidth / 2;
 
-    footnote.style.left    = left + 'px'
-    wrapper.style.maxWidth = maxWidth + 'px'
+    footnote.style.left    = left + 'px';
+    wrapper.style.maxWidth = maxWidth + 'px';
 
-    positionTooltip(footnote, room.leftRelative)
+    positionTooltip(footnote, room.leftRelative);
   }
 
   if (parseFloat(footnote.offsetHeight) <= content.scrollHeight) {
-    classList(footnote).add('is-scrollable')
+    classList(footnote).add('is-scrollable');
   }
 }
+
+export default repositionFootnote;

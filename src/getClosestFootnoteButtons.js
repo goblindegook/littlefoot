@@ -1,4 +1,4 @@
-import closest from 'dom-closest'
+import closest from 'dom-closest';
 
 /**
  * Get the closest footnote buttons or button for a selector.
@@ -7,23 +7,25 @@ import closest from 'dom-closest'
  * @param  {Boolean} allowMultiple Allow activating multiple buttons.
  * @return {Array}                 All footnotes activated by the function.
  */
-export default function getClosestFootnoteButtons(selector, allowMultiple = false) {
-  const buttons = []
+function getClosestFootnoteButtons(selector, allowMultiple = false) {
+  const buttons = [];
 
   if (selector == null || selector.length === 0) {
-    return buttons
+    return buttons;
   }
 
   if (allowMultiple) {
-    const elements = document.querySelectorAll(selector)
+    const elements = document.querySelectorAll(selector);
     Array.prototype.forEach.call(elements, (element) => {
-      buttons.push(closest(element, '.littlefoot-footnote__button'))
-    })
+      buttons.push(closest(element, '.littlefoot-footnote__button'));
+    });
 
   } else {
-    const element = document.querySelector(selector)
-    buttons.push(closest(element, '.littlefoot-footnote__button'))
+    const element = document.querySelector(selector);
+    buttons.push(closest(element, '.littlefoot-footnote__button'));
   }
 
-  return buttons.filter((button) => button)
+  return buttons.filter((button) => button);
 }
+
+export default getClosestFootnoteButtons;

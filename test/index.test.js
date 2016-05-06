@@ -1,128 +1,127 @@
-import classList from 'dom-classlist'
-import test from 'tape'
-import littlefoot from '../src/'
-import { dispatchEvent } from '../src/dom/events'
-import { setup, sleep, teardown } from './helper'
+import classList from 'dom-classlist';
+import test from 'tape';
+import littlefoot from '../src/';
+import { dispatchEvent } from '../src/dom/events';
+import { setup, sleep, teardown } from './helper';
 
 test('littlefoot setup with default options', (t) => {
-  setup('default.html')
+  setup('default.html');
 
-  const body             = document.body
-  const footnotes        = body.querySelectorAll('.footnote').length
-  const reverseFootnotes = body.querySelectorAll('.reversefootnote').length
+  const body             = document.body;
+  const footnotes        = body.querySelectorAll('.footnote').length;
+  const reverseFootnotes = body.querySelectorAll('.reversefootnote').length;
 
-  littlefoot()
+  littlefoot();
 
   t.equal(body.querySelectorAll('.littlefoot-footnote__container').length, footnotes,
-    'inserts footnote containers')
+    'inserts footnote containers');
 
   t.equal(body.querySelectorAll('button').length, footnotes,
-    'inserts footnote buttons')
+    'inserts footnote buttons');
 
   t.equal(body.querySelectorAll('.footnote-processed').length, reverseFootnotes,
-    'processes footnotes')
+    'processes footnotes');
 
   t.equal(body.querySelectorAll('.footnotes').length, 1,
-    'adds a footnote container')
+    'adds a footnote container');
 
   t.equal(body.querySelectorAll('.footnotes.footnote-print-only').length, 1,
-    'hides the footnote container')
+    'hides the footnote container');
 
   t.equal(body.querySelectorAll('hr.footnote-print-only').length, 1,
-    'hides the footnote separator')
+    'hides the footnote separator');
 
   t.equal(body.querySelectorAll('li.footnote-print-only').length, reverseFootnotes,
-    'hides all footnotes')
+    'hides all footnotes');
 
   t.equal(body.querySelectorAll('button.is-active').length, 0,
-    'has no active footnotes')
+    'has no active footnotes');
 
-  teardown()
-  t.end()
-})
+  teardown();
+  t.end();
+});
 
 test('footnote activation and dismissal', (t) => {
-  setup('default.html')
+  setup('default.html');
 
-  const lf = littlefoot()
-
-  const activateDelay = lf.getSetting('activateDelay')
-  const dismissDelay  = lf.getSetting('dismissDelay')
-  const footnote      = document.body.querySelector('button[data-footnote-id="1"]')
+  const lf            = littlefoot();
+  const activateDelay = lf.getSetting('activateDelay');
+  const dismissDelay  = lf.getSetting('dismissDelay');
+  const footnote      = document.body.querySelector('button[data-footnote-id="1"]');
 
   // these should do nothing
-  lf.activate()
-  lf.activate('')
-  lf.activate('#invalid')
+  lf.activate();
+  lf.activate('');
+  lf.activate('#invalid');
 
   sleep(activateDelay)
     .then(() => {
 
       t.equal(document.body.querySelectorAll('button.is-active').length, 0,
-        'displays no popovers on invalid activate()')
+        'displays no popovers on invalid activate()');
 
       // activate button
-      lf.activate('button[data-footnote-id="1"]')
+      lf.activate('button[data-footnote-id="1"]');
 
-      return sleep(activateDelay)
+      return sleep(activateDelay);
     })
     .then(() => {
-      const popover = document.body.querySelector('.littlefoot-footnote')
-      const wrapper = document.body.querySelector('.littlefoot-footnote__wrapper')
-      const content = document.body.querySelector('.littlefoot-footnote__content')
+      const popover = document.body.querySelector('.littlefoot-footnote');
+      const wrapper = document.body.querySelector('.littlefoot-footnote__wrapper');
+      const content = document.body.querySelector('.littlefoot-footnote__content');
 
       t.equal(content.innerHTML.trim(), footnote.getAttribute('data-littlefoot-footnote').trim(),
-        'injects content into popover')
+        'injects content into popover');
 
       t.equal(document.body.querySelectorAll('button.is-active').length, 1,
-        'displays one popover on activate()')
+        'displays one popover on activate()');
 
       t.ok(popover.getAttribute('data-littlefoot-max-height'),
-        'sets a data-littlefoot-max-height')
+        'sets a data-littlefoot-max-height');
 
       t.equal(parseFloat(popover.style.maxWidth), document.body.clientWidth,
-        'sets maximum popover width to document width')
+        'sets maximum popover width to document width');
 
       t.equal(parseFloat(content.offsetWidth), parseFloat(wrapper.style.maxWidth),
-        'fits wrapper to content width')
+        'fits wrapper to content width');
 
-      lf.dismiss()
-      return sleep(dismissDelay)
+      lf.dismiss();
+      return sleep(dismissDelay);
     })
     .then(() => {
       t.notOk(classList(footnote).contains('is-active'),
-        'dismisses popovers on dismiss()')
+        'dismisses popovers on dismiss()');
 
-      dispatchEvent(footnote, 'click')
+      dispatchEvent(footnote, 'click');
 
       t.ok(classList(footnote).contains('changing'),
-        'transitions popover activation on click')
+        'transitions popover activation on click');
 
-      return sleep(activateDelay)
+      return sleep(activateDelay);
     })
     .then(() => {
       t.ok(classList(footnote).contains('is-active'),
-        'activates one popover on button click event')
+        'activates one popover on button click event');
 
-      dispatchEvent(document.body, 'click')
-      return sleep(dismissDelay)
+      dispatchEvent(document.body, 'click');
+      return sleep(dismissDelay);
     })
     .then(() => {
       t.notOk(classList(footnote).contains('is-active'),
-        'dismisses popovers on body click event')
+        'dismisses popovers on body click event');
 
-      dispatchEvent(footnote, 'click')
-      return sleep(activateDelay)
+      dispatchEvent(footnote, 'click');
+      return sleep(activateDelay);
     })
     .then(() => {
-      dispatchEvent(footnote, 'click')
-      return sleep(dismissDelay)
+      dispatchEvent(footnote, 'click');
+      return sleep(dismissDelay);
     })
     .then(() => {
       t.notOk(classList(footnote).contains('is-active'),
-        'dismisses popovers on activating twice')
+        'dismisses popovers on activating twice');
 
-      teardown()
-      t.end()
-    })
-})
+      teardown();
+      t.end();
+    });
+});

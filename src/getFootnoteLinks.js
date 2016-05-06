@@ -1,4 +1,4 @@
-import closest from 'dom-closest'
+import closest from 'dom-closest';
 
 /**
  * Obtain the ID attribute from a footnote link element's closest parent or child.
@@ -8,19 +8,19 @@ import closest from 'dom-closest'
  * @return {String}                          Link ID.
  */
 function getFootnoteBacklinkId(link, anchorParentSelector) {
-  const parent = closest(link, anchorParentSelector)
+  const parent = closest(link, anchorParentSelector);
 
   if (parent) {
-    return parent.getAttribute('id')
+    return parent.getAttribute('id');
   }
 
-  const child = link.querySelector(anchorParentSelector)
+  const child = link.querySelector(anchorParentSelector);
 
   if (child) {
-    return child.getAttribute('id')
+    return child.getAttribute('id');
   }
 
-  return ''
+  return '';
 }
 
 /**
@@ -35,14 +35,14 @@ function getFootnoteBacklinkId(link, anchorParentSelector) {
  */
 function mapFootnoteReferences(footnoteLinks, anchorParentSelector) {
   return footnoteLinks.map((link) => {
-    const id     = getFootnoteBacklinkId(link, anchorParentSelector) || ''
-    const linkId = link.getAttribute('id') || ''
-    const href   = '#' + link.getAttribute('href').split('#')[1]
+    const id     = getFootnoteBacklinkId(link, anchorParentSelector) || '';
+    const linkId = link.getAttribute('id') || '';
+    const href   = '#' + link.getAttribute('href').split('#')[1];
 
-    link.setAttribute('data-footnote-backlink-ref', id + linkId)
-    link.setAttribute('data-footnote-ref', href)
+    link.setAttribute('data-footnote-backlink-ref', id + linkId);
+    link.setAttribute('data-footnote-ref', href);
 
-    return link
+    return link;
   })
 }
 
@@ -51,24 +51,26 @@ function mapFootnoteReferences(footnoteLinks, anchorParentSelector) {
  * @param  {Object} settings Littlefoot settings.
  * @return {Array}           Footnote links found in the document.
  */
-export default function getFootnoteLinks(settings) {
-  const scope                = settings.scope || ''
-  const anchorPattern        = settings.anchorPattern
-  const footnoteParentClass  = settings.footnoteParentClass
-  const anchorParentSelector = settings.anchorParentSelector
-  const footnoteLinkSelector = `${scope} a[href*="#"]`.trim()
+function getFootnoteLinks(settings) {
+  const scope                = settings.scope || '';
+  const anchorPattern        = settings.anchorPattern;
+  const footnoteParentClass  = settings.footnoteParentClass;
+  const anchorParentSelector = settings.anchorParentSelector;
+  const footnoteLinkSelector = `${scope} a[href*="#"]`.trim();
 
   const footnoteLinks = Array.prototype.filter.call(
     document.querySelectorAll(footnoteLinkSelector),
     (link) => {
-      const href   = link.getAttribute('href')
-      const rel    = link.getAttribute('rel')
-      const anchor = '' + href + (rel != null && rel !== 'null' ? rel : '')
+      const href   = link.getAttribute('href');
+      const rel    = link.getAttribute('rel');
+      const anchor = '' + href + (rel != null && rel !== 'null' ? rel : '');
 
       return anchor.match(anchorPattern)
-        && !closest(link, `[class*="${footnoteParentClass}"]:not(a):not(${anchorParentSelector})`)
+        && !closest(link, `[class*="${footnoteParentClass}"]:not(a):not(${anchorParentSelector})`);
     }
-  )
+  );
 
-  return mapFootnoteReferences(footnoteLinks, anchorParentSelector)
+  return mapFootnoteReferences(footnoteLinks, anchorParentSelector);
 }
+
+export default getFootnoteLinks;

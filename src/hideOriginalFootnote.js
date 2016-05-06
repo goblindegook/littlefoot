@@ -1,7 +1,7 @@
-import classList from 'dom-classlist'
-import children from './dom/children'
+import classList from 'dom-classlist';
+import children from './dom/children';
 
-const printOnly = 'footnote-print-only'
+const printOnly = 'footnote-print-only';
 
 /**
  * Mark an element for hiding by setting a print-only class.
@@ -10,7 +10,7 @@ const printOnly = 'footnote-print-only'
  * @return {void}
  */
 function hideElement(element) {
-  classList(element).add(printOnly)
+  classList(element).add(printOnly);
 }
 
 /**
@@ -22,13 +22,13 @@ function hideElement(element) {
  * @return {void}
  */
 function hideFootnoteContainer(container) {
-  const visibleElements   = children(container, `:not(.${printOnly})`)
-  const visibleSeparators = children(container, `hr:not(.${printOnly})`)
+  const visibleElements   = children(container, `:not(.${printOnly})`);
+  const visibleSeparators = children(container, `hr:not(.${printOnly})`);
 
   if (visibleElements.length === visibleSeparators.length) {
-    visibleSeparators.forEach(hideElement)
-    hideElement(container)
-    hideFootnoteContainer(container.parentNode)
+    visibleSeparators.forEach(hideElement);
+    hideElement(container);
+    hideFootnoteContainer(container.parentNode);
   }
 }
 
@@ -40,8 +40,10 @@ function hideFootnoteContainer(container) {
  * @param  {DOMElement} link     Footnote link element.
  * @return {void}
  */
-export default function hideOriginalFootnote(footnote, link) {
-  hideElement(footnote)
-  hideElement(link)
-  hideFootnoteContainer(footnote.parentNode)
+function hideOriginalFootnote(footnote, link) {
+  hideElement(footnote);
+  hideElement(link);
+  hideFootnoteContainer(footnote.parentNode);
 }
+
+export default hideOriginalFootnote;

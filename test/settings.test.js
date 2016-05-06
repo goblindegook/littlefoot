@@ -1,12 +1,12 @@
-import test from 'tape'
-import littlefoot from '../src/'
+import test from 'tape';
+import littlefoot from '../src/';
 
 test('littlefoot settings', (t) => {
-  const lf = littlefoot()
+  const lf = littlefoot();
 
-  lf.updateSetting('test', 'boop')
+  lf.updateSetting('test', 'boop');
 
-  t.equal(lf.getSetting('test'), 'boop', 'allows getting and setting values')
+  t.equal(lf.getSetting('test'), 'boop', 'allows getting and setting values');
 
-  t.end()
-})
+  t.end();
+});
