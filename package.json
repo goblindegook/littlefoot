@@ -7,7 +7,7 @@
     "clean": "rm -rf coverage dist",
     "build": "mkdir -p dist && npm run build-scripts && npm run build-styles",
     "build-scripts": "cd src; babel *.js **/*.js -d ../dist",
-    "build-styles": "node-sass --include-path styles/sass -o dist/ styles/sass/",
+    "build-styles": "node-sass --include-path styles -o dist/ styles/",
     "docs": "esdoc -c esdoc.json",
     "lint": "eslint {src,test}/**/*.js",
     "prepublish": "npm run build",
