@@ -28,7 +28,8 @@
   },
   "license": "MIT",
   "main": "dist/index.js",
-  "style": "styles/css/littlefoot.css",
+  "jsnext:main": "src/index.js",
+  "style": "dist/littlefoot.css",
   "devDependencies": {
     "babel": "^6.3.26",
     "babel-cli": "^6.4.5",
