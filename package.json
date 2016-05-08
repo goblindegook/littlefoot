@@ -5,7 +5,7 @@
   "repository": "goblindegook/littlefoot",
   "scripts": {
     "clean": "rm -rf coverage dist",
-    "build": "npm run build-scripts && npm run build-styles",
+    "build": "mkdir -p dist && npm run build-scripts && npm run build-styles",
     "build-scripts": "cd src; babel *.js **/*.js -d ../dist",
     "build-styles": "node-sass --include-path styles/sass -o dist/ styles/sass/",
     "docs": "esdoc -c esdoc.json",
