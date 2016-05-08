@@ -5,12 +5,13 @@
   "repository": "goblindegook/littlefoot",
   "scripts": {
     "clean": "rm -rf coverage dist",
+    "rebuild": "npm run clean && npm run build",
     "build": "mkdir -p dist && npm run build-scripts && npm run build-styles",
     "build-scripts": "cd src; babel *.js **/*.js -d ../dist",
-    "build-styles": "node-sass --include-path styles -o dist/ styles/",
+    "build-styles": "node-sass --output-style compressed --include-path styles -o dist/ styles/",
     "docs": "esdoc -c esdoc.json",
     "lint": "eslint {src,test}/**/*.js",
-    "prepublish": "npm run build",
+    "prepublish": "npm run rebuild",
     "pretest": "npm run lint && npm run build-styles",
     "test": "karma start --single-run",
     "test-local": "karma start --single-run --browsers ChromeCanary",
@@ -62,6 +63,7 @@
     "sinon": "^1.17.3",
     "stringify": "^5.1.0",
     "tape": "^4.4.0",
+    "uglify-js": "^2.6.2",
     "watchify": "^3.7.0"
   },
   "dependencies": {
