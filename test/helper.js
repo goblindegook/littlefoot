@@ -32,7 +32,7 @@ export function setup(fixture) {
 export function setupStylesheet() {
   const stylesheet = document.createElement('link');
   stylesheet.rel   = 'stylesheet';
-  stylesheet.href  = 'base/styles/css/littlefoot.css';
+  stylesheet.href  = 'base/dist/littlefoot.css';
 
   document.body.appendChild(stylesheet);
 }

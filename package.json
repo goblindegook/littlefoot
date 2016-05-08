@@ -4,10 +4,10 @@
   "description": "Footnotes without the footprint.",
   "repository": "goblindegook/littlefoot",
   "scripts": {
-    "clean": "rm -rf coverage lib styles/css",
+    "clean": "rm -rf coverage dist",
     "build": "npm run build-scripts && npm run build-styles",
-    "build-scripts": "cd src; babel *.js **/*.js -d ../lib",
-    "build-styles": "node-sass --include-path styles/sass -o styles/css/ styles/sass/",
+    "build-scripts": "cd src; babel *.js **/*.js -d ../dist",
+    "build-styles": "node-sass --include-path styles/sass -o dist/ styles/sass/",
     "docs": "esdoc -c esdoc.json",
     "lint": "eslint {src,test}/**/*.js",
     "prepublish": "npm run build",
@@ -27,7 +27,7 @@
     "url": "https://goblindegook.com/"
   },
   "license": "MIT",
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "style": "styles/css/littlefoot.css",
   "devDependencies": {
     "babel": "^6.3.26",
