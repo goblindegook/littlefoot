@@ -6,9 +6,10 @@
   "scripts": {
     "clean": "rm -rf coverage dist",
     "rebuild": "npm run clean && npm run build",
-    "build": "mkdir -p dist && npm run build-scripts && npm run build-styles",
-    "build-scripts": "cd src; babel *.js **/*.js -d ../dist",
+    "build": "mkdir -p dist && npm run build-scripts && npm run build-styles && npm run optimize",
+    "build-scripts": "browserify -s littlefoot -o dist/littlefoot.js src/index.js",
     "build-styles": "node-sass --output-style compressed --include-path styles -o dist/ styles/",
+    "optimize": "uglifyjs dist/littlefoot.js --compress unused=false --mangle > dist/littlefoot.min.js",
     "docs": "esdoc -c esdoc.json",
     "lint": "eslint {src,test}/**/*.js",
     "prepublish": "npm run rebuild",
@@ -28,7 +29,7 @@
     "url": "https://goblindegook.com/"
   },
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "dist/littlefoot.js",
   "jsnext:main": "src/index.js",
   "style": "dist/littlefoot.css",
   "devDependencies": {
