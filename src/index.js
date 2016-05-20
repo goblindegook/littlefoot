@@ -160,8 +160,7 @@ const littlefoot = function(options) {
     }
 
     if (isActive) {
-      const dismissSelector = settings.allowMultiple ? '.littlefoot-footnote' + selector : null;
-      dismissFootnotes(dismissSelector);
+      dismissFootnotes('.littlefoot-footnote' + selector);
       return;
     }
 

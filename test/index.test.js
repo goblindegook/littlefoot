@@ -41,13 +41,14 @@ test('littlefoot setup with default options', (t) => {
   t.end();
 });
 
+
 test('footnote activation and dismissal', (t) => {
   setup('default.html');
 
   const lf            = littlefoot();
   const activateDelay = lf.getSetting('activateDelay');
   const dismissDelay  = lf.getSetting('dismissDelay');
-  const footnote      = document.body.querySelector('button[data-footnote-id="1"]');
+  const button        = document.body.querySelector('button[data-footnote-id="1"]');
 
   // these should do nothing
   lf.activate();
@@ -70,7 +71,7 @@ test('footnote activation and dismissal', (t) => {
       const wrapper = document.body.querySelector('.littlefoot-footnote__wrapper');
       const content = document.body.querySelector('.littlefoot-footnote__content');
 
-      t.equal(content.innerHTML.trim(), footnote.getAttribute('data-littlefoot-footnote').trim(),
+      t.equal(content.innerHTML.trim(), button.getAttribute('data-littlefoot-footnote').trim(),
         'injects content into popover');
 
       t.equal(document.body.querySelectorAll('button.is-active').length, 1,
@@ -89,37 +90,37 @@ test('footnote activation and dismissal', (t) => {
       return sleep(dismissDelay);
     })
     .then(() => {
-      t.notOk(classList(footnote).contains('is-active'),
+      t.notOk(classList(button).contains('is-active'),
         'dismisses popovers on dismiss()');
 
-      dispatchEvent(footnote, 'click');
+      dispatchEvent(button, 'click');
 
-      t.ok(classList(footnote).contains('changing'),
+      t.ok(classList(button).contains('changing'),
         'transitions popover activation on click');
 
       return sleep(activateDelay);
     })
     .then(() => {
-      t.ok(classList(footnote).contains('is-active'),
+      t.ok(classList(button).contains('is-active'),
         'activates one popover on button click event');
 
       dispatchEvent(document.body, 'click');
       return sleep(dismissDelay);
     })
     .then(() => {
-      t.notOk(classList(footnote).contains('is-active'),
+      t.notOk(classList(button).contains('is-active'),
         'dismisses popovers on body click event');
 
-      dispatchEvent(footnote, 'click');
+      dispatchEvent(button, 'click');
       return sleep(activateDelay);
     })
     .then(() => {
-      dispatchEvent(footnote, 'click');
+      dispatchEvent(button, 'click');
       return sleep(dismissDelay);
     })
     .then(() => {
-      t.notOk(classList(footnote).contains('is-active'),
-        'dismisses popovers on activating twice');
+      t.notOk(classList(button).contains('is-active'),
+        'dismisses popovers on clicking the button again');
 
       teardown();
       t.end();
