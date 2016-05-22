@@ -24,7 +24,7 @@ test('littlefoot setup with custom contentTemplate', (t) => {
       t.equal(footnote.getAttribute('data-footnote-id'), '1', 'replaces id token');
       t.equal(footnote.getAttribute('data-footnote-number'), '1', 'replaces number token');
 
-      t.equal(content.innerHTML.trim(), button.getAttribute('data-littlefoot-footnote').trim(),
+      t.equal(content.innerHTML.trim(), button.getAttribute('data-footnote-content').trim(),
         'injects content into popover');
 
       teardown();

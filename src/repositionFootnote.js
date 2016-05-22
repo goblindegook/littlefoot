@@ -42,7 +42,7 @@ function isFootnoteOnTop(footnote, room) {
  */
 function setFootnoteState(footnote, state) {
   const alternative = state === 'top' ? 'bottom' : 'top';
-  footnote.setAttribute('data-littlefoot-state', state);
+  footnote.setAttribute('data-footnote-state', state);
   classList(footnote).add('is-positioned-' + state);
   classList(footnote).remove('is-positioned-' + alternative);
 }
@@ -56,7 +56,7 @@ function setFootnoteState(footnote, state) {
  */
 function updateFootnoteState(footnote, room) {
   const isTop    = isFootnoteOnTop(footnote, room);
-  const state    = footnote.getAttribute('data-littlefoot-state');
+  const state    = footnote.getAttribute('data-footnote-state');
   const newState = isTop ? 'top' : 'bottom';
 
   if (state !== newState) {
@@ -73,7 +73,7 @@ function updateFootnoteState(footnote, room) {
  * @return {Number}              Maximum footnote height.
  */
 function getFootnoteMaxHeight(footnote, room) {
-  const maxHeight       = parseInt(footnote.getAttribute('data-littlefoot-max-height'), 10);
+  const maxHeight       = parseInt(footnote.getAttribute('data-footnote-max-height'), 10);
   const isTop           = isFootnoteOnTop(footnote, room);
   const marginSize      = parseInt(getStyle(footnote, 'marginTop'), 10);
   const availableHeight = room[isTop ? 'top' : 'bottom'] - marginSize - 15;

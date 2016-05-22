@@ -17,6 +17,8 @@ function dismissFootnote(footnote, timeout = 0) {
     return;
   }
 
+  linkedButton.setAttribute('aria-expanded', 'false');
+
   classList(linkedButton).add('changing');
   classList(linkedButton).remove('is-active');
   classList(linkedButton).remove('is-hover-instantiated');

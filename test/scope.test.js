@@ -10,7 +10,7 @@ test('littlefoot setup with scope=body', (t) => {
 
   littlefoot({ scope: 'body' });
 
-  const footnoteButtons    = document.body.querySelectorAll('[data-littlefoot-footnote]');
+  const footnoteButtons    = document.body.querySelectorAll('[data-footnote-content]');
   const processedFootnotes = document.body.querySelectorAll('.footnote-processed');
 
   t.equal(footnoteButtons.length, footnoteReferences.length, 'creates buttons for all footnotes when scope is body');
@@ -25,7 +25,7 @@ test('littlefoot setup with scope=#invalid', (t) => {
 
   littlefoot({ scope: '#invalid' });
 
-  const footnoteButtons    = document.body.querySelectorAll('[data-littlefoot-footnote]');
+  const footnoteButtons    = document.body.querySelectorAll('[data-footnote-content]');
   const processedFootnotes = document.body.querySelectorAll('.footnote-processed');
 
   t.equal(footnoteButtons.length, 0, 'creates no footnote buttons when scope is #invalid');

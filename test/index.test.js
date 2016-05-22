@@ -61,6 +61,9 @@ test('footnote activation and dismissal', (t) => {
       t.equal(document.body.querySelectorAll('button.is-active').length, 0,
         'displays no popovers on invalid activate()');
 
+      t.equal(button.getAttribute('aria-expanded'), 'false', 'changes ARIA expanded attribute to false');
+      t.equal(button.getAttribute('aria-label'), 'Footnote 1', 'sets ARIA label');
+
       // activate button
       lf.activate('button[data-footnote-id="1"]');
 
@@ -71,14 +74,16 @@ test('footnote activation and dismissal', (t) => {
       const wrapper = document.body.querySelector('.littlefoot-footnote__wrapper');
       const content = document.body.querySelector('.littlefoot-footnote__content');
 
-      t.equal(content.innerHTML.trim(), button.getAttribute('data-littlefoot-footnote').trim(),
+      t.equal(button.getAttribute('aria-controls'), popover.getAttribute('id'), 'sets ARIA controls');
+      t.equal(button.getAttribute('aria-expanded'), 'true', 'changes ARIA expanded attribute to true');
+
+      t.equal(content.innerHTML.trim(), button.getAttribute('data-footnote-content').trim(),
         'injects content into popover');
 
-      t.equal(document.body.querySelectorAll('button.is-active').length, 1,
-        'displays one popover on activate()');
+      t.equal(document.body.querySelectorAll('button.is-active').length, 1, 'displays one popover on activate()');
 
-      t.ok(popover.getAttribute('data-littlefoot-max-height'),
-        'sets a data-littlefoot-max-height');
+      t.ok(popover.getAttribute('data-footnote-max-height'),
+        'sets a data-footnote-max-height');
 
       t.equal(parseFloat(popover.style.maxWidth), document.body.clientWidth,
         'sets maximum popover width to document width');

@@ -2,6 +2,23 @@ import test from 'tape';
 import littlefoot from '../src/';
 import { setup, teardown } from './helper';
 
+test('littlefoot setup with default buttonTemplate', (t) => {
+  setup('default.html');
+
+  littlefoot();
+  
+  const footnotes = document.body.querySelectorAll('.footnote');
+  const buttons   = document.body.querySelectorAll('button');
+
+  t.equal(buttons.length, footnotes.length, 'one custom button created per footnote');
+  t.equal(buttons[0].getAttribute('id'), 'fnref:1', 'replaces reference token');
+  t.equal(buttons[0].getAttribute('data-footnote-id'), '1', 'replaces id token');
+  t.equal(buttons[0].getAttribute('data-footnote-number'), '1', 'replaces number token');
+
+  teardown();
+  t.end();
+});
+
 test('littlefoot setup with custom buttonTemplate', (t) => {
   setup('default.html');
 

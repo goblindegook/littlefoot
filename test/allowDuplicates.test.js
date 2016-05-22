@@ -7,7 +7,7 @@ test('littlefoot setup with allowDuplicates=false', (t) => {
 
   littlefoot({ allowDuplicates: false });
 
-  const buttons   = document.body.querySelectorAll('[data-littlefoot-footnote]');
+  const buttons   = document.body.querySelectorAll('[data-footnote-content]');
   const processed = document.body.querySelectorAll('.footnote-processed');
 
   t.equal(buttons.length, processed.length,
@@ -22,7 +22,7 @@ test('littlefoot setup with allowDuplicates=true', (t) => {
 
   littlefoot({ allowDuplicates: true });
 
-  const buttons   = document.body.querySelectorAll('[data-littlefoot-footnote]');
+  const buttons   = document.body.querySelectorAll('[data-footnote-content]');
   const processed = document.body.querySelectorAll('.footnote-processed');
 
   t.ok(buttons.length > processed.length,
@@ -37,7 +37,7 @@ test('littlefoot setup with allowDuplicates=true', (t) => {
 
   littlefoot({ allowDuplicates: false });
 
-  const buttons   = document.body.querySelectorAll('[data-littlefoot-footnote]');
+  const buttons   = document.body.querySelectorAll('[data-footnote-content]');
   const processed = document.body.querySelectorAll('.footnote-processed');
 
   t.equal(buttons.length, processed.length,

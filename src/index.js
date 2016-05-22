@@ -71,7 +71,7 @@ const littlefoot = function(options) {
 
     buttons.forEach((button) => {
       button.insertAdjacentHTML('afterend', contentTemplate({
-        content: button.getAttribute('data-littlefoot-footnote'),
+        content: button.getAttribute('data-footnote-content'),
         id:      button.getAttribute('data-footnote-id'),
         number:  button.getAttribute('data-footnote-number'),
       }));
@@ -79,7 +79,8 @@ const littlefoot = function(options) {
       const popover = button.nextElementSibling;
       const content = popover.querySelector('.littlefoot-footnote__content');
 
-      popover.setAttribute('data-littlefoot-max-height', getMaxHeight(content));
+      button.setAttribute('aria-expanded', 'true');
+      popover.setAttribute('data-footnote-max-height', getMaxHeight(content));
       popover.style.maxWidth = document.body.clientWidth + 'px';
 
       classList(button).add('is-active');
