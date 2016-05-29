@@ -70,7 +70,8 @@
   },
   "dependencies": {
     "babel-runtime": "^6.9.0",
-    "delegate": "^3.0.1",
+    "component-delegate": "^0.2.4",
+    "component-event": "^0.1.4",
     "dom-classlist": "^1.0.1",
     "dom-closest": "^0.2.0",
     "dom-matches": "^2.0.0",

@@ -1,9 +1,9 @@
 import closest from 'dom-closest';
 import classList from 'dom-classlist';
-import delegate from 'delegate';
+import delegate from 'component-delegate';
+import events from 'component-event';
 import template from 'lodash/template';
 import throttle from 'lodash/throttle';
-import { addEventListener, dispatchEvent } from './dom/events';
 import getMaxHeight from './dom/getMaxHeight';
 import createSettings from './settings';
 import dismissFootnote from './dismissFootnote';
@@ -85,8 +85,8 @@ const littlefoot = function(options) {
 
       classList(button).add('is-active');
 
-      addEventListener(content, 'mousewheel', throttle(scrollContent));
-      addEventListener(content, 'wheel', throttle(scrollContent));
+      events.bind(content, 'mousewheel', throttle(scrollContent));
+      events.bind(content, 'wheel', throttle(scrollContent));
 
       repositionFootnotes();
 
@@ -154,7 +154,9 @@ const littlefoot = function(options) {
     const footnoteId = button.getAttribute('data-footnote-id');
     const selector   = `[data-footnote-id="${footnoteId}"]`;
 
-    dispatchEvent(button, 'blur');
+    if (typeof button.blur === 'function') {
+      button.blur();
+    }
 
     if (isChanging) {
       return;
@@ -230,15 +232,15 @@ const littlefoot = function(options) {
     }
   }
 
-  addEventListener(document, 'touchend', onTouchClick);
-  addEventListener(document, 'click', onTouchClick);
-  addEventListener(document, 'keyup', onEscapeKeypress);
-  addEventListener(document, 'gestureend', repositionFootnotes);
-  addEventListener(window, 'scroll', throttle(repositionFootnotes));
-  addEventListener(window, 'resize', throttle(repositionFootnotes));
+  events.bind(document, 'touchend', onTouchClick);
+  events.bind(document, 'click', onTouchClick);
+  events.bind(document, 'keyup', onEscapeKeypress);
+  events.bind(document, 'gestureend', repositionFootnotes);
+  events.bind(window, 'scroll', throttle(repositionFootnotes));
+  events.bind(window, 'resize', throttle(repositionFootnotes));
 
-  delegate(document, '.littlefoot-footnote__button', 'mouseover', onHover);
-  delegate(document, '.is-hover-instantiated', 'mouseout', onUnhover);
+  delegate.bind(document, '.littlefoot-footnote__button', 'mouseover', onHover);
+  delegate.bind(document, '.is-hover-instantiated', 'mouseout', onUnhover);
 
   return {
     activate:      displayFootnote,

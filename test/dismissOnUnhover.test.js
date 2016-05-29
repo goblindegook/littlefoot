@@ -1,7 +1,7 @@
 import test from 'tape';
 import classList from 'dom-classlist';
 import littlefoot from '../src/';
-import { dispatchEvent } from '../src/dom/events';
+import simulant from 'simulant';
 import { setup, sleep, teardown } from './helper';
 
 test('littlefoot setup with dismissOnUnhover=true', (t) => {
@@ -14,14 +14,14 @@ test('littlefoot setup with dismissOnUnhover=true', (t) => {
   const hoverDelay    = lf.getSetting('hoverDelay');
   const footnote      = document.body.querySelector('button[data-footnote-id="1"]');
 
-  dispatchEvent(footnote, 'mouseover');
+  simulant.fire(footnote, 'mouseover');
 
   sleep(activateDelay)
     .then(() => {
       t.ok(classList(footnote).contains('is-active'),
         'popover has is-active class before unhover event');
 
-      dispatchEvent(footnote, 'mouseout');
+      simulant.fire(footnote, 'mouseout');
 
       return sleep(dismissDelay + hoverDelay);
     })

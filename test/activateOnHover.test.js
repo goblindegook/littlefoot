@@ -1,7 +1,7 @@
 import test from 'tape';
 import classList from 'dom-classlist';
 import littlefoot from '../src/';
-import { dispatchEvent } from '../src/dom/events';
+import simulant from 'simulant';
 import { setup, sleep, teardown } from './helper';
 
 test('littlefoot setup with activateOnHover=true', (t) => {
@@ -10,9 +10,9 @@ test('littlefoot setup with activateOnHover=true', (t) => {
   const lf = littlefoot({ activateOnHover: true });
 
   const activateDelay = lf.getSetting('activateDelay');
-  const footnote    = document.body.querySelector('button[data-footnote-id="1"]');
+  const footnote      = document.body.querySelector('button[data-footnote-id="1"]');
 
-  dispatchEvent(footnote, 'mouseover');
+  simulant.fire(footnote, 'mouseover');
 
   sleep(activateDelay)
     .then(() => {

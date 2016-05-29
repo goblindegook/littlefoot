@@ -1,6 +1,6 @@
 import test from 'tape';
 import littlefoot from '../src/';
-import { dispatchEvent } from '../src/dom/events';
+import simulant from 'simulant';
 import { setup, sleep, teardown } from './helper';
 
 test('littlefoot setup with allowMultiple=true', (t) => {
@@ -12,8 +12,8 @@ test('littlefoot setup with allowMultiple=true', (t) => {
   const dismissDelay  = lf.getSetting('dismissDelay');
   const buttons       = document.querySelectorAll('button[data-footnote-id]');
 
-  dispatchEvent(document.body.querySelector('button[data-footnote-id="1"]'), 'click');
-  dispatchEvent(document.body.querySelector('button[data-footnote-id="2"]'), 'click');
+  simulant.fire(document.body.querySelector('button[data-footnote-id="1"]'), 'click');
+  simulant.fire(document.body.querySelector('button[data-footnote-id="2"]'), 'click');
 
   sleep(activateDelay)
     .then(() => {
@@ -46,11 +46,11 @@ test('littlefoot setup with allowMultiple=false', (t) => {
 
   const activateDelay = lf.getSetting('activateDelay');
 
-  dispatchEvent(document.body.querySelector('button[data-footnote-id="1"]'), 'click');
+  simulant.fire(document.body.querySelector('button[data-footnote-id="1"]'), 'click');
 
   sleep(activateDelay)
     .then(() => {
-      dispatchEvent(document.body.querySelector('button[data-footnote-id="2"]'), 'click');
+      simulant.fire(document.body.querySelector('button[data-footnote-id="2"]'), 'click');
       return sleep(activateDelay);
     })
     .then(() => {

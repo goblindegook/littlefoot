@@ -1,7 +1,7 @@
 import classList from 'dom-classlist';
 import test from 'tape';
 import littlefoot from '../src/';
-import { dispatchEvent } from '../src/dom/events';
+import simulant from 'simulant';
 import { setup, sleep, teardown } from './helper';
 
 test('littlefoot setup with default options', (t) => {
@@ -98,7 +98,7 @@ test('footnote activation and dismissal', (t) => {
       t.notOk(classList(button).contains('is-active'),
         'dismisses popovers on dismiss()');
 
-      dispatchEvent(button, 'click');
+      simulant.fire(button, 'click');
 
       t.ok(classList(button).contains('changing'),
         'transitions popover activation on click');
@@ -109,18 +109,18 @@ test('footnote activation and dismissal', (t) => {
       t.ok(classList(button).contains('is-active'),
         'activates one popover on button click event');
 
-      dispatchEvent(document.body, 'click');
+      simulant.fire(document.body, 'click');
       return sleep(dismissDelay);
     })
     .then(() => {
       t.notOk(classList(button).contains('is-active'),
         'dismisses popovers on body click event');
 
-      dispatchEvent(button, 'click');
+      simulant.fire(button, 'click');
       return sleep(activateDelay);
     })
     .then(() => {
-      dispatchEvent(button, 'click');
+      simulant.fire(button, 'click');
       return sleep(dismissDelay);
     })
     .then(() => {
