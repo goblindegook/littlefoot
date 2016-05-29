@@ -1,4 +1,4 @@
-import closest from 'dom-closest';
+import closest from 'component-closest';
 
 /**
  * Get the closest footnote buttons or button for a selector.

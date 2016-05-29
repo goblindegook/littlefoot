@@ -1,4 +1,4 @@
-import closest from 'dom-closest';
+import closest from 'component-closest';
 
 /**
  * Obtain the ID attribute from a footnote link element's closest parent or child.

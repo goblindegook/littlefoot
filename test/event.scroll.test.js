@@ -1,6 +1,6 @@
 import test from 'tape';
 import classList from 'dom-classlist';
-import closest from 'dom-closest';
+import closest from 'component-closest';
 import simulant from 'simulant';
 import littlefoot from '../src/';
 import { setup, setupStylesheet, sleep, teardown } from './helper';

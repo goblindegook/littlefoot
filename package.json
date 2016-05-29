@@ -70,11 +70,11 @@
   },
   "dependencies": {
     "babel-runtime": "^6.9.0",
+    "component-closest": "^1.0.1",
     "component-delegate": "^0.2.4",
     "component-event": "^0.1.4",
+    "component-matches-selector": "^0.1.6",
     "dom-classlist": "^1.0.1",
-    "dom-closest": "^0.2.0",
-    "dom-matches": "^2.0.0",
     "dom-siblings": "^0.1.0",
     "lodash": "^4.12.0"
   }
