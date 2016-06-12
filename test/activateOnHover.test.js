@@ -16,8 +16,8 @@ test('littlefoot setup with activateOnHover=true', (t) => {
 
   sleep(activateDelay)
     .then(() => {
-      t.ok(classList(footnote).contains('is-hover-instantiated'),
-        'adds the is-hover-instantiated class to the popover');
+      t.ok(classList(footnote).contains('is-hovered'),
+        'adds the is-hovered class to the popover');
 
       t.ok(classList(footnote).contains('is-active'),
         'adds the is-active class to the popover');

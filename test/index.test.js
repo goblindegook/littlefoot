@@ -100,7 +100,7 @@ test('footnote activation and dismissal', (t) => {
 
       simulant.fire(button, 'click');
 
-      t.ok(classList(button).contains('changing'),
+      t.ok(classList(button).contains('is-changing'),
         'transitions popover activation on click');
 
       return sleep(activateDelay);

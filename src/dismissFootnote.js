@@ -13,23 +13,21 @@ function dismissFootnote(footnote, timeout = 0) {
   const footnoteID   = footnote.getAttribute('data-footnote-id');
   const linkedButton = document.querySelector('.littlefoot-footnote__button[data-footnote-id="' + footnoteID + '"]');
 
-  if (classList(linkedButton).contains('changing')) {
+  if (classList(linkedButton).contains('is-changing')) {
     return;
   }
 
   linkedButton.setAttribute('aria-expanded', 'false');
 
-  classList(linkedButton).add('changing');
+  classList(linkedButton).add('is-changing');
   classList(linkedButton).remove('is-active');
-  classList(linkedButton).remove('is-hover-instantiated');
-  classList(linkedButton).remove('is-click-instantiated');
+  classList(linkedButton).remove('is-hovered');
 
-  classList(footnote).add('disapearing');
   classList(footnote).remove('is-active');
 
   window.setTimeout(() => {
     footnote.parentNode.removeChild(footnote);
-    classList(linkedButton).remove('changing');
+    classList(linkedButton).remove('is-changing');
   }, timeout);
 }
 

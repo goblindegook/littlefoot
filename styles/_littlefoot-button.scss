@@ -4,29 +4,28 @@
 // @state .is-active - The associated popover has been activated and is visible.
 
 .littlefoot-footnote__button {
-  position: relative;
-  z-index: 5;
-  top: $button-vertical-adjust;
-  box-sizing: border-box;
-  display: inline-block;
-  padding: $button-per-side-padding;
-  margin: 0 $button-right-margin 0 $button-left-margin;
-  border: none;
-  border-radius: $button-border-radius;
-  cursor: pointer;
-  background-color: rgba($button-color, $button-standard-opacity);
+  -webkit-font-smoothing: antialiased;
   backface-visibility: hidden;
+  background-color: rgba($button-color, $button-standard-opacity);
+  border-radius: $button-border-radius;
+  border: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-block;
   font-size: 1rem;
   line-height: 0;
-  vertical-align: middle;
+  margin: 0 $button-right-margin 0 $button-left-margin;
+  padding: $button-per-side-padding;
+  position: relative;
   text-decoration: none;
-  -webkit-font-smoothing: antialiased;
-  transition-property: $button-transition-properties;
+  top: $button-vertical-adjust;
   transition-duration: $popover-transition-default-duration;
+  transition-property: $button-transition-properties;
+  vertical-align: middle;
+  z-index: 5;
 
   &:hover,
   &:focus {
-    outline: none;
     background-color: rgba($button-hovered-color, $button-hovered-opacity);
   }
 
@@ -41,36 +40,36 @@
 
   // Clearfix
   &::after {
+    clear: both;
     content: '';
     display: table;
-    clear: both;
   }
 }
 
 .littlefoot-footnote__button__ellipsis {
   svg {
     display: inline-block;
-    height: $button-inner-circle-size;
     float: left;
+    height: $button-inner-circle-size;
   }
 }
 
 .littlefoot-footnote__button__number {
-  position: relative;
-  height: $button-height;
-  width: 1.5em;
   border-radius: $button-height / 2;
+  height: $button-height;
+  position: relative;
+  width: 1.5em;
 
   &::after {
+    color: rgba($button-color, .5);
     content: attr(data-footnote-number);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     display: block;
     font-size: $button-height * .6;
     font-weight: bold;
-    color: rgba($button-color, .5);
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
     transition: color $popover-transition-default-duration $popover-transition-default-timing-function;
   }
 

@@ -131,12 +131,12 @@ const littlefoot = function(options) {
       dismissFootnotes(`.littlefoot-footnote:not(${selector})`);
     }
 
-    classList(footnote).add('is-hover-instantiated');
+    classList(footnote).add('is-hovered');
 
     const popovers = displayFootnote('.littlefoot-footnote__button' + selector);
 
     popovers.forEach((popover) => {
-      classList(popover).add('is-hover-instantiated');
+      classList(popover).add('is-hovered');
     });
   }
 
@@ -150,7 +150,7 @@ const littlefoot = function(options) {
    */
   function activateButton(button) {
     const isActive   = classList(button).contains('is-active');
-    const isChanging = classList(button).contains('changing');
+    const isChanging = classList(button).contains('is-changing');
     const footnoteId = button.getAttribute('data-footnote-id');
     const selector   = `[data-footnote-id="${footnoteId}"]`;
 
@@ -172,12 +172,11 @@ const littlefoot = function(options) {
     }
 
     // Activate footnote:
-    classList(button).add('changing');
-    classList(button).add('is-click-instantiated');
+    classList(button).add('is-changing');
     displayFootnote('.littlefoot-footnote__button' + selector);
 
     setTimeout(() => {
-      classList(button).remove('changing');
+      classList(button).remove('is-changing');
     }, settings.activateDelay);
   }
 
@@ -240,7 +239,7 @@ const littlefoot = function(options) {
   events.bind(window, 'resize', throttle(repositionFootnotes));
 
   delegate.bind(document, '.littlefoot-footnote__button', 'mouseover', onHover);
-  delegate.bind(document, '.is-hover-instantiated', 'mouseout', onUnhover);
+  delegate.bind(document, '.is-hovered', 'mouseout', onUnhover);
 
   return {
     activate:      displayFootnote,
