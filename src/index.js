@@ -61,10 +61,11 @@ const littlefoot = function(options) {
    * decoding any special characters, adding the new element to the page,
    * calling the position function, and adding the scroll handler.
    *
-   * @param  {String} selector CSS selector of buttons that are to be activated.
-   * @return {Array}           All footnotes activated by the function.
+   * @param  {String} selector  CSS selector of buttons that are to be activated.
+   * @param  {String} className Class name to add to the popover element.
+   * @return {void}
    */
-  function displayFootnote(selector) {
+  function displayFootnote(selector, className) {
     const contentTemplate = template(settings.contentTemplate);
     const buttons         = getClosestFootnoteButtons(selector, settings.allowMultiple);
     const popoversCreated = [];
@@ -85,6 +86,10 @@ const littlefoot = function(options) {
 
       classList(button).add('is-active');
 
+      if (className) {
+        classList(popover).add(className);
+      }
+
       events.bind(content, 'mousewheel', throttle(scrollContent));
       events.bind(content, 'wheel', throttle(scrollContent));
 
@@ -102,8 +107,6 @@ const littlefoot = function(options) {
         classList(popover).add('is-active');
       });
     }, settings.activateDelay);
-
-    return popoversCreated;
   }
 
   /**
@@ -133,11 +136,7 @@ const littlefoot = function(options) {
 
     classList(footnote).add('is-hovered');
 
-    const popovers = displayFootnote('.littlefoot-footnote__button' + selector);
-
-    popovers.forEach((popover) => {
-      classList(popover).add('is-hovered');
-    });
+    displayFootnote('.littlefoot-footnote__button' + selector, 'is-hovered');
   }
 
   /**

@@ -263,7 +263,7 @@ Methods on the returning object were overhauled, removing breakpoint logic.
 
 #### Changed methods
 
-* `activate()` will not activate any footnotes if called without a selector.
+* `activate()` will not activate any footnotes if called without a selector and will no longer return a list of activated popovers.
 * `close()` was renamed `dismiss()` and will no longer return the list of deactivated buttons.
 
 #### Removed methods
