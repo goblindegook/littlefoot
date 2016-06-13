@@ -102,13 +102,6 @@ if (process.env.SAUCE_USERNAME) {
       browserName: 'safari',
       version:     '8',
     },
-    'SL_iOS_9': {
-      base:              'SauceLabs',
-      platform:          'OS X 10.10',
-      deviceName:        'iPhone 6 Plus',
-      deviceOrientation: 'portrait',
-      version:           '9.2',
-    },
     // SL_Opera_12: {
     //   base:        'SauceLabs',
     //   platform:    'Windows 7',
