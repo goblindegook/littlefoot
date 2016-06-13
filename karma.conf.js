@@ -114,7 +114,7 @@ if (process.env.SAUCE_USERNAME) {
       platform:    'Linux',
       browserName: 'android',
       deviceName:  'Android Emulator',
-      version:     '5.1.1',
+      version:     '5.1',
     },
     // SL_Opera_12: {
     //   base:        'SauceLabs',
