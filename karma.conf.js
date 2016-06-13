@@ -72,11 +72,11 @@ if (process.env.SAUCE_USERNAME) {
     //   browserName: 'internet explorer',
     //   version:     '8',
     // },
-    SL_Firefox_47: {
+    SL_Firefox_46: {
       base:        'SauceLabs',
       platform:    'Windows 7',
       browserName: 'firefox',
-      version:     '47',
+      version:     '46',
     },
     SL_Firefox_45: {
       base:        'SauceLabs',
@@ -101,6 +101,20 @@ if (process.env.SAUCE_USERNAME) {
       platform:    'OS X 10.10',
       browserName: 'safari',
       version:     '8',
+    },
+    'SL_iOS_Safari_9': {
+      base:        'SauceLabs',
+      platform:    'OS X 10.10',
+      browserName: 'iphone',
+      deviceName:  'iPhone Emulator',
+      version:     '9.2',
+    },
+    'SL_Android': {
+      base:        'SauceLabs',
+      platform:    'Linux',
+      browserName: 'android',
+      deviceName:  'Android Emulator',
+      version:     '5.1.1',
     },
     // SL_Opera_12: {
     //   base:        'SauceLabs',
