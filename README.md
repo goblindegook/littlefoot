@@ -215,7 +215,7 @@ Running the function will return an object that can be stored and used to manipu
 
 ### `dismiss([footnoteSelector[, timeout]])`
 
-This function will close any footnote popovers matching the (string) selector provided for footnotes. `timeout` specifies the amount of time after the footnote's active class is removed before the element itself is removed. Either of these can be excluded; `footnoteSelector` will default to all active footnotes, while `timeout` will default to the `dismissDelay` option.
+This function will close any footnote popovers matching the (string) selector provided for footnotes. `timeout` specifies the amount of time after the footnote's active class is removed before the element itself is removed. If excluded, `timeout` will default to the `dismissDelay` option.
 
 ### `activate(buttonSelector)`
 

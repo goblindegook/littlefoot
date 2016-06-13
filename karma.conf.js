@@ -18,17 +18,29 @@ if (!process.env.SAUCE_USERNAME && fs.existsSync('sauce.json')) {
 
 if (process.env.SAUCE_USERNAME) {
   customLaunchers = {
+    SL_Chrome_dev: {
+      base:        'SauceLabs',
+      platform:    'Windows 7',
+      browserName: 'chrome',
+      version:     'dev',
+    },
+    SL_Chrome_beta: {
+      base:        'SauceLabs',
+      platform:    'Windows 7',
+      browserName: 'chrome',
+      version:     'beta',
+    },
+    SL_Chrome_50: {
+      base:        'SauceLabs',
+      platform:    'Windows 7',
+      browserName: 'chrome',
+      version:     '50',
+    },
     SL_Chrome_49: {
       base:        'SauceLabs',
       platform:    'Windows 7',
       browserName: 'chrome',
       version:     '49',
-    },
-    SL_Chrome_48: {
-      base:        'SauceLabs',
-      platform:    'Windows 7',
-      browserName: 'chrome',
-      version:     '48',
     },
     SL_Edge_13: {
       base:        'SauceLabs',
@@ -60,17 +72,17 @@ if (process.env.SAUCE_USERNAME) {
     //   browserName: 'internet explorer',
     //   version:     '8',
     // },
+    SL_Firefox_47: {
+      base:        'SauceLabs',
+      platform:    'Windows 7',
+      browserName: 'firefox',
+      version:     '47',
+    },
     SL_Firefox_45: {
       base:        'SauceLabs',
       platform:    'Windows 7',
       browserName: 'firefox',
       version:     '45',
-    },
-    SL_Firefox_44: {
-      base:        'SauceLabs',
-      platform:    'Windows 7',
-      browserName: 'firefox',
-      version:     '44',
     },
     SL_Safari_9: {
       base:        'SauceLabs',
@@ -83,6 +95,19 @@ if (process.env.SAUCE_USERNAME) {
       platform:    'OS X 10.10',
       browserName: 'safari',
       version:     '8',
+    },
+    'SL_Safari_8': {
+      base:        'SauceLabs',
+      platform:    'OS X 10.10',
+      browserName: 'safari',
+      version:     '8',
+    },
+    'SL_iOS_9': {
+      base:              'SauceLabs',
+      platform:          'OS X 10.10',
+      deviceName:        'iPhone 6 Plus',
+      deviceOrientation: 'portrait',
+      version:           '9.2',
     },
     // SL_Opera_12: {
     //   base:        'SauceLabs',
