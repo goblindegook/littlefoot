@@ -108,7 +108,7 @@ if (process.env.SAUCE_USERNAME) {
       browserName:       'iphone',
       deviceName:        'iPhone Emulator',
       deviceOrientation: 'portrait',
-      version:           '9.1',
+      version:           '9',
     },
     // 'SL_Android': {
     //   base:              'SauceLabs',
