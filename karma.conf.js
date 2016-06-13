@@ -104,7 +104,7 @@ if (process.env.SAUCE_USERNAME) {
     },
     'SL_iOS_Safari_9': {
       base:        'SauceLabs',
-      platform:    'OS X 10.10',
+      platform:    'OS X 10.11',
       browserName: 'iphone',
       deviceName:  'iPhone Emulator',
       version:     '9.2',
