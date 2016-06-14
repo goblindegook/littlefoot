@@ -108,12 +108,12 @@ if (process.env.SAUCE_USERNAME) {
     //   browserName: 'iphone',
     //   version:     '9.1',
     // },
-    'SL_Android': {
-      base:              'SauceLabs',
-      platform:          'Linux',
-      browserName:       'android',
-      version:           '5.1',
-    },
+    // 'SL_Android': {
+    //   base:              'SauceLabs',
+    //   platform:          'Linux',
+    //   browserName:       'android',
+    //   version:           '5.1',
+    // },
     // SL_Opera_12: {
     //   base:        'SauceLabs',
     //   platform:    'Windows 7',
