@@ -106,16 +106,14 @@ if (process.env.SAUCE_USERNAME) {
     //   base:        'SauceLabs',
     //   platform:    'OS X 10.11',
     //   browserName: 'iphone',
-    //   version:     '9.2',
+    //   version:     '9.1',
     // },
-    // 'SL_Android': {
-    //   base:              'SauceLabs',
-    //   platform:          'Linux',
-    //   browserName:       'android',
-    //   deviceName:        'Android Emulator',
-    //   deviceOrientation: 'portrait',
-    //   version:           '5.1',
-    // },
+    'SL_Android': {
+      base:              'SauceLabs',
+      platform:          'Linux',
+      browserName:       'android',
+      version:           '5.1',
+    },
     // SL_Opera_12: {
     //   base:        'SauceLabs',
     //   platform:    'Windows 7',
