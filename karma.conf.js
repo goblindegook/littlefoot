@@ -66,15 +66,15 @@ if (process.env.SAUCE_USERNAME) {
     //   browserName: 'internet explorer',
     //   version:     '8',
     // },
-    SL_Firefox_51: {
+    SL_Firefox_50: {
       base: 'SauceLabs',
       platform: 'Windows 7',
       browserName: 'firefox',
-      version: '51'
+      version: '50'
     },
     SL_Safari_10: {
       base: 'SauceLabs',
-      platform: 'OS X 10.10',
+      platform: 'OS X 10.12',
       browserName: 'safari',
       version: '10'
     },
