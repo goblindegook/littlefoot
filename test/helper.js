@@ -4,37 +4,37 @@
  * @param  {String} fixture Fixture file to load (defaults to default.html).
  * @return {void}
  */
-export function setup(fixture) {
+export function setup (fixture) {
   const content = document.createElement('div')
 
-  content.id = 'root';
+  content.id = 'root'
 
   switch (fixture) {
     case 'multiple.html':
-      content.innerHTML = require('./fixtures/multiple.html');
-      break;
+      content.innerHTML = require('./fixtures/multiple.html')
+      break
 
     case 'scroll.html':
-      content.innerHTML = require('./fixtures/scroll.html');
-      break;
+      content.innerHTML = require('./fixtures/scroll.html')
+      break
 
     default:
-      content.innerHTML = require('./fixtures/default.html');
+      content.innerHTML = require('./fixtures/default.html')
   }
 
-  document.body.appendChild(content);
+  document.body.appendChild(content)
 }
 
 /**
  * Load littlefoot stylesheet.
  * @return {void}
  */
-export function setupStylesheet() {
-  const stylesheet = document.createElement('link');
-  stylesheet.rel   = 'stylesheet';
-  stylesheet.href  = 'base/dist/littlefoot.css';
+export function setupStylesheet () {
+  const stylesheet = document.createElement('link')
+  stylesheet.rel = 'stylesheet'
+  stylesheet.href = 'base/dist/littlefoot.css'
 
-  document.body.appendChild(stylesheet);
+  document.body.appendChild(stylesheet)
 }
 
 /**
@@ -42,9 +42,9 @@ export function setupStylesheet() {
  *
  * @return {void}
  */
-export function teardown() {
+export function teardown () {
   while (document.body.firstChild) {
-    document.body.removeChild(document.body.firstChild);
+    document.body.removeChild(document.body.firstChild)
   }
 }
 
@@ -54,12 +54,12 @@ export function teardown() {
  * @param  {Number}  timeout Sleep delay.
  * @return {Promise}         Promise.
  */
-export function sleep(timeout) {
-  return new Promise((resolve) => setTimeout(resolve, timeout));
+export function sleep (timeout) {
+  return new Promise((resolve) => setTimeout(resolve, timeout))
 }
 
 export default {
   setup,
   sleep,
-  teardown,
-};
+  teardown
+}

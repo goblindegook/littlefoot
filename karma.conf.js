@@ -1,70 +1,70 @@
-'use strict';
+'use strict'
 
-var fs = require('fs');
+var fs = require('fs')
 
-var browsers        = [];
-var customLaunchers = {};
-var reporters       = ['dots', 'coverage', 'saucelabs'];
+var browsers = []
+var customLaunchers = {}
+var reporters = ['dots', 'coverage', 'saucelabs']
 
 if (process.env.TRAVIS) {
-  browsers = [];
-  reporters.push('coveralls');
+  browsers = []
+  reporters.push('coveralls')
 }
 
 if (!process.env.SAUCE_USERNAME && fs.existsSync('sauce.json')) {
-  process.env.SAUCE_USERNAME   = require('./sauce').username;
-  process.env.SAUCE_ACCESS_KEY = require('./sauce').accessKey;
+  process.env.SAUCE_USERNAME = require('./sauce').username
+  process.env.SAUCE_ACCESS_KEY = require('./sauce').accessKey
 }
 
 if (process.env.SAUCE_USERNAME) {
   customLaunchers = {
     SL_Chrome_dev: {
-      base:        'SauceLabs',
-      platform:    'Windows 7',
+      base: 'SauceLabs',
+      platform: 'Windows 7',
       browserName: 'chrome',
-      version:     'dev',
+      version: 'dev'
     },
     SL_Chrome_beta: {
-      base:        'SauceLabs',
-      platform:    'Windows 7',
+      base: 'SauceLabs',
+      platform: 'Windows 7',
       browserName: 'chrome',
-      version:     'beta',
+      version: 'beta'
     },
     SL_Chrome_50: {
-      base:        'SauceLabs',
-      platform:    'Windows 7',
+      base: 'SauceLabs',
+      platform: 'Windows 7',
       browserName: 'chrome',
-      version:     '50',
+      version: '50'
     },
     SL_Chrome_49: {
-      base:        'SauceLabs',
-      platform:    'Windows 7',
+      base: 'SauceLabs',
+      platform: 'Windows 7',
       browserName: 'chrome',
-      version:     '49',
+      version: '49'
     },
     SL_Edge_13: {
-      base:        'SauceLabs',
-      platform:    'Windows 10',
+      base: 'SauceLabs',
+      platform: 'Windows 10',
       browserName: 'microsoftedge',
-      version:     '13',
+      version: '13'
     },
     SL_InternetExplorer_11: {
-      base:        'SauceLabs',
-      platform:    'Windows 10',
+      base: 'SauceLabs',
+      platform: 'Windows 10',
       browserName: 'internet explorer',
-      version:     '11',
+      version: '11'
     },
     SL_InternetExplorer_10: {
-      base:        'SauceLabs',
-      platform:    'Windows 8',
+      base: 'SauceLabs',
+      platform: 'Windows 8',
       browserName: 'internet explorer',
-      version:     '10',
+      version: '10'
     },
     SL_InternetExplorer_9: {
-      base:        'SauceLabs',
-      platform:    'Windows 7',
+      base: 'SauceLabs',
+      platform: 'Windows 7',
       browserName: 'internet explorer',
-      version:     '9',
+      version: '9'
     },
     // SL_InternetExplorer_8: {
     //   base:        'SauceLabs',
@@ -73,35 +73,29 @@ if (process.env.SAUCE_USERNAME) {
     //   version:     '8',
     // },
     SL_Firefox_46: {
-      base:        'SauceLabs',
-      platform:    'Windows 7',
+      base: 'SauceLabs',
+      platform: 'Windows 7',
       browserName: 'firefox',
-      version:     '46',
+      version: '46'
     },
     SL_Firefox_45: {
-      base:        'SauceLabs',
-      platform:    'Windows 7',
+      base: 'SauceLabs',
+      platform: 'Windows 7',
       browserName: 'firefox',
-      version:     '45',
+      version: '45'
     },
     SL_Safari_9: {
-      base:        'SauceLabs',
-      platform:    'OS X 10.11',
+      base: 'SauceLabs',
+      platform: 'OS X 10.11',
       browserName: 'safari',
-      version:     '9',
+      version: '9'
     },
     'SL_Safari_8': {
-      base:        'SauceLabs',
-      platform:    'OS X 10.10',
+      base: 'SauceLabs',
+      platform: 'OS X 10.10',
       browserName: 'safari',
-      version:     '8',
-    },
-    'SL_Safari_8': {
-      base:        'SauceLabs',
-      platform:    'OS X 10.10',
-      browserName: 'safari',
-      version:     '8',
-    },
+      version: '8'
+    }
     // 'SL_iOS_Safari_9': {
     //   base:        'SauceLabs',
     //   platform:    'OS X 10.11',
@@ -120,45 +114,43 @@ if (process.env.SAUCE_USERNAME) {
     //   browserName: 'opera',
     //   version:     '12',
     // },
-  };
+  }
 }
 
-module.exports = function(karma) {
+module.exports = function (karma) {
   karma.set({
-    browsers:                 browsers.concat(Object.keys(customLaunchers)),
-    customLaunchers:          customLaunchers,
-    reporters:                reporters,
+    browsers: browsers.concat(Object.keys(customLaunchers)),
+    customLaunchers: customLaunchers,
+    reporters: reporters,
     browserNoActivityTimeout: 60000,
-    frameworks:               ['browserify', 'tap', 'sinon' ],
+    frameworks: ['browserify', 'tap', 'sinon'],
     browserify: {
       debug: true,
       transform: [
         'babelify',
         'stringify',
-        ['browserify-istanbul', {
-          instrumenter: require('babel-istanbul')
-        }],
-      ],
+        ['browserify-istanbul', { instrumenter: require('babel-istanbul') }]
+      ]
     },
     files: [
       'dist/*.css',
-      'test/**/*.test.js',
+      'test/**/*.test.js'
     ],
     preprocessors: {
-      'src/**/*.js':  ['browserify', 'coverage'],
-      'test/**/*.js': ['browserify'],
+      'src/**/*.js': ['browserify', 'coverage'],
+      'test/**/*.js': ['browserify']
     },
     coverageReporter: {
       dir: 'coverage/',
       reporters: [
         { type: 'text' },
-        { type: process.env.TRAVIS ? 'lcov' : 'html' },
-      ],
+        { type: process.env.TRAVIS ? 'lcov' : 'html' }
+      ]
     },
     sauceLabs: {
-      testName:          'littlefoot',
-      passed:            'true',
-      recordScreenshots: false,
-    },
-  });
-};
+      testName: 'littlefoot',
+      passed: 'true',
+      recordScreenshots: false
+    }
+  })
+}

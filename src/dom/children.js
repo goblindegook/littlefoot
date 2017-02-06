@@ -1,17 +1,16 @@
-import matches from 'component-matches-selector';
+import matches from 'component-matches-selector'
 
 /**
  * Fetch children elements.
  *
- * @param  {DOMElement} element  [description]
- * @param  {String}     selector Sibling selector.
- * @return {Array}               Sibling elements.
+ * @param  {DOMElement} element  Element to query.
+ * @param  {String}     selector Child selector.
+ * @return {Array}               Child elements.
  */
-function children(element, selector = null) {
-  return Array.prototype.filter.call(
-    element.children,
+function children (element, selector = null) {
+  return [...element.children].filter(
     (child) => child.nodeType !== 8 && (!selector || matches(child, selector))
-  );
+  )
 }
 
-export default children;
+export default children

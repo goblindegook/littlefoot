@@ -1,4 +1,4 @@
-import classList from 'dom-classlist';
+import classList from 'dom-classlist'
 
 /**
  * Removes/adds appropriate classes to the footnote content and button after
@@ -9,26 +9,26 @@ import classList from 'dom-classlist';
  *                               actually removing the popover from the DOM.
  * @return {void}
  */
-function dismissFootnote(footnote, timeout = 0) {
-  const footnoteID   = footnote.getAttribute('data-footnote-id');
-  const linkedButton = document.querySelector('.littlefoot-footnote__button[data-footnote-id="' + footnoteID + '"]');
+function dismissFootnote (footnote, timeout = 0) {
+  const footnoteID = footnote.getAttribute('data-footnote-id')
+  const linkedButton = document.querySelector('.littlefoot-footnote__button[data-footnote-id="' + footnoteID + '"]')
 
   if (classList(linkedButton).contains('is-changing')) {
-    return;
+    return
   }
 
-  linkedButton.setAttribute('aria-expanded', 'false');
+  linkedButton.setAttribute('aria-expanded', 'false')
 
-  classList(linkedButton).add('is-changing');
-  classList(linkedButton).remove('is-active');
-  classList(linkedButton).remove('is-hovered');
+  classList(linkedButton).add('is-changing')
+  classList(linkedButton).remove('is-active')
+  classList(linkedButton).remove('is-hovered')
 
-  classList(footnote).remove('is-active');
+  classList(footnote).remove('is-active')
 
   window.setTimeout(() => {
-    footnote.parentNode.removeChild(footnote);
-    classList(linkedButton).remove('is-changing');
-  }, timeout);
+    footnote.parentNode.removeChild(footnote)
+    classList(linkedButton).remove('is-changing')
+  }, timeout)
 }
 
-export default dismissFootnote;
+export default dismissFootnote
