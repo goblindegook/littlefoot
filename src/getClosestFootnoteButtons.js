@@ -15,8 +15,8 @@ function getClosestFootnoteButtons (selector, allowMultiple = false) {
   }
 
   if (allowMultiple) {
-    const elements = document.querySelectorAll(selector)
-    Array.prototype.forEach.call(elements, (element) => {
+    const elements = [...document.querySelectorAll(selector)]
+    elements.forEach((element) => {
       buttons.push(closest(element, '.littlefoot-footnote__button'))
     })
   } else {

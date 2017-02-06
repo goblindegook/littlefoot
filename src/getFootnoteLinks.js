@@ -58,17 +58,15 @@ function getFootnoteLinks (settings) {
   const anchorParentSelector = settings.anchorParentSelector
   const footnoteLinkSelector = `${scope} a[href*="#"]`.trim()
 
-  const footnoteLinks = Array.prototype.filter.call(
-    document.querySelectorAll(footnoteLinkSelector),
-    (link) => {
+  const footnoteLinks = [...document.querySelectorAll(footnoteLinkSelector)]
+    .filter((link) => {
       const href = link.getAttribute('href')
       const rel = link.getAttribute('rel')
       const anchor = '' + href + (rel != null && rel !== 'null' ? rel : '')
 
       return anchor.match(anchorPattern) &&
         !closest(link, `[class*="${footnoteParentClass}"]:not(a):not(${anchorParentSelector})`)
-    }
-  )
+    })
 
   return mapFootnoteReferences(footnoteLinks, anchorParentSelector)
 }

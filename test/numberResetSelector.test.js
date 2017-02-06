@@ -7,9 +7,8 @@ test('littlefoot setup with numberResetSelector', (t) => {
 
   littlefoot({ numberResetSelector: 'article' })
 
-  const buttons = document.querySelectorAll('button[data-footnote-id]')
-  const numbers = Array.prototype.map.call(buttons,
-    (button) => button.getAttribute('data-footnote-number'))
+  const buttons = [...document.querySelectorAll('button[data-footnote-id]')]
+  const numbers = buttons.map((button) => button.getAttribute('data-footnote-number'))
 
   t.notEqual(numbers.length, new Set(numbers).size,
     'should yield footnotes with duplicate numbering')
@@ -23,9 +22,8 @@ test('littlefoot setup without numberResetSelector', (t) => {
 
   littlefoot({ numberResetSelector: null })
 
-  const buttons = document.querySelectorAll('button[data-footnote-id]')
-  const numbers = Array.prototype.map.call(buttons,
-    (button) => button.getAttribute('data-footnote-number'))
+  const buttons = [...document.querySelectorAll('button[data-footnote-id]')]
+  const numbers = buttons.map((button) => button.getAttribute('data-footnote-number'))
 
   t.equal(numbers.length, new Set(numbers).size,
     'should yield footnotes with unique numbering')

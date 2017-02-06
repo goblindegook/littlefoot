@@ -33,9 +33,9 @@ const littlefoot = function (options) {
    * @return {void}
    */
   function dismissFootnotes (selector = '.littlefoot-footnote', timeout = settings.dismissDelay) {
-    const footnotes = document.querySelectorAll(selector)
+    const footnotes = [...document.querySelectorAll(selector)]
 
-    Array.prototype.forEach.call(footnotes, (footnote) => {
+    footnotes.forEach((footnote) => {
       dismissFootnote(footnote, timeout)
     })
   }
@@ -47,9 +47,9 @@ const littlefoot = function (options) {
    * @return {void}
    */
   function repositionFootnotes (event) {
-    const footnotes = document.querySelectorAll('.littlefoot-footnote')
+    const footnotes = [...document.querySelectorAll('.littlefoot-footnote')]
 
-    Array.prototype.forEach.call(footnotes, (footnote) => {
+    footnotes.forEach((footnote) => {
       repositionFootnote(footnote, event)
     })
   }
