@@ -2,7 +2,7 @@ import test from 'tape'
 import littlefoot from '../src/'
 import { setup, teardown } from './helper'
 
-test('littlefoot setup with allowDuplicates=false', (t) => {
+test('setup with allowDuplicates=false', (t) => {
   setup('default.html')
 
   littlefoot({ allowDuplicates: false })
@@ -17,7 +17,7 @@ test('littlefoot setup with allowDuplicates=false', (t) => {
   t.end()
 })
 
-test('littlefoot setup with allowDuplicates=true', (t) => {
+test('setup with allowDuplicates=true', (t) => {
   setup('default.html')
 
   littlefoot({ allowDuplicates: true })
@@ -32,7 +32,7 @@ test('littlefoot setup with allowDuplicates=true', (t) => {
   t.end()
 })
 
-test('littlefoot setup with allowDuplicates=true', (t) => {
+test('setup with allowDuplicates=true', (t) => {
   setup('multiple.html')
 
   littlefoot({ allowDuplicates: false })

@@ -3,7 +3,7 @@ import littlefoot from '../src/'
 import simulant from 'simulant'
 import { setup, sleep, teardown } from './helper'
 
-test('littlefoot setup with allowMultiple=true', (t) => {
+test('setup with allowMultiple=true', async (t) => {
   setup('default.html')
 
   const lf = littlefoot({ allowMultiple: true })
@@ -15,31 +15,28 @@ test('littlefoot setup with allowMultiple=true', (t) => {
   simulant.fire(document.body.querySelector('button[data-footnote-id="1"]'), 'click')
   simulant.fire(document.body.querySelector('button[data-footnote-id="2"]'), 'click')
 
-  sleep(activateDelay)
-    .then(() => {
-      t.equal(document.body.querySelectorAll('button.is-active').length, 2,
-        'allows multiple active popovers')
+  await sleep(activateDelay)
 
-      lf.dismiss()
-      return sleep(dismissDelay)
-    })
-    .then(() => {
-      t.equal(document.body.querySelectorAll('button.is-active').length, 0,
-        'dismisses all popovers on dismiss()')
+  t.equal(document.body.querySelectorAll('button.is-active').length, 2,
+    'allows multiple active popovers')
 
-      lf.activate('button[data-footnote-id]')
-      return sleep(activateDelay)
-    })
-    .then(() => {
-      t.equal(document.body.querySelectorAll('button.is-active').length, buttons.length,
-        'activate all popovers with activate()')
+  lf.dismiss()
+  await sleep(dismissDelay)
 
-      teardown()
-      t.end()
-    })
+  t.equal(document.body.querySelectorAll('button.is-active').length, 0,
+    'dismisses all popovers on dismiss()')
+
+  lf.activate('button[data-footnote-id]')
+  await sleep(activateDelay)
+
+  t.equal(document.body.querySelectorAll('button.is-active').length, buttons.length,
+    'activate all popovers with activate()')
+
+  teardown()
+  t.end()
 })
 
-test('littlefoot setup with allowMultiple=false', (t) => {
+test('setup with allowMultiple=false', async (t) => {
   setup('default.html')
 
   const lf = littlefoot({ allowMultiple: false })
@@ -48,16 +45,15 @@ test('littlefoot setup with allowMultiple=false', (t) => {
 
   simulant.fire(document.body.querySelector('button[data-footnote-id="1"]'), 'click')
 
-  sleep(activateDelay)
-    .then(() => {
-      simulant.fire(document.body.querySelector('button[data-footnote-id="2"]'), 'click')
-      return sleep(activateDelay)
-    })
-    .then(() => {
-      t.equal(document.body.querySelectorAll('button.is-active').length, 1,
-        'does not allow multiple active popovers')
+  await sleep(activateDelay)
 
-      teardown()
-      t.end()
-    })
+  simulant.fire(document.body.querySelector('button[data-footnote-id="2"]'), 'click')
+
+  await sleep(activateDelay)
+
+  t.equal(document.body.querySelectorAll('button.is-active').length, 1,
+    'does not allow multiple active popovers')
+
+  teardown()
+  t.end()
 })

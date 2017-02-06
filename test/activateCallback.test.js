@@ -3,7 +3,7 @@ import sinon from 'sinon'
 import { setup, sleep, teardown } from './helper'
 import littlefoot from '../src/'
 
-test('littlefoot setup with activateCallback', (t) => {
+test('setup with activateCallback', async (t) => {
   setup('default.html')
 
   const callback = sinon.spy()
@@ -14,11 +14,10 @@ test('littlefoot setup with activateCallback', (t) => {
 
   lf.activate('button[data-footnote-id="1"]')
 
-  sleep(activateDelay)
-    .then(() => {
-      t.ok(callback.called, 'activateCallback called')
+  await sleep(activateDelay)
 
-      teardown()
-      t.end()
-    })
+  t.ok(callback.called, 'activateCallback called')
+
+  teardown()
+  t.end()
 })

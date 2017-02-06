@@ -2,7 +2,7 @@ import test from 'tape'
 import littlefoot from '../src/'
 import { setup, teardown } from './helper'
 
-test('littlefoot setup with default buttonTemplate', (t) => {
+test('setup with default buttonTemplate', (t) => {
   setup('default.html')
 
   littlefoot()
@@ -19,7 +19,7 @@ test('littlefoot setup with default buttonTemplate', (t) => {
   t.end()
 })
 
-test('littlefoot setup with custom buttonTemplate', (t) => {
+test('setup with custom buttonTemplate', (t) => {
   setup('default.html')
 
   littlefoot({ buttonTemplate: require('./fixtures/buttonTemplate.html') })

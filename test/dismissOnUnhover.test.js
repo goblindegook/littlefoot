@@ -4,7 +4,7 @@ import littlefoot from '../src/'
 import simulant from 'simulant'
 import { setup, sleep, teardown } from './helper'
 
-test('littlefoot setup with dismissOnUnhover=true', (t) => {
+test('setup with dismissOnUnhover=true', async (t) => {
   setup('default.html')
 
   const lf = littlefoot({ activateOnHover: true, dismissOnUnhover: true })
@@ -16,20 +16,18 @@ test('littlefoot setup with dismissOnUnhover=true', (t) => {
 
   simulant.fire(footnote, 'mouseover')
 
-  sleep(activateDelay)
-    .then(() => {
-      t.ok(classList(footnote).contains('is-active'),
-        'popover has is-active class before unhover event')
+  await sleep(activateDelay)
 
-      simulant.fire(footnote, 'mouseout')
+  t.ok(classList(footnote).contains('is-active'),
+    'popover has is-active class before unhover event')
 
-      return sleep(dismissDelay + hoverDelay)
-    })
-    .then(() => {
-      t.notOk(classList(footnote).contains('is-active'),
-        'popover no longer has the is-active class after unhover event')
+  simulant.fire(footnote, 'mouseout')
 
-      teardown()
-      t.end()
-    })
+  await sleep(dismissDelay + hoverDelay)
+
+  t.notOk(classList(footnote).contains('is-active'),
+    'popover no longer has the is-active class after unhover event')
+
+  teardown()
+  t.end()
 })

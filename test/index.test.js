@@ -4,7 +4,7 @@ import littlefoot from '../src/'
 import simulant from 'simulant'
 import { setup, sleep, teardown } from './helper'
 
-test('littlefoot setup with default options', (t) => {
+test('setup with default options', (t) => {
   setup('default.html')
 
   const body = document.body
@@ -41,7 +41,7 @@ test('littlefoot setup with default options', (t) => {
   t.end()
 })
 
-test('footnote activation and dismissal', (t) => {
+test('footnote activation and dismissal', async (t) => {
   setup('default.html')
 
   const lf = littlefoot()
@@ -54,78 +54,72 @@ test('footnote activation and dismissal', (t) => {
   lf.activate('')
   lf.activate('#invalid')
 
-  sleep(activateDelay)
-    .then(() => {
-      t.equal(document.body.querySelectorAll('button.is-active').length, 0,
-        'displays no popovers on invalid activate()')
+  await sleep(activateDelay)
 
-      t.equal(button.getAttribute('aria-expanded'), 'false', 'changes ARIA expanded attribute to false')
-      t.equal(button.getAttribute('aria-label'), 'Footnote 1', 'sets ARIA label')
+  t.equal(document.body.querySelectorAll('button.is-active').length, 0,
+    'displays no popovers on invalid activate()')
 
-      // activate button
-      lf.activate('button[data-footnote-id="1"]')
+  t.equal(button.getAttribute('aria-expanded'), 'false', 'changes ARIA expanded attribute to false')
+  t.equal(button.getAttribute('aria-label'), 'Footnote 1', 'sets ARIA label')
 
-      return sleep(activateDelay)
-    })
-    .then(() => {
-      const popover = document.body.querySelector('.littlefoot-footnote')
-      const wrapper = document.body.querySelector('.littlefoot-footnote__wrapper')
-      const content = document.body.querySelector('.littlefoot-footnote__content')
+  // activate button
+  lf.activate('button[data-footnote-id="1"]')
 
-      t.equal(button.getAttribute('aria-controls'), popover.getAttribute('id'), 'sets ARIA controls')
-      t.equal(button.getAttribute('aria-expanded'), 'true', 'changes ARIA expanded attribute to true')
+  await sleep(activateDelay)
 
-      t.equal(content.innerHTML.trim(), button.getAttribute('data-footnote-content').trim(),
-        'injects content into popover')
+  const popover = document.body.querySelector('.littlefoot-footnote')
+  const wrapper = document.body.querySelector('.littlefoot-footnote__wrapper')
+  const content = document.body.querySelector('.littlefoot-footnote__content')
 
-      t.equal(document.body.querySelectorAll('button.is-active').length, 1, 'displays one popover on activate()')
+  t.equal(button.getAttribute('aria-controls'), popover.getAttribute('id'), 'sets ARIA controls')
+  t.equal(button.getAttribute('aria-expanded'), 'true', 'changes ARIA expanded attribute to true')
 
-      t.ok(popover.getAttribute('data-footnote-max-height'),
-        'sets a data-footnote-max-height')
+  t.equal(content.innerHTML.trim(), button.getAttribute('data-footnote-content').trim(),
+    'injects content into popover')
 
-      t.equal(parseFloat(popover.style.maxWidth), document.body.clientWidth,
-        'sets maximum popover width to document width')
+  t.equal(document.body.querySelectorAll('button.is-active').length, 1, 'displays one popover on activate()')
 
-      t.equal(parseFloat(content.offsetWidth), parseFloat(wrapper.style.maxWidth),
-        'fits wrapper to content width')
+  t.ok(popover.getAttribute('data-footnote-max-height'),
+    'sets a data-footnote-max-height')
 
-      lf.dismiss()
-      return sleep(dismissDelay)
-    })
-    .then(() => {
-      t.notOk(classList(button).contains('is-active'),
-        'dismisses popovers on dismiss()')
+  t.equal(parseFloat(popover.style.maxWidth), document.body.clientWidth,
+    'sets maximum popover width to document width')
 
-      simulant.fire(button, 'click')
+  t.equal(parseFloat(content.offsetWidth), parseFloat(wrapper.style.maxWidth),
+    'fits wrapper to content width')
 
-      t.ok(classList(button).contains('is-changing'),
-        'transitions popover activation on click')
+  lf.dismiss()
 
-      return sleep(activateDelay)
-    })
-    .then(() => {
-      t.ok(classList(button).contains('is-active'),
-        'activates one popover on button click event')
+  await sleep(dismissDelay)
 
-      simulant.fire(document.body, 'click')
-      return sleep(dismissDelay)
-    })
-    .then(() => {
-      t.notOk(classList(button).contains('is-active'),
-        'dismisses popovers on body click event')
+  t.notOk(classList(button).contains('is-active'),
+    'dismisses popovers on dismiss()')
 
-      simulant.fire(button, 'click')
-      return sleep(activateDelay)
-    })
-    .then(() => {
-      simulant.fire(button, 'click')
-      return sleep(dismissDelay)
-    })
-    .then(() => {
-      t.notOk(classList(button).contains('is-active'),
-        'dismisses popovers on clicking the button again')
+  simulant.fire(button, 'click')
 
-      teardown()
-      t.end()
-    })
+  t.ok(classList(button).contains('is-changing'),
+    'transitions popover activation on click')
+
+  await sleep(activateDelay)
+
+  t.ok(classList(button).contains('is-active'),
+    'activates one popover on button click event')
+
+  simulant.fire(document.body, 'click')
+  await sleep(dismissDelay)
+
+  t.notOk(classList(button).contains('is-active'),
+    'dismisses popovers on body click event')
+
+  simulant.fire(button, 'click')
+  await sleep(activateDelay)
+
+  simulant.fire(button, 'click')
+  await sleep(dismissDelay)
+
+  t.notOk(classList(button).contains('is-active'),
+    'dismisses popovers on clicking the button again')
+
+  teardown()
+  t.end()
 })

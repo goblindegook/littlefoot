@@ -4,7 +4,7 @@ import littlefoot from '../src/'
 import simulant from 'simulant'
 import { setup, sleep, teardown } from './helper'
 
-test('littlefoot setup with activateOnHover=true', (t) => {
+test('setup with activateOnHover=true', async (t) => {
   setup('default.html')
 
   const lf = littlefoot({ activateOnHover: true })
@@ -14,15 +14,14 @@ test('littlefoot setup with activateOnHover=true', (t) => {
 
   simulant.fire(footnote, 'mouseover')
 
-  sleep(activateDelay)
-    .then(() => {
-      t.ok(classList(footnote).contains('is-hovered'),
-        'adds the is-hovered class to the popover')
+  await sleep(activateDelay)
 
-      t.ok(classList(footnote).contains('is-active'),
-        'adds the is-active class to the popover')
+  t.ok(classList(footnote).contains('is-hovered'),
+    'adds the is-hovered class to the popover')
 
-      teardown()
-      t.end()
-    })
+  t.ok(classList(footnote).contains('is-active'),
+    'adds the is-active class to the popover')
+
+  teardown()
+  t.end()
 })

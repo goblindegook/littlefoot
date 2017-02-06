@@ -2,7 +2,7 @@ import test from 'tape'
 import littlefoot from '../src/'
 import { setup, teardown } from './helper'
 
-test('littlefoot setup with numberResetSelector', (t) => {
+test('setup with numberResetSelector', (t) => {
   setup('multiple.html')
 
   littlefoot({ numberResetSelector: 'article' })
@@ -17,7 +17,7 @@ test('littlefoot setup with numberResetSelector', (t) => {
   t.end()
 })
 
-test('littlefoot setup without numberResetSelector', (t) => {
+test('setup without numberResetSelector', (t) => {
   setup('multiple.html')
 
   littlefoot({ numberResetSelector: null })

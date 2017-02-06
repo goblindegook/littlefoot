@@ -2,7 +2,7 @@ import test from 'tape'
 import littlefoot from '../src/'
 import { setup, sleep, teardown } from './helper'
 
-test('littlefoot setup with custom contentTemplate', (t) => {
+test('setup with custom contentTemplate', async (t) => {
   setup('default.html')
 
   const lf = littlefoot({ contentTemplate: require('./fixtures/contentTemplate.html') })
@@ -14,20 +14,19 @@ test('littlefoot setup with custom contentTemplate', (t) => {
 
   lf.activate(buttonSelector)
 
-  sleep(delay)
-    .then(() => {
-      const footnote = document.body.querySelector('aside.custom')
-      const content = footnote.querySelector('.littlefoot-footnote__content')
+  await sleep(delay)
 
-      t.ok(footnote, 'custom footnote content instantiated')
+  const footnote = document.body.querySelector('aside.custom')
+  const content = footnote.querySelector('.littlefoot-footnote__content')
 
-      t.equal(footnote.getAttribute('data-footnote-id'), '1', 'replaces id token')
-      t.equal(footnote.getAttribute('data-footnote-number'), '1', 'replaces number token')
+  t.ok(footnote, 'custom footnote content instantiated')
 
-      t.equal(content.innerHTML.trim(), button.getAttribute('data-footnote-content').trim(),
-        'injects content into popover')
+  t.equal(footnote.getAttribute('data-footnote-id'), '1', 'replaces id token')
+  t.equal(footnote.getAttribute('data-footnote-number'), '1', 'replaces number token')
 
-      teardown()
-      t.end()
-    })
+  t.equal(content.innerHTML.trim(), button.getAttribute('data-footnote-content').trim(),
+    'injects content into popover')
+
+  teardown()
+  t.end()
 })
