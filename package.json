@@ -6,7 +6,7 @@
   "scripts": {
     "build:scripts": "browserify -s littlefoot -o dist/littlefoot.js src/index.js",
     "build:styles": "node-sass --output-style compressed --include-path styles -o dist/ styles/",
-    "build": "mkdir -p dist && concurrently 'npm run build:scripts' 'npm run build:styles' && npm run optimize",
+    "build": "mkdir -p dist && npm run build:scripts && npm run build:styles && npm run optimize",
     "clean": "rm -rf coverage dist docs",
     "docs": "esdoc -c esdoc.json",
     "lint": "standard",
