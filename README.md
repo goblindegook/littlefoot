@@ -7,8 +7,6 @@
 [![Dependency Status](https://david-dm.org/goblindegook/littlefoot.svg)](https://david-dm.org/goblindegook/littlefoot)
 [![devDependency Status](https://david-dm.org/goblindegook/littlefoot/dev-status.svg)](https://david-dm.org/goblindegook/littlefoot#info=devDependencies)
 
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/littlefoot.svg)](https://saucelabs.com/u/littlefoot)
-
 littlefoot is a lightweight JavaScript library that creates exceptional footnotes. It was forked from [Bigfoot.js](https://github.com/lemonmade/bigfoot/) by [Chris Sauve](http://cmsauve.com/projects) and does not require jQuery.
 
 Simply include the code on your pages and footnotes will be detected automatically and improved in the following ways:
