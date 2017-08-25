@@ -49,9 +49,9 @@ function createSettings (options) {
     /**
      * Updates the specified setting(s) with the value(s) you pass.
      *
-     * @param   {String} key   The setting name as a string or an object containing
-     *                         setting-new value pairs.
-     * @param   {*}      value The new value, if the first argument was a string.
+     * @param  {String} key   The setting name as a string or an object containing
+     *                        setting-new value pairs.
+     * @param  {*}      value The new value, if the first argument was a string.
      * @return {void}
      */
     set (key, value) {

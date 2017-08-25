@@ -84,12 +84,12 @@ function getFootnoteMaxHeight (footnote, room) {
 /**
  * Positions each footnote relative to its button.
  *
- * @param  {DOMElement} footnote The footnote element.
- * @param  {Event}      event    The type of event that prompted the reposition function.
+ * @param  {DOMElement} footnote  The footnote element.
+ * @param  {String}     eventType The type of event that prompted repositioning,
+ *                                defaults to 'resize'.
  * @return {void}
  */
-function repositionFootnote (footnote, event) {
-  const eventType = event ? event.type : 'resize'
+function repositionFootnote (footnote, eventType = 'resize') {
   const button = siblings(footnote, '.littlefoot-footnote__button')[0]
   const room = getAvailableRoom(button)
   const content = footnote.querySelector('.littlefoot-footnote__content')

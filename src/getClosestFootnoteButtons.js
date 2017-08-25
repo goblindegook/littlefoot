@@ -8,23 +8,15 @@ import closest from 'component-closest'
  * @return {Array}                 All footnotes activated by the function.
  */
 function getClosestFootnoteButtons (selector, allowMultiple = false) {
-  const buttons = []
+  if (selector) {
+    const elements = allowMultiple ? document.querySelectorAll(selector) : [document.querySelector(selector)]
 
-  if (selector == null || selector.length === 0) {
-    return buttons
-  }
-
-  if (allowMultiple) {
-    const elements = [...document.querySelectorAll(selector)]
-    elements.forEach((element) => {
-      buttons.push(closest(element, '.littlefoot-footnote__button'))
-    })
+    return [...elements]
+      .map((element) => closest(element, '.littlefoot-footnote__button'))
+      .filter((button) => button)
   } else {
-    const element = document.querySelector(selector)
-    buttons.push(closest(element, '.littlefoot-footnote__button'))
+    return []
   }
-
-  return buttons.filter((button) => button)
 }
 
 export default getClosestFootnoteButtons

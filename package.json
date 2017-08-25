@@ -14,10 +14,10 @@
     "prepublish": "npm run rebuild",
     "pretest": "concurrently 'npm run lint' 'npm run build:styles'",
     "rebuild": "npm run clean && npm run build",
-    "test:chrome": "karma start --single-run --browsers Chrome",
+    "test:chrome": "karma start --single-run --browsers ChromeHeadless",
     "test:firefox": "karma start --single-run --browsers Firefox",
     "test:saucelabs": "karma start --single-run",
-    "test:watch": "karma start --browsers Chrome",
+    "test:watch": "karma start --browsers ChromeHeadless",
     "test": "npm run test:firefox"
   },
   "browserify": {

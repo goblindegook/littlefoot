@@ -50,7 +50,7 @@ const littlefoot = function (options) {
     const footnotes = [...document.querySelectorAll('.littlefoot-footnote')]
 
     footnotes.forEach((footnote) => {
-      repositionFootnote(footnote, event)
+      repositionFootnote(footnote, event && event.type)
     })
   }
 
@@ -67,9 +67,8 @@ const littlefoot = function (options) {
   function displayFootnote (selector, className) {
     const contentTemplate = template(settings.contentTemplate)
     const buttons = getClosestFootnoteButtons(selector, settings.allowMultiple)
-    const popoversCreated = []
 
-    buttons.forEach((button) => {
+    const popoversCreated = buttons.map((button) => {
       button.insertAdjacentHTML('afterend', contentTemplate({
         content: button.getAttribute('data-footnote-content'),
         id: button.getAttribute('data-footnote-id'),
@@ -94,11 +93,11 @@ const littlefoot = function (options) {
 
       repositionFootnotes()
 
-      popoversCreated.push(popover)
-
       if (typeof settings.activateCallback === 'function') {
         settings.activateCallback(popover, button)
       }
+
+      return popover
     })
 
     setTimeout(() => {
@@ -116,26 +115,21 @@ const littlefoot = function (options) {
    * @return {void}
    */
   function onHover (event) {
-    if (!settings.activateOnHover) {
-      return
+    if (settings.activateOnHover) {
+      const target = event.target || event.srcElement
+      const footnote = closest(target, '.littlefoot-footnote__button')
+      const footnoteId = footnote.getAttribute('data-footnote-id')
+      const selector = `[data-footnote-id="${footnoteId}"]`
+
+      if (!classList(footnote).contains('is-active')) {
+        if (!settings.allowMultiple) {
+          dismissFootnotes(`.littlefoot-footnote:not(${selector})`)
+        }
+
+        classList(footnote).add('is-hovered')
+        displayFootnote('.littlefoot-footnote__button' + selector, 'is-hovered')
+      }
     }
-
-    const target = event.target || event.srcElement
-    const footnote = closest(target, '.littlefoot-footnote__button')
-    const footnoteId = footnote.getAttribute('data-footnote-id')
-    const selector = `[data-footnote-id="${footnoteId}"]`
-
-    if (classList(footnote).contains('is-active')) {
-      return
-    }
-
-    if (!settings.allowMultiple) {
-      dismissFootnotes(`.littlefoot-footnote:not(${selector})`)
-    }
-
-    classList(footnote).add('is-hovered')
-
-    displayFootnote('.littlefoot-footnote__button' + selector, 'is-hovered')
   }
 
   /**
@@ -206,15 +200,13 @@ const littlefoot = function (options) {
    * @return {void}
    */
   function onUnhover () {
-    if (!settings.dismissOnUnhover || !settings.activateOnHover) {
-      return
+    if (settings.dismissOnUnhover && settings.activateOnHover) {
+      setTimeout(() => {
+        if (!document.querySelector('.littlefoot-footnote__button:hover, .littlefoot-footnote:hover')) {
+          dismissFootnotes()
+        }
+      }, settings.hoverDelay)
     }
-
-    setTimeout(() => {
-      if (!document.querySelector('.littlefoot-footnote__button:hover, .littlefoot-footnote:hover')) {
-        dismissFootnotes()
-      }
-    }, settings.hoverDelay)
   }
 
   /**
