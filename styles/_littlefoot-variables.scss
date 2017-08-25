@@ -49,6 +49,9 @@ $popover-scroll-indicator-bottom-position: .45em !default;
 $popover-scrolly-fade-gradient-start-location: 50% !default;
 $popover-scroll-indicator-padding: (($popover-padding-content-horizontal / 2) - ($popover-scroll-indicator-width / 2)) !default;
 
+// POPOVER-AT-BOTTOM STYLING
+$popover-bottom-breakpoint: 720px !default; // The window width below which popovers will start displaying at the bottom. Set to "false" to display normal popovers for all window sizes.
+
 // TRANSITIONS
 $popover-transition-default-duration: .25s !default;
 $popover-scroll-indicator-transition-properties: opacity !default;
