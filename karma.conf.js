@@ -3,7 +3,14 @@
 var fs = require('fs')
 
 var browsers = []
-var customLaunchers = {}
+
+var customLaunchers = {
+  ChromeHeadlessNoSandbox: {
+    base: 'ChromeHeadless',
+    flags: ['--no-sandbox']
+  }
+}
+
 var reporters = ['dots', 'coverage-istanbul', 'saucelabs']
 
 if (!process.env.SAUCE_USERNAME && fs.existsSync('sauce.json')) {
@@ -13,6 +20,7 @@ if (!process.env.SAUCE_USERNAME && fs.existsSync('sauce.json')) {
 
 if (process.env.SAUCE_USERNAME) {
   customLaunchers = {
+    ...customLaunchers,
     SL_Chrome_dev: {
       base: 'SauceLabs',
       platform: 'Windows 7',
