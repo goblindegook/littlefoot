@@ -4,7 +4,7 @@ var fs = require('fs')
 
 var browsers = []
 var customLaunchers = {}
-var reporters = ['dots', 'coverage', 'saucelabs']
+var reporters = ['dots', 'coverage-istanbul', 'saucelabs']
 
 if (process.env.TRAVIS) {
   browsers = []
@@ -117,7 +117,7 @@ module.exports = function (karma) {
       transform: [
         'babelify',
         'stringify',
-        ['browserify-istanbul', { instrumenter: require('babel-istanbul') }]
+        'browserify-istanbul'
       ]
     },
     files: [
@@ -128,12 +128,9 @@ module.exports = function (karma) {
       'src/**/*.js': ['browserify', 'coverage'],
       'test/**/*.js': ['browserify']
     },
-    coverageReporter: {
+    coverageIstanbulReporter: {
       dir: 'coverage/',
-      reporters: [
-        { type: 'text' },
-        { type: process.env.TRAVIS ? 'lcov' : 'html' }
-      ]
+      reports: ['text', 'lcov']
     },
     sauceLabs: {
       testName: 'littlefoot',
