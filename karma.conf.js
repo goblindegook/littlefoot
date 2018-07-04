@@ -6,11 +6,6 @@ var browsers = []
 var customLaunchers = {}
 var reporters = ['dots', 'coverage-istanbul', 'saucelabs']
 
-if (process.env.TRAVIS) {
-  browsers = []
-  reporters.push('coveralls')
-}
-
 if (!process.env.SAUCE_USERNAME && fs.existsSync('sauce.json')) {
   process.env.SAUCE_USERNAME = require('./sauce').username
   process.env.SAUCE_ACCESS_KEY = require('./sauce').accessKey

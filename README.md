@@ -1,7 +1,6 @@
 # littlefoot.js
 
 [![Build Status](https://travis-ci.org/goblindegook/littlefoot.svg?branch=master)](https://travis-ci.org/goblindegook/littlefoot)
-[![Coverage Status](https://coveralls.io/repos/github/goblindegook/littlefoot/badge.svg?branch=master)](https://coveralls.io/github/goblindegook/littlefoot?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/d3c8383d65d047118fd7201d8028d823)](https://www.codacy.com/app/goblindegook/littlefoot)
 [![Code Climate](https://codeclimate.com/github/goblindegook/littlefoot/badges/gpa.svg)](https://codeclimate.com/github/goblindegook/littlefoot)
 [![Dependency Status](https://david-dm.org/goblindegook/littlefoot.svg)](https://david-dm.org/goblindegook/littlefoot)
