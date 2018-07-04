@@ -8,7 +8,7 @@ var reporters = ['dots', 'coverage-istanbul', 'saucelabs']
 
 if (process.env.TRAVIS) {
   browsers = []
-  reporters.push('coveralls')
+  reporters.unshift('coveralls')
 }
 
 if (!process.env.SAUCE_USERNAME && fs.existsSync('sauce.json')) {
