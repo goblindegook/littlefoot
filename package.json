@@ -37,6 +37,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-plugin-istanbul": "^4.1.6",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.7.0",
     "babel-tape-runner": "^2.0.1",
@@ -73,6 +74,8 @@
     "component-matches-selector": "^0.1.6",
     "dom-classlist": "^1.0.1",
     "dom-siblings": "^0.1.0",
-    "lodash": "^4.17.10"
+    "lodash.escape": "^4.0.1",
+    "lodash.template": "^4.4.0",
+    "lodash.throttle": "^4.1.1"
   }
 }

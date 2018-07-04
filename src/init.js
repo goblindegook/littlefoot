@@ -1,7 +1,7 @@
 import closest from 'component-closest'
 import classList from 'dom-classlist'
-import escape from 'lodash/escape'
-import template from 'lodash/template'
+import escape from 'lodash.escape'
+import template from 'lodash.template'
 import getFootnoteLinks from './getFootnoteLinks'
 import hideOriginalFootnote from './hideOriginalFootnote'
 

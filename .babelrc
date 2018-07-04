@@ -3,6 +3,7 @@
     "env"
   ],
   "plugins": [
+    "transform-async-to-generator",
     "transform-runtime"
   ],
   "env": {
