@@ -49,17 +49,7 @@ test('footnote activation and dismissal', async (t) => {
   const dismissDelay = lf.getSetting('dismissDelay')
   const button = document.body.querySelector('button[data-footnote-id="1"]')
 
-  // these should do nothing
-  lf.activate()
-  lf.activate('')
-  lf.activate('#invalid')
-
-  await sleep(activateDelay)
-
-  t.equal(document.body.querySelectorAll('button.is-active').length, 0,
-    'displays no popovers on invalid activate()')
-
-  t.equal(button.getAttribute('aria-expanded'), 'false', 'changes ARIA expanded attribute to false')
+  t.equal(button.getAttribute('aria-expanded'), 'false', 'sets ARIA expanded attribute to false')
   t.equal(button.getAttribute('aria-label'), 'Footnote 1', 'sets ARIA label')
 
   // activate button
