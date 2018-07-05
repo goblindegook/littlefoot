@@ -1,4 +1,8 @@
 import closest from 'dom-closest'
+import {
+  FOOTNOTE_BACKLINK_REF,
+  FOOTNOTE_REF
+} from './constants'
 
 /**
  * Obtain the ID attribute from a footnote link element's closest parent or child.
@@ -39,8 +43,8 @@ function mapFootnoteReferences (footnoteLinks, anchorParentSelector) {
     const linkId = link.getAttribute('id') || ''
     const href = '#' + link.getAttribute('href').split('#')[1]
 
-    link.setAttribute('data-footnote-backlink-ref', id + linkId)
-    link.setAttribute('data-footnote-ref', href)
+    link.setAttribute(FOOTNOTE_BACKLINK_REF, id + linkId)
+    link.setAttribute(FOOTNOTE_REF, href)
 
     return link
   })

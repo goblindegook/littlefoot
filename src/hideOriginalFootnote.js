@@ -1,7 +1,6 @@
 import classList from 'dom-classlist'
 import { children } from './dom/children'
-
-const printOnly = 'footnote-print-only'
+import { CLASS_PRINT_ONLY } from './constants'
 
 /**
  * Mark an element for hiding by setting a print-only class.
@@ -10,7 +9,7 @@ const printOnly = 'footnote-print-only'
  * @return {void}
  */
 function hideElement (element) {
-  classList(element).add(printOnly)
+  classList(element).add(CLASS_PRINT_ONLY)
 }
 
 /**
@@ -22,8 +21,8 @@ function hideElement (element) {
  * @return {void}
  */
 function hideFootnoteContainer (container) {
-  const visibleElements = children(container, `:not(.${printOnly})`)
-  const visibleSeparators = children(container, `hr:not(.${printOnly})`)
+  const visibleElements = children(container, `:not(.${CLASS_PRINT_ONLY})`)
+  const visibleSeparators = children(container, `hr:not(.${CLASS_PRINT_ONLY})`)
 
   if (visibleElements.length === visibleSeparators.length) {
     visibleSeparators.forEach(hideElement)

@@ -11,6 +11,18 @@ import { getClosestFootnoteButtons } from './getClosestFootnoteButtons'
 import { init } from './init'
 import { repositionFootnote } from './repositionFootnote'
 import { scrollContent } from './scrollContent'
+import {
+  CLASS_ACTIVE,
+  CLASS_CHANGING,
+  CLASS_HOVERED,
+  CLASS_BUTTON,
+  CLASS_CONTENT,
+  CLASS_FOOTNOTE,
+  FOOTNOTE_CONTENT,
+  FOOTNOTE_ID,
+  FOOTNOTE_MAX_HEIGHT,
+  FOOTNOTE_NUMBER
+} from './constants'
 
 /**
  * Littlefoot instance factory.
@@ -32,7 +44,7 @@ const littlefoot = function (options) {
    *                           actually removing the popover from the DOM.
    * @return {void}
    */
-  function dismissFootnotes (selector = '.littlefoot-footnote', timeout = settings.dismissDelay) {
+  function dismissFootnotes (selector = `.${CLASS_FOOTNOTE}`, timeout = settings.dismissDelay) {
     const footnotes = [...document.querySelectorAll(selector)]
 
     footnotes.forEach((footnote) => {
@@ -47,7 +59,7 @@ const littlefoot = function (options) {
    * @return {void}
    */
   function repositionFootnotes (event) {
-    const footnotes = [...document.querySelectorAll('.littlefoot-footnote')]
+    const footnotes = [...document.querySelectorAll(`.${CLASS_FOOTNOTE}`)]
 
     footnotes.forEach((footnote) => {
       repositionFootnote(footnote, event && event.type)
@@ -70,19 +82,19 @@ const littlefoot = function (options) {
 
     const popoversCreated = buttons.map((button) => {
       button.insertAdjacentHTML('afterend', contentTemplate({
-        content: button.getAttribute('data-footnote-content'),
-        id: button.getAttribute('data-footnote-id'),
-        number: button.getAttribute('data-footnote-number')
+        content: button.getAttribute(FOOTNOTE_CONTENT),
+        id: button.getAttribute(FOOTNOTE_ID),
+        number: button.getAttribute(FOOTNOTE_NUMBER)
       }))
 
       const popover = button.nextElementSibling
-      const content = popover.querySelector('.littlefoot-footnote__content')
+      const content = popover.querySelector(`.${CLASS_CONTENT}`)
 
       button.setAttribute('aria-expanded', 'true')
-      popover.setAttribute('data-footnote-max-height', getMaxHeight(content))
+      popover.setAttribute(FOOTNOTE_MAX_HEIGHT, getMaxHeight(content))
       popover.style.maxWidth = document.body.clientWidth + 'px'
 
-      classList(button).add('is-active')
+      classList(button).add(CLASS_ACTIVE)
 
       if (className) {
         classList(popover).add(className)
@@ -102,7 +114,7 @@ const littlefoot = function (options) {
 
     setTimeout(() => {
       popoversCreated.forEach((popover) => {
-        classList(popover).add('is-active')
+        classList(popover).add(CLASS_ACTIVE)
       })
     }, settings.activateDelay)
   }
@@ -117,17 +129,17 @@ const littlefoot = function (options) {
   function onHover (event) {
     if (settings.activateOnHover) {
       const target = event.target || event.srcElement
-      const footnote = closest(target, '.littlefoot-footnote__button')
-      const footnoteId = footnote.getAttribute('data-footnote-id')
-      const selector = `[data-footnote-id="${footnoteId}"]`
+      const footnote = closest(target, `.${CLASS_BUTTON}`)
+      const footnoteId = footnote.getAttribute(FOOTNOTE_ID)
+      const selector = `[${FOOTNOTE_ID}="${footnoteId}"]`
 
-      if (!classList(footnote).contains('is-active')) {
+      if (!classList(footnote).contains(CLASS_ACTIVE)) {
         if (!settings.allowMultiple) {
-          dismissFootnotes(`.littlefoot-footnote:not(${selector})`)
+          dismissFootnotes(`.${CLASS_FOOTNOTE}:not(${selector})`)
         }
 
-        classList(footnote).add('is-hovered')
-        displayFootnote('.littlefoot-footnote__button' + selector, 'is-hovered')
+        classList(footnote).add(CLASS_HOVERED)
+        displayFootnote(`.${CLASS_BUTTON}${selector}`, CLASS_HOVERED)
       }
     }
   }
@@ -141,10 +153,10 @@ const littlefoot = function (options) {
    * @return {void}
    */
   function activateButton (button) {
-    const isActive = classList(button).contains('is-active')
-    const isChanging = classList(button).contains('is-changing')
-    const footnoteId = button.getAttribute('data-footnote-id')
-    const selector = `[data-footnote-id="${footnoteId}"]`
+    const isActive = classList(button).contains(CLASS_ACTIVE)
+    const isChanging = classList(button).contains(CLASS_CHANGING)
+    const footnoteId = button.getAttribute(FOOTNOTE_ID)
+    const selector = `[${FOOTNOTE_ID}="${footnoteId}"]`
 
     if (typeof button.blur === 'function') {
       button.blur()
@@ -155,20 +167,20 @@ const littlefoot = function (options) {
     }
 
     if (isActive) {
-      dismissFootnotes('.littlefoot-footnote' + selector)
+      dismissFootnotes(`.${CLASS_FOOTNOTE}${selector}`)
       return
     }
 
     if (!settings.allowMultiple) {
-      dismissFootnotes('.littlefoot-footnote:not(' + selector + ')')
+      dismissFootnotes(`.${CLASS_FOOTNOTE}:not(${selector})`)
     }
 
     // Activate footnote:
-    classList(button).add('is-changing')
-    displayFootnote('.littlefoot-footnote__button' + selector)
+    classList(button).add(CLASS_CHANGING)
+    displayFootnote(`.${CLASS_BUTTON}${selector}`)
 
     setTimeout(() => {
-      classList(button).remove('is-changing')
+      classList(button).remove(CLASS_CHANGING)
     }, settings.activateDelay)
   }
 
@@ -181,15 +193,15 @@ const littlefoot = function (options) {
    * @return {void}
    */
   function onTouchClick (event) {
-    const button = closest(event.target, '.littlefoot-footnote__button')
-    const footnote = closest(event.target, '.littlefoot-footnote')
+    const button = closest(event.target, `.${CLASS_BUTTON}`)
+    const footnote = closest(event.target, `.${CLASS_FOOTNOTE}`)
 
     if (button) {
       event.preventDefault()
       activateButton(button)
     }
 
-    if (!button && !footnote && document.querySelector('.littlefoot-footnote')) {
+    if (!button && !footnote && document.querySelector(`.${CLASS_FOOTNOTE}`)) {
       dismissFootnotes()
     }
   }
@@ -202,7 +214,7 @@ const littlefoot = function (options) {
   function onUnhover () {
     if (settings.dismissOnUnhover && settings.activateOnHover) {
       setTimeout(() => {
-        if (!document.querySelector('.littlefoot-footnote__button:hover, .littlefoot-footnote:hover')) {
+        if (!document.querySelector(`.${CLASS_BUTTON}:hover, .${CLASS_FOOTNOTE}:hover`)) {
           dismissFootnotes()
         }
       }, settings.hoverDelay)
@@ -228,8 +240,8 @@ const littlefoot = function (options) {
   bind(window, 'scroll', throttle(repositionFootnotes))
   bind(window, 'resize', throttle(repositionFootnotes))
 
-  delegate(document).on('mouseover', '.littlefoot-footnote__button', onHover)
-  delegate(document).on('mouseout', '.is-hovered', onUnhover)
+  delegate(document).on('mouseover', `.${CLASS_BUTTON}`, onHover)
+  delegate(document).on('mouseout', `.${CLASS_HOVERED}`, onUnhover)
 
   return {
     activate: displayFootnote,

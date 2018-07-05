@@ -1,4 +1,11 @@
 import classList from 'dom-classlist'
+import {
+  CLASS_ACTIVE,
+  CLASS_CHANGING,
+  CLASS_HOVERED,
+  CLASS_BUTTON,
+  FOOTNOTE_ID
+} from './constants'
 
 /**
  * Removes/adds appropriate classes to the footnote content and button after
@@ -10,21 +17,21 @@ import classList from 'dom-classlist'
  * @return {void}
  */
 export function dismissFootnote (footnote, timeout = 0) {
-  const footnoteID = footnote.getAttribute('data-footnote-id')
-  const linkedButton = document.querySelector('.littlefoot-footnote__button[data-footnote-id="' + footnoteID + '"]')
+  const footnoteID = footnote.getAttribute(FOOTNOTE_ID)
+  const linkedButton = document.querySelector(`.${CLASS_BUTTON}[${FOOTNOTE_ID}="${footnoteID}"]`)
 
-  if (!classList(linkedButton).contains('is-changing')) {
+  if (!classList(linkedButton).contains(CLASS_CHANGING)) {
     linkedButton.setAttribute('aria-expanded', 'false')
 
-    classList(linkedButton).add('is-changing')
-    classList(linkedButton).remove('is-active')
-    classList(linkedButton).remove('is-hovered')
+    classList(linkedButton).add(CLASS_CHANGING)
+    classList(linkedButton).remove(CLASS_ACTIVE)
+    classList(linkedButton).remove(CLASS_HOVERED)
 
-    classList(footnote).remove('is-active')
+    classList(footnote).remove(CLASS_ACTIVE)
 
     window.setTimeout(() => {
       footnote.parentNode.removeChild(footnote)
-      classList(linkedButton).remove('is-changing')
+      classList(linkedButton).remove(CLASS_CHANGING)
     }, timeout)
   }
 }

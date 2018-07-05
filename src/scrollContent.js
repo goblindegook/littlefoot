@@ -1,5 +1,6 @@
 import closest from 'dom-closest'
 import classList from 'dom-classlist'
+import { CLASS_FULLY_SCROLLED, CLASS_FOOTNOTE } from './constants'
 
 /**
  * Footnote content scroll handler.
@@ -12,10 +13,10 @@ export function scrollContent (event) {
   const delta = event.type === 'wheel' ? -event.deltaY : event.wheelDelta
   const isScrollUp = delta > 0
   const height = target.clientHeight
-  const popover = closest(target, '.littlefoot-footnote')
+  const popover = closest(target, `.${CLASS_FOOTNOTE}`)
 
   if (!isScrollUp && delta < height + target.scrollTop - target.scrollHeight) {
-    classList(popover).add('is-fully-scrolled')
+    classList(popover).add(CLASS_FULLY_SCROLLED)
 
     target.scrollTop = target.scrollHeight
     event.stopPropagation()
@@ -24,7 +25,7 @@ export function scrollContent (event) {
   }
 
   if (isScrollUp) {
-    classList(popover).remove('is-fully-scrolled')
+    classList(popover).remove(CLASS_FULLY_SCROLLED)
 
     if (target.scrollTop < delta) {
       target.scrollTop = 0

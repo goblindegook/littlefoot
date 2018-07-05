@@ -2,6 +2,19 @@ import siblings from 'dom-siblings'
 import classList from 'dom-classlist'
 import { getAvailableRoom } from './dom/getAvailableRoom'
 import { getStyle } from './dom/getStyle'
+import {
+  CLASS_SCROLLABLE,
+  CLASS_BUTTON,
+  CLASS_CONTENT,
+  CLASS_TOOLTIP,
+  CLASS_WRAPPER,
+  FOOTNOTE_MAX_HEIGHT,
+  FOOTNOTE_STATE
+} from './constants'
+
+const CLASS_POSITION_PREFIX = 'is-positioned-'
+const BOTTOM = 'bottom'
+const TOP = 'top'
 
 /**
  * Positions the tooltip at the same relative horizontal position as the button.
@@ -11,7 +24,7 @@ import { getStyle } from './dom/getStyle'
  * @return {void}
  */
 function positionTooltip (popover, leftRelative = 0.5) {
-  const tooltip = popover.querySelector('.littlefoot-footnote__tooltip')
+  const tooltip = popover.querySelector(`.${CLASS_TOOLTIP}`)
 
   if (tooltip) {
     tooltip.style.left = (leftRelative * 100) + '%'
@@ -41,10 +54,10 @@ function isFootnoteOnTop (footnote, room) {
  * @return {void}
  */
 function setFootnoteState (footnote, state) {
-  const alternative = state === 'top' ? 'bottom' : 'top'
-  footnote.setAttribute('data-footnote-state', state)
-  classList(footnote).add('is-positioned-' + state)
-  classList(footnote).remove('is-positioned-' + alternative)
+  const alternative = state === TOP ? BOTTOM : TOP
+  footnote.setAttribute(FOOTNOTE_STATE, state)
+  classList(footnote).add(CLASS_POSITION_PREFIX + state)
+  classList(footnote).remove(CLASS_POSITION_PREFIX + alternative)
 }
 
 /**
@@ -56,8 +69,8 @@ function setFootnoteState (footnote, state) {
  */
 function updateFootnoteState (footnote, room) {
   const isTop = isFootnoteOnTop(footnote, room)
-  const state = footnote.getAttribute('data-footnote-state')
-  const newState = isTop ? 'top' : 'bottom'
+  const state = footnote.getAttribute(FOOTNOTE_STATE)
+  const newState = isTop ? TOP : BOTTOM
 
   if (state !== newState) {
     setFootnoteState(footnote, newState)
@@ -73,10 +86,10 @@ function updateFootnoteState (footnote, room) {
  * @return {Number}              Maximum footnote height.
  */
 function getFootnoteMaxHeight (footnote, room) {
-  const maxHeight = parseInt(footnote.getAttribute('data-footnote-max-height'), 10)
+  const maxHeight = parseInt(footnote.getAttribute(FOOTNOTE_MAX_HEIGHT), 10)
   const isTop = isFootnoteOnTop(footnote, room)
   const marginSize = parseInt(getStyle(footnote, 'marginTop'), 10)
-  const availableHeight = room[isTop ? 'top' : 'bottom'] - marginSize - 15
+  const availableHeight = room[isTop ? TOP : BOTTOM] - marginSize - 15
 
   return Math.min(maxHeight, availableHeight)
 }
@@ -90,9 +103,9 @@ function getFootnoteMaxHeight (footnote, room) {
  * @return {void}
  */
 export function repositionFootnote (footnote, eventType = 'resize') {
-  const button = siblings(footnote, '.littlefoot-footnote__button')[0]
+  const [ button ] = siblings(footnote, `.${CLASS_BUTTON}`)
   const room = getAvailableRoom(button)
-  const content = footnote.querySelector('.littlefoot-footnote__content')
+  const content = footnote.querySelector(`.${CLASS_CONTENT}`)
   const maxHeight = getFootnoteMaxHeight(footnote, room)
 
   updateFootnoteState(footnote, room)
@@ -100,7 +113,7 @@ export function repositionFootnote (footnote, eventType = 'resize') {
   content.style.maxHeight = maxHeight + 'px'
 
   if (eventType === 'resize') {
-    const wrapper = footnote.querySelector('.littlefoot-footnote__wrapper')
+    const wrapper = footnote.querySelector(`.${CLASS_WRAPPER}`)
     const maxWidth = content.offsetWidth
     const buttonMarginLeft = parseInt(getStyle(button, 'marginLeft'), 10)
     const left = -room.leftRelative * maxWidth + buttonMarginLeft + button.offsetWidth / 2
@@ -112,6 +125,6 @@ export function repositionFootnote (footnote, eventType = 'resize') {
   }
 
   if (parseFloat(footnote.offsetHeight) <= content.scrollHeight) {
-    classList(footnote).add('is-scrollable')
+    classList(footnote).add(CLASS_SCROLLABLE)
   }
 }

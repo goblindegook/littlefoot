@@ -4,6 +4,12 @@ import escape from 'lodash.escape'
 import template from 'lodash.template'
 import { getFootnoteLinks } from './getFootnoteLinks'
 import { hideOriginalFootnote } from './hideOriginalFootnote'
+import {
+  CLASS_PROCESSED,
+  FOOTNOTE_BACKLINK_REF,
+  FOOTNOTE_ID,
+  FOOTNOTE_REF
+} from './constants'
 
 /**
  * Get the closest related footnote to a footnote link.
@@ -14,13 +20,9 @@ import { hideOriginalFootnote } from './hideOriginalFootnote'
  * @return {DOMElement}                 The closest related footnote.
  */
 function getClosestFootnote (link, selector, allowDuplicates) {
-  let relatedSelector = link.getAttribute('data-footnote-ref').replace(/[:.+~*\[\]]/g, '\\$&') // eslint-disable-line
-
-  if (!allowDuplicates) {
-    relatedSelector = relatedSelector + ':not(.footnote-processed)'
-  }
-
-  const relatedFootnote = document.querySelector(relatedSelector)
+  const relatedSelector = link.getAttribute(FOOTNOTE_REF).replace(/[:.+~*\[\]]/g, '\\$&') // eslint-disable-line
+  const unprocessedSelector = `${relatedSelector}:not(.${CLASS_PROCESSED})`
+  const relatedFootnote = document.querySelector(allowDuplicates ? relatedSelector : unprocessedSelector)
 
   return closest(relatedFootnote, selector)
 }
@@ -31,10 +33,10 @@ function getClosestFootnote (link, selector, allowDuplicates) {
  * @param  {DOMElement} element Root element, defaults to document.
  * @return {Number}             Starting number for all footnotes.
  */
-function getFootnoteNumberStart (element = document) {
-  const footnotes = element.querySelectorAll('[data-footnote-id]')
+function getFootnoteOffset (element = document) {
+  const footnotes = element.querySelectorAll(`[${FOOTNOTE_ID}]`)
   const lastFootnote = footnotes[footnotes.length - 1]
-  const lastFootnoteId = lastFootnote ? lastFootnote.getAttribute('data-footnote-id') : 0
+  const lastFootnoteId = lastFootnote ? lastFootnote.getAttribute(FOOTNOTE_ID) : 0
 
   return 1 + parseInt(lastFootnoteId, 10)
 }
@@ -63,6 +65,29 @@ function prepareContent (content, backlinkId) {
 }
 
 /**
+ * Creates a mapping function that resets the footnote number within
+ * each selected element.
+ *
+ * @param  {String} numberResetSelector Element selector.
+ * @return {Function}
+ */
+function resetNumbers (numberResetSelector) {
+  return (footnote, i, footnotes) => {
+    const resetElement = closest(footnote.link, numberResetSelector)
+    const [previousReset, number] = i
+      ? [footnotes[i - 1].resetElement, footnotes[i - 1].data.number]
+      : [null, 0]
+
+    return Object.assign(footnote, {
+      resetElement,
+      data: Object.assign(footnote.data, {
+        number: resetElement === previousReset ? number + 1 : 1
+      })
+    })
+  }
+}
+
+/**
  * Footnote button/content initializer (run on doc.ready).
  *
  * Finds the likely footnote links and then uses their target to find the content.
@@ -72,45 +97,38 @@ function prepareContent (content, backlinkId) {
  */
 export function init (settings) {
   const buttonTemplate = template(settings.buttonTemplate)
-  const rawFootnoteLinks = getFootnoteLinks(settings)
-  const footnotes = []
+  const offset = getFootnoteOffset()
 
-  const footnoteLinks = rawFootnoteLinks.filter((footnoteLink) => {
-    const closestFootnote = getClosestFootnote(footnoteLink, settings.footnoteSelector, settings.allowDuplicates)
+  getFootnoteLinks(settings)
+    .reduce((acc, link) => {
+      const element = getClosestFootnote(link, settings.footnoteSelector, settings.allowDuplicates)
 
-    if (closestFootnote) {
-      classList(closestFootnote).add('footnote-processed')
-      footnotes.push(closestFootnote)
-    }
+      if (element) {
+        classList(element).add(CLASS_PROCESSED)
+      }
 
-    return closestFootnote
-  })
+      return element ? [...acc, { link, element }] : acc
+    }, [])
+    .reduce((acc, { element, link }, i) => {
+      const number = offset + i
+      const id = offset + i
+      const reference = link.getAttribute(FOOTNOTE_BACKLINK_REF)
+      const content = escape(prepareContent(element.innerHTML, reference))
 
-  const numberStart = getFootnoteNumberStart()
-  let previousReset = null
-  let number = 0
-
-  footnotes.forEach((footnote, i) => {
-    const id = numberStart + i
-    const link = footnoteLinks[i]
-    const reference = link.getAttribute('data-footnote-backlink-ref')
-    const content = escape(prepareContent(footnote.innerHTML, reference))
-
-    if (settings.numberResetSelector != null) {
-      const resetElement = closest(link, settings.numberResetSelector)
-      number = resetElement === previousReset ? number + 1 : 1
-      previousReset = resetElement
-    } else {
-      number = id
-    }
-
-    link.insertAdjacentHTML('beforebegin', buttonTemplate({
-      content,
-      id,
-      number,
-      reference
-    }))
-
-    hideOriginalFootnote(footnote, link)
-  })
+      return [...acc, {
+        element,
+        link,
+        data: {
+          content,
+          id,
+          number,
+          reference
+        }
+      }]
+    }, [])
+    .map(settings.numberResetSelector ? resetNumbers(settings.numberResetSelector) : i => i)
+    .forEach(({ element, link, data }) => {
+      link.insertAdjacentHTML('beforebegin', buttonTemplate(data))
+      hideOriginalFootnote(element, link)
+    })
 }

@@ -3,7 +3,7 @@
  *
  * @type {Object}
  */
-const defaults = {
+const DEFAULTS = {
   activateCallback: null,
   activateDelay: 100,
   activateOnHover: false,
@@ -28,5 +28,5 @@ const defaults = {
  * @return {Object}         Settings.
  */
 export function createSettings (options) {
-  return Object.assign({}, defaults, options)
+  return Object.assign({}, DEFAULTS, options)
 }
