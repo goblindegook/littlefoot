@@ -57,7 +57,7 @@
     "karma-sauce-launcher": "^1.2.0",
     "karma-sinon": "^1.0.5",
     "karma-tap": "^4.1.4",
-    "node-sass": "^4.9.0",
+    "node-sass": "^4.9.1",
     "simulant": "^0.2.2",
     "sinon": "^6.1.0",
     "standard": "^11.0.1",
