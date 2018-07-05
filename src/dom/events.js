@@ -1,4 +1,4 @@
- /**
+/**
    * Removes/adds appropriate classes to the footnote content and button after
    * a delay (to allow for transitions) it removes the actual footnote content.
    *
