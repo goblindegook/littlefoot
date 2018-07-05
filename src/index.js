@@ -46,10 +46,7 @@ const littlefoot = function (options) {
    */
   function dismissFootnotes (selector = `.${CLASS_FOOTNOTE}`, timeout = settings.dismissDelay) {
     const footnotes = [...document.querySelectorAll(selector)]
-
-    footnotes.forEach((footnote) => {
-      dismissFootnote(footnote, timeout)
-    })
+    footnotes.forEach(dismissFootnote(timeout))
   }
 
   /**
@@ -60,10 +57,7 @@ const littlefoot = function (options) {
    */
   function repositionFootnotes (event) {
     const footnotes = [...document.querySelectorAll(`.${CLASS_FOOTNOTE}`)]
-
-    footnotes.forEach((footnote) => {
-      repositionFootnote(footnote, event && event.type)
-    })
+    footnotes.forEach(repositionFootnote(event && event.type))
   }
 
   /**
@@ -113,7 +107,7 @@ const littlefoot = function (options) {
     })
 
     setTimeout(() => {
-      popoversCreated.forEach((popover) => {
+      popoversCreated.forEach(popover => {
         classList(popover).add(CLASS_ACTIVE)
       })
     }, settings.activateDelay)

@@ -56,14 +56,11 @@ function mapFootnoteReferences (footnoteLinks, anchorParentSelector) {
  * @return {Array}           Footnote links found in the document.
  */
 export function getFootnoteLinks (settings) {
-  const scope = settings.scope || ''
-  const anchorPattern = settings.anchorPattern
-  const footnoteParentClass = settings.footnoteParentClass
-  const anchorParentSelector = settings.anchorParentSelector
-  const footnoteLinkSelector = `${scope} a[href*="#"]`.trim()
+  const { anchorPattern, anchorParentSelector, footnoteParentClass, scope } = settings
+  const footnoteLinkSelector = `${scope || ''} a[href*="#"]`.trim()
 
   const footnoteLinks = [...document.querySelectorAll(footnoteLinkSelector)]
-    .filter((link) => {
+    .filter(link => {
       const href = link.getAttribute('href')
       const rel = link.getAttribute('rel')
       const anchor = '' + href + (rel != null && rel !== 'null' ? rel : '')

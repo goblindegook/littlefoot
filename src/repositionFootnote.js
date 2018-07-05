@@ -95,36 +95,37 @@ function getFootnoteMaxHeight (footnote, room) {
 }
 
 /**
- * Positions each footnote relative to its button.
+ * Returns a function that positions each footnote relative to its button.
  *
- * @param  {DOMElement} footnote  The footnote element.
- * @param  {String}     eventType The type of event that prompted repositioning,
- *                                defaults to 'resize'.
+ * @param  {String} eventType The type of event that prompted repositioning,
+ *                            defaults to 'resize'.
  * @return {void}
  */
-export function repositionFootnote (footnote, eventType = 'resize') {
-  const [ button ] = siblings(footnote, `.${CLASS_BUTTON}`)
-  const room = getAvailableRoom(button)
-  const content = footnote.querySelector(`.${CLASS_CONTENT}`)
-  const maxHeight = getFootnoteMaxHeight(footnote, room)
+export function repositionFootnote (eventType = 'resize') {
+  return footnote => {
+    const [ button ] = siblings(footnote, `.${CLASS_BUTTON}`)
+    const room = getAvailableRoom(button)
+    const content = footnote.querySelector(`.${CLASS_CONTENT}`)
+    const maxHeight = getFootnoteMaxHeight(footnote, room)
 
-  updateFootnoteState(footnote, room)
+    updateFootnoteState(footnote, room)
 
-  content.style.maxHeight = maxHeight + 'px'
+    content.style.maxHeight = maxHeight + 'px'
 
-  if (eventType === 'resize') {
-    const wrapper = footnote.querySelector(`.${CLASS_WRAPPER}`)
-    const maxWidth = content.offsetWidth
-    const buttonMarginLeft = parseInt(getStyle(button, 'marginLeft'), 10)
-    const left = -room.leftRelative * maxWidth + buttonMarginLeft + button.offsetWidth / 2
+    if (eventType === 'resize') {
+      const wrapper = footnote.querySelector(`.${CLASS_WRAPPER}`)
+      const maxWidth = content.offsetWidth
+      const buttonMarginLeft = parseInt(getStyle(button, 'marginLeft'), 10)
+      const left = -room.leftRelative * maxWidth + buttonMarginLeft + button.offsetWidth / 2
 
-    footnote.style.left = left + 'px'
-    wrapper.style.maxWidth = maxWidth + 'px'
+      footnote.style.left = left + 'px'
+      wrapper.style.maxWidth = maxWidth + 'px'
 
-    positionTooltip(footnote, room.leftRelative)
-  }
+      positionTooltip(footnote, room.leftRelative)
+    }
 
-  if (parseFloat(footnote.offsetHeight) <= content.scrollHeight) {
-    classList(footnote).add(CLASS_SCROLLABLE)
+    if (parseFloat(footnote.offsetHeight) <= content.scrollHeight) {
+      classList(footnote).add(CLASS_SCROLLABLE)
+    }
   }
 }

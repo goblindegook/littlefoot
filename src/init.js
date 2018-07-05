@@ -14,17 +14,17 @@ import {
 /**
  * Get the closest related footnote to a footnote link.
  *
- * @param  {DOMElement} link            Footnote link.
- * @param  {String}     selector        Footnote selector.
- * @param  {Boolean}    allowDuplicates Whether to instantiate duplicate footnote.
- * @return {DOMElement}                 The closest related footnote.
+ * @param  {DOMElement} link             Footnote link.
+ * @param  {String}     footnoteSelector Footnote selector.
+ * @param  {Boolean}    allowDuplicates  Whether to instantiate duplicate footnote.
+ * @return {DOMElement}                  The closest related footnote.
  */
-function getClosestFootnote (link, selector, allowDuplicates) {
-  const relatedSelector = link.getAttribute(FOOTNOTE_REF).replace(/[:.+~*\[\]]/g, '\\$&') // eslint-disable-line
-  const unprocessedSelector = `${relatedSelector}:not(.${CLASS_PROCESSED})`
-  const relatedFootnote = document.querySelector(allowDuplicates ? relatedSelector : unprocessedSelector)
+function getClosestFootnote (link, footnoteSelector, allowDuplicates) {
+  const selector = link.getAttribute(FOOTNOTE_REF).replace(/[:.+~*\[\]]/g, '\\$&') // eslint-disable-line
+  const strictSelector = `${selector}:not(.${CLASS_PROCESSED})`
+  const related = document.querySelector(allowDuplicates ? selector : strictSelector)
 
-  return closest(relatedFootnote, selector)
+  return closest(related, footnoteSelector)
 }
 
 /**
@@ -73,16 +73,12 @@ function prepareContent (content, backlinkId) {
  */
 function resetNumbers (numberResetSelector) {
   return (footnote, i, footnotes) => {
-    const resetElement = closest(footnote.link, numberResetSelector)
-    const [previousReset, number] = i
-      ? [footnotes[i - 1].resetElement, footnotes[i - 1].data.number]
-      : [null, 0]
+    const reset = closest(footnote.link, numberResetSelector)
+    const previous = i ? footnotes[i - 1] : { reset: null, number: 0 }
 
     return Object.assign(footnote, {
-      resetElement,
-      data: Object.assign(footnote.data, {
-        number: resetElement === previousReset ? number + 1 : 1
-      })
+      reset: previous.reset,
+      number: reset === previous.reset ? previous.number + 1 : 1
     })
   }
 }
@@ -92,23 +88,27 @@ function resetNumbers (numberResetSelector) {
  *
  * Finds the likely footnote links and then uses their target to find the content.
  *
- * @param  {Object} settings littlefoot settings object.
+ * @param  {Object} options littlefoot settings object.
  * @return {void}
  */
 export function init (settings) {
-  const buttonTemplate = template(settings.buttonTemplate)
+  const { allowDuplicates, buttonTemplate, footnoteSelector, numberResetSelector } = settings
+
+  const renderButton = template(buttonTemplate)
+  const maybeResetNumbers = numberResetSelector ? resetNumbers(numberResetSelector) : i => i
   const offset = getFootnoteOffset()
 
   getFootnoteLinks(settings)
     .reduce((acc, link) => {
-      const element = getClosestFootnote(link, settings.footnoteSelector, settings.allowDuplicates)
+      const element = getClosestFootnote(link, footnoteSelector, allowDuplicates)
 
       if (element) {
         classList(element).add(CLASS_PROCESSED)
       }
 
-      return element ? [...acc, { link, element }] : acc
+      return [...acc, { link, element }]
     }, [])
+    .filter(({ element }) => !!element)
     .reduce((acc, { element, link }, i) => {
       const number = offset + i
       const id = offset + i
@@ -116,19 +116,17 @@ export function init (settings) {
       const content = escape(prepareContent(element.innerHTML, reference))
 
       return [...acc, {
+        content,
         element,
+        id,
         link,
-        data: {
-          content,
-          id,
-          number,
-          reference
-        }
+        number,
+        reference
       }]
     }, [])
-    .map(settings.numberResetSelector ? resetNumbers(settings.numberResetSelector) : i => i)
-    .forEach(({ element, link, data }) => {
-      link.insertAdjacentHTML('beforebegin', buttonTemplate(data))
-      hideOriginalFootnote(element, link)
+    .map(maybeResetNumbers)
+    .map(footnote => {
+      footnote.link.insertAdjacentHTML('beforebegin', renderButton(footnote))
+      hideOriginalFootnote(footnote.element, footnote.link)
     })
 }

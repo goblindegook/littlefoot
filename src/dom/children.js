@@ -9,6 +9,6 @@ import matches from 'dom-matches'
  */
 export function children (element, selector = null) {
   return [...element.children].filter(
-    (child) => child.nodeType !== 8 && (!selector || matches(child, selector))
+    child => child.nodeType !== 8 && (!selector || matches(child, selector))
   )
 }

@@ -1,4 +1,16 @@
 import closest from 'dom-closest'
+import { CLASS_BUTTON } from './constants'
+
+/**
+ * Get one or more elements for a selector.
+ *
+ * @param  {String}  selector      CSS selector of elements that are to be obtained.
+ * @param  {Boolean} allowMultiple Allow selecting multiple elements.
+ * @return {Array}                 All elements queried.
+ */
+function query (selector, allowMultiple) {
+  return allowMultiple ? document.querySelectorAll(selector) : [document.querySelector(selector)]
+}
 
 /**
  * Get the closest footnote buttons or button for a selector.
@@ -8,13 +20,7 @@ import closest from 'dom-closest'
  * @return {Array}                 All footnotes activated by the function.
  */
 export function getClosestFootnoteButtons (selector, allowMultiple = false) {
-  if (selector) {
-    const elements = allowMultiple ? document.querySelectorAll(selector) : [document.querySelector(selector)]
-
-    return [...elements]
-      .map((element) => closest(element, '.littlefoot-footnote__button'))
-      .filter((button) => button)
-  } else {
-    return []
-  }
+  return selector ? [...query(selector, allowMultiple)] : []
+    .map(element => closest(element, `.${CLASS_BUTTON}`))
+    .filter(button => button)
 }
