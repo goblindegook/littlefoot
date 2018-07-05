@@ -7,7 +7,7 @@ import classList from 'dom-classlist'
  * @param  {Event} event Scroll or mousewheel event.
  * @return {void}
  */
-function scrollContent (event) {
+export function scrollContent (event) {
   const target = event.currentTarget
   const delta = event.type === 'wheel' ? -event.deltaY : event.wheelDelta
   const isScrollUp = delta > 0
@@ -33,5 +33,3 @@ function scrollContent (event) {
     }
   }
 }
-
-export default scrollContent

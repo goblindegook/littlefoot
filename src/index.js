@@ -5,12 +5,12 @@ import template from 'lodash.template'
 import throttle from 'lodash.throttle'
 import { getMaxHeight } from './dom/getMaxHeight'
 import { bind } from './dom/events'
-import createSettings from './settings'
-import dismissFootnote from './dismissFootnote'
-import getClosestFootnoteButtons from './getClosestFootnoteButtons'
-import init from './init'
-import repositionFootnote from './repositionFootnote'
-import scrollContent from './scrollContent'
+import { createSettings } from './settings'
+import { dismissFootnote } from './dismissFootnote'
+import { getClosestFootnoteButtons } from './getClosestFootnoteButtons'
+import { init } from './init'
+import { repositionFootnote } from './repositionFootnote'
+import { scrollContent } from './scrollContent'
 
 /**
  * Littlefoot instance factory.
@@ -234,8 +234,8 @@ const littlefoot = function (options) {
   return {
     activate: displayFootnote,
     dismiss: dismissFootnotes,
-    getSetting: settings.get,
-    updateSetting: settings.set
+    getSetting: (key) => settings[key],
+    updateSetting: (key, value) => { settings[key] = value }
   }
 }
 

@@ -1,4 +1,4 @@
-import getStyle from './getStyle'
+import { getStyle } from './getStyle'
 
 /**
  * Get the computed maximum pixel height (as a regular integer) for an element.

@@ -57,9 +57,3 @@ export function teardown () {
 export function sleep (timeout) {
   return new Promise((resolve) => setTimeout(resolve, timeout))
 }
-
-export default {
-  setup,
-  sleep,
-  teardown
-}

@@ -7,7 +7,7 @@ import closest from 'dom-closest'
  * @param  {Boolean} allowMultiple Allow activating multiple buttons.
  * @return {Array}                 All footnotes activated by the function.
  */
-function getClosestFootnoteButtons (selector, allowMultiple = false) {
+export function getClosestFootnoteButtons (selector, allowMultiple = false) {
   if (selector) {
     const elements = allowMultiple ? document.querySelectorAll(selector) : [document.querySelector(selector)]
 
@@ -18,5 +18,3 @@ function getClosestFootnoteButtons (selector, allowMultiple = false) {
     return []
   }
 }
-
-export default getClosestFootnoteButtons

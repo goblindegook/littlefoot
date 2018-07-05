@@ -5,11 +5,9 @@
  * @param  {String}     property Property name.
  * @return {String}              Computed style property.
  */
-function getStyle (element, property) {
+export function getStyle (element, property) {
   const view = element.ownerDocument.defaultView || window
   const style = view.getComputedStyle ? view.getComputedStyle(element) : element.currentStyle
 
   return style.getPropertyValue(property) || style[property] || ''
 }
-
-export default getStyle

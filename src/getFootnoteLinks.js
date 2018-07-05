@@ -51,7 +51,7 @@ function mapFootnoteReferences (footnoteLinks, anchorParentSelector) {
  * @param  {Object} settings Littlefoot settings.
  * @return {Array}           Footnote links found in the document.
  */
-function getFootnoteLinks (settings) {
+export function getFootnoteLinks (settings) {
   const scope = settings.scope || ''
   const anchorPattern = settings.anchorPattern
   const footnoteParentClass = settings.footnoteParentClass
@@ -70,5 +70,3 @@ function getFootnoteLinks (settings) {
 
   return mapFootnoteReferences(footnoteLinks, anchorParentSelector)
 }
-
-export default getFootnoteLinks

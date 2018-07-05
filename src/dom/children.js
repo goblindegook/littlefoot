@@ -7,10 +7,8 @@ import matches from 'dom-matches'
  * @param  {String}     selector Child selector.
  * @return {Array}               Child elements.
  */
-function children (element, selector = null) {
+export function children (element, selector = null) {
   return [...element.children].filter(
     (child) => child.nodeType !== 8 && (!selector || matches(child, selector))
   )
 }
-
-export default children

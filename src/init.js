@@ -2,8 +2,8 @@ import closest from 'dom-closest'
 import classList from 'dom-classlist'
 import escape from 'lodash.escape'
 import template from 'lodash.template'
-import getFootnoteLinks from './getFootnoteLinks'
-import hideOriginalFootnote from './hideOriginalFootnote'
+import { getFootnoteLinks } from './getFootnoteLinks'
+import { hideOriginalFootnote } from './hideOriginalFootnote'
 
 /**
  * Get the closest related footnote to a footnote link.
@@ -70,7 +70,7 @@ function prepareContent (content, backlinkId) {
  * @param  {Object} settings littlefoot settings object.
  * @return {void}
  */
-function init (settings) {
+export function init (settings) {
   const buttonTemplate = template(settings.buttonTemplate)
   const rawFootnoteLinks = getFootnoteLinks(settings)
   const footnotes = []
@@ -114,5 +114,3 @@ function init (settings) {
     hideOriginalFootnote(footnote, link)
   })
 }
-
-export default init

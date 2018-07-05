@@ -1,7 +1,7 @@
 import siblings from 'dom-siblings'
 import classList from 'dom-classlist'
-import getAvailableRoom from './dom/getAvailableRoom'
-import getStyle from './dom/getStyle'
+import { getAvailableRoom } from './dom/getAvailableRoom'
+import { getStyle } from './dom/getStyle'
 
 /**
  * Positions the tooltip at the same relative horizontal position as the button.
@@ -89,7 +89,7 @@ function getFootnoteMaxHeight (footnote, room) {
  *                                defaults to 'resize'.
  * @return {void}
  */
-function repositionFootnote (footnote, eventType = 'resize') {
+export function repositionFootnote (footnote, eventType = 'resize') {
   const button = siblings(footnote, '.littlefoot-footnote__button')[0]
   const room = getAvailableRoom(button)
   const content = footnote.querySelector('.littlefoot-footnote__content')
@@ -115,5 +115,3 @@ function repositionFootnote (footnote, eventType = 'resize') {
     classList(footnote).add('is-scrollable')
   }
 }
-
-export default repositionFootnote

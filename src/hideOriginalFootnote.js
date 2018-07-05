@@ -1,5 +1,5 @@
 import classList from 'dom-classlist'
-import children from './dom/children'
+import { children } from './dom/children'
 
 const printOnly = 'footnote-print-only'
 
@@ -40,10 +40,8 @@ function hideFootnoteContainer (container) {
  * @param  {DOMElement} link     Footnote link element.
  * @return {void}
  */
-function hideOriginalFootnote (footnote, link) {
+export function hideOriginalFootnote (footnote, link) {
   hideElement(footnote)
   hideElement(link)
   hideFootnoteContainer(footnote.parentNode)
 }
-
-export default hideOriginalFootnote

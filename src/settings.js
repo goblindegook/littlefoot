@@ -27,39 +27,6 @@ const defaults = {
  * @param  {Object} options Littlefoot options.
  * @return {Object}         Settings.
  */
-function createSettings (options) {
-  const store = Object.assign({}, defaults, options)
-
-  /**
-   * Settings prototype.
-   *
-   * @type {Object}
-   */
-  const Settings = {
-    /**
-     * Returns the value of the passed setting.
-     *
-     * @param  {String} key The setting to retrieve.
-     * @return {*}          The value of the passed setting.
-     */
-    get (key) {
-      return store[key]
-    },
-
-    /**
-     * Updates the specified setting(s) with the value(s) you pass.
-     *
-     * @param  {String} key   The setting name as a string or an object containing
-     *                        setting-new value pairs.
-     * @param  {*}      value The new value, if the first argument was a string.
-     * @return {void}
-     */
-    set (key, value) {
-      store[key] = value
-    }
-  }
-
-  return Object.assign(Object.create(Settings), store)
+export function createSettings (options) {
+  return Object.assign({}, defaults, options)
 }
-
-export default createSettings
