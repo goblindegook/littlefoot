@@ -71,11 +71,11 @@ const littlefoot = function (options) {
    * @return {void}
    */
   function displayFootnote (selector, className) {
-    const contentTemplate = template(settings.contentTemplate)
+    const renderContent = template(settings.contentTemplate)
     const buttons = getClosestFootnoteButtons(selector, settings.allowMultiple)
 
-    const popoversCreated = buttons.map((button) => {
-      button.insertAdjacentHTML('afterend', contentTemplate({
+    const popoversCreated = buttons.map(button => {
+      button.insertAdjacentHTML('afterend', renderContent({
         content: button.getAttribute(FOOTNOTE_CONTENT),
         id: button.getAttribute(FOOTNOTE_ID),
         number: button.getAttribute(FOOTNOTE_NUMBER)

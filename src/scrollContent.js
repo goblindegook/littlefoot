@@ -3,14 +3,26 @@ import classList from 'dom-classlist'
 import { CLASS_FULLY_SCROLLED, CLASS_FOOTNOTE } from './constants'
 
 /**
+ * Get event data.
+ *
+ * @param  {Event} event Scroll or mousewheel event.
+ * @return {void}
+ */
+function parseEvent (event) {
+  return {
+    target: event.currentTarget,
+    delta: event.type === 'wheel' ? -event.deltaY : event.wheelDelta
+  }
+}
+
+/**
  * Footnote content scroll handler.
  *
  * @param  {Event} event Scroll or mousewheel event.
  * @return {void}
  */
 export function scrollContent (event) {
-  const target = event.currentTarget
-  const delta = event.type === 'wheel' ? -event.deltaY : event.wheelDelta
+  const { target, delta } = parseEvent(event)
   const isScrollUp = delta > 0
   const height = target.clientHeight
   const popover = closest(target, `.${CLASS_FOOTNOTE}`)
