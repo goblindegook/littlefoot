@@ -1,10 +1,10 @@
-import closest from 'component-closest'
+import closest from 'dom-closest'
 import classList from 'dom-classlist'
-import delegate from 'component-delegate'
-import events from 'component-event'
+import delegate from 'dom-delegate'
 import template from 'lodash.template'
 import throttle from 'lodash.throttle'
-import getMaxHeight from './dom/getMaxHeight'
+import { getMaxHeight } from './dom/getMaxHeight'
+import { bind } from './dom/events'
 import createSettings from './settings'
 import dismissFootnote from './dismissFootnote'
 import getClosestFootnoteButtons from './getClosestFootnoteButtons'
@@ -88,8 +88,8 @@ const littlefoot = function (options) {
         classList(popover).add(className)
       }
 
-      events.bind(content, 'mousewheel', throttle(scrollContent))
-      events.bind(content, 'wheel', throttle(scrollContent))
+      bind(content, 'mousewheel', throttle(scrollContent))
+      bind(content, 'wheel', throttle(scrollContent))
 
       repositionFootnotes()
 
@@ -221,15 +221,15 @@ const littlefoot = function (options) {
     }
   }
 
-  events.bind(document, 'touchend', onTouchClick)
-  events.bind(document, 'click', onTouchClick)
-  events.bind(document, 'keyup', onEscapeKeypress)
-  events.bind(document, 'gestureend', repositionFootnotes)
-  events.bind(window, 'scroll', throttle(repositionFootnotes))
-  events.bind(window, 'resize', throttle(repositionFootnotes))
+  bind(document, 'touchend', onTouchClick)
+  bind(document, 'click', onTouchClick)
+  bind(document, 'keyup', onEscapeKeypress)
+  bind(document, 'gestureend', repositionFootnotes)
+  bind(window, 'scroll', throttle(repositionFootnotes))
+  bind(window, 'resize', throttle(repositionFootnotes))
 
-  delegate.bind(document, '.littlefoot-footnote__button', 'mouseover', onHover)
-  delegate.bind(document, '.is-hovered', 'mouseout', onUnhover)
+  delegate(document).on('mouseover', '.littlefoot-footnote__button', onHover)
+  delegate(document).on('mouseout', '.is-hovered', onUnhover)
 
   return {
     activate: displayFootnote,

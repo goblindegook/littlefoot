@@ -6,7 +6,7 @@ import getStyle from './getStyle'
  * @param  {DOMElement} element  Element that is being measured.
  * @return {Number}              Maximum element height in pixels.
  */
-function getMaxHeight (element) {
+export function getMaxHeight (element) {
   const value = getStyle(element, 'maxHeight')
   const size = parseFloat(value)
 
@@ -20,5 +20,3 @@ function getMaxHeight (element) {
 
   return Math.round(size)
 }
-
-export default getMaxHeight

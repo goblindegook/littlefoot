@@ -1,4 +1,4 @@
-import matches from 'component-matches-selector'
+import matches from 'dom-matches'
 
 /**
  * Fetch children elements.

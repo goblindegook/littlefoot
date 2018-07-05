@@ -1,4 +1,4 @@
-import closest from 'component-closest'
+import closest from 'dom-closest'
 import classList from 'dom-classlist'
 
 /**
