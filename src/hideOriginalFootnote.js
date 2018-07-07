@@ -1,16 +1,8 @@
-import classList from 'dom-classlist'
+import { addClass } from './document'
 import { children } from './dom/children'
 import { CLASS_PRINT_ONLY } from './constants'
 
-/**
- * Mark an element for hiding by setting a print-only class.
- *
- * @param  {DOMElement} element Element to make print-only.
- * @return {void}
- */
-function hideElement (element) {
-  classList(element).add(CLASS_PRINT_ONLY)
-}
+const makeInvisible = addClass(CLASS_PRINT_ONLY)
 
 /**
  * Propagates the decision of hiding the original footnotes up the DOM tree,
@@ -22,11 +14,10 @@ function hideElement (element) {
  */
 function hideFootnoteContainer (container) {
   const visibleElements = children(container, `:not(.${CLASS_PRINT_ONLY})`)
-  const visibleSeparators = children(container, `hr:not(.${CLASS_PRINT_ONLY})`)
+  const visibleSeparators = visibleElements.filter(el => el.tagName === 'HR')
 
   if (visibleElements.length === visibleSeparators.length) {
-    visibleSeparators.forEach(hideElement)
-    hideElement(container)
+    [...visibleSeparators, container].forEach(makeInvisible)
     hideFootnoteContainer(container.parentNode)
   }
 }
@@ -40,7 +31,6 @@ function hideFootnoteContainer (container) {
  * @return {void}
  */
 export function hideOriginalFootnote (footnote, link) {
-  hideElement(footnote)
-  hideElement(link)
+  [footnote, link].forEach(makeInvisible)
   hideFootnoteContainer(footnote.parentNode)
 }

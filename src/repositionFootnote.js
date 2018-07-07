@@ -101,7 +101,7 @@ function getFootnoteMaxHeight (footnote, room) {
  *                            defaults to 'resize'.
  * @return {void}
  */
-export function repositionFootnote (eventType = 'resize') {
+export function repositionPopover (eventType = 'resize') {
   return footnote => {
     const [ button ] = siblings(footnote, `.${CLASS_BUTTON}`)
     const room = getAvailableRoom(button)

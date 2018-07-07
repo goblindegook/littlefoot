@@ -20,7 +20,7 @@ function query (selector, allowMultiple) {
  * @return {Array}                 All footnotes activated by the function.
  */
 export function getClosestFootnoteButtons (selector, allowMultiple = false) {
-  return selector ? [...query(selector, allowMultiple)] : []
+  return selector ? [...query(`${selector}.${CLASS_BUTTON}`, allowMultiple)] : []
     .map(element => closest(element, `.${CLASS_BUTTON}`))
     .filter(button => button)
 }

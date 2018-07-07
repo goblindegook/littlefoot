@@ -9,8 +9,10 @@ import { createSettings } from './settings'
 import { dismissFootnote } from './dismissFootnote'
 import { getClosestFootnoteButtons } from './getClosestFootnoteButtons'
 import { init } from './init'
-import { repositionFootnote } from './repositionFootnote'
+import { repositionPopover } from './repositionFootnote'
 import { scrollContent } from './scrollContent'
+import { onEscapeKeypress } from './events'
+import { addClass, findAllFootnotes, insertPopover } from './document'
 import {
   CLASS_ACTIVE,
   CLASS_CHANGING,
@@ -18,11 +20,17 @@ import {
   CLASS_BUTTON,
   CLASS_CONTENT,
   CLASS_FOOTNOTE,
-  FOOTNOTE_CONTENT,
   FOOTNOTE_ID,
-  FOOTNOTE_MAX_HEIGHT,
-  FOOTNOTE_NUMBER
+  FOOTNOTE_MAX_HEIGHT
 } from './constants'
+
+function maybeCall (context, fn, ...args) {
+  if (typeof fn === 'function') {
+    fn.call(context, args)
+  }
+}
+
+function noop () {}
 
 /**
  * Littlefoot instance factory.
@@ -44,9 +52,8 @@ const littlefoot = function (options) {
    *                           actually removing the popover from the DOM.
    * @return {void}
    */
-  function dismissFootnotes (selector = `.${CLASS_FOOTNOTE}`, timeout = settings.dismissDelay) {
-    const footnotes = [...document.querySelectorAll(selector)]
-    footnotes.forEach(dismissFootnote(timeout))
+  function dismissPopovers (selector, timeout = settings.dismissDelay) {
+    findAllFootnotes(selector).forEach(dismissFootnote(timeout))
   }
 
   /**
@@ -55,9 +62,8 @@ const littlefoot = function (options) {
    * @param  {Event} event The type of event that prompted the reposition function.
    * @return {void}
    */
-  function repositionFootnotes (event) {
-    const footnotes = [...document.querySelectorAll(`.${CLASS_FOOTNOTE}`)]
-    footnotes.forEach(repositionFootnote(event && event.type))
+  function repositionPopovers (event) {
+    findAllFootnotes().forEach(repositionPopover(event && event.type))
   }
 
   /**
@@ -70,47 +76,40 @@ const littlefoot = function (options) {
    * @param  {String} className Class name to add to the popover element.
    * @return {void}
    */
-  function displayFootnote (selector, className) {
-    const renderContent = template(settings.contentTemplate)
-    const buttons = getClosestFootnoteButtons(selector, settings.allowMultiple)
+  function displayPopover (selector, className) {
+    const { activateCallback, activateDelay, allowMultiple, contentTemplate } = settings
+    const renderPopover = template(contentTemplate)
 
-    const popoversCreated = buttons.map(button => {
-      button.insertAdjacentHTML('afterend', renderContent({
-        content: button.getAttribute(FOOTNOTE_CONTENT),
-        id: button.getAttribute(FOOTNOTE_ID),
-        number: button.getAttribute(FOOTNOTE_NUMBER)
-      }))
+    const popoversCreated = getClosestFootnoteButtons(selector, allowMultiple)
+      .map(button => {
+        const popover = insertPopover(button, renderPopover)
+        const content = popover.querySelector(`.${CLASS_CONTENT}`)
 
-      const popover = button.nextElementSibling
-      const content = popover.querySelector(`.${CLASS_CONTENT}`)
+        button.setAttribute('aria-expanded', 'true')
+        popover.setAttribute(FOOTNOTE_MAX_HEIGHT, getMaxHeight(content))
+        popover.style.maxWidth = document.body.clientWidth + 'px'
 
-      button.setAttribute('aria-expanded', 'true')
-      popover.setAttribute(FOOTNOTE_MAX_HEIGHT, getMaxHeight(content))
-      popover.style.maxWidth = document.body.clientWidth + 'px'
+        addClass(CLASS_ACTIVE)(button)
+        addClass(className)(popover)
 
-      classList(button).add(CLASS_ACTIVE)
+        bind(content, 'mousewheel', throttle(scrollContent))
+        bind(content, 'wheel', throttle(scrollContent))
 
-      if (className) {
-        classList(popover).add(className)
-      }
+        repositionPopovers()
+        maybeCall(null, activateCallback, popover, button)
 
-      bind(content, 'mousewheel', throttle(scrollContent))
-      bind(content, 'wheel', throttle(scrollContent))
-
-      repositionFootnotes()
-
-      if (typeof settings.activateCallback === 'function') {
-        settings.activateCallback(popover, button)
-      }
-
-      return popover
-    })
+        return popover
+      })
 
     setTimeout(() => {
-      popoversCreated.forEach(popover => {
-        classList(popover).add(CLASS_ACTIVE)
-      })
-    }, settings.activateDelay)
+      popoversCreated.forEach(addClass(CLASS_ACTIVE))
+    }, activateDelay)
+  }
+
+  function dismissOtherPopovers (selector) {
+    if (!settings.allowMultiple) {
+      dismissPopovers(`:not(${selector})`)
+    }
   }
 
   /**
@@ -125,63 +124,54 @@ const littlefoot = function (options) {
       const target = event.target || event.srcElement
       const footnote = closest(target, `.${CLASS_BUTTON}`)
       const footnoteId = footnote.getAttribute(FOOTNOTE_ID)
+      const footnoteClass = classList(footnote)
       const selector = `[${FOOTNOTE_ID}="${footnoteId}"]`
 
-      if (!classList(footnote).contains(CLASS_ACTIVE)) {
-        if (!settings.allowMultiple) {
-          dismissFootnotes(`.${CLASS_FOOTNOTE}:not(${selector})`)
-        }
-
-        classList(footnote).add(CLASS_HOVERED)
-        displayFootnote(`.${CLASS_BUTTON}${selector}`, CLASS_HOVERED)
+      if (!footnoteClass.contains(CLASS_ACTIVE)) {
+        dismissOtherPopovers(selector)
+        footnoteClass.add(CLASS_HOVERED)
+        displayPopover(selector, CLASS_HOVERED)
       }
     }
   }
 
+  function activateButtonPopovers (button, selector, delay) {
+    dismissOtherPopovers(selector)
+    addClass(CLASS_CHANGING)(button)
+    displayPopover(selector)
+
+    setTimeout(() => {
+      classList(button).remove(CLASS_CHANGING)
+    }, delay)
+  }
+
   /**
    * Handles the logic of clicking/tapping the footnote button. That is,
-   * activates the popover if it isn't already active (+ deactivate others, if
-   * appropriate) or, deactivates the popover if it is already active.
+   * activates the popover if it isn't already active (and deactivates
+   * others, if appropriate) or, deactivates the popover if it is already
+   * active.
    *
    * @param  {DOMElement} button Button being clicked/pressed.
    * @return {void}
    */
-  function activateButton (button) {
-    const isActive = classList(button).contains(CLASS_ACTIVE)
-    const isChanging = classList(button).contains(CLASS_CHANGING)
+  function toggleButton (button) {
     const footnoteId = button.getAttribute(FOOTNOTE_ID)
     const selector = `[${FOOTNOTE_ID}="${footnoteId}"]`
+    const buttonClass = classList(button)
 
-    if (typeof button.blur === 'function') {
-      button.blur()
-    }
+    const [fn, ...args] = buttonClass.contains(CLASS_CHANGING)
+      ? [noop]
+      : buttonClass.contains(CLASS_ACTIVE)
+        ? [dismissPopovers, selector, settings.dismissDelay]
+        : [activateButtonPopovers, button, selector, settings.activateDelay]
 
-    if (isChanging) {
-      return
-    }
-
-    if (isActive) {
-      dismissFootnotes(`.${CLASS_FOOTNOTE}${selector}`)
-      return
-    }
-
-    if (!settings.allowMultiple) {
-      dismissFootnotes(`.${CLASS_FOOTNOTE}:not(${selector})`)
-    }
-
-    // Activate footnote:
-    classList(button).add(CLASS_CHANGING)
-    displayFootnote(`.${CLASS_BUTTON}${selector}`)
-
-    setTimeout(() => {
-      classList(button).remove(CLASS_CHANGING)
-    }, settings.activateDelay)
+    maybeCall(button, button.blur)
+    fn(...args)
   }
 
   /**
-   * Activates the button the was clicked/taps. Also removes other popovers, if
-   * allowMultiple is false. Finally, removes all popovers if something non-fn
-   * related was clicked/tapped.
+   * Toggles the button that was clicked/tapped, or removes all popovers if
+   * something non-footnote related was clicked/tapped.
    *
    * @param  {Event} event Event that contains the target of the tap/click event.
    * @return {void}
@@ -192,11 +182,11 @@ const littlefoot = function (options) {
 
     if (button) {
       event.preventDefault()
-      activateButton(button)
+      toggleButton(button)
     }
 
     if (!button && !footnote && document.querySelector(`.${CLASS_FOOTNOTE}`)) {
-      dismissFootnotes()
+      dismissPopovers()
     }
   }
 
@@ -209,37 +199,25 @@ const littlefoot = function (options) {
     if (settings.dismissOnUnhover && settings.activateOnHover) {
       setTimeout(() => {
         if (!document.querySelector(`.${CLASS_BUTTON}:hover, .${CLASS_FOOTNOTE}:hover`)) {
-          dismissFootnotes()
+          dismissPopovers()
         }
       }, settings.hoverDelay)
     }
   }
 
-  /**
-   * Remove all popovers on keypress.
-   *
-   * @param  {Event} event Event that contains the key that was pressed.
-   * @return {void}
-   */
-  function onEscapeKeypress (event) {
-    if (event.keyCode === 27) {
-      dismissFootnotes()
-    }
-  }
-
   bind(document, 'touchend', onTouchClick)
   bind(document, 'click', onTouchClick)
-  bind(document, 'keyup', onEscapeKeypress)
-  bind(document, 'gestureend', repositionFootnotes)
-  bind(window, 'scroll', throttle(repositionFootnotes))
-  bind(window, 'resize', throttle(repositionFootnotes))
+  bind(document, 'keyup', onEscapeKeypress(dismissPopovers))
+  bind(document, 'gestureend', repositionPopovers)
+  bind(window, 'scroll', throttle(repositionPopovers))
+  bind(window, 'resize', throttle(repositionPopovers))
 
   delegate(document).on('mouseover', `.${CLASS_BUTTON}`, onHover)
   delegate(document).on('mouseout', `.${CLASS_HOVERED}`, onUnhover)
 
   return {
-    activate: displayFootnote,
-    dismiss: dismissFootnotes,
+    activate: displayPopover,
+    dismiss: dismissPopovers,
     getSetting: (key) => settings[key],
     updateSetting: (key, value) => { settings[key] = value }
   }
