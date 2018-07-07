@@ -16,13 +16,13 @@ export function addClass (className) {
     : () => {}
 }
 
-export function insertPopover (element, render) {
-  element.insertAdjacentHTML('afterend', render({
-    content: element.getAttribute(FOOTNOTE_CONTENT),
-    id: element.getAttribute(FOOTNOTE_ID),
-    number: element.getAttribute(FOOTNOTE_NUMBER)
+export function insertPopover (button, render) {
+  button.insertAdjacentHTML('afterend', render({
+    content: button.getAttribute(FOOTNOTE_CONTENT),
+    id: button.getAttribute(FOOTNOTE_ID),
+    number: button.getAttribute(FOOTNOTE_NUMBER)
   }))
-  return element.nextElementSibling
+  return button.nextElementSibling
 }
 
 export function insertButton (link, render, properties) {

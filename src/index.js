@@ -112,9 +112,23 @@ const littlefoot = function (options) {
     }
   }
 
+  function activatePopover (button, selector) {
+    dismissOtherPopovers(selector)
+    addClass(CLASS_CHANGING)(button)
+    displayPopover(selector)
+
+    setTimeout(() => {
+      classList(button).remove(CLASS_CHANGING)
+    }, settings.activateDelay)
+  }
+
+  function getPopoverSelector (button) {
+    const footnoteId = button.getAttribute(FOOTNOTE_ID)
+    return `[${FOOTNOTE_ID}="${footnoteId}"]`
+  }
+
   /**
-   * To activate the popover of a hovered footnote button. Also removes other
-   * popovers, if allowMultiple is false.
+   * Event handler to activate the popover of a hovered footnote button.
    *
    * @param  {Event} event Event that contains the target of the mouseenter event.
    * @return {void}
@@ -122,48 +136,32 @@ const littlefoot = function (options) {
   function onHover (event) {
     if (settings.activateOnHover) {
       const target = event.target || event.srcElement
-      const footnote = closest(target, `.${CLASS_BUTTON}`)
-      const footnoteId = footnote.getAttribute(FOOTNOTE_ID)
-      const footnoteClass = classList(footnote)
-      const selector = `[${FOOTNOTE_ID}="${footnoteId}"]`
+      const button = closest(target, `.${CLASS_BUTTON}`)
 
-      if (!footnoteClass.contains(CLASS_ACTIVE)) {
-        dismissOtherPopovers(selector)
-        footnoteClass.add(CLASS_HOVERED)
-        displayPopover(selector, CLASS_HOVERED)
+      if (!classList(button).contains(CLASS_ACTIVE)) {
+        const selector = getPopoverSelector(button)
+        classList(button).add(CLASS_HOVERED)
+        activatePopover(button, selector)
       }
     }
   }
 
-  function activateButtonPopovers (button, selector, delay) {
-    dismissOtherPopovers(selector)
-    addClass(CLASS_CHANGING)(button)
-    displayPopover(selector)
-
-    setTimeout(() => {
-      classList(button).remove(CLASS_CHANGING)
-    }, delay)
-  }
-
   /**
    * Handles the logic of clicking/tapping the footnote button. That is,
-   * activates the popover if it isn't already active (and deactivates
-   * others, if appropriate) or, deactivates the popover if it is already
-   * active.
+   * activates the popover if it isn't already active or deactivates the
+   * popover if it is already active.
    *
    * @param  {DOMElement} button Button being clicked/pressed.
    * @return {void}
    */
   function toggleButton (button) {
-    const footnoteId = button.getAttribute(FOOTNOTE_ID)
-    const selector = `[${FOOTNOTE_ID}="${footnoteId}"]`
-    const buttonClass = classList(button)
+    const selector = getPopoverSelector(button)
 
-    const [fn, ...args] = buttonClass.contains(CLASS_CHANGING)
+    const [fn, ...args] = classList(button).contains(CLASS_CHANGING)
       ? [noop]
-      : buttonClass.contains(CLASS_ACTIVE)
-        ? [dismissPopovers, selector, settings.dismissDelay]
-        : [activateButtonPopovers, button, selector, settings.activateDelay]
+      : classList(button).contains(CLASS_ACTIVE)
+        ? [dismissPopovers, selector]
+        : [activatePopover, button, selector]
 
     maybeCall(button, button.blur)
     fn(...args)
