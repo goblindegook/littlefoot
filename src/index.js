@@ -99,22 +99,24 @@ function toggleHandler (activate, dismiss, settings) {
   }
 
   return target => {
-    const button = findClosestButton(event.target)
+    const button = findClosestButton(target)
 
     if (button) {
       maybeCall(button, button.blur)
       const selector = getPopoverSelector(button)
 
-      isChanging(button)
-        ? null
-        : isActive(button)
-          ? dismiss(selector)
-          : displayPopover(selector, button)
+      if (!isChanging(button)) {
+        if (isActive(button)) {
+          dismiss(selector)
+        } else {
+          displayPopover(selector, button)
+        }
+      }
 
       return button
     }
 
-    const popover = findClosestPopover(event.target)
+    const popover = findClosestPopover(target)
 
     if (!popover && document.querySelector(`.${CLASS_FOOTNOTE}`)) {
       dismiss()
