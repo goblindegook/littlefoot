@@ -3,25 +3,29 @@ import template from 'lodash.template'
 import throttle from 'lodash.throttle'
 import { bind } from './dom/events'
 import { createSettings } from './settings'
-import { dismissPopover } from './dismissPopover'
 import { repositionPopover } from './repositionPopovers'
-import { getClosestFootnoteButtons } from './getClosestFootnoteButtons'
 import { init } from './init'
 import { onEscapeKeypress } from './events'
 import {
   activateButton,
   addClass,
-  findAllFootnotes,
+  deactivateButton,
+  findAllButtons,
+  findAllPopovers,
   findClosestButton,
   findClosestPopover,
+  findOneButton,
+  findPopoverButton,
+  getPopoverSelector,
   insertPopover,
   isActive,
   isChanging,
+  remove,
   setActive,
   setChanging,
   setHovered,
-  unsetChanging,
-  getPopoverSelector
+  unsetActive,
+  unsetChanging
 } from './document'
 import {
   CLASS_BUTTON,
@@ -33,12 +37,22 @@ function maybeCall (context, fn, ...args) {
   return typeof fn === 'function' && fn.call(context, ...args)
 }
 
+function findButtons (selector, multiple) {
+  return selector
+    ? multiple
+      ? findAllButtons(selector)
+      : [findOneButton(selector)]
+    : []
+}
+
 function activatePopover (settings) {
   return (selector, className) => {
     const { activateCallback, activateDelay, allowMultiple, contentTemplate } = settings
     const renderPopover = template(contentTemplate)
 
-    const popovers = getClosestFootnoteButtons(selector, allowMultiple)
+    const popovers = findButtons(selector, allowMultiple)
+      .map(findClosestButton)
+      .filter(button => button)
       .map(button => {
         const popover = insertPopover(button, renderPopover)
         activateButton(button)
@@ -52,14 +66,31 @@ function activatePopover (settings) {
   }
 }
 
+function dismissPopover (delay) {
+  return popover => {
+    const button = findPopoverButton(popover)
+
+    if (!isChanging(button)) {
+      setChanging(button)
+      deactivateButton(button)
+      unsetActive(popover)
+
+      window.setTimeout(() => {
+        remove(popover)
+        unsetChanging(button)
+      }, delay)
+    }
+  }
+}
+
 function dismissPopovers (settings) {
   return (selector, timeout = settings.dismissDelay) => {
-    findAllFootnotes(selector).forEach(dismissPopover(timeout))
+    findAllPopovers(selector).forEach(dismissPopover(timeout))
   }
 }
 
 function repositionPopovers (event) {
-  findAllFootnotes().forEach(repositionPopover(event && event.type))
+  findAllPopovers().forEach(repositionPopover(event && event.type))
 }
 
 function onTouchClick (activate, dismiss, settings) {

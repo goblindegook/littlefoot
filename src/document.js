@@ -17,12 +17,26 @@ import {
   FOOTNOTE_NUMBER
 } from './constants'
 
-export function findAllFootnotes (selector = '') {
-  return [...document.querySelectorAll(`${selector}.${CLASS_FOOTNOTE}`)]
+export function findOneButton (selector = '') {
+  return document.querySelector(`${selector}.${CLASS_BUTTON}`)
+}
+
+export function findAllButtons (selector = '') {
+  return [...document.querySelectorAll(`${selector}.${CLASS_BUTTON}`)]
 }
 
 export const findClosestButton = element => closest(element, `.${CLASS_BUTTON}`)
+
+export function findAllPopovers (selector = '') {
+  return [...document.querySelectorAll(`${selector}.${CLASS_FOOTNOTE}`)]
+}
+
 export const findClosestPopover = element => closest(element, `.${CLASS_FOOTNOTE}`)
+
+export function findPopoverButton (popover) {
+  const id = popover.getAttribute(FOOTNOTE_ID)
+  return document.querySelector(`.${CLASS_BUTTON}[${FOOTNOTE_ID}="${id}"]`)
+}
 
 export function addClass (className) {
   return element => className && element && classList(element).add(className)

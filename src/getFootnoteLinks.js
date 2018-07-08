@@ -4,13 +4,6 @@ import {
   FOOTNOTE_REF
 } from './constants'
 
-/**
- * Obtain the ID attribute from a footnote link element's closest parent or child.
- *
- * @param  {DOMElement} link                 Footnote link element.
- * @param  {String}     anchorParentSelector Anchor parent selector.
- * @return {String}                          Link ID.
- */
 function getFootnoteBacklinkId (link, anchorParentSelector) {
   const parent = closest(link, anchorParentSelector)
 
