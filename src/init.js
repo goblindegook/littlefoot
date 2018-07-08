@@ -1,13 +1,14 @@
 import closest from 'dom-closest'
 import escape from 'lodash.escape'
 import template from 'lodash.template'
-import { hideOriginalFootnote } from './hideOriginalFootnote'
-import { getFootnoteLinks, insertButton, addClass } from './document'
+import { children } from './dom/children'
+import { getFootnoteLinks, insertBefore, addClass } from './document'
 import {
   CLASS_PROCESSED,
   FOOTNOTE_BACKLINK_REF,
   FOOTNOTE_ID,
-  FOOTNOTE_REF
+  FOOTNOTE_REF,
+  CLASS_PRINT_ONLY
 } from './constants'
 
 const setProcessed = addClass(CLASS_PROCESSED)
@@ -65,6 +66,23 @@ function addFootnoteProperties () {
   }
 }
 
+const setPrintOnly = addClass(CLASS_PRINT_ONLY)
+
+function hideFootnoteContainer (container) {
+  const visibleElements = children(container, `:not(.${CLASS_PRINT_ONLY})`)
+  const visibleSeparators = visibleElements.filter(el => el.tagName === 'HR')
+
+  if (visibleElements.length === visibleSeparators.length) {
+    [...visibleSeparators, container].forEach(setPrintOnly)
+    hideFootnoteContainer(container.parentNode)
+  }
+}
+
+function hideOriginalFootnote (footnote, link) {
+  [footnote, link].forEach(setPrintOnly)
+  hideFootnoteContainer(footnote.parentNode)
+}
+
 /**
  * Footnote button/content initializer (run on doc.ready).
  *
@@ -91,7 +109,7 @@ export function init (settings) {
     .map(addFootnoteProperties())
     .map(numberResetSelector ? resetNumbers(numberResetSelector) : i => i)
     .map(footnote => {
-      insertButton(footnote.link, template(buttonTemplate), footnote)
+      insertBefore(footnote.link, template(buttonTemplate)(footnote))
       hideOriginalFootnote(footnote.element, footnote.link)
     })
 }

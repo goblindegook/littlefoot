@@ -3,20 +3,20 @@ import closest from 'dom-closest'
 import throttle from 'lodash.throttle'
 import { bind } from './dom/events'
 import { getMaxHeight } from './dom/getMaxHeight'
-import { scrollContent } from './scrollContent'
 import {
   CLASS_ACTIVE,
   CLASS_BUTTON,
   CLASS_CHANGING,
   CLASS_CONTENT,
   CLASS_FOOTNOTE,
+  CLASS_FULLY_SCROLLED,
   CLASS_HOVERED,
+  FOOTNOTE_BACKLINK_REF,
   FOOTNOTE_CONTENT,
   FOOTNOTE_ID,
   FOOTNOTE_MAX_HEIGHT,
   FOOTNOTE_NUMBER,
-  FOOTNOTE_REF,
-  FOOTNOTE_BACKLINK_REF
+  FOOTNOTE_REF
 } from './constants'
 
 export function findOneButton (selector = '') {
@@ -75,6 +75,32 @@ export function deactivateButton (button) {
   unsetHovered(button)
 }
 
+function scrollContent (event) {
+  const target = event.currentTarget
+  const delta = event.type === 'wheel' ? -event.deltaY : event.wheelDelta
+  const isScrollUp = delta > 0
+  const height = target.clientHeight
+  const popover = findClosestPopover(target)
+
+  if (!isScrollUp && delta < height + target.scrollTop - target.scrollHeight) {
+    classList(popover).add(CLASS_FULLY_SCROLLED)
+    target.scrollTop = target.scrollHeight
+    event.stopPropagation()
+    event.preventDefault()
+    return
+  }
+
+  if (isScrollUp) {
+    classList(popover).remove(CLASS_FULLY_SCROLLED)
+
+    if (target.scrollTop < delta) {
+      target.scrollTop = 0
+      event.stopPropagation()
+      event.preventDefault()
+    }
+  }
+}
+
 export function insertPopover (button, render) {
   button.insertAdjacentHTML('afterend', render({
     content: button.getAttribute(FOOTNOTE_CONTENT),
@@ -94,8 +120,8 @@ export function insertPopover (button, render) {
   return popover
 }
 
-export function insertButton (link, render, properties) {
-  link.insertAdjacentHTML('beforebegin', render(properties))
+export function insertBefore (link, html) {
+  link.insertAdjacentHTML('beforebegin', html)
 }
 
 export function remove (element) {
