@@ -11,6 +11,8 @@ import {
   FOOTNOTE_REF
 } from './constants'
 
+const setProcessed = addClass(CLASS_PROCESSED)
+
 function prepareContent (content, backlinkId) {
   const pattern = backlinkId.trim().replace(/\s+/g, '|')
   const regex = new RegExp('(\\s|&nbsp;)*<\\s*a[^#<]*#(' + pattern + ')[^>]*>(.*?)<\\s*/\\s*a>', 'g')
@@ -43,7 +45,7 @@ function addLinkElements (allowDuplicates, footnoteSelector) {
     const related = document.querySelector(allowDuplicates ? selector : strictSelector)
     const element = closest(related, footnoteSelector)
 
-    addClass(CLASS_PROCESSED)(element)
+    setProcessed(element)
 
     return { element, link }
   }

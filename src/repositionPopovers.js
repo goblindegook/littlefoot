@@ -16,13 +16,6 @@ const CLASS_POSITION_PREFIX = 'is-positioned-'
 const BOTTOM = 'bottom'
 const TOP = 'top'
 
-/**
- * Positions the tooltip at the same relative horizontal position as the button.
- *
- * @param  {DOMElement} popover      Popover element.
- * @param  {Number}     leftRelative Relative positioning to the left.
- * @return {void}
- */
 function positionTooltip (popover, leftRelative = 0.5) {
   const tooltip = popover.querySelector(`.${CLASS_TOOLTIP}`)
 
@@ -31,14 +24,6 @@ function positionTooltip (popover, leftRelative = 0.5) {
   }
 }
 
-/**
- * Checks whether there is enough available room to position the footnote
- * on top of the button.
- *
- * @param  {DOMElement}  footnote Footnote element.
- * @param  {Object}      room     Available room object.
- * @return {Boolean}              Is footnote allowed on top.
- */
 function isFootnoteOnTop (footnote, room) {
   const marginSize = parseInt(getStyle(footnote, 'marginTop'), 10)
   const totalHeight = 2 * marginSize + footnote.offsetHeight
@@ -46,13 +31,6 @@ function isFootnoteOnTop (footnote, room) {
   return room.bottom < totalHeight && room.bottom < room.top
 }
 
-/**
- * Set footnote state attributes.
- *
- * @param  {DOMElement} footnote Footnote DOM element.
- * @param  {String}     state    State to set, one of 'top' or 'bottom'.
- * @return {void}
- */
 function setFootnoteState (footnote, state) {
   const alternative = state === TOP ? BOTTOM : TOP
   footnote.setAttribute(FOOTNOTE_STATE, state)
@@ -60,13 +38,6 @@ function setFootnoteState (footnote, state) {
   classList(footnote).remove(CLASS_POSITION_PREFIX + alternative)
 }
 
-/**
- * Update footnote state according to available room.
- *
- * @param  {DOMElement} footnote Footnote element.
- * @param  {Object}     room     Available room object.
- * @return {void}
- */
 function updateFootnoteState (footnote, room) {
   const isTop = isFootnoteOnTop(footnote, room)
   const state = footnote.getAttribute(FOOTNOTE_STATE)
@@ -78,13 +49,6 @@ function updateFootnoteState (footnote, room) {
   }
 }
 
-/**
- * Get a footnote's maximum height in the available space above or below its button.
- *
- * @param  {DOMElement} footnote Footnote element.
- * @param  {Object}     room     Available room object.
- * @return {Number}              Maximum footnote height.
- */
 function getFootnoteMaxHeight (footnote, room) {
   const maxHeight = parseInt(footnote.getAttribute(FOOTNOTE_MAX_HEIGHT), 10)
   const isTop = isFootnoteOnTop(footnote, room)

@@ -28,29 +28,6 @@ function getFootnoteBacklinkId (link, anchorParentSelector) {
 }
 
 /**
- * Groups the ID and HREF of a superscript/anchor tag pair in data attributes.
- *
- * This resolves the issue of the href and backlink id being separated between
- * the two elements.
- *
- * @param  {Array}  footnoteLinks        Anchors that link to footnotes.
- * @param  {String} anchorParentSelector Anchor parent selector.
- * @return {Array}                       Anchors with footnote references added.
- */
-function mapFootnoteReferences (footnoteLinks, anchorParentSelector) {
-  return footnoteLinks.map((link) => {
-    const id = getFootnoteBacklinkId(link, anchorParentSelector) || ''
-    const linkId = link.getAttribute('id') || ''
-    const href = '#' + link.getAttribute('href').split('#')[1]
-
-    link.setAttribute(FOOTNOTE_BACKLINK_REF, id + linkId)
-    link.setAttribute(FOOTNOTE_REF, href)
-
-    return link
-  })
-}
-
-/**
  * Find footnote links in the document.
  * @param  {Object} settings Littlefoot settings.
  * @return {Array}           Footnote links found in the document.
@@ -59,15 +36,23 @@ export function getFootnoteLinks (settings) {
   const { anchorPattern, anchorParentSelector, footnoteParentClass, scope } = settings
   const footnoteLinkSelector = `${scope || ''} a[href*="#"]`.trim()
 
-  const footnoteLinks = [...document.querySelectorAll(footnoteLinkSelector)]
+  return [...document.querySelectorAll(footnoteLinkSelector)]
     .filter(link => {
       const href = link.getAttribute('href')
       const rel = link.getAttribute('rel')
-      const anchor = '' + href + (rel != null && rel !== 'null' ? rel : '')
+      const anchor = `${href}${rel != null && rel !== 'null' ? rel : ''}`
 
       return anchor.match(anchorPattern) &&
         !closest(link, `[class*="${footnoteParentClass}"]:not(a):not(${anchorParentSelector})`)
     })
+    .map(link => {
+      const id = getFootnoteBacklinkId(link, anchorParentSelector) || ''
+      const linkId = link.getAttribute('id') || ''
+      const href = '#' + link.getAttribute('href').split('#')[1]
 
-  return mapFootnoteReferences(footnoteLinks, anchorParentSelector)
+      link.setAttribute(FOOTNOTE_BACKLINK_REF, id + linkId)
+      link.setAttribute(FOOTNOTE_REF, href)
+
+      return link
+    })
 }
