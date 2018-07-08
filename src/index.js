@@ -84,8 +84,8 @@ function dismissPopover (delay) {
 }
 
 function dismissPopovers (settings) {
-  return (selector, timeout = settings.dismissDelay) => {
-    findAllPopovers(selector).forEach(dismissPopover(timeout))
+  return (selector, delay = settings.dismissDelay) => {
+    findAllPopovers(selector).forEach(dismissPopover(delay))
   }
 }
 
@@ -166,11 +166,6 @@ const littlefoot = function (options) {
   const activate = activatePopover(settings)
   const dismiss = dismissPopovers(settings)
 
-  const getSetting = key => settings[key]
-  const updateSetting = (key, value) => {
-    settings[key] = value
-  }
-
   init(settings)
 
   bind(document, 'touchend', onTouchClick(activate, dismiss, settings))
@@ -179,9 +174,13 @@ const littlefoot = function (options) {
   bind(document, 'gestureend', repositionPopovers)
   bind(window, 'scroll', throttle(repositionPopovers))
   bind(window, 'resize', throttle(repositionPopovers))
-
   delegate(document).on('mouseover', `.${CLASS_BUTTON}`, onHover(activate, dismiss, settings))
   delegate(document).on('mouseout', `.${CLASS_HOVERED}`, onUnhover(dismiss, settings))
+
+  const getSetting = key => settings[key]
+  const updateSetting = (key, value) => {
+    settings[key] = value
+  }
 
   return { activate, dismiss, getSetting, updateSetting }
 }

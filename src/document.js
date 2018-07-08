@@ -75,7 +75,7 @@ export function deactivateButton (button) {
   unsetHovered(button)
 }
 
-function scrollContent (event) {
+function onScrollContent (event) {
   const target = event.currentTarget
   const delta = event.type === 'wheel' ? -event.deltaY : event.wheelDelta
   const isScrollUp = delta > 0
@@ -114,8 +114,8 @@ export function insertPopover (button, render) {
   popover.setAttribute(FOOTNOTE_MAX_HEIGHT, getMaxHeight(content))
   popover.style.maxWidth = document.body.clientWidth + 'px'
 
-  bind(content, 'mousewheel', throttle(scrollContent))
-  bind(content, 'wheel', throttle(scrollContent))
+  bind(content, 'mousewheel', throttle(onScrollContent))
+  bind(content, 'wheel', throttle(onScrollContent))
 
   return popover
 }
