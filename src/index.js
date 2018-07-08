@@ -1,11 +1,8 @@
-import delegate from 'dom-delegate'
 import template from 'lodash.template'
-import throttle from 'lodash.throttle'
-import { bind } from './dom/events'
 import { createSettings } from './settings'
 import { repositionPopover } from './repositionPopovers'
 import { init } from './init'
-import { onEscapeKeypress } from './events'
+import { onTouchClick, onEscapeKey, onScrollResize, onHover, onUnhover } from './events'
 import {
   activateButton,
   addClass,
@@ -29,8 +26,7 @@ import {
 } from './document'
 import {
   CLASS_BUTTON,
-  CLASS_FOOTNOTE,
-  CLASS_HOVERED
+  CLASS_FOOTNOTE
 } from './constants'
 
 function maybeCall (context, fn, ...args) {
@@ -93,7 +89,7 @@ function repositionPopovers (event) {
   findAllPopovers().forEach(repositionPopover(event && event.type))
 }
 
-function onTouchClick (activate, dismiss, settings) {
+function toggleHandler (activate, dismiss, settings) {
   const displayPopover = (selector, button) => {
     const { activateDelay, allowMultiple } = settings
     setChanging(button)
@@ -102,19 +98,20 @@ function onTouchClick (activate, dismiss, settings) {
     setTimeout(() => unsetChanging(button), activateDelay)
   }
 
-  return event => {
+  return target => {
     const button = findClosestButton(event.target)
 
     if (button) {
-      event.preventDefault()
       maybeCall(button, button.blur)
       const selector = getPopoverSelector(button)
 
-      return isChanging(button)
+      isChanging(button)
         ? null
         : isActive(button)
           ? dismiss(selector)
           : displayPopover(selector, button)
+
+      return button
     }
 
     const popover = findClosestPopover(event.target)
@@ -125,11 +122,10 @@ function onTouchClick (activate, dismiss, settings) {
   }
 }
 
-function onHover (activate, dismiss, settings) {
-  return event => {
-    const { activateOnHover, allowMultiple } = settings
+function hoverHandler (activate, dismiss, settings) {
+  const { activateOnHover, allowMultiple } = settings
+  return target => {
     if (activateOnHover) {
-      const target = event.target || event.srcElement
       const button = findClosestButton(target)
 
       if (!isActive(button)) {
@@ -142,8 +138,8 @@ function onHover (activate, dismiss, settings) {
   }
 }
 
-function onUnhover (dismiss, settings) {
-  return () => {
+function unhoverHandler (dismiss, settings) {
+  return _ => {
     const { activateOnHover, dismissOnUnhover, hoverDelay } = settings
     if (dismissOnUnhover && activateOnHover) {
       setTimeout(() => {
@@ -166,16 +162,17 @@ const littlefoot = function (options) {
   const activate = activatePopover(settings)
   const dismiss = dismissPopovers(settings)
 
+  const handleToggle = toggleHandler(activate, dismiss, settings)
+  const handleActivation = hoverHandler(activate, dismiss, settings)
+  const handleDeactivation = unhoverHandler(dismiss, settings)
+
   init(settings)
 
-  bind(document, 'touchend', onTouchClick(activate, dismiss, settings))
-  bind(document, 'click', onTouchClick(activate, dismiss, settings))
-  bind(document, 'keyup', onEscapeKeypress(dismiss))
-  bind(document, 'gestureend', repositionPopovers)
-  bind(window, 'scroll', throttle(repositionPopovers))
-  bind(window, 'resize', throttle(repositionPopovers))
-  delegate(document).on('mouseover', `.${CLASS_BUTTON}`, onHover(activate, dismiss, settings))
-  delegate(document).on('mouseout', `.${CLASS_HOVERED}`, onUnhover(dismiss, settings))
+  onTouchClick(handleToggle)
+  onEscapeKey(dismiss)
+  onScrollResize(repositionPopovers)
+  onHover(handleActivation)
+  onUnhover(handleDeactivation)
 
   const getSetting = key => settings[key]
   const updateSetting = (key, value) => {
