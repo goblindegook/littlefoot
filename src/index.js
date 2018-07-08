@@ -93,7 +93,9 @@ function toggleHandler (activate, dismiss, settings) {
   const displayPopover = (selector, button) => {
     const { activateDelay, allowMultiple } = settings
     setChanging(button)
-    !allowMultiple && dismiss(`:not(${selector})`)
+    if (!allowMultiple) {
+      dismiss(`:not(${selector})`)
+    }
     activate(selector)
     setTimeout(() => unsetChanging(button), activateDelay)
   }
@@ -112,15 +114,15 @@ function toggleHandler (activate, dismiss, settings) {
           displayPopover(selector, button)
         }
       }
+    } else {
+      const popover = findClosestPopover(target)
 
-      return button
+      if (!popover && document.querySelector(`.${CLASS_FOOTNOTE}`)) {
+        dismiss()
+      }
     }
 
-    const popover = findClosestPopover(target)
-
-    if (!popover && document.querySelector(`.${CLASS_FOOTNOTE}`)) {
-      dismiss()
-    }
+    return button
   }
 }
 
