@@ -141,7 +141,7 @@ function hoverHandler (activate, dismiss, settings) {
 }
 
 function unhoverHandler (dismiss, settings) {
-  return _ => {
+  return () => {
     const { activateOnHover, dismissOnUnhover, hoverDelay } = settings
     if (dismissOnUnhover && activateOnHover) {
       setTimeout(() => {
