@@ -9,9 +9,11 @@ import {
   deactivateButton,
   findAllButtons,
   findAllPopovers,
+  findButton,
   findClosestButton,
   findClosestPopover,
-  findOneButton,
+  findHoveredFootnote,
+  findPopover,
   findPopoverButton,
   getPopoverSelector,
   insertPopover,
@@ -24,10 +26,6 @@ import {
   unsetActive,
   unsetChanging
 } from './document'
-import {
-  CLASS_BUTTON,
-  CLASS_FOOTNOTE
-} from './constants'
 
 function maybeCall (context, fn, ...args) {
   return typeof fn === 'function' && fn.call(context, ...args)
@@ -37,7 +35,7 @@ function findButtons (selector, multiple) {
   return selector
     ? multiple
       ? findAllButtons(selector)
-      : [findOneButton(selector)]
+      : [findButton(selector)]
     : []
 }
 
@@ -117,7 +115,7 @@ function toggleHandler (activate, dismiss, settings) {
     } else {
       const popover = findClosestPopover(target)
 
-      if (!popover && document.querySelector(`.${CLASS_FOOTNOTE}`)) {
+      if (!popover && findPopover()) {
         dismiss()
       }
     }
@@ -147,7 +145,7 @@ function unhoverHandler (dismiss, settings) {
     const { activateOnHover, dismissOnUnhover, hoverDelay } = settings
     if (dismissOnUnhover && activateOnHover) {
       setTimeout(() => {
-        if (!document.querySelector(`.${CLASS_BUTTON}:hover, .${CLASS_FOOTNOTE}:hover`)) {
+        if (!findHoveredFootnote()) {
           dismiss()
         }
       }, hoverDelay)

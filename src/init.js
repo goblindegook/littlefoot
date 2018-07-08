@@ -11,6 +11,7 @@ import {
   CLASS_PRINT_ONLY
 } from './constants'
 
+const setPrintOnly = addClass(CLASS_PRINT_ONLY)
 const setProcessed = addClass(CLASS_PROCESSED)
 
 function prepareContent (content, backlinkId) {
@@ -65,8 +66,6 @@ function addFootnoteProperties () {
     return { content, element, id, link, number, reference }
   }
 }
-
-const setPrintOnly = addClass(CLASS_PRINT_ONLY)
 
 function hideFootnoteContainer (container) {
   const visibleElements = children(container, `:not(.${CLASS_PRINT_ONLY})`)

@@ -19,25 +19,33 @@ import {
   FOOTNOTE_REF
 } from './constants'
 
-export function findOneButton (selector = '') {
-  return document.querySelector(`${selector}.${CLASS_BUTTON}`)
+function findOne (className) {
+  return (selector = '') => document.querySelector(`${selector}.${className}`)
 }
 
-export function findAllButtons (selector = '') {
-  return [...document.querySelectorAll(`${selector}.${CLASS_BUTTON}`)]
+function findAll (className) {
+  return (selector = '') => [...document.querySelectorAll(`${selector}.${className}`)]
 }
 
-export const findClosestButton = element => closest(element, `.${CLASS_BUTTON}`)
-
-export function findAllPopovers (selector = '') {
-  return [...document.querySelectorAll(`${selector}.${CLASS_FOOTNOTE}`)]
+function findClosest (className) {
+  return element => closest(element, `.${className}`)
 }
 
-export const findClosestPopover = element => closest(element, `.${CLASS_FOOTNOTE}`)
+export const findButton = findOne(CLASS_BUTTON)
+export const findAllButtons = findAll(CLASS_BUTTON)
+export const findClosestButton = findClosest(CLASS_BUTTON)
+
+export const findPopover = findOne(CLASS_FOOTNOTE)
+export const findAllPopovers = findAll(CLASS_FOOTNOTE)
+export const findClosestPopover = findClosest(CLASS_FOOTNOTE)
 
 export function findPopoverButton (popover) {
   const id = popover.getAttribute(FOOTNOTE_ID)
-  return document.querySelector(`.${CLASS_BUTTON}[${FOOTNOTE_ID}="${id}"]`)
+  return findButton(`[${FOOTNOTE_ID}="${id}"]`)
+}
+
+export function findHoveredFootnote () {
+  return document.querySelector(`.${CLASS_BUTTON}:hover, .${CLASS_FOOTNOTE}:hover`)
 }
 
 export function addClass (className) {
