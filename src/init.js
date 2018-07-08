@@ -1,9 +1,8 @@
 import closest from 'dom-closest'
 import escape from 'lodash.escape'
 import template from 'lodash.template'
-import { getFootnoteLinks } from './getFootnoteLinks'
 import { hideOriginalFootnote } from './hideOriginalFootnote'
-import { insertButton, addClass } from './document'
+import { getFootnoteLinks, insertButton, addClass } from './document'
 import {
   CLASS_PROCESSED,
   FOOTNOTE_BACKLINK_REF,
@@ -75,9 +74,18 @@ function addFootnoteProperties () {
  * @return {void}
  */
 export function init (settings) {
-  const { allowDuplicates, buttonTemplate, footnoteSelector, numberResetSelector } = settings
+  const {
+    allowDuplicates,
+    anchorParentSelector,
+    anchorPattern,
+    buttonTemplate,
+    footnoteParentClass,
+    footnoteSelector,
+    numberResetSelector,
+    scope
+  } = settings
 
-  getFootnoteLinks(settings)
+  getFootnoteLinks({ anchorPattern, anchorParentSelector, footnoteParentClass, scope })
     .map(addLinkElements(allowDuplicates, footnoteSelector))
     .filter(({ element }) => !!element)
     .map(addFootnoteProperties())
