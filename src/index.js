@@ -1,6 +1,6 @@
 import template from 'lodash.template'
 import { createSettings } from './settings'
-import { repositionPopover } from './repositionPopovers'
+import { layoutPopover } from './layout'
 import { init } from './init'
 import { bindEvents } from './events'
 import {
@@ -50,7 +50,7 @@ function activatePopover (settings) {
       .map(button => {
         const popover = insertPopover(button, renderPopover)
         activateButton(button)
-        repositionPopovers()
+        layoutPopovers()
         addClass(className)(popover)
         maybeCall(null, activateCallback, popover, button)
         return popover
@@ -83,8 +83,8 @@ function dismissPopovers (settings) {
   }
 }
 
-function repositionPopovers (type) {
-  findAllPopovers().forEach(repositionPopover(type))
+function layoutPopovers (type) {
+  findAllPopovers().forEach(layoutPopover(type))
 }
 
 function createToggleHandler (activate, dismiss, settings) {
@@ -160,7 +160,7 @@ function createDomain (settings) {
   return {
     activate,
     dismiss,
-    repositionPopovers,
+    layoutPopovers,
     toggleHandler: createToggleHandler(activate, dismiss, settings),
     hoverHandler: createHoverHandler(activate, dismiss, settings),
     unhoverHandler: createUnhoverHandler(dismiss, settings)

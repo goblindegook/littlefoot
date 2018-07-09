@@ -23,7 +23,7 @@ function isPopoverOnTop (footnote, room) {
   return room.bottom < totalHeight && room.bottom < room.top
 }
 
-function setPopoverPosition (popover, room) {
+function repositionPopover (popover, room) {
   const isTop = isPopoverOnTop(popover, room)
   const previous = popover.getAttribute(POPOVER_POSITION) || BOTTOM
   const position = isTop ? TOP : BOTTOM
@@ -83,14 +83,14 @@ function resizePopover (popover, content, button, room) {
  *                            defaults to 'resize'.
  * @return {void}
  */
-export function repositionPopover (eventType = 'resize') {
+export function layoutPopover (eventType = 'resize') {
   return popover => {
     const [ button ] = siblings(popover, `.${CLASS_BUTTON}`)
     const room = getAvailableRoom(button)
     const content = popover.querySelector(`.${CLASS_CONTENT}`)
 
     setContentHeight(popover, content, room)
-    setPopoverPosition(popover, room)
+    repositionPopover(popover, room)
 
     if (eventType === 'resize') {
       resizePopover(popover, content, button, room)
