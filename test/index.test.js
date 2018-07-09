@@ -113,3 +113,27 @@ test('footnote activation and dismissal', async (t) => {
   teardown()
   t.end()
 })
+
+test('footnote activation with no selector', async t => {
+  setup('default.html')
+  const lf = littlefoot({ activateDelay: 0 })
+
+  lf.activate()
+  const popover = document.body.querySelector('.littlefoot-footnote')
+  t.equal(popover, null, 'does not activate any popovers')
+
+  teardown()
+  t.end()
+})
+
+test('footnote activation with invalid selector', async t => {
+  setup('default.html')
+  const lf = littlefoot({ activateDelay: 0 })
+
+  lf.activate('invalid')
+  const popover = document.body.querySelector('.littlefoot-footnote')
+  t.equal(popover, null, 'does not activate any popovers')
+
+  teardown()
+  t.end()
+})

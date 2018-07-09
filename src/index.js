@@ -31,21 +31,16 @@ function maybeCall (context, fn, ...args) {
   return typeof fn === 'function' && fn.call(context, ...args)
 }
 
-function findButtons (selector, multiple) {
-  return selector
-    ? multiple
-      ? findAllButtons(selector)
-      : [findButton(selector)]
-    : []
-}
-
 function activatePopover (settings) {
   return (selector, className) => {
+    if (!selector) {
+      return
+    }
+
     const { activateCallback, activateDelay, allowMultiple, contentTemplate } = settings
     const renderPopover = template(contentTemplate)
 
-    const popovers = findButtons(selector, allowMultiple)
-      .map(findClosestButton)
+    const popovers = (allowMultiple ? findAllButtons(selector) : [findButton(selector)])
       .filter(button => button)
       .map(button => {
         const popover = insertPopover(button, renderPopover)
