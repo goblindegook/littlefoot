@@ -14,15 +14,12 @@ function isIE () {
   return ua.indexOf('MSIE ') > 0 || ua.indexOf('Trident/') > 0 || ua.indexOf('Edge/') > 0
 }
 
-test.skip('scroll event handling', async (t) => {
+test.skip('scroll event handling', t => {
   setup('scroll.html')
 
-  const lf = littlefoot()
-  const delay = lf.getSetting('activateDelay')
+  const lf = littlefoot({ activateDelay: 0 })
 
   lf.activate('button[data-footnote-id="1"]')
-
-  await sleep(delay)
 
   const content = document.body.querySelector('.littlefoot-footnote__content')
   const popover = closest(content, '.littlefoot-footnote')
@@ -42,16 +39,13 @@ test.skip('scroll event handling', async (t) => {
 
 test('content scroll event handling', {
   skip: isIE() // FIXME: Fix content scroll handling tests on IE and Edge.
-}, async (t) => {
+}, t => {
   setup('scroll.html')
   setupStylesheet()
 
-  const lf = littlefoot()
-  const delay = lf.getSetting('activateDelay')
+  const lf = littlefoot({ activateDelay: 0 })
 
   lf.activate('button[data-footnote-id="1"]')
-
-  await sleep(delay)
 
   const content = document.body.querySelector('.littlefoot-footnote__content')
   const popover = closest(content, '.littlefoot-footnote')

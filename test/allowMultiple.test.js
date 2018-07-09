@@ -5,29 +5,25 @@ import { setup, sleep, teardown } from './helper'
 
 test('setup with allowMultiple=true', async (t) => {
   setup('default.html')
+  const lf = littlefoot({ activateDelay: 0, dismissDelay: 0, allowMultiple: true })
 
-  const lf = littlefoot({ allowMultiple: true })
-
-  const activateDelay = lf.getSetting('activateDelay')
-  const dismissDelay = lf.getSetting('dismissDelay')
   const buttons = document.querySelectorAll('button[data-footnote-id]')
 
   simulant.fire(document.body.querySelector('button[data-footnote-id="1"]'), 'click')
   simulant.fire(document.body.querySelector('button[data-footnote-id="2"]'), 'click')
-
-  await sleep(activateDelay)
+  await sleep(1)
 
   t.equal(document.body.querySelectorAll('button.is-active').length, 2,
     'allows multiple active popovers')
 
   lf.dismiss()
-  await sleep(dismissDelay)
+  await sleep(1)
 
   t.equal(document.body.querySelectorAll('button.is-active').length, 0,
     'dismisses all popovers on dismiss()')
 
   lf.activate('button[data-footnote-id]')
-  await sleep(activateDelay)
+  await sleep(1)
 
   t.equal(document.body.querySelectorAll('button.is-active').length, buttons.length,
     'activate all popovers with activate()')
@@ -38,18 +34,13 @@ test('setup with allowMultiple=true', async (t) => {
 
 test('setup with allowMultiple=false', async (t) => {
   setup('default.html')
-
-  const lf = littlefoot({ allowMultiple: false })
-
-  const activateDelay = lf.getSetting('activateDelay')
+  littlefoot({ activateDelay: 0, allowMultiple: false })
 
   simulant.fire(document.body.querySelector('button[data-footnote-id="1"]'), 'click')
-
-  await sleep(activateDelay)
+  await sleep(1)
 
   simulant.fire(document.body.querySelector('button[data-footnote-id="2"]'), 'click')
-
-  await sleep(activateDelay)
+  await sleep(1)
 
   t.equal(document.body.querySelectorAll('button.is-active').length, 1,
     'does not allow multiple active popovers')

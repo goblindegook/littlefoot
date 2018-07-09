@@ -1,22 +1,15 @@
 import test from 'tape'
 import sinon from 'sinon'
-import { setup, sleep, teardown } from './helper'
+import { setup, teardown } from './helper'
 import littlefoot from '../src/'
 
-test('setup with activateCallback', async (t) => {
+test('setup with activateCallback', t => {
   setup('default.html')
-
-  const callback = sinon.spy()
-
-  const lf = littlefoot({ activateCallback: callback })
-
-  const activateDelay = lf.getSetting('activateDelay')
+  const activateCallback = sinon.spy()
+  const lf = littlefoot({ activateDelay: 0, activateCallback })
 
   lf.activate('button[data-footnote-id="1"]')
-
-  await sleep(activateDelay)
-
-  t.ok(callback.called, 'activateCallback called')
+  t.ok(activateCallback.called, 'activateCallback called')
 
   teardown()
   t.end()

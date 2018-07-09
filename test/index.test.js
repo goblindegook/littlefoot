@@ -114,7 +114,7 @@ test('footnote activation and dismissal', async (t) => {
   t.end()
 })
 
-test('footnote activation with no selector', async t => {
+test('footnote activation with no selector', t => {
   setup('default.html')
   const lf = littlefoot({ activateDelay: 0 })
 
@@ -126,7 +126,7 @@ test('footnote activation with no selector', async t => {
   t.end()
 })
 
-test('footnote activation with invalid selector', async t => {
+test('footnote activation with invalid selector', t => {
   setup('default.html')
   const lf = littlefoot({ activateDelay: 0 })
 
