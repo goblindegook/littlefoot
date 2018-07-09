@@ -64,8 +64,40 @@ function repositionTooltip (popover, leftRelative = 0.5) {
   }
 }
 
-function resizePopover (popover, content, button, room) {
-  const wrapper = popover.querySelector(`.${CLASS_WRAPPER}`)
+function findPopoverButton (popover) {
+  return siblings(popover, `.${CLASS_BUTTON}`)[0]
+}
+
+function findPopoverContent (popover) {
+  return popover.querySelector(`.${CLASS_CONTENT}`)
+}
+
+function findPopoverWrapper (popover) {
+  return popover.querySelector(`.${CLASS_WRAPPER}`)
+}
+
+/**
+ * Positions a footnote relative to its button.
+ */
+export function layoutPopover (popover) {
+  const button = findPopoverButton(popover)
+  const room = getAvailableRoom(button)
+  const content = findPopoverContent(popover)
+
+  setContentHeight(popover, content, room)
+  repositionPopover(popover, room)
+  setPopoverScrollableState(popover, content)
+
+  return { button, content, room }
+}
+
+/**
+ * Resizes a footnote relative to its container and repositions the tooltip.
+ */
+export function resizePopover (popover) {
+  const { button, content, room } = layoutPopover(popover)
+  const wrapper = findPopoverWrapper(popover)
+
   const maxWidth = content.offsetWidth
   const buttonMarginLeft = parseInt(getStyle(button, 'marginLeft'), 10)
   const left = -room.leftRelative * maxWidth + buttonMarginLeft + button.offsetWidth / 2
@@ -74,28 +106,4 @@ function resizePopover (popover, content, button, room) {
   wrapper.style.maxWidth = maxWidth + 'px'
 
   repositionTooltip(popover, room.leftRelative)
-}
-
-/**
- * Returns a function that positions each footnote relative to its button.
- *
- * @param  {String} eventType The type of event that prompted repositioning,
- *                            defaults to 'resize'.
- * @return {void}
- */
-export function layoutPopover (eventType = 'resize') {
-  return popover => {
-    const [ button ] = siblings(popover, `.${CLASS_BUTTON}`)
-    const room = getAvailableRoom(button)
-    const content = popover.querySelector(`.${CLASS_CONTENT}`)
-
-    setContentHeight(popover, content, room)
-    repositionPopover(popover, room)
-
-    if (eventType === 'resize') {
-      resizePopover(popover, content, button, room)
-    }
-
-    setPopoverScrollableState(popover, content)
-  }
 }
