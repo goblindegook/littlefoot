@@ -3,7 +3,7 @@ import classList from 'dom-classlist'
 import closest from 'dom-closest'
 import simulant from 'simulant'
 import littlefoot from '../src/'
-import { setup, setupStylesheet, sleep, teardown } from './helper'
+import { setup, setupStylesheet, teardown } from './helper'
 
 /**
  * Checks if a Microsoft browser is in use.
