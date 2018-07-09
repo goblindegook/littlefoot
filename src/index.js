@@ -2,7 +2,7 @@ import template from 'lodash.template'
 import { createSettings } from './settings'
 import { repositionPopover } from './repositionPopovers'
 import { init } from './init'
-import { onTouchClick, onEscapeKey, onScrollResize, onHover, onUnhover } from './events'
+import { bindEvents } from './events'
 import {
   activateButton,
   addClass,
@@ -83,11 +83,11 @@ function dismissPopovers (settings) {
   }
 }
 
-function repositionPopovers (event) {
-  findAllPopovers().forEach(repositionPopover(event && event.type))
+function repositionPopovers (type) {
+  findAllPopovers().forEach(repositionPopover(type))
 }
 
-function toggleHandler (activate, dismiss, settings) {
+function createToggleHandler (activate, dismiss, settings) {
   const displayPopover = (selector, button) => {
     const { activateDelay, allowMultiple } = settings
     setChanging(button)
@@ -124,7 +124,7 @@ function toggleHandler (activate, dismiss, settings) {
   }
 }
 
-function hoverHandler (activate, dismiss, settings) {
+function createHoverHandler (activate, dismiss, settings) {
   const { activateOnHover, allowMultiple } = settings
   return target => {
     if (activateOnHover) {
@@ -140,7 +140,7 @@ function hoverHandler (activate, dismiss, settings) {
   }
 }
 
-function unhoverHandler (dismiss, settings) {
+function createUnhoverHandler (dismiss, settings) {
   return () => {
     const { activateOnHover, dismissOnUnhover, hoverDelay } = settings
     if (dismissOnUnhover && activateOnHover) {
@@ -153,6 +153,20 @@ function unhoverHandler (dismiss, settings) {
   }
 }
 
+function createDomain (settings) {
+  const activate = activatePopover(settings)
+  const dismiss = dismissPopovers(settings)
+
+  return {
+    activate,
+    dismiss,
+    repositionPopovers,
+    toggleHandler: createToggleHandler(activate, dismiss, settings),
+    hoverHandler: createHoverHandler(activate, dismiss, settings),
+    unhoverHandler: createUnhoverHandler(dismiss, settings)
+  }
+}
+
 /**
  * Littlefoot instance factory.
  *
@@ -161,27 +175,22 @@ function unhoverHandler (dismiss, settings) {
  */
 const littlefoot = function (options) {
   const settings = createSettings(options)
-  const activate = activatePopover(settings)
-  const dismiss = dismissPopovers(settings)
-
-  const handleToggle = toggleHandler(activate, dismiss, settings)
-  const handleActivation = hoverHandler(activate, dismiss, settings)
-  const handleDeactivation = unhoverHandler(dismiss, settings)
 
   init(settings)
-
-  onTouchClick(handleToggle)
-  onEscapeKey(dismiss)
-  onScrollResize(repositionPopovers)
-  onHover(handleActivation)
-  onUnhover(handleDeactivation)
+  const domain = createDomain(settings)
+  bindEvents(domain)
 
   const getSetting = key => settings[key]
   const updateSetting = (key, value) => {
     settings[key] = value
   }
 
-  return { activate, dismiss, getSetting, updateSetting }
+  return {
+    activate: domain.activate,
+    dismiss: domain.dismiss,
+    getSetting,
+    updateSetting
+  }
 }
 
 export default littlefoot

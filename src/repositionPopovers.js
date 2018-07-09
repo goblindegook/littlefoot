@@ -9,14 +9,54 @@ import {
   CLASS_TOOLTIP,
   CLASS_WRAPPER,
   FOOTNOTE_MAX_HEIGHT,
-  FOOTNOTE_STATE
+  POPOVER_POSITION
 } from './constants'
 
 const CLASS_POSITION_PREFIX = 'is-positioned-'
 const BOTTOM = 'bottom'
 const TOP = 'top'
 
-function positionTooltip (popover, leftRelative = 0.5) {
+function isPopoverOnTop (footnote, room) {
+  const marginSize = parseInt(getStyle(footnote, 'marginTop'), 10)
+  const totalHeight = 2 * marginSize + footnote.offsetHeight
+
+  return room.bottom < totalHeight && room.bottom < room.top
+}
+
+function setPopoverPosition (popover, room) {
+  const isTop = isPopoverOnTop(popover, room)
+  const previous = popover.getAttribute(POPOVER_POSITION) || BOTTOM
+  const position = isTop ? TOP : BOTTOM
+
+  if (previous !== position) {
+    classList(popover).remove(CLASS_POSITION_PREFIX + previous)
+    classList(popover).add(CLASS_POSITION_PREFIX + position)
+    popover.setAttribute(POPOVER_POSITION, position)
+    popover.style.transformOrigin = `${room.leftRelative * 100}% ${isTop ? '100%' : '0'}`
+  }
+}
+
+function getPopoverMaxHeight (footnote, room) {
+  const isTop = isPopoverOnTop(footnote, room)
+  const maxHeight = parseInt(footnote.getAttribute(FOOTNOTE_MAX_HEIGHT), 10)
+  const marginSize = parseInt(getStyle(footnote, 'marginTop'), 10)
+  const availableHeight = room[isTop ? TOP : BOTTOM] - marginSize - 15
+
+  return Math.min(maxHeight, availableHeight)
+}
+
+function setContentHeight (popover, content, room) {
+  const maxHeight = getPopoverMaxHeight(popover, room)
+  content.style.maxHeight = maxHeight + 'px'
+}
+
+function setPopoverScrollableState (popover, content) {
+  if (parseFloat(popover.offsetHeight) <= content.scrollHeight) {
+    classList(popover).add(CLASS_SCROLLABLE)
+  }
+}
+
+function repositionTooltip (popover, leftRelative = 0.5) {
   const tooltip = popover.querySelector(`.${CLASS_TOOLTIP}`)
 
   if (tooltip) {
@@ -24,38 +64,16 @@ function positionTooltip (popover, leftRelative = 0.5) {
   }
 }
 
-function isFootnoteOnTop (footnote, room) {
-  const marginSize = parseInt(getStyle(footnote, 'marginTop'), 10)
-  const totalHeight = 2 * marginSize + footnote.offsetHeight
+function resizePopover (popover, content, button, room) {
+  const wrapper = popover.querySelector(`.${CLASS_WRAPPER}`)
+  const maxWidth = content.offsetWidth
+  const buttonMarginLeft = parseInt(getStyle(button, 'marginLeft'), 10)
+  const left = -room.leftRelative * maxWidth + buttonMarginLeft + button.offsetWidth / 2
 
-  return room.bottom < totalHeight && room.bottom < room.top
-}
+  popover.style.left = left + 'px'
+  wrapper.style.maxWidth = maxWidth + 'px'
 
-function setFootnoteState (footnote, state) {
-  const alternative = state === TOP ? BOTTOM : TOP
-  footnote.setAttribute(FOOTNOTE_STATE, state)
-  classList(footnote).add(CLASS_POSITION_PREFIX + state)
-  classList(footnote).remove(CLASS_POSITION_PREFIX + alternative)
-}
-
-function updateFootnoteState (footnote, room) {
-  const isTop = isFootnoteOnTop(footnote, room)
-  const state = footnote.getAttribute(FOOTNOTE_STATE)
-  const newState = isTop ? TOP : BOTTOM
-
-  if (state !== newState) {
-    setFootnoteState(footnote, newState)
-    footnote.style.transformOrigin = `${room.leftRelative * 100}% ${isTop ? '100%' : '0'}`
-  }
-}
-
-function getFootnoteMaxHeight (footnote, room) {
-  const maxHeight = parseInt(footnote.getAttribute(FOOTNOTE_MAX_HEIGHT), 10)
-  const isTop = isFootnoteOnTop(footnote, room)
-  const marginSize = parseInt(getStyle(footnote, 'marginTop'), 10)
-  const availableHeight = room[isTop ? TOP : BOTTOM] - marginSize - 15
-
-  return Math.min(maxHeight, availableHeight)
+  repositionTooltip(popover, room.leftRelative)
 }
 
 /**
@@ -66,30 +84,18 @@ function getFootnoteMaxHeight (footnote, room) {
  * @return {void}
  */
 export function repositionPopover (eventType = 'resize') {
-  return footnote => {
-    const [ button ] = siblings(footnote, `.${CLASS_BUTTON}`)
+  return popover => {
+    const [ button ] = siblings(popover, `.${CLASS_BUTTON}`)
     const room = getAvailableRoom(button)
-    const content = footnote.querySelector(`.${CLASS_CONTENT}`)
-    const maxHeight = getFootnoteMaxHeight(footnote, room)
+    const content = popover.querySelector(`.${CLASS_CONTENT}`)
 
-    updateFootnoteState(footnote, room)
-
-    content.style.maxHeight = maxHeight + 'px'
+    setContentHeight(popover, content, room)
+    setPopoverPosition(popover, room)
 
     if (eventType === 'resize') {
-      const wrapper = footnote.querySelector(`.${CLASS_WRAPPER}`)
-      const maxWidth = content.offsetWidth
-      const buttonMarginLeft = parseInt(getStyle(button, 'marginLeft'), 10)
-      const left = -room.leftRelative * maxWidth + buttonMarginLeft + button.offsetWidth / 2
-
-      footnote.style.left = left + 'px'
-      wrapper.style.maxWidth = maxWidth + 'px'
-
-      positionTooltip(footnote, room.leftRelative)
+      resizePopover(popover, content, button, room)
     }
 
-    if (parseFloat(footnote.offsetHeight) <= content.scrollHeight) {
-      classList(footnote).add(CLASS_SCROLLABLE)
-    }
+    setPopoverScrollableState(popover, content)
   }
 }

@@ -18,27 +18,22 @@ function handleEscapeWith (fn) {
   return event => event.keyCode === 27 && fn()
 }
 
-export function onTouchClick (fn) {
-  const handler = handleWith(fn)
-  bind(document, 'touchend', handler)
-  bind(document, 'click', handler)
-}
+export function bindEvents ({
+  toggleHandler,
+  dismiss,
+  repositionPopovers,
+  hoverHandler,
+  unhoverHandler
+}) {
+  const throttledRepositionPopovers = throttle(event => repositionPopovers(event && event.type))
 
-export function onEscapeKey (fn) {
-  bind(document, 'keyup', handleEscapeWith(fn))
-}
+  bind(document, 'touchend', handleWith(toggleHandler))
+  bind(document, 'click', handleWith(toggleHandler))
+  bind(document, 'keyup', handleEscapeWith(dismiss))
+  bind(document, 'gestureend', throttledRepositionPopovers)
+  bind(window, 'scroll', throttledRepositionPopovers)
+  bind(window, 'resize', throttledRepositionPopovers)
 
-export function onScrollResize (fn) {
-  const handler = throttle(fn)
-  bind(document, 'gestureend', handler)
-  bind(window, 'scroll', handler)
-  bind(window, 'resize', handler)
-}
-
-export function onHover (fn) {
-  delegate(document).on('mouseover', `.${CLASS_BUTTON}`, handleWith(fn))
-}
-
-export function onUnhover (fn) {
-  delegate(document).on('mouseout', `.${CLASS_HOVERED}`, handleWith(fn))
+  delegate(document).on('mouseover', `.${CLASS_BUTTON}`, handleWith(hoverHandler))
+  delegate(document).on('mouseout', `.${CLASS_HOVERED}`, handleWith(unhoverHandler))
 }
