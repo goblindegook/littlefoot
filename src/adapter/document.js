@@ -1,5 +1,6 @@
 import classList from 'dom-classlist'
 import closest from 'dom-closest'
+import siblings from 'dom-siblings'
 import throttle from 'lodash.throttle'
 import { bind } from './dom/events'
 import { getMaxHeight } from './dom/getMaxHeight'
@@ -42,8 +43,7 @@ export const findAllPopovers = findAll(CLASS_FOOTNOTE)
 export const findClosestPopover = findClosest(CLASS_FOOTNOTE)
 
 export function findPopoverButton (popover) {
-  const id = popover.getAttribute(FOOTNOTE_ID)
-  return findButton(`[${FOOTNOTE_ID}="${id}"]`)
+  return siblings(popover, `.${CLASS_BUTTON}`)[0]
 }
 
 export function findHoveredFootnote () {

@@ -1,16 +1,15 @@
-import siblings from 'dom-siblings'
 import classList from 'dom-classlist'
 import { getAvailableRoom } from './dom/getAvailableRoom'
 import { getStyle } from './dom/getStyle'
 import {
   CLASS_SCROLLABLE,
-  CLASS_BUTTON,
   CLASS_CONTENT,
   CLASS_TOOLTIP,
   CLASS_WRAPPER,
   FOOTNOTE_MAX_HEIGHT,
   POPOVER_POSITION
 } from './constants'
+import { findPopoverButton } from './document'
 
 const CLASS_POSITION_PREFIX = 'is-positioned-'
 const BOTTOM = 'bottom'
@@ -62,10 +61,6 @@ function repositionTooltip (popover, leftRelative = 0.5) {
   if (tooltip) {
     tooltip.style.left = (leftRelative * 100) + '%'
   }
-}
-
-function findPopoverButton (popover) {
-  return siblings(popover, `.${CLASS_BUTTON}`)[0]
 }
 
 function findPopoverContent (popover) {
