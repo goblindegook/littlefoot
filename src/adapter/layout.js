@@ -8,7 +8,8 @@ import {
   FOOTNOTE_MAX_HEIGHT,
   POPOVER_POSITION
 } from './constants'
-import { findPopoverButton, findPopoverContent } from './document'
+import { getPopoverFootnote } from './footnotes'
+import { findPopoverContent } from './document'
 
 const CLASS_POSITION_PREFIX = 'is-positioned-'
 const BOTTOM = 'bottom'
@@ -55,7 +56,7 @@ function repositionTooltip (popover, leftRelative = 0.5) {
  * Positions a footnote relative to its button.
  */
 export function layoutPopover (popover) {
-  const button = findPopoverButton(popover).element // FIXME
+  const button = getPopoverFootnote(popover).getButtonElement()
   const room = getAvailableRoom(button)
   const content = findPopoverContent(popover)
 

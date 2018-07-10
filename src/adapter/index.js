@@ -4,6 +4,7 @@ import template from 'lodash.template'
 import { children } from './dom/children'
 import * as adapter from './document'
 import * as layout from './layout'
+import * as footnoteMethods from './footnotes'
 import {
   CLASS_PROCESSED,
   CLASS_PRINT_ONLY
@@ -157,5 +158,5 @@ export function createDocumentAdapter (settings) {
       hideOriginalFootnote(footnote.element, footnote.link)
     })
 
-  return Object.assign({}, adapter, layout)
+  return Object.assign({}, adapter, footnoteMethods, layout)
 }

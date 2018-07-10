@@ -1,18 +1,14 @@
 import classList from 'dom-classlist'
 import closest from 'dom-closest'
-import siblings from 'dom-siblings'
 import throttle from 'lodash.throttle'
 import { bind } from './dom/events'
 import { getMaxHeight } from './dom/getMaxHeight'
-import { maybeCall } from '../helpers'
 import {
   CLASS_ACTIVE,
   CLASS_BUTTON,
-  CLASS_CHANGING,
   CLASS_CONTENT,
   CLASS_FOOTNOTE,
   CLASS_FULLY_SCROLLED,
-  CLASS_HOVERED,
   FOOTNOTE_CONTENT,
   FOOTNOTE_ID,
   FOOTNOTE_MAX_HEIGHT,
@@ -25,16 +21,12 @@ export function invertSelection (selector) {
   return `:not(${selector})`
 }
 
-function findOne (className) {
+export function findOne (className) {
   return (selector = '') => document.querySelector(`${selector}.${className}`)
 }
 
-function findAll (className) {
+export function findAll (className) {
   return (selector = '') => [...document.querySelectorAll(`${selector}.${className}`)]
-}
-
-function findClosest (className) {
-  return element => closest(element, `.${className}`)
 }
 
 export function addClass (className) {
@@ -49,62 +41,19 @@ function setAttribute (attribute) {
   return (element, value) => element.setAttribute(attribute, value)
 }
 
-export const findButton = findOne(CLASS_BUTTON)
-export const findAllButtons = findAll(CLASS_BUTTON)
-
 export const findPopover = findOne(CLASS_FOOTNOTE)
 export const findAllPopovers = findAll(CLASS_FOOTNOTE)
-export const findClosestPopover = findClosest(CLASS_FOOTNOTE)
+export const findClosestPopover = element => closest(element, `.${CLASS_FOOTNOTE}`)
 
-export function findHoveredFootnote () {
-  return document.querySelector(`.${CLASS_BUTTON}:hover, .${CLASS_FOOTNOTE}:hover`)
+export function hasHoveredFootnote () {
+  return !!document.querySelector(`.${CLASS_BUTTON}:hover, .${CLASS_FOOTNOTE}:hover`)
 }
 
 export const setActive = addClass(CLASS_ACTIVE)
-export const getFootnoteId = getAttribute(FOOTNOTE_ID)
 export const getFootnoteRef = getAttribute(FOOTNOTE_REF)
 export const setFootnoteRef = setAttribute(FOOTNOTE_REF)
 export const getFootnoteBacklinkRef = getAttribute(FOOTNOTE_BACKLINK_REF)
 export const setFootnoteBacklinkRef = setAttribute(FOOTNOTE_BACKLINK_REF)
-
-export function createButton (element) {
-  return element && {
-    element,
-
-    blur: () => maybeCall(element, element.blur),
-
-    activate: () => {
-      element.setAttribute('aria-expanded', 'true')
-      classList(element).add(CLASS_ACTIVE)
-    },
-
-    deactivate: () => {
-      element.setAttribute('aria-expanded', 'false')
-      classList(element).remove(CLASS_ACTIVE)
-      classList(element).remove(CLASS_HOVERED)
-    },
-
-    getFootnoteSelector: () => `[${FOOTNOTE_ID}="${element.getAttribute(FOOTNOTE_ID)}"]`,
-
-    hover: () => classList(element).add(CLASS_HOVERED),
-
-    isActive: () => classList(element).contains(CLASS_ACTIVE),
-
-    isChanging: () => classList(element).contains(CLASS_CHANGING),
-
-    startChanging: () => classList(element).add(CLASS_CHANGING),
-
-    stopChanging: () => classList(element).remove(CLASS_CHANGING)
-  }
-}
-
-export function findClosestButton (selector) {
-  return createButton(findClosest(CLASS_BUTTON)(selector))
-}
-
-export function findPopoverButton (popover) {
-  return createButton(siblings(popover, `.${CLASS_BUTTON}`)[0])
-}
 
 export function getLastFootnoteId () {
   const footnotes = document.querySelectorAll(`[${FOOTNOTE_ID}]`)
@@ -144,7 +93,7 @@ export function findPopoverContent (popover) {
 export function insertPopover (button, render) {
   button.insertAdjacentHTML('afterend', render({
     content: button.getAttribute(FOOTNOTE_CONTENT),
-    id: getFootnoteId(button),
+    id: button.getAttribute(FOOTNOTE_ID),
     number: button.getAttribute(FOOTNOTE_NUMBER)
   }))
 

@@ -1,6 +1,5 @@
 import template from 'lodash.template'
 import { maybeCall } from './helpers'
-import { createButton } from './adapter/document'
 
 function activatePopover (adapter, settings) {
   return (selector, className) => {
@@ -11,14 +10,14 @@ function activatePopover (adapter, settings) {
     const { activateCallback, activateDelay, allowMultiple, contentTemplate } = settings
     const renderPopover = template(contentTemplate)
 
-    const popovers = (allowMultiple ? adapter.findAllButtons(selector) : [adapter.findButton(selector)])
-      .filter(button => button)
-      .map(element => {
-        const popover = adapter.insertPopover(element, renderPopover)
-        const button = createButton(element)
-        button.activate()
+    const popovers = (allowMultiple ? adapter.findAllFootnotes(selector) : [adapter.findFootnote(selector)])
+      .filter(footnote => footnote)
+      .map(footnote => {
+        // FIXME: Core should not handle DOM elements, activate() should create the popover internally.
+        const popover = adapter.insertPopover(footnote.getButtonElement(), renderPopover)
+        footnote.activate()
         adapter.addClass(className)(popover)
-        maybeCall(null, activateCallback, popover, button.element) // FIXME
+        maybeCall(null, activateCallback, popover, footnote.getButtonElement())
         return popover
       })
 
@@ -30,15 +29,16 @@ function activatePopover (adapter, settings) {
 
 function dismissPopover (adapter, delay) {
   return popover => {
-    const button = adapter.findPopoverButton(popover)
+    const footnote = adapter.getPopoverFootnote(popover)
 
-    if (!button.isChanging()) {
-      button.startChanging()
-      button.deactivate()
+    if (!footnote.isChanging()) {
+      footnote.startChanging()
+      footnote.dismiss()
 
       setTimeout(() => {
+        // FIXME: Create footnote.dismiss() to remove the popover object from the DOM tree.
         adapter.remove(popover)
-        button.stopChanging()
+        footnote.stopChanging()
       }, delay)
     }
   }
@@ -51,24 +51,27 @@ function dismissPopovers (adapter, settings) {
 }
 
 function createToggleHandler (adapter, activate, dismiss, settings) {
+  // FIXME: Core should not handle raw event targets, event handler should convert it beforehand.
   return target => {
     const { activateDelay, allowMultiple } = settings
-    const button = adapter.findClosestButton(target)
+    const footnote = adapter.findClosestFootnote(target)
 
-    if (button) {
-      button.blur()
-      const selector = button.getFootnoteSelector()
+    if (footnote) {
+      footnote.blur()
 
-      if (!button.isChanging()) {
-        if (button.isActive()) {
+      if (!footnote.isChanging()) {
+        // FIXME: Selectors should be handled internally.
+        const selector = footnote.getSelector()
+
+        if (footnote.isActive()) {
           dismiss(selector)
         } else {
-          button.startChanging()
+          footnote.startChanging()
           if (!allowMultiple) {
             dismiss(adapter.invertSelection(selector))
           }
           activate(selector)
-          setTimeout(button.stopChanging, activateDelay)
+          setTimeout(footnote.stopChanging, activateDelay)
         }
       }
     } else {
@@ -78,20 +81,20 @@ function createToggleHandler (adapter, activate, dismiss, settings) {
         dismiss()
       }
     }
-
-    return button
   }
 }
 
 function createHoverHandler (adapter, activate, dismiss, settings) {
   const { activateOnHover, allowMultiple } = settings
+  // FIXME: Core should not handle raw event targets, event handler should convert it beforehand.
   return target => {
     if (activateOnHover) {
-      const button = adapter.findClosestButton(target)
+      const footnote = adapter.findClosestFootnote(target)
 
-      if (!button.isActive()) {
-        const selector = button.getFootnoteSelector()
-        button.hover()
+      if (!footnote.isActive()) {
+        // FIXME: Selectors should be handled internally.
+        const selector = footnote.getSelector()
+        footnote.hover()
         if (!allowMultiple) {
           dismiss(adapter.invertSelection(selector))
         }
@@ -106,7 +109,7 @@ function createUnhoverHandler (adapter, dismiss, settings) {
     const { dismissOnUnhover, hoverDelay } = settings
     if (dismissOnUnhover) {
       setTimeout(() => {
-        if (!adapter.findHoveredFootnote()) {
+        if (!adapter.hasHoveredFootnote()) {
           dismiss()
         }
       }, hoverDelay)
