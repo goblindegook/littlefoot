@@ -26,18 +26,12 @@ export function bindEvents ({
   hoverHandler,
   unhoverHandler
 }) {
-  const scrollHandler = throttle(layoutPopovers)
-  const resizeHandler = throttle(() => {
-    layoutPopovers()
-    resizePopovers()
-  })
-
   bind(document, 'touchend', handleWith(toggleHandler))
   bind(document, 'click', handleWith(toggleHandler))
   bind(document, 'keyup', handleEscapeWith(dismiss))
-  bind(document, 'gestureend', scrollHandler)
-  bind(window, 'scroll', scrollHandler)
-  bind(window, 'resize', resizeHandler)
+  bind(document, 'gestureend', throttle(layoutPopovers))
+  bind(window, 'scroll', throttle(layoutPopovers))
+  bind(window, 'resize', throttle(resizePopovers))
 
   delegate(document).on('mouseover', `.${CLASS_BUTTON}`, handleWith(hoverHandler))
   delegate(document).on('mouseout', `.${CLASS_HOVERED}`, handleWith(unhoverHandler))
