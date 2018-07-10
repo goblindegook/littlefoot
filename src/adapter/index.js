@@ -2,7 +2,8 @@ import closest from 'dom-closest'
 import escape from 'lodash.escape'
 import template from 'lodash.template'
 import { children } from './dom/children'
-import { getFootnoteLinks, insertBefore, addClass } from './document'
+import * as adapter from './document'
+import * as layout from './layout'
 import {
   CLASS_PROCESSED,
   FOOTNOTE_BACKLINK_REF,
@@ -11,8 +12,57 @@ import {
   CLASS_PRINT_ONLY
 } from './constants'
 
-const setPrintOnly = addClass(CLASS_PRINT_ONLY)
-const setProcessed = addClass(CLASS_PROCESSED)
+const setPrintOnly = adapter.addClass(CLASS_PRINT_ONLY)
+const setProcessed = adapter.addClass(CLASS_PROCESSED)
+
+function getFootnoteBacklinkId (link, anchorParentSelector) {
+  const parent = closest(link, anchorParentSelector)
+
+  if (parent) {
+    return parent.getAttribute('id')
+  }
+
+  const child = link.querySelector(anchorParentSelector)
+
+  if (child) {
+    return child.getAttribute('id')
+  }
+
+  return ''
+}
+
+function setLinkReferences (link, anchorParentSelector) {
+  const id = getFootnoteBacklinkId(link, anchorParentSelector) || ''
+  const linkId = link.getAttribute('id') || ''
+  const href = '#' + link.getAttribute('href').split('#')[1]
+  link.setAttribute(FOOTNOTE_REF, href)
+  link.setAttribute(FOOTNOTE_BACKLINK_REF, id + linkId)
+  return link
+}
+
+export function getFootnoteLinks ({
+  anchorPattern,
+  anchorParentSelector,
+  footnoteParentClass,
+  scope
+}) {
+  const footnoteLinkSelector = `${scope || ''} a[href*="#"]`.trim()
+
+  return [...document.querySelectorAll(footnoteLinkSelector)]
+    .filter(link => {
+      const href = link.getAttribute('href')
+      const rel = link.getAttribute('rel')
+      const anchor = `${href}${rel != null && rel !== 'null' ? rel : ''}`
+
+      return anchor.match(anchorPattern) &&
+        !closest(link, `[class*="${footnoteParentClass}"]:not(a):not(${anchorParentSelector})`)
+    })
+    .map(link => setLinkReferences(link, anchorParentSelector))
+}
+
+export function insertButton (link, html) {
+  link.insertAdjacentHTML('beforebegin', html)
+}
 
 function prepareContent (content, backlinkId) {
   const pattern = backlinkId.trim().replace(/\s+/g, '|')
@@ -90,7 +140,7 @@ function hideOriginalFootnote (footnote, link) {
  * @param  {Object} options littlefoot settings object.
  * @return {void}
  */
-export function init (settings) {
+export function createDocumentAdapter (settings) {
   const {
     allowDuplicates,
     anchorParentSelector,
@@ -104,11 +154,13 @@ export function init (settings) {
 
   getFootnoteLinks({ anchorPattern, anchorParentSelector, footnoteParentClass, scope })
     .map(addLinkElements(allowDuplicates, footnoteSelector))
-    .filter(({ element }) => !!element)
+    .filter(({ element }) => element)
     .map(addFootnoteProperties())
     .map(numberResetSelector ? resetNumbers(numberResetSelector) : i => i)
     .map(footnote => {
-      insertBefore(footnote.link, template(buttonTemplate)(footnote))
+      insertButton(footnote.link, template(buttonTemplate)(footnote))
       hideOriginalFootnote(footnote.element, footnote.link)
     })
+
+  return Object.assign({}, adapter, layout)
 }

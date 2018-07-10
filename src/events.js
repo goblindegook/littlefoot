@@ -1,10 +1,10 @@
 import delegate from 'dom-delegate'
 import throttle from 'lodash.throttle'
-import { bind } from './dom/events'
+import { bind } from './adapter/dom/events'
 import {
   CLASS_BUTTON,
   CLASS_HOVERED
-} from './constants'
+} from './adapter/constants'
 
 function handleWith (fn) {
   return event => {

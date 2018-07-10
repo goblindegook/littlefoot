@@ -11,13 +11,15 @@ import {
   CLASS_FOOTNOTE,
   CLASS_FULLY_SCROLLED,
   CLASS_HOVERED,
-  FOOTNOTE_BACKLINK_REF,
   FOOTNOTE_CONTENT,
   FOOTNOTE_ID,
   FOOTNOTE_MAX_HEIGHT,
-  FOOTNOTE_NUMBER,
-  FOOTNOTE_REF
+  FOOTNOTE_NUMBER
 } from './constants'
+
+export function invertSelection (selector) {
+  return `:not(${selector})`
+}
 
 function findOne (className) {
   return (selector = '') => document.querySelector(`${selector}.${className}`)
@@ -128,59 +130,10 @@ export function insertPopover (button, render) {
   return popover
 }
 
-export function insertBefore (link, html) {
-  link.insertAdjacentHTML('beforebegin', html)
-}
-
 export function remove (element) {
   element.parentNode.removeChild(element)
 }
 
 export function getPopoverSelector (button) {
   return `[${FOOTNOTE_ID}="${button.getAttribute(FOOTNOTE_ID)}"]`
-}
-
-function getFootnoteBacklinkId (link, anchorParentSelector) {
-  const parent = closest(link, anchorParentSelector)
-
-  if (parent) {
-    return parent.getAttribute('id')
-  }
-
-  const child = link.querySelector(anchorParentSelector)
-
-  if (child) {
-    return child.getAttribute('id')
-  }
-
-  return ''
-}
-
-function setLinkReferences (link, anchorParentSelector) {
-  const id = getFootnoteBacklinkId(link, anchorParentSelector) || ''
-  const linkId = link.getAttribute('id') || ''
-  const href = '#' + link.getAttribute('href').split('#')[1]
-  link.setAttribute(FOOTNOTE_REF, href)
-  link.setAttribute(FOOTNOTE_BACKLINK_REF, id + linkId)
-  return link
-}
-
-export function getFootnoteLinks ({
-  anchorPattern,
-  anchorParentSelector,
-  footnoteParentClass,
-  scope
-}) {
-  const footnoteLinkSelector = `${scope || ''} a[href*="#"]`.trim()
-
-  return [...document.querySelectorAll(footnoteLinkSelector)]
-    .filter(link => {
-      const href = link.getAttribute('href')
-      const rel = link.getAttribute('rel')
-      const anchor = `${href}${rel != null && rel !== 'null' ? rel : ''}`
-
-      return anchor.match(anchorPattern) &&
-        !closest(link, `[class*="${footnoteParentClass}"]:not(a):not(${anchorParentSelector})`)
-    })
-    .map(link => setLinkReferences(link, anchorParentSelector))
 }

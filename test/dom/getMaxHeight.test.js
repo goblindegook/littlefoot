@@ -1,5 +1,5 @@
 import test from 'tape'
-import { getMaxHeight } from '../../src/dom/getMaxHeight'
+import { getMaxHeight } from '../../src/adapter/dom/getMaxHeight'
 import { teardown } from '../helper'
 
 /**
