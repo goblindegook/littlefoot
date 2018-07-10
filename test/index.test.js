@@ -61,7 +61,7 @@ test('footnote activation and dismissal', async (t) => {
   const wrapper = document.body.querySelector('.littlefoot-footnote__wrapper')
   const content = document.body.querySelector('.littlefoot-footnote__content')
 
-  t.equal(button.getAttribute('aria-controls'), popover.getAttribute('id'), 'sets ARIA controls')
+  t.equal(button.getAttribute('aria-controls'), popover.id, 'sets ARIA controls')
   t.equal(button.getAttribute('aria-expanded'), 'true', 'changes ARIA expanded attribute to true')
 
   t.equal(content.innerHTML.trim(), button.getAttribute('data-footnote-content').trim(),

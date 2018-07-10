@@ -1,8 +1,6 @@
 import template from 'lodash.template'
-
-function maybeCall (context, fn, ...args) {
-  return typeof fn === 'function' && fn.call(context, ...args)
-}
+import { maybeCall } from './helpers'
+import { createButton } from './adapter/document'
 
 function activatePopover (adapter, settings) {
   return (selector, className) => {
@@ -15,11 +13,12 @@ function activatePopover (adapter, settings) {
 
     const popovers = (allowMultiple ? adapter.findAllButtons(selector) : [adapter.findButton(selector)])
       .filter(button => button)
-      .map(button => {
-        const popover = adapter.insertPopover(button, renderPopover)
-        adapter.activateButton(button)
+      .map(element => {
+        const popover = adapter.insertPopover(element, renderPopover)
+        const button = createButton(element)
+        button.activate()
         adapter.addClass(className)(popover)
-        maybeCall(null, activateCallback, popover, button)
+        maybeCall(null, activateCallback, popover, button.element) // FIXME
         return popover
       })
 
@@ -33,14 +32,13 @@ function dismissPopover (adapter, delay) {
   return popover => {
     const button = adapter.findPopoverButton(popover)
 
-    if (!adapter.isChanging(button)) {
-      adapter.setChanging(button)
-      adapter.deactivateButton(button)
-      adapter.unsetActive(popover)
+    if (!button.isChanging()) {
+      button.startChanging()
+      button.deactivate()
 
       setTimeout(() => {
         adapter.remove(popover)
-        adapter.unsetChanging(button)
+        button.stopChanging()
       }, delay)
     }
   }
@@ -53,28 +51,24 @@ function dismissPopovers (adapter, settings) {
 }
 
 function createToggleHandler (adapter, activate, dismiss, settings) {
-  const displayPopover = (selector, button) => {
-    const { activateDelay, allowMultiple } = settings
-    adapter.setChanging(button)
-    if (!allowMultiple) {
-      dismiss(adapter.invertSelection(selector))
-    }
-    activate(selector)
-    setTimeout(() => adapter.unsetChanging(button), activateDelay)
-  }
-
   return target => {
+    const { activateDelay, allowMultiple } = settings
     const button = adapter.findClosestButton(target)
 
     if (button) {
-      maybeCall(button, button.blur)
-      const selector = adapter.getPopoverSelector(button)
+      button.blur()
+      const selector = button.getFootnoteSelector()
 
-      if (!adapter.isChanging(button)) {
-        if (adapter.isActive(button)) {
+      if (!button.isChanging()) {
+        if (button.isActive()) {
           dismiss(selector)
         } else {
-          displayPopover(selector, button)
+          button.startChanging()
+          if (!allowMultiple) {
+            dismiss(adapter.invertSelection(selector))
+          }
+          activate(selector)
+          setTimeout(button.stopChanging, activateDelay)
         }
       }
     } else {
@@ -95,10 +89,12 @@ function createHoverHandler (adapter, activate, dismiss, settings) {
     if (activateOnHover) {
       const button = adapter.findClosestButton(target)
 
-      if (!adapter.isActive(button)) {
-        const selector = adapter.getPopoverSelector(button)
-        adapter.setHovered(button)
-        !allowMultiple && dismiss(adapter.invertSelection(selector))
+      if (!button.isActive()) {
+        const selector = button.getFootnoteSelector()
+        button.hover()
+        if (!allowMultiple) {
+          dismiss(adapter.invertSelection(selector))
+        }
         activate(selector)
       }
     }
@@ -107,8 +103,8 @@ function createHoverHandler (adapter, activate, dismiss, settings) {
 
 function createUnhoverHandler (adapter, dismiss, settings) {
   return () => {
-    const { activateOnHover, dismissOnUnhover, hoverDelay } = settings
-    if (dismissOnUnhover && activateOnHover) {
+    const { dismissOnUnhover, hoverDelay } = settings
+    if (dismissOnUnhover) {
       setTimeout(() => {
         if (!adapter.findHoveredFootnote()) {
           dismiss()

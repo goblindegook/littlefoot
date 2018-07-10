@@ -6,26 +6,23 @@ import * as adapter from './document'
 import * as layout from './layout'
 import {
   CLASS_PROCESSED,
-  FOOTNOTE_BACKLINK_REF,
-  FOOTNOTE_ID,
-  FOOTNOTE_REF,
   CLASS_PRINT_ONLY
 } from './constants'
 
-const setPrintOnly = adapter.addClass(CLASS_PRINT_ONLY)
-const setProcessed = adapter.addClass(CLASS_PROCESSED)
+export const setPrintOnly = adapter.addClass(CLASS_PRINT_ONLY)
+export const setProcessed = adapter.addClass(CLASS_PROCESSED)
 
 function getFootnoteBacklinkId (link, anchorParentSelector) {
   const parent = closest(link, anchorParentSelector)
 
   if (parent) {
-    return parent.getAttribute('id')
+    return parent.id
   }
 
   const child = link.querySelector(anchorParentSelector)
 
   if (child) {
-    return child.getAttribute('id')
+    return child.id
   }
 
   return ''
@@ -33,10 +30,10 @@ function getFootnoteBacklinkId (link, anchorParentSelector) {
 
 function setLinkReferences (link, anchorParentSelector) {
   const id = getFootnoteBacklinkId(link, anchorParentSelector) || ''
-  const linkId = link.getAttribute('id') || ''
+  const linkId = link.id || ''
   const href = '#' + link.getAttribute('href').split('#')[1]
-  link.setAttribute(FOOTNOTE_REF, href)
-  link.setAttribute(FOOTNOTE_BACKLINK_REF, id + linkId)
+  adapter.setFootnoteRef(link, href)
+  adapter.setFootnoteBacklinkRef(link, `${id}${linkId}`)
   return link
 }
 
@@ -91,7 +88,7 @@ function resetNumbers (numberResetSelector) {
 
 function addLinkElements (allowDuplicates, footnoteSelector) {
   return link => {
-    const selector = link.getAttribute(FOOTNOTE_REF).replace(/[:.+~*\[\]]/g, '\\$&') // eslint-disable-line
+    const selector = adapter.getFootnoteRef(link).replace(/[:.+~*\[\]]/g, '\\$&') // eslint-disable-line
     const strictSelector = `${selector}:not(.${CLASS_PROCESSED})`
     const related = document.querySelector(allowDuplicates ? selector : strictSelector)
     const element = closest(related, footnoteSelector)
@@ -102,15 +99,11 @@ function addLinkElements (allowDuplicates, footnoteSelector) {
   }
 }
 
-function addFootnoteProperties () {
-  const footnotes = document.querySelectorAll(`[${FOOTNOTE_ID}]`)
-  const lastId = footnotes.length && footnotes[footnotes.length - 1].getAttribute(FOOTNOTE_ID)
-  const offset = 1 + parseInt(lastId, 10)
-
+function assignFootnoteProperties (offset) {
   return ({ element, link }, idx) => {
     const number = offset + idx
     const id = offset + idx
-    const reference = link.getAttribute(FOOTNOTE_BACKLINK_REF)
+    const reference = adapter.getFootnoteBacklinkRef(link)
     const content = escape(prepareContent(element.innerHTML, reference))
 
     return { content, element, id, link, number, reference }
@@ -152,10 +145,12 @@ export function createDocumentAdapter (settings) {
     scope
   } = settings
 
+  const offset = parseInt(adapter.getLastFootnoteId(), 10) + 1
+
   getFootnoteLinks({ anchorPattern, anchorParentSelector, footnoteParentClass, scope })
     .map(addLinkElements(allowDuplicates, footnoteSelector))
     .filter(({ element }) => element)
-    .map(addFootnoteProperties())
+    .map(assignFootnoteProperties(offset))
     .map(numberResetSelector ? resetNumbers(numberResetSelector) : i => i)
     .map(footnote => {
       insertButton(footnote.link, template(buttonTemplate)(footnote))

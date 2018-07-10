@@ -11,7 +11,7 @@ test('setup with default buttonTemplate', (t) => {
   const buttons = document.body.querySelectorAll('button')
 
   t.equal(buttons.length, footnotes.length, 'one custom button created per footnote')
-  t.equal(buttons[0].getAttribute('id'), 'fnref:1', 'replaces reference token')
+  t.equal(buttons[0].id, 'fnref:1', 'replaces reference token')
   t.equal(buttons[0].getAttribute('data-footnote-id'), '1', 'replaces id token')
   t.equal(buttons[0].getAttribute('data-footnote-number'), '1', 'replaces number token')
 
