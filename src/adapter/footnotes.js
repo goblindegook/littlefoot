@@ -27,16 +27,16 @@ function maybeCall (context, fn, ...args) {
   return typeof fn === 'function' && fn.call(context, ...args)
 }
 
-function findOne (className) {
-  return (selector = '') => document.querySelector(`${selector}.${className}`)
+function findOne (className, selector = '') {
+  return document.querySelector(`${selector}.${className}`)
 }
 
-function findAll (className) {
-  return (selector = '') => [...document.querySelectorAll(`${selector}.${className}`)]
+function findAll (className, selector = '') {
+  return [...document.querySelectorAll(`${selector}.${className}`)]
 }
 
 function addClass (className) {
-  return element => className && element && classList(element).add(className)
+  return element => className && classList(element).add(className)
 }
 
 function findPopoverContent (popover) {
@@ -155,28 +155,28 @@ function createFootnote (button, popover) {
 }
 
 export function findFootnote (selector) {
-  return createFootnote(findOne(CLASS_BUTTON)(selector))
+  const button = findOne(CLASS_BUTTON, selector)
+  return createFootnote(button)
 }
 
 export function findAllFootnotes (selector) {
-  return findAll(CLASS_BUTTON)(selector).map(createFootnote)
+  return findAll(CLASS_BUTTON, selector).map(createFootnote)
 }
 
-export function findActiveFootnotes (selector) {
-  return findAll(CLASS_FOOTNOTE)(selector)
-    .map(popover => {
-      const button = siblings(popover, `.${CLASS_BUTTON}`)[0]
-      return createFootnote(button, popover)
-    })
+function createFootnoteFromPopover (popover) {
+  const button = siblings(popover, `.${CLASS_BUTTON}`)[0]
+  return createFootnote(button, popover)
+}
+
+export function findActiveFootnotes () {
+  return findAll(CLASS_FOOTNOTE)
+    .map(createFootnoteFromPopover)
 }
 
 export function findOtherFootnotes (footnote) {
   const selector = footnote.getSelector()
-  return findAll(CLASS_FOOTNOTE)(`:not(${selector})`)
-    .map(popover => {
-      const button = siblings(popover, `.${CLASS_BUTTON}`)[0]
-      return createFootnote(button, popover)
-    })
+  return findAll(CLASS_FOOTNOTE, `:not(${selector})`)
+    .map(createFootnoteFromPopover)
 }
 
 export function findClosestFootnote (target) {
