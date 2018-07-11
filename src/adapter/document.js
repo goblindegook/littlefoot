@@ -1,18 +1,11 @@
 import classList from 'dom-classlist'
 import closest from 'dom-closest'
-import throttle from 'lodash.throttle'
-import { bind } from './dom/events'
-import { getMaxHeight } from './dom/getMaxHeight'
 import {
   CLASS_ACTIVE,
   CLASS_BUTTON,
   CLASS_CONTENT,
   CLASS_FOOTNOTE,
-  CLASS_FULLY_SCROLLED,
-  FOOTNOTE_CONTENT,
   FOOTNOTE_ID,
-  FOOTNOTE_MAX_HEIGHT,
-  FOOTNOTE_NUMBER,
   FOOTNOTE_REF,
   FOOTNOTE_BACKLINK_REF
 } from './constants'
@@ -60,53 +53,8 @@ export function getLastFootnoteId () {
   return footnotes.length && footnotes[footnotes.length - 1].getAttribute(FOOTNOTE_ID)
 }
 
-function onScrollContent (event) {
-  const target = event.currentTarget
-  const delta = event.type === 'wheel' ? -event.deltaY : event.wheelDelta
-  const isScrollUp = delta > 0
-  const height = target.clientHeight
-  const popover = findClosestPopover(target)
-
-  if (!isScrollUp && delta < height + target.scrollTop - target.scrollHeight) {
-    classList(popover).add(CLASS_FULLY_SCROLLED)
-    target.scrollTop = target.scrollHeight
-    event.stopPropagation()
-    event.preventDefault()
-    return
-  }
-
-  if (isScrollUp) {
-    classList(popover).remove(CLASS_FULLY_SCROLLED)
-
-    if (target.scrollTop < delta) {
-      target.scrollTop = 0
-      event.stopPropagation()
-      event.preventDefault()
-    }
-  }
-}
-
 export function findPopoverContent (popover) {
   return popover.querySelector(`.${CLASS_CONTENT}`)
-}
-
-export function insertPopover (button, render) {
-  button.insertAdjacentHTML('afterend', render({
-    content: button.getAttribute(FOOTNOTE_CONTENT),
-    id: button.getAttribute(FOOTNOTE_ID),
-    number: button.getAttribute(FOOTNOTE_NUMBER)
-  }))
-
-  const popover = button.nextElementSibling
-  const content = findPopoverContent(popover)
-
-  popover.setAttribute(FOOTNOTE_MAX_HEIGHT, getMaxHeight(content))
-  popover.style.maxWidth = document.body.clientWidth + 'px'
-
-  bind(content, 'mousewheel', throttle(onScrollContent))
-  bind(content, 'wheel', throttle(onScrollContent))
-
-  return popover
 }
 
 export function remove (element) {

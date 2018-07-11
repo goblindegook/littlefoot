@@ -19,20 +19,20 @@ function handleEscapeWith (fn) {
 }
 
 export function bindEvents ({
-  toggleHandler,
+  toggle,
   dismiss,
-  layoutPopovers,
-  resizePopovers,
-  hoverHandler,
-  unhoverHandler
+  reposition,
+  resize,
+  hover,
+  unhover
 }) {
-  bind(document, 'touchend', handleWith(toggleHandler))
-  bind(document, 'click', handleWith(toggleHandler))
+  bind(document, 'touchend', handleWith(toggle))
+  bind(document, 'click', handleWith(toggle))
   bind(document, 'keyup', handleEscapeWith(dismiss))
-  bind(document, 'gestureend', throttle(layoutPopovers))
-  bind(window, 'scroll', throttle(layoutPopovers))
-  bind(window, 'resize', throttle(resizePopovers))
+  bind(document, 'gestureend', throttle(reposition))
+  bind(window, 'scroll', throttle(reposition))
+  bind(window, 'resize', throttle(resize))
 
-  delegate(document).on('mouseover', `.${CLASS_BUTTON}`, handleWith(hoverHandler))
-  delegate(document).on('mouseout', `.${CLASS_HOVERED}`, handleWith(unhoverHandler))
+  delegate(document).on('mouseover', `.${CLASS_BUTTON}`, handleWith(hover))
+  delegate(document).on('mouseout', `.${CLASS_HOVERED}`, handleWith(unhover))
 }

@@ -1,57 +1,48 @@
 import template from 'lodash.template'
-import { maybeCall } from './helpers'
 
-function activatePopover (adapter, settings) {
-  return (selector, className) => {
-    if (!selector) {
-      return
-    }
+function createActivateHandler (adapter, settings) {
+  return (footnotes, className) => {
+    const { activateCallback, activateDelay, contentTemplate } = settings
+    const render = template(contentTemplate)
 
-    const { activateCallback, activateDelay, allowMultiple, contentTemplate } = settings
-    const renderPopover = template(contentTemplate)
-
-    const popovers = (allowMultiple ? adapter.findAllFootnotes(selector) : [adapter.findFootnote(selector)])
+    const newFootnotes = footnotes
       .filter(footnote => footnote)
-      .map(footnote => {
-        // FIXME: Core should not handle DOM elements, activate() should create the popover internally.
-        const popover = adapter.insertPopover(footnote.getButtonElement(), renderPopover)
-        footnote.activate()
-        adapter.addClass(className)(popover)
-        maybeCall(null, activateCallback, popover, footnote.getButtonElement())
-        return popover
+      .map(footnote => footnote.activate(render, className, activateCallback))
+
+    adapter.findActiveFootnotes()
+      .forEach(footnote => {
+        footnote.reposition()
+        footnote.resize()
       })
 
-    adapter.findAllPopovers().forEach(adapter.resizePopover)
-
-    setTimeout(() => popovers.forEach(adapter.setActive), activateDelay)
+    setTimeout(() => newFootnotes.forEach(footnote => footnote.ready()), activateDelay)
   }
 }
 
-function dismissPopover (adapter, delay) {
-  return popover => {
-    const footnote = adapter.getPopoverFootnote(popover)
-
+function dismissFootnote (delay) {
+  return footnote => {
     if (!footnote.isChanging()) {
       footnote.startChanging()
       footnote.dismiss()
 
       setTimeout(() => {
-        // FIXME: Create footnote.dismiss() to remove the popover object from the DOM tree.
-        adapter.remove(popover)
         footnote.stopChanging()
+        footnote.remove()
       }, delay)
     }
   }
 }
 
-function dismissPopovers (adapter, settings) {
+function dismissFootnotes (adapter, settings) {
   return (selector, delay = settings.dismissDelay) => {
-    adapter.findAllPopovers(selector).forEach(dismissPopover(adapter, delay))
+    adapter.findActiveFootnotes(selector)
+      .forEach(dismissFootnote(delay))
   }
 }
 
 function createToggleHandler (adapter, activate, dismiss, settings) {
-  // FIXME: Core should not handle raw event targets, event handler should convert it beforehand.
+  // FIXME: Core should not handle raw event targets,
+  // event handler should convert it beforehand.
   return target => {
     const { activateDelay, allowMultiple } = settings
     const footnote = adapter.findClosestFootnote(target)
@@ -70,7 +61,7 @@ function createToggleHandler (adapter, activate, dismiss, settings) {
           if (!allowMultiple) {
             dismiss(adapter.invertSelection(selector))
           }
-          activate(selector)
+          activate([footnote])
           setTimeout(footnote.stopChanging, activateDelay)
         }
       }
@@ -93,12 +84,12 @@ function createHoverHandler (adapter, activate, dismiss, settings) {
 
       if (!footnote.isActive()) {
         // FIXME: Selectors should be handled internally.
-        const selector = footnote.getSelector()
         footnote.hover()
         if (!allowMultiple) {
+          const selector = footnote.getSelector()
           dismiss(adapter.invertSelection(selector))
         }
-        activate(selector)
+        activate([footnote])
       }
     }
   }
@@ -118,16 +109,37 @@ function createUnhoverHandler (adapter, dismiss, settings) {
 }
 
 export function createCore (adapter, settings) {
-  const activate = activatePopover(adapter, settings)
-  const dismiss = dismissPopovers(adapter, settings)
+  const activate = createActivateHandler(adapter, settings)
+  const dismiss = dismissFootnotes(adapter, settings)
 
   return {
-    activate,
+    // FIXME: Remove selector -> footnotes conversion from core.
+    activate: (selector, className) => {
+      if (selector) {
+        const { allowMultiple } = settings
+        const footnotes = allowMultiple
+          ? adapter.findAllFootnotes(selector)
+          : [adapter.findFootnote(selector)]
+        activate(footnotes, className)
+      }
+    },
+
     dismiss,
-    layoutPopovers: () => adapter.findAllPopovers().forEach(adapter.layoutPopover),
-    resizePopovers: () => adapter.findAllPopovers().forEach(adapter.resizePopover),
-    toggleHandler: createToggleHandler(adapter, activate, dismiss, settings),
-    hoverHandler: createHoverHandler(adapter, activate, dismiss, settings),
-    unhoverHandler: createUnhoverHandler(adapter, dismiss, settings)
+
+    reposition: () => {
+      adapter.findActiveFootnotes()
+        .forEach(footnote => footnote.reposition())
+    },
+
+    resize: () => {
+      adapter.findActiveFootnotes()
+        .forEach(footnote => footnote.resize())
+    },
+
+    toggle: createToggleHandler(adapter, activate, dismiss, settings),
+
+    hover: createHoverHandler(adapter, activate, dismiss, settings),
+
+    unhover: createUnhoverHandler(adapter, dismiss, settings)
   }
 }
