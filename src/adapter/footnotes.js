@@ -168,8 +168,8 @@ function createFootnoteFromPopover (popover) {
   return createFootnote(button, popover)
 }
 
-export function findActiveFootnotes () {
-  return findAll(CLASS_FOOTNOTE)
+export function findActiveFootnotes (selector) {
+  return findAll(CLASS_FOOTNOTE, selector)
     .map(createFootnoteFromPopover)
 }
 
