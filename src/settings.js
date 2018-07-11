@@ -11,7 +11,7 @@ const DEFAULTS = {
   allowMultiple: false,
   anchorParentSelector: 'sup',
   anchorPattern: /(fn|footnote|note)[:\-_\d]/gi,
-  dismissDelay: 300,
+  dismissDelay: 100,
   dismissOnUnhover: false,
   footnoteParentClass: 'footnote',
   footnoteSelector: 'li',

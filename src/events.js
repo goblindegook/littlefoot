@@ -6,15 +6,14 @@ import {
   CLASS_HOVERED
 } from './adapter/constants'
 
-function handleWith (fn) {
+function handle (fn) {
   return event => {
-    if (fn(event.target || event.srcElement)) {
-      event.preventDefault()
-    }
+    fn(event.target || event.srcElement)
+    event.preventDefault()
   }
 }
 
-function handleEscapeWith (fn) {
+function handleEscape (fn) {
   return event => event.keyCode === 27 && fn()
 }
 
@@ -26,13 +25,13 @@ export function bindEvents ({
   hover,
   unhover
 }) {
-  bind(document, 'touchend', handleWith(toggle))
-  bind(document, 'click', handleWith(toggle))
-  bind(document, 'keyup', handleEscapeWith(dismiss))
+  bind(document, 'touchend', handle(toggle))
+  bind(document, 'click', handle(toggle))
+  bind(document, 'keyup', handleEscape(dismiss))
   bind(document, 'gestureend', throttle(reposition))
   bind(window, 'scroll', throttle(reposition))
   bind(window, 'resize', throttle(resize))
 
-  delegate(document).on('mouseover', `.${CLASS_BUTTON}`, handleWith(hover))
-  delegate(document).on('mouseout', `.${CLASS_HOVERED}`, handleWith(unhover))
+  delegate(document).on('mouseover', `.${CLASS_BUTTON}`, handle(hover))
+  delegate(document).on('mouseout', `.${CLASS_HOVERED}`, handle(unhover))
 }

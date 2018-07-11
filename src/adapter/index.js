@@ -3,7 +3,6 @@ import closest from 'dom-closest'
 import escape from 'lodash.escape'
 import template from 'lodash.template'
 import { children } from './dom/children'
-import * as helpers from './helpers'
 import * as adapter from './footnotes'
 import {
   CLASS_PROCESSED,
@@ -179,5 +178,5 @@ export function createDocumentAdapter (settings) {
       hideOriginalFootnote(footnote.element, footnote.link)
     })
 
-  return Object.assign({}, helpers, adapter)
+  return adapter
 }

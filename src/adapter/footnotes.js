@@ -7,7 +7,6 @@ import { getAvailableRoom } from './dom/getAvailableRoom'
 import { getMaxHeight } from './dom/getMaxHeight'
 import { getStyle } from './dom/getStyle'
 import { getPopoverMaxHeight, repositionPopover, repositionTooltip } from './layout'
-import { addClass, findClosestPopover, findOne } from './helpers'
 import {
   CLASS_ACTIVE,
   CLASS_BUTTON,
@@ -28,13 +27,23 @@ function maybeCall (context, fn, ...args) {
   return typeof fn === 'function' && fn.call(context, ...args)
 }
 
+function findOne (className) {
+  return (selector = '') => document.querySelector(`${selector}.${className}`)
+}
+
 function findAll (className) {
   return (selector = '') => [...document.querySelectorAll(`${selector}.${className}`)]
+}
+
+function addClass (className) {
+  return element => className && element && classList(element).add(className)
 }
 
 function findPopoverContent (popover) {
   return popover.querySelector(`.${CLASS_CONTENT}`)
 }
+
+export const findClosestPopover = element => closest(element, `.${CLASS_FOOTNOTE}`)
 
 function scrollHandler (event) {
   const target = event.currentTarget
@@ -66,6 +75,12 @@ const throttledScrollHandler = throttle(scrollHandler)
 
 function createFootnote (button, popover) {
   return button && {
+    button,
+
+    popover,
+
+    getId: () => button.getAttribute(FOOTNOTE_ID),
+
     blur: () => maybeCall(button, button.blur),
 
     activate: (render, className, onActivate) => {
@@ -78,19 +93,19 @@ function createFootnote (button, popover) {
         number: button.getAttribute(FOOTNOTE_NUMBER)
       }))
 
-      const popover = button.nextElementSibling
-      const content = findPopoverContent(popover)
+      const newPopover = button.nextElementSibling
+      const content = findPopoverContent(newPopover)
 
-      popover.setAttribute(FOOTNOTE_MAX_HEIGHT, getMaxHeight(content))
-      popover.style.maxWidth = document.body.clientWidth + 'px'
+      newPopover.setAttribute(FOOTNOTE_MAX_HEIGHT, getMaxHeight(content))
+      newPopover.style.maxWidth = document.body.clientWidth + 'px'
 
       bind(content, 'mousewheel', throttledScrollHandler)
       bind(content, 'wheel', throttledScrollHandler)
 
-      addClass(className)(popover)
-      maybeCall(null, onActivate, popover, button)
+      addClass(className)(newPopover)
+      maybeCall(null, onActivate, newPopover, button)
 
-      return createFootnote(button, popover)
+      return createFootnote(button, newPopover)
     },
 
     dismiss: () => {
@@ -109,13 +124,13 @@ function createFootnote (button, popover) {
 
     ready: () => classList(popover).add(CLASS_ACTIVE),
 
-    remove: () => popover && popover.parentNode.removeChild(popover),
+    remove: () => popover.parentNode.removeChild(popover),
 
     reposition: () => {
       const room = getAvailableRoom(button)
       const content = findPopoverContent(popover)
-
       const maxHeight = getPopoverMaxHeight(popover, room)
+
       content.style.maxHeight = maxHeight + 'px'
 
       repositionPopover(popover, room)
@@ -154,14 +169,28 @@ export function findAllFootnotes (selector) {
 }
 
 export function findActiveFootnotes (selector) {
-  return findAll(CLASS_FOOTNOTE)(selector).map(createPopoverFromFootnote)
+  return findAll(CLASS_FOOTNOTE)(selector)
+    .map(popover => {
+      const button = siblings(popover, `.${CLASS_BUTTON}`)[0]
+      return createFootnote(button, popover)
+    })
 }
 
-export function findClosestFootnote (button) {
-  return createFootnote(closest(button, `.${CLASS_BUTTON}`))
+export function findOtherFootnotes (footnote) {
+  const selector = footnote.getSelector()
+  return findAll(CLASS_FOOTNOTE)(`:not(${selector})`)
+    .map(popover => {
+      const button = siblings(popover, `.${CLASS_BUTTON}`)[0]
+      return createFootnote(button, popover)
+    })
 }
 
-export function createPopoverFromFootnote (popover) {
-  const button = siblings(popover, `.${CLASS_BUTTON}`)[0]
+export function findClosestFootnote (target) {
+  const button = closest(target, `.${CLASS_BUTTON}`)
+  const popover = button && siblings(button, `.${CLASS_FOOTNOTE}`)[0]
   return createFootnote(button, popover)
+}
+
+export function hasHoveredFootnotes () {
+  return !!document.querySelector(`.${CLASS_BUTTON}:hover, .${CLASS_FOOTNOTE}:hover`)
 }
