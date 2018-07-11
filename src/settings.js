@@ -1,3 +1,5 @@
+import { CLASS_WRAPPER, CLASS_TOOLTIP, CLASS_FOOTNOTE, CLASS_CONTENT, CLASS_BUTTON, FOOTNOTE_CONTENT, FOOTNOTE_ID, FOOTNOTE_NUMBER } from './adapter/constants'
+
 /**
  * Default settings.
  *
@@ -18,8 +20,8 @@ const DEFAULTS = {
   hoverDelay: 250,
   numberResetSelector: null,
   scope: null,
-  contentTemplate: '<aside class="littlefoot-footnote is-positioned-bottom" id="fncontent:<%= id %>" data-footnote-id="<%= id %>" data-footnote-number="<%= number %>" alt="Footnote <%= number %>"><div class="littlefoot-footnote__wrapper"><div class="littlefoot-footnote__content" tabindex="0"><%= content %></div></div><div class="littlefoot-footnote__tooltip"></div></aside>',
-  buttonTemplate: '<span class="littlefoot-footnote__container"><button class="littlefoot-footnote__button littlefoot-footnote__button__ellipsis" id="<%= reference %>" data-footnote-content="<%= content %>" data-footnote-id="<%= id %>" data-footnote-number="<%= number %>" alt="See Footnote <%= number %>" aria-controls="fncontent:<%= id %>" aria-expanded="false" aria-label="Footnote <%= number %>" rel="footnote"><svg viewbox="0 0 31 6" preserveAspectRatio="xMidYMid"><circle r="3" cx="3" cy="3" fill="white"></circle><circle r="3" cx="15" cy="3" fill="white"></circle><circle r="3" cx="27" cy="3" fill="white"></circle></svg></button></span>'
+  contentTemplate: `<aside class="${CLASS_FOOTNOTE} is-positioned-bottom" id="fncontent:<%= id %>" ${FOOTNOTE_ID}="<%= id %>" ${FOOTNOTE_NUMBER}="<%= number %>" alt="Footnote <%= number %>"><div class="${CLASS_WRAPPER}"><div class="${CLASS_CONTENT}" tabindex="0"><%= content %></div></div><div class="${CLASS_TOOLTIP}"></div></aside>`,
+  buttonTemplate: `<span class="littlefoot-footnote__container"><button class="${CLASS_BUTTON} littlefoot-footnote__button__ellipsis" id="<%= reference %>" ${FOOTNOTE_CONTENT}="<%= content %>" ${FOOTNOTE_ID}="<%= id %>" ${FOOTNOTE_NUMBER}="<%= number %>" alt="See Footnote <%= number %>" aria-controls="fncontent:<%= id %>" aria-expanded="false" aria-label="Footnote <%= number %>" rel="footnote"><svg viewbox="0 0 31 6" preserveAspectRatio="xMidYMid"><circle r="3" cx="3" cy="3" fill="white"></circle><circle r="3" cx="15" cy="3" fill="white"></circle><circle r="3" cx="27" cy="3" fill="white"></circle></svg></button></span>`
 }
 
 /**
