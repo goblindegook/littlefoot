@@ -163,25 +163,25 @@ export function findAllFootnotes (selector) {
   return findAll(CLASS_BUTTON, selector).map(createFootnote)
 }
 
-function createFootnoteFromPopover (popover) {
-  const button = siblings(popover, `.${CLASS_BUTTON}`)[0]
-  return createFootnote(button, popover)
+function findMatching (className, element) {
+  return element && siblings(element, `.${className}`)[0]
 }
 
 export function findActiveFootnotes (selector) {
   return findAll(CLASS_FOOTNOTE, selector)
-    .map(createFootnoteFromPopover)
+    .map(popover => {
+      const button = findMatching(CLASS_BUTTON, popover)
+      return createFootnote(button, popover)
+    })
 }
 
-export function findOtherFootnotes (footnote) {
-  const selector = footnote.getSelector()
-  return findAll(CLASS_FOOTNOTE, `:not(${selector})`)
-    .map(createFootnoteFromPopover)
+export function findOtherActiveFootnotes (footnote) {
+  return findActiveFootnotes(`:not(${footnote.getSelector()})`)
 }
 
 export function findClosestFootnote (target) {
   const button = closest(target, `.${CLASS_BUTTON}`)
-  const popover = button && siblings(button, `.${CLASS_FOOTNOTE}`)[0]
+  const popover = findMatching(CLASS_FOOTNOTE, button)
   return createFootnote(button, popover)
 }
 

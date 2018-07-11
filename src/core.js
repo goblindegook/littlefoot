@@ -51,7 +51,7 @@ function createToggleHandler (adapter, activate, dismiss, settings) {
         dismiss(footnote)
       } else {
         if (!allowMultiple) {
-          adapter.findOtherFootnotes(footnote).forEach(dismiss)
+          adapter.findOtherActiveFootnotes(footnote).forEach(dismiss)
         }
 
         activate(footnote)
@@ -71,7 +71,7 @@ function createHoverHandler (adapter, activate, dismiss, settings) {
       if (!footnote.isActive()) {
         footnote.hover()
         if (!allowMultiple) {
-          adapter.findOtherFootnotes(footnote).forEach(dismiss)
+          adapter.findOtherActiveFootnotes(footnote).forEach(dismiss)
         }
         activate(footnote)
       }
