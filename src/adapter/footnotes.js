@@ -66,10 +66,6 @@ const throttledScrollHandler = throttle(scrollHandler)
 
 function createFootnote (button, popover) {
   return button && {
-    getButtonElement: () => button,
-
-    getPopoverElement: () => popover,
-
     blur: () => maybeCall(button, button.blur),
 
     activate: (render, className, onActivate) => {
