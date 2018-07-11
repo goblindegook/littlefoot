@@ -7,11 +7,7 @@ import { getAvailableRoom } from './dom/getAvailableRoom'
 import { getMaxHeight } from './dom/getMaxHeight'
 import { getStyle } from './dom/getStyle'
 import { getPopoverMaxHeight, repositionPopover, repositionTooltip } from './layout'
-import {
-  addClass,
-  findClosestPopover,
-  findOne
-} from './document'
+import { addClass, findClosestPopover, findOne } from './helpers'
 import {
   CLASS_ACTIVE,
   CLASS_BUTTON,

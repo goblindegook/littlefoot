@@ -1,9 +1,10 @@
+import classList from 'dom-classlist'
 import closest from 'dom-closest'
 import escape from 'lodash.escape'
 import template from 'lodash.template'
 import { children } from './dom/children'
-import * as adapter from './document'
-import * as footnoteMethods from './footnotes'
+import * as helpers from './helpers'
+import * as adapter from './footnotes'
 import {
   CLASS_PROCESSED,
   CLASS_PRINT_ONLY,
@@ -20,8 +21,8 @@ function setAttribute (attribute) {
   return (element, value) => element.setAttribute(attribute, value)
 }
 
-export const setPrintOnly = adapter.addClass(CLASS_PRINT_ONLY)
-export const setProcessed = adapter.addClass(CLASS_PROCESSED)
+export const setPrintOnly = el => el && classList(el).add(CLASS_PRINT_ONLY)
+export const setProcessed = el => el && classList(el).add(CLASS_PROCESSED)
 
 const getFootnoteRef = getAttribute(FOOTNOTE_REF)
 const setFootnoteRef = setAttribute(FOOTNOTE_REF)
@@ -178,5 +179,5 @@ export function createDocumentAdapter (settings) {
       hideOriginalFootnote(footnote.element, footnote.link)
     })
 
-  return Object.assign({}, adapter, footnoteMethods)
+  return Object.assign({}, helpers, adapter)
 }
