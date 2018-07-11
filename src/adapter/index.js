@@ -3,15 +3,35 @@ import escape from 'lodash.escape'
 import template from 'lodash.template'
 import { children } from './dom/children'
 import * as adapter from './document'
-import * as layout from './layout'
 import * as footnoteMethods from './footnotes'
 import {
   CLASS_PROCESSED,
-  CLASS_PRINT_ONLY
+  CLASS_PRINT_ONLY,
+  FOOTNOTE_ID,
+  FOOTNOTE_REF,
+  FOOTNOTE_BACKLINK_REF
 } from './constants'
+
+function getAttribute (attribute) {
+  return element => element.getAttribute(attribute)
+}
+
+function setAttribute (attribute) {
+  return (element, value) => element.setAttribute(attribute, value)
+}
 
 export const setPrintOnly = adapter.addClass(CLASS_PRINT_ONLY)
 export const setProcessed = adapter.addClass(CLASS_PROCESSED)
+
+const getFootnoteRef = getAttribute(FOOTNOTE_REF)
+const setFootnoteRef = setAttribute(FOOTNOTE_REF)
+const getFootnoteBacklinkRef = getAttribute(FOOTNOTE_BACKLINK_REF)
+const setFootnoteBacklinkRef = setAttribute(FOOTNOTE_BACKLINK_REF)
+
+function getLastFootnoteId () {
+  const footnotes = document.querySelectorAll(`[${FOOTNOTE_ID}]`)
+  return footnotes.length && footnotes[footnotes.length - 1].getAttribute(FOOTNOTE_ID)
+}
 
 function getFootnoteBacklinkId (link, anchorParentSelector) {
   const parent = closest(link, anchorParentSelector)
@@ -33,8 +53,8 @@ function setLinkReferences (link, anchorParentSelector) {
   const id = getFootnoteBacklinkId(link, anchorParentSelector) || ''
   const linkId = link.id || ''
   const href = '#' + link.getAttribute('href').split('#')[1]
-  adapter.setFootnoteRef(link, href)
-  adapter.setFootnoteBacklinkRef(link, `${id}${linkId}`)
+  setFootnoteRef(link, href)
+  setFootnoteBacklinkRef(link, `${id}${linkId}`)
   return link
 }
 
@@ -89,7 +109,7 @@ function resetNumbers (numberResetSelector) {
 
 function addLinkElements (allowDuplicates, footnoteSelector) {
   return link => {
-    const selector = adapter.getFootnoteRef(link).replace(/[:.+~*\[\]]/g, '\\$&') // eslint-disable-line
+    const selector = getFootnoteRef(link).replace(/[:.+~*\[\]]/g, '\\$&') // eslint-disable-line
     const strictSelector = `${selector}:not(.${CLASS_PROCESSED})`
     const related = document.querySelector(allowDuplicates ? selector : strictSelector)
     const element = closest(related, footnoteSelector)
@@ -104,7 +124,7 @@ function assignFootnoteProperties (offset) {
   return ({ element, link }, idx) => {
     const number = offset + idx
     const id = offset + idx
-    const reference = adapter.getFootnoteBacklinkRef(link)
+    const reference = getFootnoteBacklinkRef(link)
     const content = escape(prepareContent(element.innerHTML, reference))
 
     return { content, element, id, link, number, reference }
@@ -146,7 +166,7 @@ export function createDocumentAdapter (settings) {
     scope
   } = settings
 
-  const offset = parseInt(adapter.getLastFootnoteId(), 10) + 1
+  const offset = parseInt(getLastFootnoteId(), 10) + 1
 
   getFootnoteLinks({ anchorPattern, anchorParentSelector, footnoteParentClass, scope })
     .map(addLinkElements(allowDuplicates, footnoteSelector))
@@ -158,5 +178,5 @@ export function createDocumentAdapter (settings) {
       hideOriginalFootnote(footnote.element, footnote.link)
     })
 
-  return Object.assign({}, adapter, footnoteMethods, layout)
+  return Object.assign({}, adapter, footnoteMethods)
 }

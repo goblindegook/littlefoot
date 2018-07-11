@@ -66,8 +66,10 @@ function createToggleHandler (adapter, activate, dismiss, settings) {
         }
       }
     } else {
+      // FIXME: Stop using findClosestPopover.
       const popover = adapter.findClosestPopover(target)
 
+      // FIXME: Stop using findPopover.
       if (!popover && adapter.findPopover()) {
         dismiss()
       }
@@ -100,7 +102,7 @@ function createUnhoverHandler (adapter, dismiss, settings) {
     const { dismissOnUnhover, hoverDelay } = settings
     if (dismissOnUnhover) {
       setTimeout(() => {
-        if (!adapter.hasHoveredFootnote()) {
+        if (!adapter.hasHoveredFootnotes()) {
           dismiss()
         }
       }, hoverDelay)

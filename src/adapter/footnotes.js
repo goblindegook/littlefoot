@@ -9,10 +9,8 @@ import { getStyle } from './dom/getStyle'
 import { getPopoverMaxHeight, repositionPopover, repositionTooltip } from './layout'
 import {
   addClass,
-  findAll,
   findClosestPopover,
-  findOne,
-  findPopoverContent
+  findOne
 } from './document'
 import {
   CLASS_ACTIVE,
@@ -26,11 +24,20 @@ import {
   FOOTNOTE_MAX_HEIGHT,
   FOOTNOTE_NUMBER,
   CLASS_SCROLLABLE,
-  CLASS_WRAPPER
+  CLASS_WRAPPER,
+  CLASS_CONTENT
 } from './constants'
 
 function maybeCall (context, fn, ...args) {
   return typeof fn === 'function' && fn.call(context, ...args)
+}
+
+function findAll (className) {
+  return (selector = '') => [...document.querySelectorAll(`${selector}.${className}`)]
+}
+
+function findPopoverContent (popover) {
+  return popover.querySelector(`.${CLASS_CONTENT}`)
 }
 
 function scrollHandler (event) {
