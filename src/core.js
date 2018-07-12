@@ -10,9 +10,9 @@ function createActivate (adapter, settings) {
 
       const activated = footnote.activate(render, className, activateCallback)
 
-      adapter.findActiveFootnotes().forEach(footnote => {
-        footnote.reposition()
-        footnote.resize()
+      adapter.findActiveFootnotes().forEach(fn => {
+        fn.reposition()
+        fn.resize()
       })
 
       setTimeout(() => {

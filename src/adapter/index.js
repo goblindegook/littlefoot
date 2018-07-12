@@ -151,7 +151,7 @@ function hideOriginalFootnote (footnote, link) {
  *
  * Finds the likely footnote links and then uses their target to find the content.
  *
- * @param  {Object} options littlefoot settings object.
+ * @param  {Object} settings littlefoot settings object.
  * @return {void}
  */
 export function createDocumentAdapter (settings) {

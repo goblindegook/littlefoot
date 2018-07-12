@@ -4,10 +4,10 @@ import matches from 'dom-matches'
  * Removes/adds appropriate classes to the footnote content and button after
  * a delay (to allow for transitions) it removes the actual footnote content.
  *
- * @param  {DOMElement} element
- * @param  {String}     type
- * @param  {Function}   fn
- * @param  {boolean}    capture
+ * @param  {DOMElement} element Element to bind event to.
+ * @param  {String}     type    Event type.
+ * @param  {Function}   fn      Event handler.
+ * @param  {boolean}    capture Capture flag.
  * @return {void}
  */
 export function bind (el, type, fn, capture = false) {

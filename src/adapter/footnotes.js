@@ -70,7 +70,7 @@ function scrollHandler (event) {
 
 const throttledScrollHandler = throttle(scrollHandler)
 
-function createFootnote (button, popover) {
+function createFootnote ({ button, popover }) {
   return button && {
     blur: () => maybeCall(button, button.blur),
 
@@ -96,7 +96,7 @@ function createFootnote (button, popover) {
       addClass(className)(newPopover)
       maybeCall(null, onActivate, newPopover, button)
 
-      return createFootnote(button, newPopover)
+      return createFootnote({ button, popover: newPopover })
     },
 
     dismiss: () => {
@@ -153,11 +153,12 @@ function createFootnote (button, popover) {
 
 export function findFootnote (selector) {
   const button = findOne(CLASS_BUTTON, selector)
-  return createFootnote(button)
+  return createFootnote({ button })
 }
 
 export function findAllFootnotes (selector) {
-  return findAll(CLASS_BUTTON, selector).map(createFootnote)
+  return findAll(CLASS_BUTTON, selector)
+    .map(button => createFootnote({ button }))
 }
 
 function findMatching (className, element) {
@@ -168,7 +169,7 @@ export function findActiveFootnotes (selector) {
   return findAll(CLASS_FOOTNOTE, selector)
     .map(popover => {
       const button = findMatching(CLASS_BUTTON, popover)
-      return createFootnote(button, popover)
+      return createFootnote({ button, popover })
     })
 }
 
@@ -179,7 +180,7 @@ export function findOtherActiveFootnotes (footnote) {
 export function findClosestFootnote (target) {
   const button = closest(target, `.${CLASS_BUTTON}`)
   const popover = findMatching(CLASS_FOOTNOTE, button)
-  return createFootnote(button, popover)
+  return createFootnote({ button, popover })
 }
 
 export function hasHoveredFootnotes () {
