@@ -42,13 +42,6 @@ export function createCore (adapter, settings) {
   const activate = createActivate(adapter, settings)
   const dismiss = createDismiss(settings)
 
-  const activateSingle = (footnote, allowMultiple) => {
-    if (!allowMultiple) {
-      adapter.findOtherActiveFootnotes(footnote).forEach(dismiss)
-    }
-    activate(footnote)
-  }
-
   return {
     activate,
 
@@ -75,7 +68,10 @@ export function createCore (adapter, settings) {
         if (footnote.isActive()) {
           dismiss(footnote)
         } else {
-          activateSingle(footnote, allowMultiple)
+          if (!allowMultiple) {
+            adapter.findOtherActiveFootnotes(footnote).forEach(dismiss)
+          }
+          activate(footnote)
         }
       } else if (!popover) {
         adapter.findActiveFootnotes().forEach(dismiss)
@@ -85,8 +81,11 @@ export function createCore (adapter, settings) {
     hover (footnote) {
       const { activateOnHover, allowMultiple } = settings
       if (activateOnHover && !footnote.isActive()) {
+        if (!allowMultiple) {
+          adapter.findOtherActiveFootnotes(footnote).forEach(dismiss)
+        }
+        activate(footnote)
         footnote.hover()
-        activateSingle(footnote, allowMultiple)
       }
     },
 
