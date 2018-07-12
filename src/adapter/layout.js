@@ -1,5 +1,5 @@
 import classList from 'dom-classlist'
-import { getStyle } from './dom/getStyle'
+import { getStyle } from './dom'
 import {
   CLASS_TOOLTIP,
   FOOTNOTE_MAX_HEIGHT,

@@ -2,10 +2,7 @@ import classList from 'dom-classlist'
 import closest from 'dom-closest'
 import siblings from 'dom-siblings'
 import throttle from 'lodash.throttle'
-import { bind } from './dom/events'
-import { getAvailableRoom } from './dom/getAvailableRoom'
-import { getMaxHeight } from './dom/getMaxHeight'
-import { getStyle } from './dom/getStyle'
+import { bind, getAvailableRoom, getMaxHeight, getStyle } from './dom'
 import { getPopoverMaxHeight, repositionPopover, repositionTooltip } from './layout'
 import {
   CLASS_ACTIVE,

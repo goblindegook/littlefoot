@@ -2,7 +2,7 @@ import classList from 'dom-classlist'
 import closest from 'dom-closest'
 import escape from 'lodash.escape'
 import template from 'lodash.template'
-import { children } from './dom/children'
+import { children } from './dom'
 import * as adapter from './footnotes'
 import {
   CLASS_PROCESSED,

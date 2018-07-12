@@ -1,6 +1,6 @@
 import delegate from 'dom-delegate'
 import throttle from 'lodash.throttle'
-import { bind } from './adapter/dom/events'
+import { bind } from './adapter/dom'
 import {
   CLASS_BUTTON,
   CLASS_HOVERED
