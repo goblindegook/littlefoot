@@ -1,7 +1,7 @@
 import { createSettings } from './settings'
 import { createCore } from './core'
 import { createDocumentAdapter } from './adapter'
-import { bindEvents } from './events'
+import { bindEvents } from './adapter/events'
 
 /**
  * Littlefoot instance factory.
@@ -16,10 +16,26 @@ const littlefoot = function (options) {
   bindEvents(core)
 
   return {
-    activate: core.activate,
+    activate (selector, className) {
+      if (selector) {
+        const { allowMultiple } = settings
+        const footnotes = allowMultiple
+          ? adapter.findAllFootnotes(selector)
+          : [adapter.findFootnote(selector)]
+
+        footnotes
+          .filter(footnote => footnote)
+          .map(footnote => core.activate(footnote, className))
+      }
+    },
+
     dismiss: core.dismiss,
-    getSetting: key => settings[key],
-    updateSetting: (key, value) => {
+
+    getSetting (key) {
+      return settings[key]
+    },
+
+    updateSetting (key, value) {
       settings[key] = value
     }
   }

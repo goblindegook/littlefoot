@@ -1,14 +1,18 @@
 import delegate from 'dom-delegate'
 import throttle from 'lodash.throttle'
-import { bind } from './adapter/dom'
+import { bind } from './dom'
+import { findClosestFootnote, findClosestPopover } from './footnotes'
 import {
   CLASS_BUTTON,
   CLASS_HOVERED
-} from './adapter/constants'
+} from './constants'
 
 function handle (fn) {
   return event => {
-    fn(event.target || event.srcElement)
+    const target = event.target || event.srcElement
+    const footnote = findClosestFootnote(target)
+    const popover = findClosestPopover(target)
+    fn(footnote, popover)
     event.preventDefault()
   }
 }

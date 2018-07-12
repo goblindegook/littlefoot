@@ -38,99 +38,67 @@ function createDismiss (settings) {
   }
 }
 
-function createToggleHandler (adapter, activate, dismiss, settings) {
-  // FIXME: target -> footnote conversion should not happen here.
-  return target => {
-    const { allowMultiple } = settings
-    const footnote = adapter.findClosestFootnote(target)
-
-    if (footnote) {
-      footnote.blur()
-
-      if (footnote.isActive()) {
-        dismiss(footnote)
-      } else {
-        if (!allowMultiple) {
-          adapter.findOtherActiveFootnotes(footnote).forEach(dismiss)
-        }
-
-        activate(footnote)
-      }
-    } else if (!adapter.findClosestPopover(target)) {
-      adapter.findActiveFootnotes().forEach(dismiss)
-    }
-  }
-}
-
-function createHoverHandler (adapter, activate, dismiss, settings) {
-  const { activateOnHover, allowMultiple } = settings
-  return target => {
-    if (activateOnHover) {
-      const footnote = adapter.findClosestFootnote(target)
-
-      if (!footnote.isActive()) {
-        footnote.hover()
-        if (!allowMultiple) {
-          adapter.findOtherActiveFootnotes(footnote).forEach(dismiss)
-        }
-        activate(footnote)
-      }
-    }
-  }
-}
-
-function createUnhoverHandler (adapter, dismiss, settings) {
-  return () => {
-    const { dismissOnUnhover, hoverDelay } = settings
-    if (dismissOnUnhover) {
-      setTimeout(() => {
-        if (!adapter.hasHoveredFootnotes()) {
-          adapter.findActiveFootnotes().forEach(dismiss)
-        }
-      }, hoverDelay)
-    }
-  }
-}
-
-// FIXME: activate and dismiss are the core methods,
-// most everything else should be moved a driving adapter.
 export function createCore (adapter, settings) {
   const activate = createActivate(adapter, settings)
   const dismiss = createDismiss(settings)
 
+  const activateSingle = (footnote, allowMultiple) => {
+    if (!allowMultiple) {
+      adapter.findOtherActiveFootnotes(footnote).forEach(dismiss)
+    }
+    activate(footnote)
+  }
+
   return {
-    activate: (selector, className) => {
-      if (selector) {
-        const { allowMultiple } = settings
-        const footnotes = allowMultiple
-          ? adapter.findAllFootnotes(selector)
-          : [adapter.findFootnote(selector)]
+    activate,
 
-        footnotes
-          .filter(footnote => footnote)
-          .map(footnote => activate(footnote, className))
-      }
-    },
-
-    dismiss: (selector, delay) => {
+    dismiss (selector, delay) {
       adapter.findActiveFootnotes(selector)
         .forEach(footnote => dismiss(footnote, delay))
     },
 
-    reposition: () => {
+    reposition () {
       adapter.findActiveFootnotes()
         .forEach(footnote => footnote.reposition())
     },
 
-    resize: () => {
+    resize () {
       adapter.findActiveFootnotes()
         .forEach(footnote => footnote.resize())
     },
 
-    toggle: createToggleHandler(adapter, activate, dismiss, settings),
+    toggle (footnote, popover) {
+      const { allowMultiple } = settings
+      if (footnote) {
+        footnote.blur()
 
-    hover: createHoverHandler(adapter, activate, dismiss, settings),
+        if (footnote.isActive()) {
+          dismiss(footnote)
+        } else {
+          activateSingle(footnote, allowMultiple)
+        }
+      } else if (!popover) {
+        adapter.findActiveFootnotes().forEach(dismiss)
+      }
+    },
 
-    unhover: createUnhoverHandler(adapter, dismiss, settings)
+    hover (footnote) {
+      const { activateOnHover, allowMultiple } = settings
+      if (activateOnHover && !footnote.isActive()) {
+        footnote.hover()
+        activateSingle(footnote, allowMultiple)
+      }
+    },
+
+    unhover () {
+      const { dismissOnUnhover, hoverDelay } = settings
+      if (dismissOnUnhover) {
+        setTimeout(() => {
+          if (!adapter.hasHoveredFootnotes()) {
+            adapter.findActiveFootnotes().forEach(dismiss)
+          }
+        }, hoverDelay)
+      }
+    }
   }
 }
