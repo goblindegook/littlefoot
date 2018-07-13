@@ -1,15 +1,14 @@
 import classList from 'dom-classlist'
 import closest from 'dom-closest'
 import siblings from 'dom-siblings'
-import throttle from 'lodash.throttle'
-import { bind, getAvailableRoom, getMaxHeight, getStyle } from './dom'
+import { getAvailableRoom, getMaxHeight, getStyle } from './dom'
+import { bindContentScrollHandler } from './events'
 import { getPopoverMaxHeight, repositionPopover, repositionTooltip } from './layout'
 import {
   CLASS_ACTIVE,
   CLASS_BUTTON,
   CLASS_CHANGING,
   CLASS_FOOTNOTE,
-  CLASS_FULLY_SCROLLED,
   CLASS_HOVERED,
   FOOTNOTE_CONTENT,
   FOOTNOTE_ID,
@@ -42,40 +41,12 @@ function findPopoverContent (popover) {
 
 export const findClosestPopover = element => closest(element, `.${CLASS_FOOTNOTE}`)
 
-function scrollHandler (event) {
-  const target = event.currentTarget
-  const delta = event.type === 'wheel' ? -event.deltaY : event.wheelDelta
-  const height = target.clientHeight
-  const popover = findClosestPopover(target)
-
-  if (delta <= 0 && delta < height + target.scrollTop - target.scrollHeight) {
-    classList(popover).add(CLASS_FULLY_SCROLLED)
-    target.scrollTop = target.scrollHeight
-    event.stopPropagation()
-    event.preventDefault()
-    return
-  }
-
-  if (delta > 0) {
-    classList(popover).remove(CLASS_FULLY_SCROLLED)
-
-    if (target.scrollTop < delta) {
-      target.scrollTop = 0
-      event.stopPropagation()
-      event.preventDefault()
-    }
-  }
-}
-
-const throttledScrollHandler = throttle(scrollHandler)
-
 function createFootnote ({ button, popover }) {
   return button && {
     getId: () => button.getAttribute(FOOTNOTE_ID),
 
-    blur: () => maybeCall(button, button.blur),
-
     activate: (render, className, onActivate) => {
+      maybeCall(button, button.blur)
       button.setAttribute('aria-expanded', 'true')
       classList(button).add(CLASS_ACTIVE)
 
@@ -91,8 +62,7 @@ function createFootnote ({ button, popover }) {
       newPopover.setAttribute(FOOTNOTE_MAX_HEIGHT, getMaxHeight(content))
       newPopover.style.maxWidth = document.body.clientWidth + 'px'
 
-      bind(content, 'mousewheel', throttledScrollHandler)
-      bind(content, 'wheel', throttledScrollHandler)
+      bindContentScrollHandler(content)
 
       addClass(className)(newPopover)
       maybeCall(null, onActivate, newPopover, button)
@@ -101,6 +71,7 @@ function createFootnote ({ button, popover }) {
     },
 
     dismiss: () => {
+      maybeCall(button, button.blur)
       button.setAttribute('aria-expanded', 'false')
       classList(button).remove(CLASS_ACTIVE)
       classList(button).remove(CLASS_HOVERED)

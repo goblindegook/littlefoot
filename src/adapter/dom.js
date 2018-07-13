@@ -10,10 +10,10 @@ import matches from 'dom-matches'
  * @param  {boolean}    capture Capture flag.
  * @return {void}
  */
-export function bind (el, type, fn, capture = false) {
+export function bind (element, type, fn, capture = false) {
   const method = window.addEventListener ? 'addEventListener' : 'attachEvent'
   const prefix = method !== 'addEventListener' ? 'on' : ''
-  el[method](prefix + type, fn, capture)
+  element[method](prefix + type, fn, capture)
 }
 
 /**

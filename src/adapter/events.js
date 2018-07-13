@@ -1,11 +1,9 @@
+import classList from 'dom-classlist'
 import delegate from 'dom-delegate'
 import throttle from 'lodash.throttle'
 import { bind } from './dom'
 import { findClosestFootnote, findClosestPopover, forAllActiveFootnotes } from './footnotes'
-import {
-  CLASS_BUTTON,
-  CLASS_HOVERED
-} from './constants'
+import { CLASS_BUTTON, CLASS_FULLY_SCROLLED, CLASS_HOVERED } from './constants'
 
 function handle (fn) {
   return event => {
@@ -19,6 +17,38 @@ function handle (fn) {
 
 function handleEscape (fn) {
   return event => event.keyCode === 27 && fn()
+}
+
+function scrollHandler (event) {
+  const target = event.currentTarget
+  const delta = event.type === 'wheel' ? -event.deltaY : event.wheelDelta
+  const height = target.clientHeight
+  const popover = findClosestPopover(target)
+
+  if (delta <= 0 && delta < height + target.scrollTop - target.scrollHeight) {
+    classList(popover).add(CLASS_FULLY_SCROLLED)
+    target.scrollTop = target.scrollHeight
+    event.stopPropagation()
+    event.preventDefault()
+    return
+  }
+
+  if (delta > 0) {
+    classList(popover).remove(CLASS_FULLY_SCROLLED)
+
+    if (target.scrollTop < delta) {
+      target.scrollTop = 0
+      event.stopPropagation()
+      event.preventDefault()
+    }
+  }
+}
+
+export function bindContentScrollHandler (contentElement) {
+  const throttledScrollHandler = throttle(scrollHandler)
+
+  bind(contentElement, 'mousewheel', throttledScrollHandler)
+  bind(contentElement, 'wheel', throttledScrollHandler)
 }
 
 export function bindEvents ({

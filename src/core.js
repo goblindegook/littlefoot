@@ -58,8 +58,6 @@ export function createCore (adapter, settings) {
     toggle (footnote, popover) {
       const { allowMultiple } = settings
       if (footnote) {
-        footnote.blur()
-
         if (footnote.isActive()) {
           dismiss(footnote)
         } else {

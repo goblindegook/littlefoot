@@ -32,8 +32,8 @@ export function repositionPopover (popover, room) {
   const position = isTop ? TOP : BOTTOM
 
   if (previous !== position) {
-    classList(popover).remove(CLASS_POSITION_PREFIX + previous)
-    classList(popover).add(CLASS_POSITION_PREFIX + position)
+    classList(popover).remove(`${CLASS_POSITION_PREFIX}${previous}`)
+    classList(popover).add(`${CLASS_POSITION_PREFIX}${position}`)
     popover.setAttribute(POPOVER_POSITION, position)
     popover.style.transformOrigin = `${room.leftRelative * 100}% ${isTop ? '100%' : '0'}`
   }
