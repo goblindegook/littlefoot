@@ -9,7 +9,7 @@ function handle (fn) {
   return event => {
     const target = event.target || event.srcElement
     const footnote = findClosestFootnote(target)
-    const popover = findClosestPopover(target)
+    const popover = target.tagName !== 'A' && findClosestPopover(target)
     fn(footnote, popover)
     if (footnote || popover) {
       event.preventDefault()

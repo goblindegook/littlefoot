@@ -125,7 +125,8 @@ module.exports = function (karma) {
     },
     files: [
       'dist/*.css',
-      'test/**/*.test.js'
+      'test/**/*.test.js',
+      'test/**/*.html'
     ],
     preprocessors: {
       'src/**/*.js': ['browserify', 'coverage'],
