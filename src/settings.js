@@ -1,4 +1,13 @@
-import { CLASS_WRAPPER, CLASS_TOOLTIP, CLASS_FOOTNOTE, CLASS_CONTENT, CLASS_BUTTON, FOOTNOTE_CONTENT, FOOTNOTE_ID, FOOTNOTE_NUMBER } from './adapter/constants'
+import {
+  CLASS_BUTTON,
+  CLASS_CONTENT,
+  CLASS_FOOTNOTE,
+  CLASS_TOOLTIP,
+  CLASS_WRAPPER,
+  FOOTNOTE_CONTENT,
+  FOOTNOTE_ID,
+  FOOTNOTE_NUMBER
+} from './adapter/constants'
 
 /**
  * Default settings.
@@ -25,5 +34,7 @@ const DEFAULTS = {
 }
 
 export function createSettings (options) {
-  return Object.assign({}, DEFAULTS, options)
+  return Object.assign({},
+    DEFAULTS,
+    options)
 }

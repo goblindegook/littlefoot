@@ -45,11 +45,10 @@ export const findClosestPopover = element => closest(element, `.${CLASS_FOOTNOTE
 function scrollHandler (event) {
   const target = event.currentTarget
   const delta = event.type === 'wheel' ? -event.deltaY : event.wheelDelta
-  const isScrollUp = delta > 0
   const height = target.clientHeight
   const popover = findClosestPopover(target)
 
-  if (!isScrollUp && delta < height + target.scrollTop - target.scrollHeight) {
+  if (delta <= 0 && delta < height + target.scrollTop - target.scrollHeight) {
     classList(popover).add(CLASS_FULLY_SCROLLED)
     target.scrollTop = target.scrollHeight
     event.stopPropagation()
@@ -57,7 +56,7 @@ function scrollHandler (event) {
     return
   }
 
-  if (isScrollUp) {
+  if (delta > 0) {
     classList(popover).remove(CLASS_FULLY_SCROLLED)
 
     if (target.scrollTop < delta) {
@@ -72,6 +71,8 @@ const throttledScrollHandler = throttle(scrollHandler)
 
 function createFootnote ({ button, popover }) {
   return button && {
+    getId: () => button.getAttribute(FOOTNOTE_ID),
+
     blur: () => maybeCall(button, button.blur),
 
     activate: (render, className, onActivate) => {
@@ -104,8 +105,6 @@ function createFootnote ({ button, popover }) {
       classList(button).remove(CLASS_ACTIVE)
       classList(button).remove(CLASS_HOVERED)
     },
-
-    getSelector: () => `[${FOOTNOTE_ID}="${button.getAttribute(FOOTNOTE_ID)}"]`,
 
     hover: () => classList(button).add(CLASS_HOVERED),
 
@@ -165,16 +164,16 @@ function findMatching (className, element) {
   return element && siblings(element, `.${className}`)[0]
 }
 
-export function findActiveFootnotes (selector) {
+export function forAllActiveFootnotes (fn, selector) {
   return findAll(CLASS_FOOTNOTE, selector)
     .map(popover => {
       const button = findMatching(CLASS_BUTTON, popover)
-      return createFootnote({ button, popover })
+      return fn(createFootnote({ button, popover }))
     })
 }
 
-export function findOtherActiveFootnotes (footnote) {
-  return findActiveFootnotes(`:not(${footnote.getSelector()})`)
+export function forOtherActiveFootnotes (fn, footnote) {
+  return forAllActiveFootnotes(fn, `:not([${FOOTNOTE_ID}="${footnote.getId()}"])`)
 }
 
 export function findClosestFootnote (target) {

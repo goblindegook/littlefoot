@@ -17,19 +17,21 @@ const littlefoot = function (options) {
 
   return {
     activate (selector, className) {
+      const { allowMultiple } = settings
       if (selector) {
-        const { allowMultiple } = settings
         const footnotes = allowMultiple
           ? adapter.findAllFootnotes(selector)
           : [adapter.findFootnote(selector)]
 
-        footnotes
+        return footnotes
           .filter(footnote => footnote)
           .map(footnote => core.activate(footnote, className))
       }
     },
 
-    dismiss: core.dismiss,
+    dismiss (selector, delay) {
+      adapter.forAllActiveFootnotes(footnote => core.dismiss(footnote, delay), selector)
+    },
 
     getSetting (key) {
       return settings[key]

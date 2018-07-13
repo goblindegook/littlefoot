@@ -1,7 +1,7 @@
 import delegate from 'dom-delegate'
 import throttle from 'lodash.throttle'
 import { bind } from './dom'
-import { findClosestFootnote, findClosestPopover } from './footnotes'
+import { findClosestFootnote, findClosestPopover, forAllActiveFootnotes } from './footnotes'
 import {
   CLASS_BUTTON,
   CLASS_HOVERED
@@ -29,9 +29,11 @@ export function bindEvents ({
   hover,
   unhover
 }) {
+  const dismissAll = () => forAllActiveFootnotes(dismiss)
+
   bind(document, 'touchend', handle(toggle))
   bind(document, 'click', handle(toggle))
-  bind(document, 'keyup', handleEscape(dismiss))
+  bind(document, 'keyup', handleEscape(dismissAll))
   bind(document, 'gestureend', throttle(reposition))
   bind(window, 'scroll', throttle(reposition))
   bind(window, 'resize', throttle(resize))

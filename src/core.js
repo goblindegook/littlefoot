@@ -10,7 +10,7 @@ function createActivate (adapter, settings) {
 
       const activated = footnote.activate(render, className, activateCallback)
 
-      adapter.findActiveFootnotes().forEach(fn => {
+      adapter.forAllActiveFootnotes(fn => {
         fn.reposition()
         fn.resize()
       })
@@ -45,19 +45,14 @@ export function createCore (adapter, settings) {
   return {
     activate,
 
-    dismiss (selector, delay) {
-      adapter.findActiveFootnotes(selector)
-        .forEach(footnote => dismiss(footnote, delay))
-    },
+    dismiss,
 
     reposition () {
-      adapter.findActiveFootnotes()
-        .forEach(footnote => footnote.reposition())
+      adapter.forAllActiveFootnotes(footnote => footnote.reposition())
     },
 
     resize () {
-      adapter.findActiveFootnotes()
-        .forEach(footnote => footnote.resize())
+      adapter.forAllActiveFootnotes(footnote => footnote.resize())
     },
 
     toggle (footnote, popover) {
@@ -69,12 +64,12 @@ export function createCore (adapter, settings) {
           dismiss(footnote)
         } else {
           if (!allowMultiple) {
-            adapter.findOtherActiveFootnotes(footnote).forEach(dismiss)
+            adapter.forOtherActiveFootnotes(dismiss, footnote)
           }
           activate(footnote)
         }
       } else if (!popover) {
-        adapter.findActiveFootnotes().forEach(dismiss)
+        adapter.forAllActiveFootnotes(dismiss)
       }
     },
 
@@ -82,7 +77,7 @@ export function createCore (adapter, settings) {
       const { activateOnHover, allowMultiple } = settings
       if (activateOnHover && !footnote.isActive()) {
         if (!allowMultiple) {
-          adapter.findOtherActiveFootnotes(footnote).forEach(dismiss)
+          adapter.forOtherActiveFootnotes(dismiss, footnote)
         }
         activate(footnote)
         footnote.hover()
@@ -94,7 +89,7 @@ export function createCore (adapter, settings) {
       if (dismissOnUnhover) {
         setTimeout(() => {
           if (!adapter.hasHoveredFootnotes()) {
-            adapter.findActiveFootnotes().forEach(dismiss)
+            adapter.forAllActiveFootnotes(dismiss)
           }
         }, hoverDelay)
       }
