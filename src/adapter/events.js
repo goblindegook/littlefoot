@@ -5,13 +5,13 @@ import { bind } from './dom'
 import { findClosestFootnote, findClosestPopover, forAllActiveFootnotes } from './footnotes'
 import { CLASS_BUTTON, CLASS_FULLY_SCROLLED, CLASS_HOVERED } from './constants'
 
-function handle (fn) {
+function handle (fn, hover = false) {
   return event => {
     const target = event.target || event.srcElement
     const footnote = findClosestFootnote(target)
-    const popover = target.tagName !== 'A' && findClosestPopover(target)
+    const popover = findClosestPopover(target)
     fn(footnote, popover)
-    if (footnote || popover) {
+    if (hover) {
       event.preventDefault()
     }
   }
@@ -70,6 +70,6 @@ export function bindEvents ({
   bind(window, 'scroll', throttle(reposition))
   bind(window, 'resize', throttle(resize))
 
-  delegate(document).on('mouseover', `.${CLASS_BUTTON}`, handle(hover))
-  delegate(document).on('mouseout', `.${CLASS_HOVERED}`, handle(unhover))
+  delegate(document).on('mouseover', `.${CLASS_BUTTON}`, handle(hover, true))
+  delegate(document).on('mouseout', `.${CLASS_HOVERED}`, handle(unhover, true))
 }
