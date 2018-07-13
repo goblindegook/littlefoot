@@ -11,7 +11,9 @@ function handle (fn) {
     const footnote = findClosestFootnote(target)
     const popover = findClosestPopover(target)
     fn(footnote, popover)
-    event.preventDefault()
+    if (footnote || popover) {
+      event.preventDefault()
+    }
   }
 }
 
