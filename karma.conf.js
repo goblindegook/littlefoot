@@ -11,7 +11,7 @@ var customLaunchers = {
   }
 }
 
-var reporters = ['dots', 'coverage-istanbul', 'saucelabs']
+var reporters = ['dots', 'coverage', 'saucelabs']
 
 if (!process.env.SAUCE_USERNAME && fs.existsSync('sauce.json')) {
   process.env.SAUCE_USERNAME = require('./sauce').username
@@ -119,8 +119,7 @@ module.exports = function (karma) {
       debug: true,
       transform: [
         'babelify',
-        'stringify',
-        'browserify-istanbul'
+        'stringify'
       ]
     },
     files: [
@@ -129,12 +128,11 @@ module.exports = function (karma) {
       'test/**/*.html'
     ],
     preprocessors: {
-      'src/**/*.js': ['browserify', 'coverage'],
-      'test/**/*.js': ['browserify']
+      '{src,test}/**/*.js': ['browserify']
     },
-    coverageIstanbulReporter: {
+    coverageReporter: {
       dir: 'coverage/',
-      reports: ['text', 'lcov']
+      reports: ['html', 'text', 'lcov']
     },
     sauceLabs: {
       testName: 'littlefoot',
