@@ -1,6 +1,7 @@
 import classList from 'dom-classlist'
 import closest from 'dom-closest'
 import siblings from 'dom-siblings'
+import template from 'lodash.template'
 import { getAvailableRoom, getMaxHeight, getStyle } from './dom'
 import { bindContentScrollHandler } from './events'
 import { getPopoverMaxHeight, repositionPopover, repositionTooltip } from './layout'
@@ -19,7 +20,7 @@ import {
   CLASS_CONTENT
 } from './constants'
 
-function maybeCall (context, fn, ...args) {
+function maybeCall (fn, context, ...args) {
   return typeof fn === 'function' && fn.call(context, ...args)
 }
 
@@ -45,11 +46,12 @@ function createFootnote ({ button, popover }) {
   return button && {
     getId: () => button.getAttribute(FOOTNOTE_ID),
 
-    activate: (render, className, onActivate) => {
-      maybeCall(button, button.blur)
+    activate: (contentTemplate, className, onActivate) => {
+      maybeCall(button.blur, button)
       button.setAttribute('aria-expanded', 'true')
       classList(button).add(CLASS_ACTIVE)
 
+      const render = template(contentTemplate)
       button.insertAdjacentHTML('afterend', render({
         content: button.getAttribute(FOOTNOTE_CONTENT),
         id: button.getAttribute(FOOTNOTE_ID),
@@ -65,13 +67,13 @@ function createFootnote ({ button, popover }) {
       bindContentScrollHandler(content)
 
       addClass(className)(newPopover)
-      maybeCall(null, onActivate, newPopover, button)
+      maybeCall(onActivate, null, newPopover, button)
 
       return createFootnote({ button, popover: newPopover })
     },
 
     dismiss: () => {
-      maybeCall(button, button.blur)
+      maybeCall(button.blur, button)
       button.setAttribute('aria-expanded', 'false')
       classList(button).remove(CLASS_ACTIVE)
       classList(button).remove(CLASS_HOVERED)

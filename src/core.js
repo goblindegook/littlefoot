@@ -1,14 +1,11 @@
-import template from 'lodash.template'
-
 function createActivate (adapter, settings) {
   return (footnote, className) => {
     const { activateCallback, activateDelay, contentTemplate } = settings
-    const render = template(contentTemplate)
 
     if (!footnote.isChanging()) {
       footnote.startChanging()
 
-      const activated = footnote.activate(render, className, activateCallback)
+      const activated = footnote.activate(contentTemplate, className, activateCallback)
 
       adapter.forAllActiveFootnotes(fn => {
         fn.reposition()
