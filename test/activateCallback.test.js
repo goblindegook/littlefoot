@@ -6,10 +6,14 @@ import littlefoot from '../src/'
 test('setup with activateCallback', t => {
   setup('default.html')
   const activateCallback = sinon.spy()
-  const lf = littlefoot({ activateDelay: 0, activateCallback })
+  const { activate } = littlefoot({ activateDelay: 0, activateCallback })
 
-  lf.activate('button[data-footnote-id="1"]')
-  t.ok(activateCallback.called, 'activateCallback called')
+  activate('button[data-footnote-id="1"]')
+
+  const popover = document.querySelector('aside[data-footnote-id="1"]')
+  const button = document.querySelector('button[data-footnote-id="1"]')
+
+  t.ok(activateCallback.calledWithExactly(popover, button), 'activateCallback called')
 
   teardown()
   t.end()

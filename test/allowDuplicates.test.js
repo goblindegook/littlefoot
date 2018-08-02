@@ -33,7 +33,7 @@ test('setup with allowDuplicates=true', (t) => {
 })
 
 test('setup with allowDuplicates=true', (t) => {
-  setup('multiple.html')
+  setup('multiple')
 
   littlefoot({ allowDuplicates: false })
 

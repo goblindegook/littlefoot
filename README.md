@@ -82,7 +82,7 @@ The script has many configurable options from having popovers instantiated on ho
 
 ### `activateCallback`
 
-Specifies a function to call on a footnote popover that is being activated (after it is added to the DOM). The function will be passed two arguments: the `popover` DOM element, and the `button` that was activated to show the popover. This option can be useful for adding additional classes or styling information on the popover.
+Specifies a function to call on a footnote popover that is being activated (after it is added to the DOM). The function will be passed two arguments: the `popover` DOM element, and the `button` that was activated to show the popover. This option can be useful for adding classes or styling information on the popover.
 
 Default: `null`
 

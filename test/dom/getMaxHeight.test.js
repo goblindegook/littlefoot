@@ -2,11 +2,6 @@ import test from 'tape'
 import { getMaxHeight } from '../../src/adapter/dom'
 import { teardown } from '../helper'
 
-/**
- * Setup fixture.
- *
- * @return {DOMElement} DOM element fixture.
- */
 function setup () {
   const fixture = document.createElement('div')
   document.body.appendChild(fixture)

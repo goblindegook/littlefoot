@@ -3,19 +3,10 @@ import classList from 'dom-classlist'
 import closest from 'dom-closest'
 import simulant from 'simulant'
 import littlefoot from '../src/'
-import { setup, setupStylesheet, teardown } from './helper'
-
-/**
- * Checks if a Microsoft browser is in use.
- * @return {Boolean} Whether IE or Edge is in use.
- */
-function isIE () {
-  const ua = window.navigator.userAgent
-  return ua.indexOf('MSIE ') > 0 || ua.indexOf('Trident/') > 0 || ua.indexOf('Edge/') > 0
-}
+import { isIE, setup, setupStylesheet, teardown } from './helper'
 
 test.skip('scroll event handling', t => {
-  setup('scroll.html')
+  setup('scroll')
 
   const lf = littlefoot({ activateDelay: 0 })
 
@@ -40,7 +31,7 @@ test.skip('scroll event handling', t => {
 test('content scroll event handling', {
   skip: isIE() // FIXME: Fix content scroll handling tests on IE and Edge.
 }, t => {
-  setup('scroll.html')
+  setup('scroll')
   setupStylesheet()
 
   const lf = littlefoot({ activateDelay: 0 })

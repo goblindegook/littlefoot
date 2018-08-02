@@ -1,4 +1,12 @@
 /**
+ * Checks whether IE is in use.
+ */
+export function isIE () {
+  const ua = window.navigator.userAgent
+  return ua.indexOf('MSIE ') > 0 || ua.indexOf('Trident/') > 0 || ua.indexOf('Edge/') > 0
+}
+
+/**
  * Setup fixtures.
  *
  * @param  {String} fixture Fixture file to load (defaults to default.html).
@@ -10,11 +18,11 @@ export function setup (fixture) {
   content.id = 'root'
 
   switch (fixture) {
-    case 'multiple.html':
+    case 'multiple':
       content.innerHTML = require('./fixtures/multiple.html')
       break
 
-    case 'scroll.html':
+    case 'scroll':
       content.innerHTML = require('./fixtures/scroll.html')
       break
 
