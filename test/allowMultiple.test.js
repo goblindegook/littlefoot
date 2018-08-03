@@ -5,7 +5,7 @@ import simulant from 'simulant'
 import { setup, sleep, teardown } from './helper'
 
 test('setup with allowMultiple=true', async t => {
-  setup('default.html')
+  setup('default')
   const lf = littlefoot({ activateDelay: 0, dismissDelay: 0, allowMultiple: true })
 
   simulant.fire(document.body.querySelector('button[data-footnote-id="1"]'), 'click')
@@ -26,7 +26,7 @@ test('setup with allowMultiple=true', async t => {
 })
 
 test('activate with allowMultiple=true', async (t) => {
-  setup('default.html')
+  setup('default')
   const lf = littlefoot({ activateDelay: 0, dismissDelay: 0, allowMultiple: true })
 
   lf.activate('button[data-footnote-id]')
@@ -40,7 +40,7 @@ test('activate with allowMultiple=true', async (t) => {
 })
 
 test('hover with allowMultiple=true', async t => {
-  setup('default.html')
+  setup('default')
 
   littlefoot({
     activateDelay: 0,
@@ -65,7 +65,7 @@ test('hover with allowMultiple=true', async t => {
 })
 
 test('setup with allowMultiple=false', async t => {
-  setup('default.html')
+  setup('default')
   littlefoot({ activateDelay: 0, allowMultiple: false })
 
   simulant.fire(document.body.querySelector('button[data-footnote-id="1"]'), 'click')

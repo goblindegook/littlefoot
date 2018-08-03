@@ -3,7 +3,7 @@ import littlefoot from '../src/'
 import { setup, sleep, teardown } from './helper'
 
 test('setup with custom contentTemplate', async (t) => {
-  setup('default.html')
+  setup('default')
 
   const lf = littlefoot({ contentTemplate: require('./fixtures/contentTemplate.html') })
   const delay = lf.getSetting('activateDelay')

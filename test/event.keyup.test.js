@@ -4,7 +4,7 @@ import littlefoot from '../src/'
 import { setup, sleep, teardown } from './helper'
 
 test('keyboard event handling', async (t) => {
-  setup('default.html')
+  setup('default')
 
   const body = document.body
 

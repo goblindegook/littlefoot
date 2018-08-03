@@ -5,7 +5,7 @@ import simulant from 'simulant'
 import { setup, sleep, teardown } from './helper'
 
 test('activate on hover', async t => {
-  setup('default.html')
+  setup('default')
 
   littlefoot({ activateDelay: 0, activateOnHover: true })
 

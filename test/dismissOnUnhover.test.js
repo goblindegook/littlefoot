@@ -5,7 +5,7 @@ import simulant from 'simulant'
 import { setup, sleep, teardown } from './helper'
 
 test('dismiss on unhover', async t => {
-  setup('default.html')
+  setup('default')
 
   littlefoot({
     activateDelay: 0,

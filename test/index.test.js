@@ -5,7 +5,7 @@ import simulant from 'simulant'
 import { setup, sleep, teardown } from './helper'
 
 test('setup with default options', (t) => {
-  setup('default.html')
+  setup('default')
 
   const body = document.body
   const footnotes = body.querySelectorAll('.footnote').length
@@ -42,7 +42,7 @@ test('setup with default options', (t) => {
 })
 
 test('footnote activation and dismissal', async (t) => {
-  setup('default.html')
+  setup('default')
 
   const lf = littlefoot()
   const activateDelay = lf.getSetting('activateDelay')
@@ -115,7 +115,7 @@ test('footnote activation and dismissal', async (t) => {
 })
 
 test('footnote activation with no selector', t => {
-  setup('default.html')
+  setup('default')
   const lf = littlefoot({ activateDelay: 0 })
 
   lf.activate()
@@ -127,7 +127,7 @@ test('footnote activation with no selector', t => {
 })
 
 test('footnote activation with invalid selector', t => {
-  setup('default.html')
+  setup('default')
   const lf = littlefoot({ activateDelay: 0 })
 
   lf.activate('invalid')

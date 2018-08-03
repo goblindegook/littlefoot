@@ -3,7 +3,7 @@ import littlefoot from '../src/'
 import { setup, teardown } from './helper'
 
 test('setup with scope=body', (t) => {
-  setup('default.html')
+  setup('default')
 
   const footnoteReferences = document.body.querySelectorAll('.footnote')
   const footnotes = document.body.querySelectorAll('.reversefootnote')
@@ -21,7 +21,7 @@ test('setup with scope=body', (t) => {
 })
 
 test('setup with scope=#invalid', (t) => {
-  setup('default.html')
+  setup('default')
 
   littlefoot({ scope: '#invalid' })
 

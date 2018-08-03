@@ -4,7 +4,7 @@ import { setup, teardown } from './helper'
 import littlefoot from '../src/'
 
 test('setup with activateCallback', t => {
-  setup('default.html')
+  setup('default')
   const activateCallback = sinon.spy()
   const { activate } = littlefoot({ activateDelay: 0, activateCallback })
 
