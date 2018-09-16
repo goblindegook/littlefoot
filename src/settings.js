@@ -34,7 +34,5 @@ const DEFAULTS = {
 }
 
 export function createSettings (options) {
-  return Object.assign({},
-    DEFAULTS,
-    options)
+  return Object.assign({}, DEFAULTS, options)
 }

@@ -3,7 +3,11 @@
  */
 export function isIE () {
   const ua = window.navigator.userAgent
-  return ua.indexOf('MSIE ') > 0 || ua.indexOf('Trident/') > 0 || ua.indexOf('Edge/') > 0
+  return (
+    ua.indexOf('MSIE ') > 0 ||
+    ua.indexOf('Trident/') > 0 ||
+    ua.indexOf('Edge/') > 0
+  )
 }
 
 /**
@@ -63,5 +67,5 @@ export function teardown () {
  * @return {Promise}         Promise.
  */
 export function sleep (timeout) {
-  return new Promise((resolve) => setTimeout(resolve, timeout))
+  return new Promise(resolve => setTimeout(resolve, timeout))
 }

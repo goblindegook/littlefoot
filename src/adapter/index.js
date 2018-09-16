@@ -29,7 +29,10 @@ const setFootnoteBacklinkRef = setAttribute(FOOTNOTE_BACKLINK_REF)
 
 function getLastFootnoteId () {
   const footnotes = document.querySelectorAll(`[${FOOTNOTE_ID}]`)
-  return footnotes.length && footnotes[footnotes.length - 1].getAttribute(FOOTNOTE_ID)
+  return (
+    footnotes.length &&
+    footnotes[footnotes.length - 1].getAttribute(FOOTNOTE_ID)
+  )
 }
 
 function getFootnoteBacklinkId (link, anchorParentSelector) {
@@ -71,8 +74,13 @@ export function getFootnoteLinks ({
       const rel = link.getAttribute('rel')
       const anchor = `${href}${rel != null && rel !== 'null' ? rel : ''}`
 
-      return anchor.match(anchorPattern) &&
-        !closest(link, `[class*="${footnoteParentClass}"]:not(a):not(${anchorParentSelector})`)
+      return (
+        anchor.match(anchorPattern) &&
+        !closest(
+          link,
+          `[class*="${footnoteParentClass}"]:not(a):not(${anchorParentSelector})`
+        )
+      )
     })
     .map(link => setLinkReferences(link, anchorParentSelector))
 }
@@ -83,9 +91,15 @@ export function insertButton (link, html) {
 
 function prepareContent (content, backlinkId) {
   const pattern = backlinkId.trim().replace(/\s+/g, '|')
-  const regex = new RegExp('(\\s|&nbsp;)*<\\s*a[^#<]*#(' + pattern + ')[^>]*>(.*?)<\\s*/\\s*a>', 'g')
+  const regex = new RegExp(
+    '(\\s|&nbsp;)*<\\s*a[^#<]*#(' + pattern + ')[^>]*>(.*?)<\\s*/\\s*a>',
+    'g'
+  )
 
-  let preparedContent = content.trim().replace(regex, '').replace('[]', '')
+  let preparedContent = content
+    .trim()
+    .replace(regex, '')
+    .replace('[]', '')
 
   if (preparedContent.indexOf('<') !== 0) {
     preparedContent = '<p>' + preparedContent + '</p>'
@@ -110,7 +124,9 @@ function addLinkElements (allowDuplicates, footnoteSelector) {
   return link => {
     const selector = getFootnoteRef(link).replace(/[:.+~*\[\]]/g, '\\$&') // eslint-disable-line
     const strictSelector = `${selector}:not(.${CLASS_PROCESSED})`
-    const related = document.querySelector(allowDuplicates ? selector : strictSelector)
+    const related = document.querySelector(
+      allowDuplicates ? selector : strictSelector
+    )
     const element = closest(related, footnoteSelector)
 
     setProcessed(element)
@@ -135,13 +151,13 @@ function hideFootnoteContainer (container) {
   const visibleSeparators = visibleElements.filter(el => el.tagName === 'HR')
 
   if (visibleElements.length === visibleSeparators.length) {
-    [...visibleSeparators, container].forEach(setPrintOnly)
+    ;[...visibleSeparators, container].forEach(setPrintOnly)
     hideFootnoteContainer(container.parentNode)
   }
 }
 
 function hideOriginalFootnote (footnote, link) {
-  [footnote, link].forEach(setPrintOnly)
+  ;[footnote, link].forEach(setPrintOnly)
   hideFootnoteContainer(footnote.parentNode)
 }
 
@@ -167,7 +183,12 @@ export function createDocumentAdapter (settings) {
 
   const offset = parseInt(getLastFootnoteId(), 10) + 1
 
-  getFootnoteLinks({ anchorPattern, anchorParentSelector, footnoteParentClass, scope })
+  getFootnoteLinks({
+    anchorPattern,
+    anchorParentSelector,
+    footnoteParentClass,
+    scope
+  })
     .map(addLinkElements(allowDuplicates, footnoteSelector))
     .filter(({ element }) => element)
     .map(assignFootnoteProperties(offset))

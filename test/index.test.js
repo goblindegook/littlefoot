@@ -4,7 +4,7 @@ import littlefoot from '../src/'
 import simulant from 'simulant'
 import { setup, sleep, teardown } from './helper'
 
-test('setup with default options', (t) => {
+test('setup with default options', t => {
   setup('default')
 
   const body = document.body
@@ -13,35 +13,59 @@ test('setup with default options', (t) => {
 
   littlefoot()
 
-  t.equal(body.querySelectorAll('.littlefoot-footnote__container').length, footnotes,
-    'inserts footnote containers')
+  t.equal(
+    body.querySelectorAll('.littlefoot-footnote__container').length,
+    footnotes,
+    'inserts footnote containers'
+  )
 
-  t.equal(body.querySelectorAll('button').length, footnotes,
-    'inserts footnote buttons')
+  t.equal(
+    body.querySelectorAll('button').length,
+    footnotes,
+    'inserts footnote buttons'
+  )
 
-  t.equal(body.querySelectorAll('.footnote-processed').length, reverseFootnotes,
-    'processes footnotes')
+  t.equal(
+    body.querySelectorAll('.footnote-processed').length,
+    reverseFootnotes,
+    'processes footnotes'
+  )
 
-  t.equal(body.querySelectorAll('.footnotes').length, 1,
-    'adds a footnote container')
+  t.equal(
+    body.querySelectorAll('.footnotes').length,
+    1,
+    'adds a footnote container'
+  )
 
-  t.equal(body.querySelectorAll('.footnotes.footnote-print-only').length, 1,
-    'hides the footnote container')
+  t.equal(
+    body.querySelectorAll('.footnotes.footnote-print-only').length,
+    1,
+    'hides the footnote container'
+  )
 
-  t.equal(body.querySelectorAll('hr.footnote-print-only').length, 1,
-    'hides the footnote separator')
+  t.equal(
+    body.querySelectorAll('hr.footnote-print-only').length,
+    1,
+    'hides the footnote separator'
+  )
 
-  t.equal(body.querySelectorAll('li.footnote-print-only').length, reverseFootnotes,
-    'hides all footnotes')
+  t.equal(
+    body.querySelectorAll('li.footnote-print-only').length,
+    reverseFootnotes,
+    'hides all footnotes'
+  )
 
-  t.equal(body.querySelectorAll('button.is-active').length, 0,
-    'has no active footnotes')
+  t.equal(
+    body.querySelectorAll('button.is-active').length,
+    0,
+    'has no active footnotes'
+  )
 
   teardown()
   t.end()
 })
 
-test('footnote activation and dismissal', async (t) => {
+test('footnote activation and dismissal', async t => {
   setup('default')
 
   const lf = littlefoot()
@@ -49,7 +73,11 @@ test('footnote activation and dismissal', async (t) => {
   const dismissDelay = lf.getSetting('dismissDelay')
   const button = document.body.querySelector('button[data-footnote-id="1"]')
 
-  t.equal(button.getAttribute('aria-expanded'), 'false', 'sets ARIA expanded attribute to false')
+  t.equal(
+    button.getAttribute('aria-expanded'),
+    'false',
+    'sets ARIA expanded attribute to false'
+  )
   t.equal(button.getAttribute('aria-label'), 'Footnote 1', 'sets ARIA label')
 
   // activate button
@@ -61,45 +89,76 @@ test('footnote activation and dismissal', async (t) => {
   const wrapper = document.body.querySelector('.littlefoot-footnote__wrapper')
   const content = document.body.querySelector('.littlefoot-footnote__content')
 
-  t.equal(button.getAttribute('aria-controls'), popover.id, 'sets ARIA controls')
-  t.equal(button.getAttribute('aria-expanded'), 'true', 'changes ARIA expanded attribute to true')
+  t.equal(
+    button.getAttribute('aria-controls'),
+    popover.id,
+    'sets ARIA controls'
+  )
+  t.equal(
+    button.getAttribute('aria-expanded'),
+    'true',
+    'changes ARIA expanded attribute to true'
+  )
 
-  t.equal(content.innerHTML.trim(), button.getAttribute('data-footnote-content').trim(),
-    'injects content into popover')
+  t.equal(
+    content.innerHTML.trim(),
+    button.getAttribute('data-footnote-content').trim(),
+    'injects content into popover'
+  )
 
-  t.equal(document.body.querySelectorAll('button.is-active').length, 1, 'displays one popover on activate()')
+  t.equal(
+    document.body.querySelectorAll('button.is-active').length,
+    1,
+    'displays one popover on activate()'
+  )
 
-  t.ok(popover.getAttribute('data-footnote-max-height'),
-    'sets a data-footnote-max-height')
+  t.ok(
+    popover.getAttribute('data-footnote-max-height'),
+    'sets a data-footnote-max-height'
+  )
 
-  t.equal(parseFloat(popover.style.maxWidth), document.body.clientWidth,
-    'sets maximum popover width to document width')
+  t.equal(
+    parseFloat(popover.style.maxWidth),
+    document.body.clientWidth,
+    'sets maximum popover width to document width'
+  )
 
-  t.equal(parseFloat(content.offsetWidth), parseFloat(wrapper.style.maxWidth),
-    'fits wrapper to content width')
+  t.equal(
+    parseFloat(content.offsetWidth),
+    parseFloat(wrapper.style.maxWidth),
+    'fits wrapper to content width'
+  )
 
   lf.dismiss()
 
   await sleep(dismissDelay)
 
-  t.notOk(classList(button).contains('is-active'),
-    'dismisses popovers on dismiss()')
+  t.notOk(
+    classList(button).contains('is-active'),
+    'dismisses popovers on dismiss()'
+  )
 
   simulant.fire(button, 'click')
 
-  t.ok(classList(button).contains('is-changing'),
-    'transitions popover activation on click')
+  t.ok(
+    classList(button).contains('is-changing'),
+    'transitions popover activation on click'
+  )
 
   await sleep(activateDelay)
 
-  t.ok(classList(button).contains('is-active'),
-    'activates one popover on button click event')
+  t.ok(
+    classList(button).contains('is-active'),
+    'activates one popover on button click event'
+  )
 
   simulant.fire(document.body, 'click')
   await sleep(dismissDelay)
 
-  t.notOk(classList(button).contains('is-active'),
-    'dismisses popovers on body click event')
+  t.notOk(
+    classList(button).contains('is-active'),
+    'dismisses popovers on body click event'
+  )
 
   simulant.fire(button, 'click')
   await sleep(activateDelay)
@@ -107,8 +166,10 @@ test('footnote activation and dismissal', async (t) => {
   simulant.fire(button, 'click')
   await sleep(dismissDelay)
 
-  t.notOk(classList(button).contains('is-active'),
-    'dismisses popovers on clicking the button again')
+  t.notOk(
+    classList(button).contains('is-active'),
+    'dismisses popovers on clicking the button again'
+  )
 
   teardown()
   t.end()

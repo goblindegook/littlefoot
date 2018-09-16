@@ -2,7 +2,11 @@ import classList from 'dom-classlist'
 import delegate from 'dom-delegate'
 import { throttle } from 'lodash'
 import { bind } from './dom'
-import { findClosestFootnote, findClosestPopover, forAllActiveFootnotes } from './footnotes'
+import {
+  findClosestFootnote,
+  findClosestPopover,
+  forAllActiveFootnotes
+} from './footnotes'
 import { CLASS_BUTTON, CLASS_FULLY_SCROLLED, CLASS_HOVERED } from './constants'
 
 function handle (fn, hover = false) {

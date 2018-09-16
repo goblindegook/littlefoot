@@ -13,7 +13,10 @@ test('setup with activateCallback', t => {
   const popover = document.querySelector('aside[data-footnote-id="1"]')
   const button = document.querySelector('button[data-footnote-id="1"]')
 
-  t.ok(activateCallback.calledWithExactly(popover, button), 'activateCallback called')
+  t.ok(
+    activateCallback.calledWithExactly(popover, button),
+    'activateCallback called'
+  )
 
   teardown()
   t.end()

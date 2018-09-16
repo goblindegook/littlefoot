@@ -5,7 +5,11 @@ function createActivate (adapter, settings) {
     if (!footnote.isChanging()) {
       footnote.startChanging()
 
-      const activated = footnote.activate(contentTemplate, className, activateCallback)
+      const activated = footnote.activate(
+        contentTemplate,
+        className,
+        activateCallback
+      )
 
       adapter.forAllActiveFootnotes(fn => {
         fn.reposition()

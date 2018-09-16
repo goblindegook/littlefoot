@@ -38,7 +38,9 @@ export function children (element, selector = null) {
  */
 export function getStyle (element, property) {
   const view = element.ownerDocument.defaultView || window
-  const style = view.getComputedStyle ? view.getComputedStyle(element) : element.currentStyle
+  const style = view.getComputedStyle
+    ? view.getComputedStyle(element)
+    : element.currentStyle
 
   return style.getPropertyValue(property) || style[property] || ''
 }
@@ -58,7 +60,7 @@ export function getMaxHeight (element) {
   }
 
   if (/%/.test(value)) {
-    return Math.round(size / 100 * document.body.clientHeight)
+    return Math.round((size / 100) * document.body.clientHeight)
   }
 
   return Math.round(size)

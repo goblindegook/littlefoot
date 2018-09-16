@@ -30,7 +30,10 @@ export const littlefoot = function (options) {
     },
 
     dismiss (selector, delay) {
-      adapter.forAllActiveFootnotes(footnote => core.dismiss(footnote, delay), selector)
+      adapter.forAllActiveFootnotes(
+        footnote => core.dismiss(footnote, delay),
+        selector
+      )
     },
 
     getSetting (key) {

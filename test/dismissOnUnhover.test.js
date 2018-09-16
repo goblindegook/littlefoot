@@ -25,8 +25,10 @@ test('dismiss on unhover', async t => {
 
   await sleep(1)
 
-  t.notOk(classList(footnote).contains('is-active'),
-    'removes the is-active class from popover')
+  t.notOk(
+    classList(footnote).contains('is-active'),
+    'removes the is-active class from popover'
+  )
 
   teardown()
   t.end()

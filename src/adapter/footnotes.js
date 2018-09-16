@@ -4,7 +4,11 @@ import siblings from 'dom-siblings'
 import { template } from 'lodash'
 import { getAvailableRoom, getMaxHeight, getStyle } from './dom'
 import { bindContentScrollHandler } from './events'
-import { getPopoverMaxHeight, repositionPopover, repositionTooltip } from './layout'
+import {
+  getPopoverMaxHeight,
+  repositionPopover,
+  repositionTooltip
+} from './layout'
 import {
   CLASS_ACTIVE,
   CLASS_BUTTON,
@@ -40,87 +44,96 @@ function findPopoverContent (popover) {
   return popover.querySelector(`.${CLASS_CONTENT}`)
 }
 
-export const findClosestPopover = element => closest(element, `.${CLASS_FOOTNOTE}`)
+export const findClosestPopover = element =>
+  closest(element, `.${CLASS_FOOTNOTE}`)
 
 function createFootnote ({ button, popover }) {
-  return button && {
-    getId: () => button.getAttribute(FOOTNOTE_ID),
+  return (
+    button && {
+      getId: () => button.getAttribute(FOOTNOTE_ID),
 
-    activate: (contentTemplate, className, onActivate) => {
-      maybeCall(button.blur, button)
-      button.setAttribute('aria-expanded', 'true')
-      classList(button).add(CLASS_ACTIVE)
+      activate: (contentTemplate, className, onActivate) => {
+        maybeCall(button.blur, button)
+        button.setAttribute('aria-expanded', 'true')
+        classList(button).add(CLASS_ACTIVE)
 
-      const render = template(contentTemplate)
-      button.insertAdjacentHTML('afterend', render({
-        content: button.getAttribute(FOOTNOTE_CONTENT),
-        id: button.getAttribute(FOOTNOTE_ID),
-        number: button.getAttribute(FOOTNOTE_NUMBER)
-      }))
+        const render = template(contentTemplate)
+        button.insertAdjacentHTML(
+          'afterend',
+          render({
+            content: button.getAttribute(FOOTNOTE_CONTENT),
+            id: button.getAttribute(FOOTNOTE_ID),
+            number: button.getAttribute(FOOTNOTE_NUMBER)
+          })
+        )
 
-      const newPopover = button.nextElementSibling
-      const content = findPopoverContent(newPopover)
+        const newPopover = button.nextElementSibling
+        const content = findPopoverContent(newPopover)
 
-      newPopover.setAttribute(FOOTNOTE_MAX_HEIGHT, getMaxHeight(content))
-      newPopover.style.maxWidth = document.body.clientWidth + 'px'
+        newPopover.setAttribute(FOOTNOTE_MAX_HEIGHT, getMaxHeight(content))
+        newPopover.style.maxWidth = document.body.clientWidth + 'px'
 
-      bindContentScrollHandler(content)
+        bindContentScrollHandler(content)
 
-      addClass(className)(newPopover)
-      maybeCall(onActivate, null, newPopover, button)
+        addClass(className)(newPopover)
+        maybeCall(onActivate, null, newPopover, button)
 
-      return createFootnote({ button, popover: newPopover })
-    },
+        return createFootnote({ button, popover: newPopover })
+      },
 
-    dismiss: () => {
-      maybeCall(button.blur, button)
-      button.setAttribute('aria-expanded', 'false')
-      classList(button).remove(CLASS_ACTIVE)
-      classList(button).remove(CLASS_HOVERED)
-    },
+      dismiss: () => {
+        maybeCall(button.blur, button)
+        button.setAttribute('aria-expanded', 'false')
+        classList(button).remove(CLASS_ACTIVE)
+        classList(button).remove(CLASS_HOVERED)
+      },
 
-    hover: () => classList(button).add(CLASS_HOVERED),
+      hover: () => classList(button).add(CLASS_HOVERED),
 
-    isActive: () => classList(button).contains(CLASS_ACTIVE),
+      isActive: () => classList(button).contains(CLASS_ACTIVE),
 
-    isChanging: () => classList(button).contains(CLASS_CHANGING),
+      isChanging: () => classList(button).contains(CLASS_CHANGING),
 
-    ready: () => classList(popover).add(CLASS_ACTIVE),
+      ready: () => classList(popover).add(CLASS_ACTIVE),
 
-    remove: () => popover.parentNode.removeChild(popover),
+      remove: () => popover.parentNode.removeChild(popover),
 
-    reposition: () => {
-      const room = getAvailableRoom(button)
-      const content = findPopoverContent(popover)
-      const maxHeight = getPopoverMaxHeight(popover, room)
+      reposition: () => {
+        const room = getAvailableRoom(button)
+        const content = findPopoverContent(popover)
+        const maxHeight = getPopoverMaxHeight(popover, room)
 
-      content.style.maxHeight = maxHeight + 'px'
+        content.style.maxHeight = maxHeight + 'px'
 
-      repositionPopover(popover, room)
+        repositionPopover(popover, room)
 
-      if (parseFloat(popover.offsetHeight) <= content.scrollHeight) {
-        classList(popover).add(CLASS_SCROLLABLE)
-      }
-    },
+        if (parseFloat(popover.offsetHeight) <= content.scrollHeight) {
+          classList(popover).add(CLASS_SCROLLABLE)
+        }
+      },
 
-    resize: () => {
-      const room = getAvailableRoom(button)
-      const content = findPopoverContent(popover)
-      const maxWidth = content.offsetWidth
-      const buttonMarginLeft = parseInt(getStyle(button, 'marginLeft'), 10)
-      const left = -room.leftRelative * maxWidth + buttonMarginLeft + button.offsetWidth / 2
-      const wrapper = popover.querySelector(`.${CLASS_WRAPPER}`)
+      resize: () => {
+        const room = getAvailableRoom(button)
+        const content = findPopoverContent(popover)
+        const maxWidth = content.offsetWidth
+        const buttonMarginLeft = parseInt(getStyle(button, 'marginLeft'), 10)
+        const left =
+          -room.leftRelative * maxWidth +
+          buttonMarginLeft +
+          button.offsetWidth / 2
+        const wrapper = popover.querySelector(`.${CLASS_WRAPPER}`)
 
-      popover.style.left = left + 'px'
-      wrapper.style.maxWidth = maxWidth + 'px'
+        popover.style.left = left + 'px'
+        wrapper.style.maxWidth = maxWidth + 'px'
 
-      repositionTooltip(popover, room.leftRelative)
-    },
+        repositionTooltip(popover, room.leftRelative)
+      },
 
-    startChanging: () => classList(button).add(CLASS_CHANGING),
+      startChanging: () => classList(button).add(CLASS_CHANGING),
 
-    stopChanging: () => classList(button).remove(CLASS_CHANGING)
-  }
+      stopChanging: () => classList(button).remove(CLASS_CHANGING)
+    }
+  )
 }
 
 export function findFootnote (selector) {
@@ -129,8 +142,9 @@ export function findFootnote (selector) {
 }
 
 export function findAllFootnotes (selector) {
-  return findAll(CLASS_BUTTON, selector)
-    .map(button => createFootnote({ button }))
+  return findAll(CLASS_BUTTON, selector).map(button =>
+    createFootnote({ button })
+  )
 }
 
 function findMatching (className, element) {
@@ -138,15 +152,17 @@ function findMatching (className, element) {
 }
 
 export function forAllActiveFootnotes (fn, selector) {
-  return findAll(CLASS_FOOTNOTE, selector)
-    .map(popover => {
-      const button = findMatching(CLASS_BUTTON, popover)
-      return fn(createFootnote({ button, popover }))
-    })
+  return findAll(CLASS_FOOTNOTE, selector).map(popover => {
+    const button = findMatching(CLASS_BUTTON, popover)
+    return fn(createFootnote({ button, popover }))
+  })
 }
 
 export function forOtherActiveFootnotes (fn, footnote) {
-  return forAllActiveFootnotes(fn, `:not([${FOOTNOTE_ID}="${footnote.getId()}"])`)
+  return forAllActiveFootnotes(
+    fn,
+    `:not([${FOOTNOTE_ID}="${footnote.getId()}"])`
+  )
 }
 
 export function findClosestFootnote (target) {
@@ -156,5 +172,7 @@ export function findClosestFootnote (target) {
 }
 
 export function hasHoveredFootnotes () {
-  return !!document.querySelector(`.${CLASS_BUTTON}:hover, .${CLASS_FOOTNOTE}:hover`)
+  return !!document.querySelector(
+    `.${CLASS_BUTTON}:hover, .${CLASS_FOOTNOTE}:hover`
+  )
 }

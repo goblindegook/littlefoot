@@ -35,7 +35,9 @@ export function repositionPopover (popover, room) {
     classList(popover).remove(`${CLASS_POSITION_PREFIX}${previous}`)
     classList(popover).add(`${CLASS_POSITION_PREFIX}${position}`)
     popover.setAttribute(POPOVER_POSITION, position)
-    popover.style.transformOrigin = `${room.leftRelative * 100}% ${isTop ? '100%' : '0'}`
+    popover.style.transformOrigin = `${room.leftRelative * 100}% ${
+      isTop ? '100%' : '0'
+    }`
   }
 }
 
@@ -43,6 +45,6 @@ export function repositionTooltip (popover, leftRelative = 0.5) {
   const tooltip = popover.querySelector(`.${CLASS_TOOLTIP}`)
 
   if (tooltip) {
-    tooltip.style.left = (leftRelative * 100) + '%'
+    tooltip.style.left = leftRelative * 100 + '%'
   }
 }
