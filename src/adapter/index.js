@@ -1,7 +1,6 @@
 import classList from 'dom-classlist'
 import closest from 'dom-closest'
-import escape from 'lodash.escape'
-import template from 'lodash.template'
+import { escape, template } from 'lodash'
 import { children } from './dom'
 import * as adapter from './footnotes'
 import {

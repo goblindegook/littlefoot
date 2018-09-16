@@ -32,7 +32,7 @@
     "url": "https://goblindegook.com/"
   },
   "license": "MIT",
-  "main": "dist/littlefoot.js",
+  "main": "src/index.js",
   "jsnext:main": "src/index.js",
   "style": "dist/littlefoot.css",
   "devDependencies": {
@@ -42,6 +42,7 @@
     "@babel/preset-env": "^7.0.0",
     "@babel/runtime": "^7.0.0",
     "babel-plugin-istanbul": "^5.0.1",
+    "babel-plugin-lodash": "^3.3.4",
     "babel-tape-runner": "^3.0.0",
     "babelify": "^10.0.0",
     "browserify": "^16.2.2",
@@ -73,8 +74,6 @@
     "dom-delegate": "^2.0.3",
     "dom-matches": "^2.0.0",
     "dom-siblings": "^0.1.0",
-    "lodash.escape": "^4.0.1",
-    "lodash.template": "^4.4.0",
-    "lodash.throttle": "^4.1.1"
+    "lodash": "^4.17.11"
   }
 }
