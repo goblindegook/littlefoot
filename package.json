@@ -32,8 +32,9 @@
     "url": "https://goblindegook.com/"
   },
   "license": "MIT",
-  "browser": "dist/littlefoot.js",
-  "jsnext:browser": "dist/littlefoot.js",
+  "main": "dist/littlefoot.js",
+  "jsnext:main": "src/index.js",
+  "typings": "src/index.d.ts",
   "style": "dist/littlefoot.css",
   "devDependencies": {
     "@babel/cli": "^7.0.0",

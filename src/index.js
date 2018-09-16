@@ -9,7 +9,7 @@ import { bindEvents } from './adapter/events'
  * @param  {Object} options Littlefoot options.
  * @return {Object}         Littlefoot instance.
  */
-const littlefoot = function (options) {
+export const littlefoot = function (options) {
   const settings = createSettings(options)
   const adapter = createDocumentAdapter(settings)
   const core = createCore(adapter, settings)
