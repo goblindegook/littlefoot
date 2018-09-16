@@ -1,4 +1,5 @@
 coverage/
+cypress/videos/
 dist/
 docs/
 node_modules/

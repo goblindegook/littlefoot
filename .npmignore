@@ -1,5 +1,6 @@
 .vscode/
 coverage/
+cypress/videos/
 docs/
 .DS_Store
 .nyc_output
