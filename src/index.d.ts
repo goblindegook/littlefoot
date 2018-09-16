@@ -1,5 +1,5 @@
 interface LittlefootSettings {
-  activateCallback: ((element: HTMLElement, button: HTMLInputElement) => any) | null
+  activateCallback: ((popover: HTMLElement, button: HTMLInputElement) => void) | null
   activateDelay: number
   activateOnHover: boolean
   allowDuplicates: boolean
