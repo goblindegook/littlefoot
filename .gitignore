@@ -1,7 +1,5 @@
 coverage/
-cypress/videos/
 dist/
-docs/
 node_modules/
 .DS_Store
 .nyc_output
