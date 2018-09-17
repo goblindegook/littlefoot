@@ -1,8 +1,14 @@
 import test from 'tape'
 import classList from 'dom-classlist'
 import littlefoot from '../src/'
-import simulant from 'simulant'
-import { setup, sleep, teardown } from './helper'
+import {
+  setup,
+  sleep,
+  teardown,
+  mouseover,
+  mouseout,
+  getButton
+} from './helper'
 
 test('dismiss on unhover', async t => {
   setup('default')
@@ -15,19 +21,17 @@ test('dismiss on unhover', async t => {
     hoverDelay: 0
   })
 
-  const footnote = document.body.querySelector('button')
+  const button = getButton('1')
 
-  simulant.fire(footnote, 'mouseover')
-
+  mouseover(button)
   await sleep(1)
 
-  simulant.fire(footnote, 'mouseout')
-
+  mouseout(button)
   await sleep(1)
 
   t.notOk(
-    classList(footnote).contains('is-active'),
-    'removes the is-active class from popover'
+    classList(button).contains('is-active'),
+    'removes the is-active class from button'
   )
 
   teardown()

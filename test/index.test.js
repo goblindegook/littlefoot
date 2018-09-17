@@ -1,8 +1,15 @@
 import classList from 'dom-classlist'
 import test from 'tape'
 import littlefoot from '../src/'
-import simulant from 'simulant'
-import { setup, sleep, teardown } from './helper'
+import {
+  setup,
+  sleep,
+  teardown,
+  getAllButtons,
+  getAllActiveButtons,
+  getButton,
+  click
+} from './helper'
 
 test('setup with default options', t => {
   setup('default')
@@ -19,11 +26,7 @@ test('setup with default options', t => {
     'inserts footnote containers'
   )
 
-  t.equal(
-    body.querySelectorAll('button').length,
-    footnotes,
-    'inserts footnote buttons'
-  )
+  t.equal(getAllButtons().length, footnotes, 'inserts footnote buttons')
 
   t.equal(
     body.querySelectorAll('.footnote-processed').length,
@@ -55,11 +58,7 @@ test('setup with default options', t => {
     'hides all footnotes'
   )
 
-  t.equal(
-    body.querySelectorAll('button.is-active').length,
-    0,
-    'has no active footnotes'
-  )
+  t.equal(getAllActiveButtons().length, 0, 'has no active footnotes')
 
   teardown()
   t.end()
@@ -71,7 +70,7 @@ test('footnote activation and dismissal', async t => {
   const lf = littlefoot()
   const activateDelay = lf.getSetting('activateDelay')
   const dismissDelay = lf.getSetting('dismissDelay')
-  const button = document.body.querySelector('button[data-footnote-id="1"]')
+  const button = getButton('1')
 
   t.equal(
     button.getAttribute('aria-expanded'),
@@ -138,7 +137,7 @@ test('footnote activation and dismissal', async t => {
     'dismisses popovers on dismiss()'
   )
 
-  simulant.fire(button, 'click')
+  click(button)
 
   t.ok(
     classList(button).contains('is-changing'),
@@ -152,7 +151,7 @@ test('footnote activation and dismissal', async t => {
     'activates one popover on button click event'
   )
 
-  simulant.fire(document.body, 'click')
+  click(document.body)
   await sleep(dismissDelay)
 
   t.notOk(
@@ -160,10 +159,10 @@ test('footnote activation and dismissal', async t => {
     'dismisses popovers on body click event'
   )
 
-  simulant.fire(button, 'click')
+  click(button)
   await sleep(activateDelay)
 
-  simulant.fire(button, 'click')
+  click(button)
   await sleep(dismissDelay)
 
   t.notOk(

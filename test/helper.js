@@ -1,3 +1,5 @@
+import simulant from 'simulant'
+
 /**
  * Checks whether IE is in use.
  */
@@ -69,3 +71,42 @@ export function teardown () {
 export function sleep (timeout) {
   return new Promise(resolve => setTimeout(resolve, timeout))
 }
+
+export function getButton (id) {
+  return document.querySelector(`button[data-footnote-id="${id}"]`)
+}
+
+export function getPopover (id) {
+  return document.querySelector(`aside[data-footnote-id="${id}"]`)
+}
+
+export function getAllButtons () {
+  return [...document.querySelectorAll(`button[data-footnote-id]`)]
+}
+
+export function getAllActiveButtons () {
+  return [...document.querySelectorAll(`button[data-footnote-id].is-active`)]
+}
+
+export function getAllPopovers () {
+  return [...document.querySelectorAll(`aside[data-footnote-id]`)]
+}
+
+export function click (element) {
+  simulant.fire(element, 'click')
+}
+
+export function mouseover (element) {
+  simulant.fire(element, 'mouseover')
+}
+
+export function mouseout (element) {
+  simulant.fire(element, 'mouseout')
+}
+
+export function keyup (element, keyCode) {
+  simulant.fire(element, 'keyup', { keyCode })
+}
+
+export const KEY_ENTER = 13
+export const KEY_ESCAPE = 27

@@ -1,8 +1,15 @@
 import test from 'tape'
+import {
+  setup,
+  sleep,
+  teardown,
+  getButton,
+  click,
+  mouseover,
+  getAllActiveButtons,
+  getAllButtons
+} from './helper'
 import littlefoot from '../src/'
-import classList from 'dom-classlist'
-import simulant from 'simulant'
-import { setup, sleep, teardown } from './helper'
 
 test('setup with allowMultiple=true', async t => {
   setup('default')
@@ -12,27 +19,17 @@ test('setup with allowMultiple=true', async t => {
     allowMultiple: true
   })
 
-  simulant.fire(
-    document.body.querySelector('button[data-footnote-id="1"]'),
-    'click'
-  )
-  simulant.fire(
-    document.body.querySelector('button[data-footnote-id="2"]'),
-    'click'
-  )
+  click(getButton('1'))
+  click(getButton('2'))
   await sleep(1)
 
-  t.equal(
-    document.body.querySelectorAll('button.is-active').length,
-    2,
-    'allows multiple active popovers'
-  )
+  t.equal(getAllActiveButtons().length, 2, 'allows multiple active popovers')
 
   lf.dismiss()
   await sleep(1)
 
   t.equal(
-    document.body.querySelectorAll('button.is-active').length,
+    getAllActiveButtons().length,
     0,
     'dismisses all popovers on dismiss()'
   )
@@ -53,7 +50,7 @@ test('activate with allowMultiple=true', async t => {
   await sleep(1)
 
   t.equal(
-    document.body.querySelectorAll('button.is-active').length,
+    getAllActiveButtons().length,
     4,
     'activate all popovers with activate()'
   )
@@ -71,19 +68,13 @@ test('hover with allowMultiple=true', async t => {
     allowMultiple: true
   })
 
-  const footnotes = document.body.querySelectorAll('button')
-
-  Array.from(footnotes).forEach(footnote =>
-    simulant.fire(footnote, 'mouseover')
-  )
+  getAllButtons().forEach(mouseover)
 
   await sleep(1)
 
-  t.same(
-    Array.from(footnotes).map(footnote =>
-      classList(footnote).contains('is-active')
-    ),
-    [true, true, true, true],
+  t.equal(
+    getAllActiveButtons().length,
+    4,
     'adds the is-active class to all popovers'
   )
 
@@ -95,20 +86,14 @@ test('setup with allowMultiple=false', async t => {
   setup('default')
   littlefoot({ activateDelay: 0, allowMultiple: false })
 
-  simulant.fire(
-    document.body.querySelector('button[data-footnote-id="1"]'),
-    'click'
-  )
+  click(getButton('1'))
   await sleep(1)
 
-  simulant.fire(
-    document.body.querySelector('button[data-footnote-id="2"]'),
-    'click'
-  )
+  click(getButton('2'))
   await sleep(1)
 
   t.equal(
-    document.body.querySelectorAll('button.is-active').length,
+    getAllActiveButtons().length,
     1,
     'does not allow multiple active popovers'
   )

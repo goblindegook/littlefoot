@@ -1,27 +1,26 @@
 import test from 'tape'
 import classList from 'dom-classlist'
 import littlefoot from '../src/'
-import simulant from 'simulant'
-import { setup, sleep, teardown } from './helper'
+import { setup, sleep, teardown, getButton, mouseover } from './helper'
 
 test('activate on hover', async t => {
   setup('default')
 
   littlefoot({ activateDelay: 0, activateOnHover: true })
 
-  const footnote = document.body.querySelector('button[data-footnote-id="1"]')
+  const button = getButton('1')
 
-  simulant.fire(footnote, 'mouseover')
+  mouseover(button)
 
   await sleep(1)
 
   t.ok(
-    classList(footnote).contains('is-hovered'),
+    classList(button).contains('is-hovered'),
     'adds the is-hovered class to the popover'
   )
 
   t.ok(
-    classList(footnote).contains('is-active'),
+    classList(button).contains('is-active'),
     'adds the is-active class to the popover'
   )
 

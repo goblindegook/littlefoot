@@ -1,7 +1,6 @@
 import test from 'tape'
-import simulant from 'simulant'
 import littlefoot from '../src/'
-import { setup, sleep, teardown } from './helper'
+import { setup, sleep, teardown, keyup, KEY_ENTER, KEY_ESCAPE } from './helper'
 
 test('keyboard event handling', async t => {
   setup('default')
@@ -21,14 +20,14 @@ test('keyboard event handling', async t => {
     'has active popover before escape keypress'
   )
 
-  simulant.fire(document, 'keyup', { keyCode: 13 }) // enter
+  keyup(document, KEY_ENTER)
 
   t.ok(
     body.querySelector('.littlefoot-footnote__content'),
     'has active popover unless escape keypress'
   )
 
-  simulant.fire(document, 'keyup', { keyCode: 27 }) // esc
+  keyup(document, KEY_ESCAPE)
 
   await sleep(dismissDelay)
 

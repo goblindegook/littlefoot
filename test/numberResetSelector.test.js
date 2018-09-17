@@ -1,13 +1,13 @@
 import test from 'tape'
 import littlefoot from '../src/'
-import { setup, teardown } from './helper'
+import { setup, teardown, getAllButtons } from './helper'
 
 test('setup with numberResetSelector', t => {
   setup('multiple')
 
   littlefoot({ numberResetSelector: 'article' })
 
-  const buttons = [...document.querySelectorAll('button[data-footnote-id]')]
+  const buttons = getAllButtons()
   const numbers = buttons.map(button =>
     button.getAttribute('data-footnote-number')
   )
@@ -27,7 +27,7 @@ test('setup without numberResetSelector', t => {
 
   littlefoot({ numberResetSelector: null })
 
-  const buttons = [...document.querySelectorAll('button[data-footnote-id]')]
+  const buttons = getAllButtons()
   const numbers = buttons.map(button =>
     button.getAttribute('data-footnote-number')
   )

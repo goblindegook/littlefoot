@@ -1,6 +1,6 @@
 import test from 'tape'
 import sinon from 'sinon'
-import { setup, teardown } from './helper'
+import { setup, teardown, getButton, getPopover } from './helper'
 import littlefoot from '../src/'
 
 test('setup with activateCallback', t => {
@@ -10,8 +10,8 @@ test('setup with activateCallback', t => {
 
   activate('button[data-footnote-id="1"]')
 
-  const popover = document.querySelector('aside[data-footnote-id="1"]')
-  const button = document.querySelector('button[data-footnote-id="1"]')
+  const popover = getPopover('1')
+  const button = getButton('1')
 
   t.ok(
     activateCallback.calledWithExactly(popover, button),
