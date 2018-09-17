@@ -16,9 +16,9 @@
     "test:chrome": "NODE_ENV=test karma start --single-run --browsers ChromeHeadless",
     "test:chrome-no-sandbox": "NODE_ENV=test karma start --single-run --browsers ChromeHeadlessNoSandbox",
     "test:firefox": "NODE_ENV=test karma start --single-run --browsers Firefox",
-    "test:watch": "NODE_ENV=test karma start --browsers ChromeHeadless",
+    "test:watch": "NODE_ENV=test karma start --browsers Chrome",
     "test": "NODE_ENV=test yarn test:chrome-no-sandbox",
-    "format": "prettier-standard '{cypress,src,test}/**/*.{js,jsx,ts,tsx,json,css,md}'",
+    "format": "prettier-standard '{src,test}/**/*.{js,jsx,ts,tsx,json,css,md}'",
     "watch": "watchify -s littlefoot -o dist/littlefoot.js src/index.js"
   },
   "browserify": {
