@@ -6,6 +6,7 @@
   "scripts": {
     "build:scripts": "browserify -s littlefoot -o dist/littlefoot.js src/index.js",
     "build:styles": "node-sass --output-style compressed --include-path styles -o dist/ styles/",
+    "build:types": "tsc --emitDeclarationOnly",
     "build": "mkdir -p dist && concurrently 'yarn build:scripts' 'yarn build:styles' && yarn optimize",
     "clean": "rm -rf coverage dist",
     "lint": "standard",
@@ -19,11 +20,15 @@
     "test:watch": "NODE_ENV=test karma start --browsers Chrome",
     "test": "NODE_ENV=test yarn test:chrome-no-sandbox",
     "format": "prettier-standard '{src,test}/**/*.{js,jsx,ts,tsx,json,css,md}'",
+    "typecheck": "tsc --noEmit",
+    "typecheck:watch": "yarn typecheck --watch",
     "watch": "watchify -s littlefoot -o dist/littlefoot.js src/index.js"
   },
   "browserify": {
     "transform": [
-      "babelify"
+      ["babelify", {
+        "extensions": [".js", ".ts"]
+      }]
     ]
   },
   "author": {
@@ -39,13 +44,17 @@
   "devDependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
     "@babel/plugin-transform-runtime": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
+    "@babel/preset-typescript": "^7.1.0",
     "@babel/runtime": "^7.0.0",
     "babel-plugin-istanbul": "^5.0.1",
     "babel-plugin-lodash": "^3.3.4",
     "babel-tape-runner": "^3.0.0",
     "babelify": "^10.0.0",
+    "brfs": "^2.0.1",
     "browserify": "^16.2.2",
     "concurrently": "^4.0.1",
     "istanbul": "^0.4.3",
@@ -63,13 +72,12 @@
     "simulant": "^0.2.2",
     "sinon": "^6.3.3",
     "standard": "^12.0.1",
-    "stringify": "^5.1.0",
     "tape": "^4.8.0",
+    "typescript": "^3.0.3",
     "uglify-js": "^3.4.9",
     "watchify": "^3.7.0"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.0.0",
     "dom-classlist": "^1.0.1",
     "dom-closest": "^0.2.0",
     "dom-delegate": "^2.0.3",

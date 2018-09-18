@@ -22,7 +22,7 @@ module.exports = function (karma) {
       debug: true,
       transform: [
         'babelify',
-        'stringify'
+        'brfs'
       ]
     },
     files: [

@@ -4,7 +4,7 @@ import matches from 'dom-matches'
  * Removes/adds appropriate classes to the footnote content and button after
  * a delay (to allow for transitions) it removes the actual footnote content.
  *
- * @param  {DOMElement} element Element to bind event to.
+ * @param  {Element} element Element to bind event to.
  * @param  {String}     type    Event type.
  * @param  {Function}   fn      Event handler.
  * @param  {boolean}    capture Capture flag.
@@ -19,7 +19,7 @@ export function bind (element, type, fn, capture = false) {
 /**
  * Fetch children elements.
  *
- * @param  {DOMElement} element  Element to query.
+ * @param  {HTMLElement} element  Element to query.
  * @param  {String}     selector Child selector.
  * @return {Array}               Child elements.
  */
@@ -32,7 +32,7 @@ export function children (element, selector = null) {
 /**
  * Fetches an element's computed styles object.
  *
- * @param  {DOMElement} element  Element to get computed styles from.
+ * @param  {HTMLElement} element  Element to get computed styles from.
  * @param  {String}     property Property name.
  * @return {String}              Computed style property.
  */
@@ -48,7 +48,7 @@ export function getStyle (element, property) {
 /**
  * Get the computed maximum pixel height (as a regular integer) for an element.
  *
- * @param  {DOMElement} element  Element that is being measured.
+ * @param  {HTMLElement} element  Element that is being measured.
  * @return {Number}              Maximum element height in pixels.
  */
 export function getMaxHeight (element) {
@@ -69,7 +69,7 @@ export function getMaxHeight (element) {
 /**
  * Calculate the room available around a button element.
  *
- * @param  {DOMElement} element Button element.
+ * @param  {HTMLElement} element Button element.
  * @return {Object}             Available room.
  */
 export function getAvailableRoom (element) {

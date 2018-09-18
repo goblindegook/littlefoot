@@ -1,12 +1,13 @@
 import test from 'tape'
 import littlefoot from '../src/'
 import { setup, sleep, teardown } from './helper'
+const fs = require('fs')
 
 test('setup with custom contentTemplate', async t => {
   setup('default')
 
   const lf = littlefoot({
-    contentTemplate: require('./fixtures/contentTemplate.html')
+    contentTemplate: fs.readFileSync(`${__dirname}/fixtures/contentTemplate.html`)
   })
   const delay = lf.getSetting('activateDelay')
   const buttonSelector = 'button[data-footnote-id="1"]'

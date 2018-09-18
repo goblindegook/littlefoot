@@ -1,4 +1,5 @@
 import simulant from 'simulant'
+const fs = require('fs')
 
 /**
  * Checks whether IE is in use.
@@ -25,15 +26,15 @@ export function setup (fixture) {
 
   switch (fixture) {
     case 'multiple':
-      content.innerHTML = require('./fixtures/multiple.html')
+      content.innerHTML = fs.readFileSync(`${__dirname}/fixtures/multiple.html`)
       break
 
     case 'scroll':
-      content.innerHTML = require('./fixtures/scroll.html')
+      content.innerHTML = fs.readFileSync(`${__dirname}/fixtures/scroll.html`)
       break
 
     default:
-      content.innerHTML = require('./fixtures/default.html')
+      content.innerHTML = fs.readFileSync(`${__dirname}/fixtures/default.html`)
   }
 
   document.body.appendChild(content)

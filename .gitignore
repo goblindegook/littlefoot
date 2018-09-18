@@ -5,3 +5,4 @@ node_modules/
 .nyc_output
 .vscode/.browse.VC.db
 sauce.json
+yarn-error.log
