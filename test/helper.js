@@ -74,23 +74,23 @@ export function sleep (timeout) {
 }
 
 export function getButton (id) {
-  return document.querySelector(`button[data-footnote-id="${id}"]`)
+  return document.querySelector('button[data-footnote-id="${id}"]')
 }
 
 export function getPopover (id) {
-  return document.querySelector(`aside[data-footnote-id="${id}"]`)
+  return document.querySelector('aside[data-footnote-id="${id}"]')
 }
 
 export function getAllButtons () {
-  return [...document.querySelectorAll(`button[data-footnote-id]`)]
+  return [...document.querySelectorAll('button[data-footnote-id]')]
 }
 
 export function getAllActiveButtons () {
-  return [...document.querySelectorAll(`button[data-footnote-id].is-active`)]
+  return [...document.querySelectorAll('button[data-footnote-id].is-active')]
 }
 
 export function getAllPopovers () {
-  return [...document.querySelectorAll(`aside[data-footnote-id]`)]
+  return [...document.querySelectorAll('aside[data-footnote-id]')]
 }
 
 export function click (element) {
