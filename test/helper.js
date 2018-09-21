@@ -74,11 +74,11 @@ export function sleep (timeout) {
 }
 
 export function getButton (id) {
-  return document.querySelector('button[data-footnote-id="${id}"]')
+  return document.querySelector(`button[data-footnote-id="${id}"]`)
 }
 
 export function getPopover (id) {
-  return document.querySelector('aside[data-footnote-id="${id}"]')
+  return document.querySelector(`aside[data-footnote-id="${id}"]`)
 }
 
 export function getAllButtons () {
