@@ -1,5 +1,7 @@
 # littlefoot.js
 
+![version](https://badgen.net/npm/v/littlefoot)
+![minified + gzip](https://badgen.net/bundlephobia/minzip/littlefoot)
 [![Build Status](https://travis-ci.org/goblindegook/littlefoot.svg?branch=master)](https://travis-ci.org/goblindegook/littlefoot)
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/d3c8383d65d047118fd7201d8028d823)](https://www.codacy.com/app/goblindegook/littlefoot)
 [![Code Climate](https://codeclimate.com/github/goblindegook/littlefoot/badges/gpa.svg)](https://codeclimate.com/github/goblindegook/littlefoot)
