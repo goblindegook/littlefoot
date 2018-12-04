@@ -4,7 +4,7 @@
   "description": "Footnotes without the footprint.",
   "repository": "goblindegook/littlefoot",
   "scripts": {
-    "build:scripts": "browserify -s littlefoot -o dist/littlefoot.js src/index.js",
+    "build:scripts": "browserify -p tinyify -s littlefoot -o dist/littlefoot.js src/index.js",
     "build:styles": "node-sass --output-style compressed --include-path styles -o dist/ styles/",
     "build:types": "tsc --emitDeclarationOnly",
     "build": "mkdir -p dist && concurrently 'yarn build:scripts' 'yarn build:styles' && yarn optimize",
@@ -26,9 +26,15 @@
   },
   "browserify": {
     "transform": [
-      ["babelify", {
-        "extensions": [".js", ".ts"]
-      }]
+      [
+        "babelify",
+        {
+          "extensions": [
+            ".js",
+            ".ts"
+          ]
+        }
+      ]
     ]
   },
   "author": {
@@ -73,6 +79,7 @@
     "sinon": "^6.3.3",
     "standard": "^12.0.1",
     "tape": "^4.8.0",
+    "tinyify": "^2.5.0",
     "typescript": "^3.0.3",
     "uglify-js": "^3.4.9",
     "watchify": "^3.7.0"
