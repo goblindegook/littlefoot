@@ -58,7 +58,6 @@
     "@babel/runtime": "^7.0.0",
     "@types/node": "^10.12.12",
     "babel-plugin-istanbul": "^5.0.1",
-    "babel-plugin-lodash": "^3.3.4",
     "babel-tape-runner": "^3.0.0",
     "babelify": "^10.0.0",
     "brfs": "^2.0.1",
