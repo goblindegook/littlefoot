@@ -1,7 +1,7 @@
 import classList from 'dom-classlist'
 import closest from 'dom-closest'
 import siblings from 'dom-siblings'
-import { template } from 'lodash'
+import template from 'lodash.template'
 import { getAvailableRoom, getMaxHeight, getStyle } from './dom'
 import { bindContentScrollHandler } from './events'
 import {

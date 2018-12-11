@@ -56,6 +56,7 @@
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-typescript": "^7.1.0",
     "@babel/runtime": "^7.0.0",
+    "@types/node": "^10.12.12",
     "babel-plugin-istanbul": "^5.0.1",
     "babel-plugin-lodash": "^3.3.4",
     "babel-tape-runner": "^3.0.0",
@@ -90,6 +91,8 @@
     "dom-delegate": "^2.0.3",
     "dom-matches": "^2.0.0",
     "dom-siblings": "^0.1.0",
-    "lodash": "^4.17.11"
+    "lodash.escape": "^4.0.1",
+    "lodash.template": "^4.4.0",
+    "lodash.throttle": "^4.1.1"
   }
 }

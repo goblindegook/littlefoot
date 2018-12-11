@@ -1,6 +1,6 @@
 import classList from 'dom-classlist'
 import delegate from 'dom-delegate'
-import { throttle } from 'lodash'
+import throttle from 'lodash.throttle'
 import { bind } from './dom'
 import {
   findClosestFootnote,

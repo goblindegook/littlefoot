@@ -6,10 +6,9 @@
     ],
     "module": "commonjs",
     "moduleResolution": "node",
-    "declaration": true,
+    "declaration": false,
     "outDir": "dist",
     "strict": false,
-    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "allowJs": true,
     "checkJs": true

@@ -27,11 +27,11 @@ module.exports = function (karma) {
     },
     files: [
       'dist/*.css',
-      'test/**/*.test.js',
+      'test/**/*.test.{js,ts}',
       'test/**/*.html'
     ],
     preprocessors: {
-      '{src,test}/**/*.js': ['browserify']
+      '{src,test}/**/*.{js,ts}': ['browserify']
     },
     coverageReporter: {
       dir: 'coverage/',

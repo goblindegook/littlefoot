@@ -21,7 +21,7 @@ interface LittlefootSettings {
 
 interface Littlefoot {
   activate(selector: string, className?: string): void
-  dismiss(selector: string, delay?: number): void
+  dismiss(selector?: string, delay?: number): void
   getSetting<K extends keyof LittlefootSettings>(key: K): LittlefootSettings[K]
   updateSetting<K extends keyof LittlefootSettings>(
     key: K,
