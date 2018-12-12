@@ -7,7 +7,9 @@ test('setup with custom contentTemplate', async t => {
   setup('default')
 
   const lf = littlefoot({
-    contentTemplate: fs.readFileSync(`${__dirname}/fixtures/contentTemplate.html`)
+    contentTemplate: fs.readFileSync(
+      `${__dirname}/fixtures/contentTemplate.html`
+    )
   })
   const delay = lf.getSetting('activateDelay')
   const buttonSelector = 'button[data-footnote-id="1"]'

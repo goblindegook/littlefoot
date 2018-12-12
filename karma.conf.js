@@ -13,6 +13,7 @@ var reporters = ['dots', 'coverage']
 
 module.exports = function (karma) {
   karma.set({
+    singleRun: true,
     browsers: browsers.concat(Object.keys(customLaunchers)),
     customLaunchers: customLaunchers,
     reporters: reporters,

@@ -640,7 +640,7 @@
     pirates "^4.0.0"
     source-map-support "^0.5.9"
 
-"@babel/runtime@^7.0.0":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.5":
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.2.0.tgz#b03e42eeddf5898e00646e4c840fa07ba8dcad7f"
   integrity sha512-oouEibCbHMVdZSDlJBO6bZmID/zA/G/Qx3H1d3rSNPTD+L8UNKvCat7aKWSJ74zYbm5zWGh0GQN0hKj8zYFTCg==
@@ -693,6 +693,11 @@
   version "10.2.1"
   resolved "https://registry.yarnpkg.com/@sheerun/eslint-config-standard/-/eslint-config-standard-10.2.1.tgz#7d73397369c396b3625cab6ec313f6d4208300ef"
   integrity sha512-aalIRUtcR6nPf50kEwnYvepSJIdpulrbMeeNMwiOmFgBg4MgScCmlI7SqOmsGJNqaH65+benoqt0H4N0RR2Okg==
+
+"@sheerun/mutationobserver-shim@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@sheerun/mutationobserver-shim/-/mutationobserver-shim-0.3.2.tgz#8013f2af54a2b7d735f71560ff360d3a8176a87b"
+  integrity sha512-vTCdPp/T/Q3oSqwHmZ5Kpa9oI7iLtGl3RQaA/NyLHikvcrPxACkkKVr/XzkSPJWXHRhKGzVvb0urJsbMlRxi1Q==
 
 "@sinonjs/commons@^1.0.2", "@sinonjs/commons@^1.2.0":
   version "1.3.0"
@@ -2321,6 +2326,16 @@ dom-siblings@^0.1.0:
   integrity sha1-iAJf+gIB9iy+3lQwZtfvGEwOwek=
   dependencies:
     dom-matches "^1.0.1"
+
+dom-testing-library@^3.14.0:
+  version "3.14.0"
+  resolved "https://registry.yarnpkg.com/dom-testing-library/-/dom-testing-library-3.14.0.tgz#3245ce4254acb6d4debd6341b0567f1a3a3d5f90"
+  integrity sha512-Dl7If4m/58lSKn6XLSySx3Om1GTy6qIjABjbIbvS1LcCALKbJXr8E6IYBKNRwJ5Cw8GBr4ABhgMwWQm0wVViAA==
+  dependencies:
+    "@babel/runtime" "^7.1.5"
+    "@sheerun/mutationobserver-shim" "^0.3.2"
+    pretty-format "^23.6.0"
+    wait-for-expect "^1.1.0"
 
 domain-browser@^1.2.0:
   version "1.2.0"
@@ -5615,7 +5630,7 @@ prettier@^1.14.2, prettier@^1.7.0:
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.15.3.tgz#1feaac5bdd181237b54dbe65d874e02a1472786a"
   integrity sha512-gAU9AGAPMaKb3NNSUUuhhFAS7SCO4ALTN4nRIn6PJ075Qd28Yn2Ig2ahEJWdJwJmlEBTUfC7mMUSFy8MwsOCfg==
 
-pretty-format@^23.0.1:
+pretty-format@^23.0.1, pretty-format@^23.6.0:
   version "23.6.0"
   resolved "https://registry.yarnpkg.com/pretty-format/-/pretty-format-23.6.0.tgz#5eaac8eeb6b33b987b7fe6097ea6a8a146ab5760"
   integrity sha512-zf9NV1NSlDLDjycnwm6hpFATCGl/K1lt0R/GdkAK2O5LN/rwJoB+Mh93gGJjut4YbmecbfgLWVGSTCr0Ewvvbw==
@@ -7311,6 +7326,11 @@ vue-eslint-parser@^2.0.2:
     espree "^3.5.2"
     esquery "^1.0.0"
     lodash "^4.17.4"
+
+wait-for-expect@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/wait-for-expect/-/wait-for-expect-1.1.0.tgz#6607375c3f79d32add35cd2c87ce13f351a3d453"
+  integrity sha512-vQDokqxyMyknfX3luCDn16bSaRcOyH6gGuUXMIbxBLeTo6nWuEWYqMTT9a+44FmW8c2m6TRWBdNvBBjA1hwEKg==
 
 watchify@^3.7.0:
   version "3.11.0"

@@ -31,7 +31,9 @@ test('setup with default buttonTemplate', t => {
 test('setup with custom buttonTemplate', t => {
   setup('default')
 
-  littlefoot({ buttonTemplate: fs.readFileSync(`${__dirname}/fixtures/buttonTemplate.html`) })
+  littlefoot({
+    buttonTemplate: fs.readFileSync(`${__dirname}/fixtures/buttonTemplate.html`)
+  })
 
   const footnotes = document.body.querySelectorAll('.footnote')
   const buttons = document.body.querySelectorAll('button.custom')
