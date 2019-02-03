@@ -78,6 +78,26 @@ var lf = littlefoot({
 
 You'll also want to include styles for the button and popovers, a number of which come with the script.
 
+### Usage with [Gatsby](https://www.gatsbyjs.org/)
+
+1. [Install littlefoot](#installation) as a dependency in your Gatsby project.
+
+2. At the root of the site's project, create or edit a [`gatsby-browser.js`](https://www.gatsbyjs.org/docs/gatsby-project-structure/#files) file and add the following:
+
+```
+const { default: littlefoot } = require('littlefoot')
+
+exports.onRouteUpdate = ({ location }) => {
+  littlefoot() // Pass any littlefoot settings here.
+}
+```
+
+3. (Optional) At the top of the [page or template file(s) that will display footnotes](https://www.gatsbyjs.org/docs/adding-markdown-pages/#create-a-page-template-for-the-markdown-data), import the style sheets.
+
+```
+import 'littlefoot/dist/littlefoot.css'
+```
+
 ## Options
 
 The script has many configurable options from having popovers instantiated on hover, to allowing multiple active footnotes, to setting specific timeouts for popover activation and dismissal. It also returns an object that allows you to activate and dismiss popovers.
