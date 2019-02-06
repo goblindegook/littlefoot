@@ -84,13 +84,13 @@ You'll also want to include styles for the button and popovers, a number of whic
 
 2. At the root of the site's project, create or edit a [`gatsby-browser.js`](https://www.gatsbyjs.org/docs/gatsby-project-structure/#files) file and add the following:
 
-```
-const { default: littlefoot } = require('littlefoot')
+    ```js
+    import littlefoot from 'littlefoot'
 
-exports.onRouteUpdate = ({ location }) => {
-  littlefoot() // Pass any littlefoot settings here.
-}
-```
+    export function onRouteUpdate() {
+      littlefoot() // Pass any littlefoot settings here.
+    }
+    ```
 
 3. (Optional) At the top of the [page or template file(s) that will display footnotes](https://www.gatsbyjs.org/docs/adding-markdown-pages/#create-a-page-template-for-the-markdown-data), import the style sheets.
 
