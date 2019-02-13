@@ -20,6 +20,7 @@ module.exports = function (karma) {
     browserNoActivityTimeout: 60000,
     frameworks: ['browserify', 'tap', 'sinon'],
     browserify: {
+      extensions: ['.ts'],
       debug: true,
       transform: [
         'babelify',

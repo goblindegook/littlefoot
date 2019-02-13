@@ -4,9 +4,9 @@ import littlefoot from '../src/'
 test('settings', t => {
   const lf = littlefoot()
 
-  lf.updateSetting('test', 'boop')
+  lf.updateSetting('scope', 'article')
 
-  t.equal(lf.getSetting('test'), 'boop', 'allows getting and setting values')
+  t.equal(lf.getSetting('scope'), 'article', 'allows getting and setting values')
 
   t.end()
 })

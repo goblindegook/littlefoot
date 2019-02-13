@@ -6,11 +6,13 @@
     ],
     "module": "commonjs",
     "moduleResolution": "node",
-    "declaration": false,
+    "declaration": true,
+    "declarationDir": "dist",
     "outDir": "dist",
     "strict": false,
     "esModuleInterop": true,
     "allowJs": true,
-    "checkJs": true
-  }
+    "checkJs": true,
+  },
+  "include": ["src", "test"]
 }

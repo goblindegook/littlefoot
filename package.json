@@ -4,7 +4,7 @@
   "description": "Footnotes without the footprint.",
   "repository": "goblindegook/littlefoot",
   "scripts": {
-    "build:scripts": "browserify -p tinyify -s littlefoot -o dist/littlefoot.js src/index.js",
+    "build:scripts": "browserify --extension=ts -p tinyify -s littlefoot -o dist/littlefoot.js src/index.ts",
     "build:styles": "node-sass --output-style compressed --include-path styles -o dist/ styles/",
     "build:types": "tsc --emitDeclarationOnly",
     "build": "mkdir -p dist && concurrently 'yarn build:scripts' 'yarn build:styles' && yarn optimize",
@@ -21,7 +21,7 @@
     "format": "prettier-standard '{src,test}/**/*.{js,jsx,ts,tsx,json,css,md}'",
     "typecheck": "tsc --noEmit",
     "typecheck:watch": "yarn typecheck --watch",
-    "watch": "watchify -s littlefoot -o dist/littlefoot.js src/index.js"
+    "watch": "watchify --extension=ts -s littlefoot -o dist/littlefoot.js src/index.ts"
   },
   "browserify": {
     "transform": [
@@ -55,7 +55,7 @@
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-typescript": "^7.1.0",
     "@babel/runtime": "^7.0.0",
-    "@types/node": "^10.12.12",
+    "@types/node": "^11.9.3",
     "babel-plugin-istanbul": "^5.0.1",
     "babel-tape-runner": "^3.0.0",
     "babelify": "^10.0.0",
