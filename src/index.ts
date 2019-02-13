@@ -1,4 +1,4 @@
-import { createSettings } from './settings'
+import { createSettings, LittlefootSettings } from './settings'
 import { createCore } from './core'
 import { createDocumentAdapter } from './adapter'
 import { bindEvents } from './adapter/events'
@@ -9,7 +9,7 @@ import { bindEvents } from './adapter/events'
  * @param  {Object} options Littlefoot options.
  * @return {Object}         Littlefoot instance.
  */
-export const littlefoot = function (options) {
+export const littlefoot = function (options: Partial<LittlefootSettings> = {}) {
   const settings = createSettings(options)
   const adapter = createDocumentAdapter(settings) as any
   const core = createCore(adapter, settings)

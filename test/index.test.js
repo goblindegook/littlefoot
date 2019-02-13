@@ -1,6 +1,6 @@
 import classList from 'dom-classlist'
 import test from 'tape'
-import littlefoot from '../src/'
+import littlefoot from '../src'
 import {
   setup,
   sleep,

@@ -9,7 +9,7 @@ import {
   FOOTNOTE_NUMBER
 } from './adapter/constants'
 
-type LittlefootSettings = {
+export type LittlefootSettings = {
   activateCallback:
     | ((popover: HTMLElement, button: HTMLInputElement) => void)
     | null
