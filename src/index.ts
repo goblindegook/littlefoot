@@ -11,7 +11,7 @@ import { bindEvents } from './adapter/events'
  */
 export const littlefoot = function (options: Partial<LittlefootSettings> = {}) {
   const settings = createSettings(options)
-  const adapter = createDocumentAdapter(settings) as any
+  const adapter = createDocumentAdapter(settings)
   const core = createCore(adapter, settings)
   bindEvents(core)
 

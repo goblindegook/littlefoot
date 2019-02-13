@@ -1,5 +1,4 @@
 import test from 'tape'
-import classList from 'dom-classlist'
 import littlefoot from '../src/'
 import { setup, sleep, teardown, getButton, mouseover } from './helper'
 
@@ -15,12 +14,12 @@ test('activate on hover', async t => {
   await sleep(1)
 
   t.ok(
-    classList(button).contains('is-hovered'),
+    button.classList.contains('is-hovered'),
     'adds the is-hovered class to the popover'
   )
 
   t.ok(
-    classList(button).contains('is-active'),
+    button.classList.contains('is-active'),
     'adds the is-active class to the popover'
   )
 

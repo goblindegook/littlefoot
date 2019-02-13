@@ -1,5 +1,7 @@
-function createActivate (adapter, settings) {
-  return (footnote, className) => {
+import { LittlefootSettings } from './settings'
+
+function createActivate (adapter, settings: LittlefootSettings) {
+  return (footnote, className: string = '') => {
     const { activateCallback, activateDelay, contentTemplate } = settings
 
     if (!footnote.isChanging()) {
@@ -25,7 +27,7 @@ function createActivate (adapter, settings) {
   }
 }
 
-function createDismiss (settings) {
+function createDismiss (settings: LittlefootSettings) {
   return (footnote, delay = settings.dismissDelay) => {
     if (!footnote.isChanging()) {
       footnote.startChanging()
@@ -39,7 +41,7 @@ function createDismiss (settings) {
   }
 }
 
-export function createCore (adapter, settings) {
+export function createCore (adapter, settings: LittlefootSettings) {
   const activate = createActivate(adapter, settings)
   const dismiss = createDismiss(settings)
 

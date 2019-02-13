@@ -1,6 +1,8 @@
 {
   "presets": [
-    "@babel/preset-env",
+    ["@babel/preset-env", {
+      "targets": "> 0.2%, not dead, last 1 version"
+    }],
     "@babel/typescript"
   ],
   "plugins": [

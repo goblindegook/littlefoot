@@ -1,4 +1,3 @@
-import classList from 'dom-classlist'
 import test from 'tape'
 import littlefoot from '../src'
 import {
@@ -133,21 +132,21 @@ test('footnote activation and dismissal', async t => {
   await sleep(dismissDelay)
 
   t.notOk(
-    classList(button).contains('is-active'),
+    button.classList.contains('is-active'),
     'dismisses popovers on dismiss()'
   )
 
   click(button)
 
   t.ok(
-    classList(button).contains('is-changing'),
+    button.classList.contains('is-changing'),
     'transitions popover activation on click'
   )
 
   await sleep(activateDelay)
 
   t.ok(
-    classList(button).contains('is-active'),
+    button.classList.contains('is-active'),
     'activates one popover on button click event'
   )
 
@@ -155,7 +154,7 @@ test('footnote activation and dismissal', async t => {
   await sleep(dismissDelay)
 
   t.notOk(
-    classList(button).contains('is-active'),
+    button.classList.contains('is-active'),
     'dismisses popovers on body click event'
   )
 
@@ -166,7 +165,7 @@ test('footnote activation and dismissal', async t => {
   await sleep(dismissDelay)
 
   t.notOk(
-    classList(button).contains('is-active'),
+    button.classList.contains('is-active'),
     'dismisses popovers on clicking the button again'
   )
 

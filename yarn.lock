@@ -721,10 +721,43 @@
     array-from "^2.1.1"
     lodash.get "^4.4.2"
 
-"@types/node@^11.9.3":
+"@types/lodash.escape@^4.0.5":
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/@types/lodash.escape/-/lodash.escape-4.0.5.tgz#4af0fc2e9293abf906c81dce113f9d0fa206e753"
+  integrity sha512-wE2EagKAL9wfQ2qybm+B6jCJl70hwnk4HUc2VmdXX2FJgo9Kd/i027i+MWpH2t66PhEOdD4tZHF/8+gQurbHbw==
+  dependencies:
+    "@types/lodash" "*"
+
+"@types/lodash.template@^4.4.5":
+  version "4.4.5"
+  resolved "https://registry.yarnpkg.com/@types/lodash.template/-/lodash.template-4.4.5.tgz#40e1df204e40fb820870b0d629bd0b3a8124b02b"
+  integrity sha512-buhJodMUvXNhPCeB/6c80V5OBFUPT7LlZZy05WdV9A5h1E1LfZPso6PCVaHlXz70hB4/DqH5+0bkdNXJRCoYDQ==
+  dependencies:
+    "@types/lodash" "*"
+
+"@types/lodash.throttle@^4.1.5":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@types/lodash.throttle/-/lodash.throttle-4.1.5.tgz#6f00b1d9edff5d1b9265c7035e2883db8bb27aeb"
+  integrity sha512-zm7RQP1z3JSaxKF5mwJH1pysZ0pQS7+J3IRWG2GBcNx+i/9uDedlB8Gfe/8SN3zNXSVdMOwv2cxmMbj/HIuAOQ==
+  dependencies:
+    "@types/lodash" "*"
+
+"@types/lodash@*":
+  version "4.14.121"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.121.tgz#9327e20d49b95fc2bf983fc2f045b2c6effc80b9"
+  integrity sha512-ORj7IBWj13iYufXt/VXrCNMbUuCTJfhzme5kx9U/UtcIPdJYuvPDUAlHlbNhz/8lKCLy9XGIZnGrqXOtQbPGoQ==
+
+"@types/node@*", "@types/node@^11.9.3":
   version "11.9.3"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-11.9.3.tgz#14adbb5ab8cd563f549fbae8dbe92e0b7d6e76cc"
   integrity sha512-DMiqG51GwES/c4ScBY0u5bDlH44+oY8AeYHjY1SGCWidD7h08o1dfHue/TGK7REmif2KiJzaUskO+Q0eaeZ2fQ==
+
+"@types/tape@^4.2.33":
+  version "4.2.33"
+  resolved "https://registry.yarnpkg.com/@types/tape/-/tape-4.2.33.tgz#3583953eaff5f8a77e65ad6ff197741457aaaab9"
+  integrity sha512-ltfyuY5BIkYlGuQfwqzTDT8f0q8Z5DGppvUnWGs39oqDmMd6/UWhNpX3ZMh/VYvfxs3rFGHMrLC/eGRdLiDGuw==
+  dependencies:
+    "@types/node" "*"
 
 JSONStream@^1.0.3, JSONStream@^1.3.2:
   version "1.3.5"

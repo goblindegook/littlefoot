@@ -1,5 +1,3 @@
-import classList from 'dom-classlist'
-import closest from 'dom-closest'
 import escape from 'lodash.escape'
 import template from 'lodash.template'
 import { children } from './dom'
@@ -12,21 +10,14 @@ import {
   FOOTNOTE_BACKLINK_REF
 } from './constants'
 
-function getAttribute (attribute) {
-  return element => element.getAttribute(attribute)
-}
+export const setPrintOnly = el => el && el.classList.add(CLASS_PRINT_ONLY)
+export const setProcessed = el => el && el.classList.add(CLASS_PROCESSED)
 
-function setAttribute (attribute) {
-  return (element, value) => element.setAttribute(attribute, value)
-}
+const getFootnoteRef = (element: HTMLElement) => element.getAttribute(FOOTNOTE_REF)
+const setFootnoteRef = (element: HTMLElement, value: string) => element.setAttribute(FOOTNOTE_REF, value)
 
-export const setPrintOnly = el => el && classList(el).add(CLASS_PRINT_ONLY)
-export const setProcessed = el => el && classList(el).add(CLASS_PROCESSED)
-
-const getFootnoteRef = getAttribute(FOOTNOTE_REF)
-const setFootnoteRef = setAttribute(FOOTNOTE_REF)
-const getFootnoteBacklinkRef = getAttribute(FOOTNOTE_BACKLINK_REF)
-const setFootnoteBacklinkRef = setAttribute(FOOTNOTE_BACKLINK_REF)
+const getFootnoteBacklinkRef = (element: HTMLElement) => element.getAttribute(FOOTNOTE_BACKLINK_REF)
+const setFootnoteBacklinkRef = (element: HTMLElement, value: string) => element.setAttribute(FOOTNOTE_BACKLINK_REF, value)
 
 function getLastFootnoteId () {
   const footnotes = document.querySelectorAll(`[${FOOTNOTE_ID}]`)
@@ -37,7 +28,7 @@ function getLastFootnoteId () {
 }
 
 function getFootnoteBacklinkId (link, anchorParentSelector) {
-  const parent = closest(link, anchorParentSelector)
+  const parent = link.closest(anchorParentSelector)
 
   if (parent) {
     return parent.id
@@ -69,7 +60,7 @@ export function getFootnoteLinks ({
 }) {
   const footnoteLinkSelector = `${scope || ''} a[href*="#"]`.trim()
 
-  return [...document.querySelectorAll(footnoteLinkSelector)]
+  return Array.from(document.querySelectorAll(footnoteLinkSelector))
     .filter(link => {
       const href = link.getAttribute('href')
       const rel = link.getAttribute('rel')
@@ -77,8 +68,7 @@ export function getFootnoteLinks ({
 
       return (
         anchor.match(anchorPattern) &&
-        !closest(
-          link,
+        !link.closest(
           `[class*="${footnoteParentClass}"]:not(a):not(${anchorParentSelector})`
         )
       )
@@ -111,7 +101,7 @@ function prepareContent (content, backlinkId) {
 
 function resetNumbers (numberResetSelector) {
   return (footnote, i, footnotes) => {
-    const reset = closest(footnote.link, numberResetSelector)
+    const reset = footnote.link.closest(numberResetSelector)
     const previous = i ? footnotes[i - 1] : { reset: null, number: 0 }
 
     return Object.assign(footnote, {
@@ -123,12 +113,10 @@ function resetNumbers (numberResetSelector) {
 
 function addLinkElements (allowDuplicates, footnoteSelector) {
   return link => {
-    const selector = getFootnoteRef(link).replace(/[:.+~*\[\]]/g, '\\$&') // eslint-disable-line
+    const selector = getFootnoteRef(link).replace(/[:.+~*[\]]/g, '\\$&')
     const strictSelector = `${selector}:not(.${CLASS_PROCESSED})`
-    const related = document.querySelector(
-      allowDuplicates ? selector : strictSelector
-    )
-    const element = closest(related, footnoteSelector)
+    const related = document.querySelector(allowDuplicates ? selector : strictSelector)
+    const element = related && related.closest(footnoteSelector)
 
     setProcessed(element)
 
@@ -158,7 +146,8 @@ function hideFootnoteContainer (container) {
 }
 
 function hideOriginalFootnote (footnote, link) {
-  ;[footnote, link].forEach(setPrintOnly)
+  setPrintOnly(footnote)
+  setPrintOnly(link)
   hideFootnoteContainer(footnote.parentNode)
 }
 

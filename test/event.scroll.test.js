@@ -1,6 +1,4 @@
 import test from 'tape'
-import classList from 'dom-classlist'
-import closest from 'dom-closest'
 import simulant from 'simulant'
 import littlefoot from '../src/'
 import { isIE, setup, setupStylesheet, teardown } from './helper'
@@ -13,10 +11,10 @@ test.skip('scroll event handling', t => {
   lf.activate('button[data-footnote-id="1"]')
 
   const content = document.body.querySelector('.littlefoot-footnote__content')
-  const popover = closest(content, '.littlefoot-footnote')
+  const popover = content.closest('.littlefoot-footnote')
 
   t.ok(
-    classList(popover).contains('is-positioned-top'),
+    popover.classList.contains('is-positioned-top'),
     'popover is above the button'
   )
 
@@ -24,7 +22,7 @@ test.skip('scroll event handling', t => {
   simulant.fire(document.body, 'wheel', { deltaY: document.body.scrollHeight })
 
   t.ok(
-    classList(popover).contains('is-positioned-bottom'),
+    popover.classList.contains('is-positioned-bottom'),
     'popover is repositioned below the button'
   )
 
@@ -46,29 +44,29 @@ test(
     lf.activate('button[data-footnote-id="1"]')
 
     const content = document.body.querySelector('.littlefoot-footnote__content')
-    const popover = closest(content, '.littlefoot-footnote')
+    const popover = content.closest('.littlefoot-footnote')
 
     t.ok(
-      classList(popover).contains('is-scrollable'),
+      popover.classList.contains('is-scrollable'),
       'long popover content is scrollable'
     )
 
     t.notOk(
-      classList(popover).contains('is-fully-scrolled'),
+      popover.classList.contains('is-fully-scrolled'),
       'long popover content starts out not fully scrolled'
     )
 
     simulant.fire(content, 'wheel', { deltaY: content.scrollHeight })
 
     t.ok(
-      classList(popover).contains('is-fully-scrolled'),
+      popover.classList.contains('is-fully-scrolled'),
       'long popover content is fully scrolled after scroll to bottom'
     )
 
     simulant.fire(content, 'wheel', { deltaY: -content.scrollHeight })
 
     t.notOk(
-      classList(popover).contains('is-fully-scrolled'),
+      popover.classList.contains('is-fully-scrolled'),
       'popover content is not fully scrolled after scroll to top'
     )
 

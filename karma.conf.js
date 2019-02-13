@@ -23,7 +23,9 @@ module.exports = function (karma) {
       extensions: ['.ts'],
       debug: true,
       transform: [
-        'babelify',
+        ['babelify', {
+          extensions: ['.js', '.ts']
+        }],
         'brfs'
       ]
     },

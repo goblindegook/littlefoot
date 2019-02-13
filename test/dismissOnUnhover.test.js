@@ -1,5 +1,4 @@
 import test from 'tape'
-import classList from 'dom-classlist'
 import littlefoot from '../src/'
 import {
   setup,
@@ -30,7 +29,7 @@ test('dismiss on unhover', async t => {
   await sleep(1)
 
   t.notOk(
-    classList(button).contains('is-active'),
+    button.classList.contains('is-active'),
     'removes the is-active class from button'
   )
 
