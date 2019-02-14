@@ -1,4 +1,3 @@
-import delegate from 'dom-delegate'
 import throttle from 'lodash.throttle'
 import {
   findClosestFootnote,
@@ -6,11 +5,13 @@ import {
   forAllActiveFootnotes
 } from './footnotes'
 import { CLASS_BUTTON, CLASS_FULLY_SCROLLED, CLASS_HOVERED } from './constants'
-import { Cancelable } from 'lodash';
+import { Cancelable } from 'lodash'
+import { Core } from '../core'
+
+const delegate = require('dom-delegate')
 
 type FootnoteAction = (footnote?: any, popover?: any) => void
-
-type EventHandler<E extends Event> = ((e: E) => void) & ({} | Cancelable)
+type EventHandler<E extends Event> = (e: E) => void
 
 function handle (fn: FootnoteAction, hover = false): EventHandler<Event> {
   return event => {
@@ -25,7 +26,7 @@ function handle (fn: FootnoteAction, hover = false): EventHandler<Event> {
 }
 
 function handleEscape (fn: () => void): EventHandler<KeyboardEvent> {
-  return event => event.keyCode === 27 && fn()
+  return event => event.key === '27' && fn()
 }
 
 function scrollHandler (event: WheelEvent): void {
@@ -34,7 +35,11 @@ function scrollHandler (event: WheelEvent): void {
   const height = target.clientHeight
   const popover = findClosestPopover(target)
 
-  if (popover && delta <= 0 && delta < height + target.scrollTop - target.scrollHeight) {
+  if (
+    popover &&
+    delta <= 0 &&
+    delta < height + target.scrollTop - target.scrollHeight
+  ) {
     popover.classList.add(CLASS_FULLY_SCROLLED)
     target.scrollTop = target.scrollHeight
     event.stopPropagation()
@@ -54,10 +59,21 @@ function scrollHandler (event: WheelEvent): void {
 }
 
 export function bindContentScrollHandler (contentElement: Element): void {
-  const throttledScrollHandler = throttle(scrollHandler) as any as EventListener
+  const throttledScrollHandler = (throttle(
+    scrollHandler
+  ) as any) as EventListener
 
   contentElement.addEventListener('mousewheel', throttledScrollHandler)
   contentElement.addEventListener('wheel', throttledScrollHandler)
+}
+
+function delegateEvent<K extends keyof WindowEventMap> (
+  type: K,
+  root: Document | Element,
+  selector: string,
+  listener: EventListener
+) {
+  delegate(root).on(type, selector, listener)
 }
 
 export function bindEvents ({
@@ -67,7 +83,7 @@ export function bindEvents ({
   resize,
   hover,
   unhover
-}): void {
+}: Core): void {
   const dismissAll = () => forAllActiveFootnotes(dismiss)
 
   document.addEventListener('touchend', handle(toggle))
@@ -77,6 +93,6 @@ export function bindEvents ({
   window.addEventListener('scroll', throttle(reposition))
   window.addEventListener('resize', throttle(resize))
 
-  delegate(document).on('mouseover', `.${CLASS_BUTTON}`, handle(hover, true))
-  delegate(document).on('mouseout', `.${CLASS_HOVERED}`, handle(unhover, true))
+  delegateEvent('mouseover', document, `.${CLASS_BUTTON}`, handle(hover, true))
+  delegateEvent('mouseout', document, `.${CLASS_BUTTON}`, handle(unhover, true))
 }

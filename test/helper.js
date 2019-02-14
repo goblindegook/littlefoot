@@ -105,9 +105,9 @@ export function mouseout (element) {
   simulant.fire(element, 'mouseout')
 }
 
-export function keyup (element, keyCode) {
-  simulant.fire(element, 'keyup', { keyCode })
+export function keyup (element, key) {
+  simulant.fire(element, 'keyup', { key })
 }
 
-export const KEY_ENTER = 13
-export const KEY_ESCAPE = 27
+export const KEY_ENTER = '13'
+export const KEY_ESCAPE = '27'

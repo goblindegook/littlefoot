@@ -6,7 +6,11 @@ test('settings', t => {
 
   lf.updateSetting('scope', 'article')
 
-  t.equal(lf.getSetting('scope'), 'article', 'allows getting and setting values')
+  t.equal(
+    lf.getSetting('scope'),
+    'article',
+    'allows getting and setting values'
+  )
 
   t.end()
 })

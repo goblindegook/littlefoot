@@ -4,8 +4,12 @@ export function children (element: Element, selector?: string): Element[] {
   )
 }
 
-export function getStyle (element: Element, property: keyof CSSStyleDeclaration): string {
-  const view = element.ownerDocument && element.ownerDocument.defaultView || window
+export function getStyle (
+  element: Element,
+  property: keyof CSSStyleDeclaration
+): string {
+  const view =
+    (element.ownerDocument && element.ownerDocument.defaultView) || window
   const style = view.getComputedStyle(element)
   return style.getPropertyValue(property as string) || style[property] || ''
 }

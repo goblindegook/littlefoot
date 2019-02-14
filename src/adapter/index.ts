@@ -9,25 +9,37 @@ import {
   FOOTNOTE_REF,
   FOOTNOTE_BACKLINK_REF
 } from './constants'
+import { Settings } from '../settings'
 
-export const setPrintOnly = el => el && el.classList.add(CLASS_PRINT_ONLY)
-export const setProcessed = el => el && el.classList.add(CLASS_PROCESSED)
+export type DOMAdapter = typeof adapter
 
-const getFootnoteRef = (element: HTMLElement) => element.getAttribute(FOOTNOTE_REF)
-const setFootnoteRef = (element: HTMLElement, value: string) => element.setAttribute(FOOTNOTE_REF, value)
+export const setPrintOnly = (el: Element) => el.classList.add(CLASS_PRINT_ONLY)
+export const setProcessed = (el: Element) => el.classList.add(CLASS_PROCESSED)
 
-const getFootnoteBacklinkRef = (element: HTMLElement) => element.getAttribute(FOOTNOTE_BACKLINK_REF)
-const setFootnoteBacklinkRef = (element: HTMLElement, value: string) => element.setAttribute(FOOTNOTE_BACKLINK_REF, value)
+const getFootnoteRef = (element: Element): string =>
+  element.getAttribute(FOOTNOTE_REF) || ''
+const setFootnoteRef = (element: Element, value: string): void =>
+  element.setAttribute(FOOTNOTE_REF, value)
 
-function getLastFootnoteId () {
+const getFootnoteBacklinkRef = (element: Element) =>
+  element.getAttribute(FOOTNOTE_BACKLINK_REF) || ''
+const setFootnoteBacklinkRef = (element: Element, value: string) =>
+  element.setAttribute(FOOTNOTE_BACKLINK_REF, value)
+
+function getLastFootnoteId (): number {
   const footnotes = document.querySelectorAll(`[${FOOTNOTE_ID}]`)
-  return (
-    footnotes.length &&
-    footnotes[footnotes.length - 1].getAttribute(FOOTNOTE_ID)
-  )
+  return footnotes.length
+    ? parseInt(
+        footnotes[footnotes.length - 1].getAttribute(FOOTNOTE_ID) || '0',
+        10
+      )
+    : 0
 }
 
-function getFootnoteBacklinkId (link, anchorParentSelector) {
+function getFootnoteBacklinkId (
+  link: HTMLAnchorElement,
+  anchorParentSelector: string
+): string {
   const parent = link.closest(anchorParentSelector)
 
   if (parent) {
@@ -43,10 +55,13 @@ function getFootnoteBacklinkId (link, anchorParentSelector) {
   return ''
 }
 
-function setLinkReferences (link, anchorParentSelector) {
+function setLinkReferences (
+  link: HTMLAnchorElement,
+  anchorParentSelector: string
+): HTMLAnchorElement {
   const id = getFootnoteBacklinkId(link, anchorParentSelector) || ''
   const linkId = link.id || ''
-  const href = '#' + link.getAttribute('href').split('#')[1]
+  const href = '#' + link.href.split('#')[1]
   setFootnoteRef(link, href)
   setFootnoteBacklinkRef(link, `${id}${linkId}`)
   return link
@@ -57,14 +72,21 @@ export function getFootnoteLinks ({
   anchorParentSelector,
   footnoteParentClass,
   scope
+}: {
+  anchorPattern: RegExp
+  anchorParentSelector: string
+  footnoteParentClass: string
+  scope: string | null
 }) {
   const footnoteLinkSelector = `${scope || ''} a[href*="#"]`.trim()
 
-  return Array.from(document.querySelectorAll(footnoteLinkSelector))
+  return Array.from(
+    document.querySelectorAll<HTMLAnchorElement>(footnoteLinkSelector)
+  )
     .filter(link => {
-      const href = link.getAttribute('href')
-      const rel = link.getAttribute('rel')
-      const anchor = `${href}${rel != null && rel !== 'null' ? rel : ''}`
+      const anchor = `${link.href}${
+        link.rel != null && link.rel !== 'null' ? link.rel : ''
+      }`
 
       return (
         anchor.match(anchorPattern) &&
@@ -76,11 +98,11 @@ export function getFootnoteLinks ({
     .map(link => setLinkReferences(link, anchorParentSelector))
 }
 
-export function insertButton (link, html) {
+export function insertButton (link: HTMLAnchorElement, html: string): void {
   link.insertAdjacentHTML('beforebegin', html)
 }
 
-function prepareContent (content, backlinkId) {
+function prepareContent (content: string, backlinkId: string): string {
   const pattern = backlinkId.trim().replace(/\s+/g, '|')
   const regex = new RegExp(
     '(\\s|&nbsp;)*<\\s*a[^#<]*#(' + pattern + ')[^>]*>(.*?)<\\s*/\\s*a>',
@@ -99,67 +121,95 @@ function prepareContent (content, backlinkId) {
   return preparedContent
 }
 
-function resetNumbers (numberResetSelector) {
-  return (footnote, i, footnotes) => {
-    const reset = footnote.link.closest(numberResetSelector)
-    const previous = i ? footnotes[i - 1] : { reset: null, number: 0 }
+type RawFootnote = {
+  element: HTMLElement | null
+  link: HTMLAnchorElement
+  number: number
+}
 
-    return Object.assign(footnote, {
-      reset: previous.reset,
-      number: reset === previous.reset ? previous.number + 1 : 1
-    })
+type FootnoteProps = {
+  element: HTMLElement
+  link: HTMLAnchorElement
+  reset: HTMLElement | null
+  number: number
+  content: string
+  id: number
+  reference: string
+}
+
+const resetNumbers = (numberResetSelector: string) => (
+  footnote: FootnoteProps,
+  i: number,
+  footnotes: FootnoteProps[]
+): FootnoteProps => {
+  const reset = footnote.link.closest(numberResetSelector)
+  const previous = i ? footnotes[i - 1] : { reset: null, number: 0 }
+
+  return {
+    ...footnote,
+    reset: previous.reset,
+    number: reset === previous.reset ? previous.number + 1 : 1
   }
 }
 
-function addLinkElements (allowDuplicates, footnoteSelector) {
+function addLinkElements (
+  allowDuplicates: boolean,
+  footnoteSelector: string
+): (link: HTMLAnchorElement) => RawFootnote {
   return link => {
     const selector = getFootnoteRef(link).replace(/[:.+~*[\]]/g, '\\$&')
     const strictSelector = `${selector}:not(.${CLASS_PROCESSED})`
-    const related = document.querySelector(allowDuplicates ? selector : strictSelector)
-    const element = related && related.closest(footnoteSelector)
+    const related = document.querySelector(
+      allowDuplicates ? selector : strictSelector
+    )
+    const element =
+      related && (related.closest(footnoteSelector) as HTMLElement)
 
-    setProcessed(element)
+    if (element) {
+      setProcessed(element)
+    }
 
-    return { element, link }
+    return { element, link, reset: null, number: 0 }
   }
 }
 
-function assignFootnoteProperties (offset) {
-  return ({ element, link }, idx) => {
-    const number = offset + idx
-    const id = offset + idx
-    const reference = getFootnoteBacklinkRef(link)
-    const content = escape(prepareContent(element.innerHTML, reference))
+const footnoteProperties = (offset: number) => (
+  { element, link }: RawFootnote,
+  idx: number
+): FootnoteProps => {
+  const number = offset + idx
+  const id = offset + idx
+  const reference = getFootnoteBacklinkRef(link)
+  const content = escape(prepareContent(element!.innerHTML, reference))
 
-    return { content, element, id, link, number, reference }
+  return {
+    content,
+    element: element!,
+    id,
+    link,
+    number,
+    reference,
+    reset: null
   }
 }
 
-function hideFootnoteContainer (container) {
+function hideFootnoteContainer (container: HTMLElement): void {
   const visibleElements = children(container, `:not(.${CLASS_PRINT_ONLY})`)
   const visibleSeparators = visibleElements.filter(el => el.tagName === 'HR')
 
   if (visibleElements.length === visibleSeparators.length) {
     ;[...visibleSeparators, container].forEach(setPrintOnly)
-    hideFootnoteContainer(container.parentNode)
+    hideFootnoteContainer(container.parentNode as HTMLElement)
   }
 }
 
-function hideOriginalFootnote (footnote, link) {
+function hideOriginalFootnote (footnote: HTMLElement, link: HTMLElement) {
   setPrintOnly(footnote)
   setPrintOnly(link)
-  hideFootnoteContainer(footnote.parentNode)
+  hideFootnoteContainer(footnote.parentNode as HTMLElement)
 }
 
-/**
- * Footnote button/content initializer (run on doc.ready).
- *
- * Finds the likely footnote links and then uses their target to find the content.
- *
- * @param  {Object} settings littlefoot settings object.
- * @return {void}
- */
-export function createDocumentAdapter (settings) {
+export function createDocumentAdapter (settings: Settings): DOMAdapter {
   const {
     allowDuplicates,
     anchorParentSelector,
@@ -171,7 +221,7 @@ export function createDocumentAdapter (settings) {
     scope
   } = settings
 
-  const offset = parseInt(getLastFootnoteId(), 10) + 1
+  const offset = getLastFootnoteId() + 1
 
   getFootnoteLinks({
     anchorPattern,
@@ -181,7 +231,7 @@ export function createDocumentAdapter (settings) {
   })
     .map(addLinkElements(allowDuplicates, footnoteSelector))
     .filter(({ element }) => element)
-    .map(assignFootnoteProperties(offset))
+    .map(footnoteProperties(offset))
     .map(numberResetSelector ? resetNumbers(numberResetSelector) : i => i)
     .map(footnote => {
       insertButton(footnote.link, template(buttonTemplate)(footnote))

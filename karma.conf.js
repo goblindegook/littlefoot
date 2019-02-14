@@ -11,31 +11,31 @@ var customLaunchers = {
 
 var reporters = ['dots', 'coverage']
 
-module.exports = function (karma) {
+module.exports = karma => {
   karma.set({
     singleRun: true,
     browsers: browsers.concat(Object.keys(customLaunchers)),
     customLaunchers: customLaunchers,
     reporters: reporters,
     browserNoActivityTimeout: 60000,
-    frameworks: ['browserify', 'tap', 'sinon'],
+    frameworks: ['browserify', 'tap', 'sinon', 'karma-typescript'],
     browserify: {
       extensions: ['.ts'],
       debug: true,
       transform: [
-        ['babelify', {
-          extensions: ['.js', '.ts']
-        }],
+        [
+          'babelify',
+          {
+            extensions: ['.js', '.ts']
+          }
+        ],
         'brfs'
       ]
     },
-    files: [
-      'dist/*.css',
-      'test/**/*.test.{js,ts}',
-      'test/**/*.html'
-    ],
+    files: ['dist/*.css', 'test/**/*.test.{js,ts}', 'test/**/*.html'],
     preprocessors: {
-      '{src,test}/**/*.{js,ts}': ['browserify']
+      '**/*.ts': 'karma-typescript',
+      'test/**/*.js': ['browserify']
     },
     coverageReporter: {
       dir: 'coverage/',

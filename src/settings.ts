@@ -9,10 +9,8 @@ import {
   FOOTNOTE_NUMBER
 } from './adapter/constants'
 
-export type LittlefootSettings = {
-  activateCallback:
-    | ((popover: HTMLElement, button: HTMLInputElement) => void)
-    | null
+export type Settings = {
+  activateCallback: ((popover: HTMLElement, button: HTMLElement) => void) | null
   activateDelay: number
   activateOnHover: boolean
   allowDuplicates: boolean
@@ -35,7 +33,7 @@ export type LittlefootSettings = {
  *
  * @type {Object}
  */
-const DEFAULTS: LittlefootSettings = {
+const DEFAULTS: Settings = {
   activateCallback: null,
   activateDelay: 100,
   activateOnHover: false,
@@ -54,6 +52,6 @@ const DEFAULTS: LittlefootSettings = {
   buttonTemplate: `<span class="littlefoot-footnote__container"><button class="${CLASS_BUTTON} littlefoot-footnote__button__ellipsis" id="<%= reference %>" ${FOOTNOTE_CONTENT}="<%= content %>" ${FOOTNOTE_ID}="<%= id %>" ${FOOTNOTE_NUMBER}="<%= number %>" title="See Footnote <%= number %>" aria-controls="fncontent:<%= id %>" aria-expanded="false" aria-label="Footnote <%= number %>" rel="footnote"><svg viewbox="0 0 31 6" preserveAspectRatio="xMidYMid"><circle r="3" cx="3" cy="3" fill="white"></circle><circle r="3" cx="15" cy="3" fill="white"></circle><circle r="3" cx="27" cy="3" fill="white"></circle></svg></button></span>`
 }
 
-export function createSettings (options: Partial<LittlefootSettings>): LittlefootSettings {
-  return { ...DEFAULTS, ...options }
+export function createSettings (settings: Partial<Settings>): Settings {
+  return { ...DEFAULTS, ...settings }
 }
