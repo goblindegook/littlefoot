@@ -18,7 +18,7 @@ export function getMaxHeight(element: HTMLElement): number {
   const value = getStyle(element, 'maxHeight')
   const size = parseFloat(value)
 
-  if (value == null || value === 'none') {
+  if (value === '' || value === 'none') {
     return element.clientHeight
   }
 

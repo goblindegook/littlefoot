@@ -13,7 +13,7 @@ export type Core = {
 }
 
 function createActivate(adapter: DOMAdapter, settings: Settings) {
-  return (footnote: Footnote, className: string = '') => {
+  return (footnote: Footnote, className = '') => {
     const { activateCallback, activateDelay, contentTemplate } = settings
 
     if (!footnote.isChanging()) {

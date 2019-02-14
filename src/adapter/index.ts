@@ -84,9 +84,7 @@ export function getFootnoteLinks({
     document.querySelectorAll<HTMLAnchorElement>(footnoteLinkSelector)
   )
     .filter(link => {
-      const anchor = `${link.href}${
-        link.rel != null && link.rel !== 'null' ? link.rel : ''
-      }`
+      const anchor = `${link.href}${link.rel !== 'null' ? link.rel : ''}`
 
       return (
         anchor.match(anchorPattern) &&
@@ -177,7 +175,7 @@ const footnoteProperties = (offset: number) => (
   { element, link }: RawFootnote,
   idx: number
 ): FootnoteProps => {
-  const number = offset + idx
+  const footnoteNumber = offset + idx
   const id = offset + idx
   const reference = getFootnoteBacklinkRef(link)
   const content = escape(prepareContent(element!.innerHTML, reference))
@@ -187,7 +185,7 @@ const footnoteProperties = (offset: number) => (
     element: element!,
     id,
     link,
-    number,
+    number: footnoteNumber,
     reference,
     reset: null
   }
