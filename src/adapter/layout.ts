@@ -15,7 +15,7 @@ type Room = {
   leftRelative: number
 }
 
-export function getAvailableRoom (element: HTMLElement): Room {
+export function getAvailableRoom(element: HTMLElement): Room {
   const marginLeft = parseFloat(getStyle(element, 'marginLeft'))
   const width = element.offsetWidth - marginLeft
   const height = element.offsetHeight
@@ -30,17 +30,14 @@ export function getAvailableRoom (element: HTMLElement): Room {
   }
 }
 
-function isPopoverOnTop (footnote: HTMLElement, room: Room): boolean {
+function isPopoverOnTop(footnote: HTMLElement, room: Room): boolean {
   const marginSize = parseInt(getStyle(footnote, 'marginTop'), 10)
   const totalHeight = 2 * marginSize + footnote.offsetHeight
 
   return room.bottom < totalHeight && room.bottom < room.top
 }
 
-export function getPopoverMaxHeight (
-  footnote: HTMLElement,
-  room: Room
-): number {
+export function getPopoverMaxHeight(footnote: HTMLElement, room: Room): number {
   const isTop = isPopoverOnTop(footnote, room)
   const maxHeight = parseInt(
     footnote.getAttribute(FOOTNOTE_MAX_HEIGHT) || '0',
@@ -52,7 +49,7 @@ export function getPopoverMaxHeight (
   return Math.min(maxHeight, availableHeight)
 }
 
-export function repositionPopover (popover: HTMLElement, room: Room): void {
+export function repositionPopover(popover: HTMLElement, room: Room): void {
   const isTop = isPopoverOnTop(popover, room)
   const previous = popover.getAttribute(POPOVER_POSITION) || BOTTOM
   const position = isTop ? TOP : BOTTOM
@@ -67,7 +64,7 @@ export function repositionPopover (popover: HTMLElement, room: Room): void {
   }
 }
 
-export function repositionTooltip (
+export function repositionTooltip(
   popover: HTMLElement,
   leftRelative = 0.5
 ): void {

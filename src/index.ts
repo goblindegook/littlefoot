@@ -10,7 +10,7 @@ type Littlefoot = {
   updateSetting: <K extends keyof Settings>(key: K, value: Settings[K]) => void
 }
 
-export const littlefoot = function (
+export const littlefoot = function(
   options: Partial<Settings> = {}
 ): Littlefoot {
   const settings = createSettings(options)
@@ -19,7 +19,7 @@ export const littlefoot = function (
   bindEvents(core)
 
   return {
-    activate (selector: string, className?: string): void {
+    activate(selector: string, className?: string): void {
       const { allowMultiple } = settings
       if (selector) {
         const footnotes = allowMultiple
@@ -32,18 +32,18 @@ export const littlefoot = function (
       }
     },
 
-    dismiss (selector, delay) {
+    dismiss(selector, delay) {
       adapter.forAllActiveFootnotes(
         footnote => core.dismiss(footnote, delay),
         selector
       )
     },
 
-    getSetting (key) {
+    getSetting(key) {
       return settings[key]
     },
 
-    updateSetting (key, value) {
+    updateSetting(key, value) {
       settings[key] = value
     }
   }

@@ -12,7 +12,7 @@ export type Core = {
   unhover: () => void
 }
 
-function createActivate (adapter: DOMAdapter, settings: Settings) {
+function createActivate(adapter: DOMAdapter, settings: Settings) {
   return (footnote: Footnote, className: string = '') => {
     const { activateCallback, activateDelay, contentTemplate } = settings
 
@@ -39,7 +39,7 @@ function createActivate (adapter: DOMAdapter, settings: Settings) {
   }
 }
 
-function createDismiss (settings: Settings) {
+function createDismiss(settings: Settings) {
   return (footnote: Footnote, delay = settings.dismissDelay) => {
     if (!footnote.isChanging()) {
       footnote.startChanging()
@@ -53,7 +53,7 @@ function createDismiss (settings: Settings) {
   }
 }
 
-export function createCore (adapter: DOMAdapter, settings: Settings): Core {
+export function createCore(adapter: DOMAdapter, settings: Settings): Core {
   const activate = createActivate(adapter, settings)
   const dismiss = createDismiss(settings)
 
@@ -62,15 +62,15 @@ export function createCore (adapter: DOMAdapter, settings: Settings): Core {
 
     dismiss,
 
-    reposition () {
+    reposition() {
       adapter.forAllActiveFootnotes(footnote => footnote.reposition())
     },
 
-    resize () {
+    resize() {
       adapter.forAllActiveFootnotes(footnote => footnote.resize())
     },
 
-    toggle (footnote, popover) {
+    toggle(footnote, popover) {
       const { allowMultiple } = settings
       if (footnote) {
         if (footnote.isActive()) {
@@ -86,7 +86,7 @@ export function createCore (adapter: DOMAdapter, settings: Settings): Core {
       }
     },
 
-    hover (footnote) {
+    hover(footnote) {
       const { activateOnHover, allowMultiple } = settings
       if (activateOnHover && !footnote.isActive()) {
         if (!allowMultiple) {
@@ -97,7 +97,7 @@ export function createCore (adapter: DOMAdapter, settings: Settings): Core {
       }
     },
 
-    unhover () {
+    unhover() {
       const { dismissOnUnhover, hoverDelay } = settings
       if (dismissOnUnhover) {
         setTimeout(() => {

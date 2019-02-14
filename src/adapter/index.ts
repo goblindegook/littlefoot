@@ -26,7 +26,7 @@ const getFootnoteBacklinkRef = (element: Element) =>
 const setFootnoteBacklinkRef = (element: Element, value: string) =>
   element.setAttribute(FOOTNOTE_BACKLINK_REF, value)
 
-function getLastFootnoteId (): number {
+function getLastFootnoteId(): number {
   const footnotes = document.querySelectorAll(`[${FOOTNOTE_ID}]`)
   return footnotes.length
     ? parseInt(
@@ -36,7 +36,7 @@ function getLastFootnoteId (): number {
     : 0
 }
 
-function getFootnoteBacklinkId (
+function getFootnoteBacklinkId(
   link: HTMLAnchorElement,
   anchorParentSelector: string
 ): string {
@@ -55,7 +55,7 @@ function getFootnoteBacklinkId (
   return ''
 }
 
-function setLinkReferences (
+function setLinkReferences(
   link: HTMLAnchorElement,
   anchorParentSelector: string
 ): HTMLAnchorElement {
@@ -67,7 +67,7 @@ function setLinkReferences (
   return link
 }
 
-export function getFootnoteLinks ({
+export function getFootnoteLinks({
   anchorPattern,
   anchorParentSelector,
   footnoteParentClass,
@@ -98,11 +98,11 @@ export function getFootnoteLinks ({
     .map(link => setLinkReferences(link, anchorParentSelector))
 }
 
-export function insertButton (link: HTMLAnchorElement, html: string): void {
+export function insertButton(link: HTMLAnchorElement, html: string): void {
   link.insertAdjacentHTML('beforebegin', html)
 }
 
-function prepareContent (content: string, backlinkId: string): string {
+function prepareContent(content: string, backlinkId: string): string {
   const pattern = backlinkId.trim().replace(/\s+/g, '|')
   const regex = new RegExp(
     '(\\s|&nbsp;)*<\\s*a[^#<]*#(' + pattern + ')[^>]*>(.*?)<\\s*/\\s*a>',
@@ -152,7 +152,7 @@ const resetNumbers = (numberResetSelector: string) => (
   }
 }
 
-function addLinkElements (
+function addLinkElements(
   allowDuplicates: boolean,
   footnoteSelector: string
 ): (link: HTMLAnchorElement) => RawFootnote {
@@ -193,7 +193,7 @@ const footnoteProperties = (offset: number) => (
   }
 }
 
-function hideFootnoteContainer (container: HTMLElement): void {
+function hideFootnoteContainer(container: HTMLElement): void {
   const visibleElements = children(container, `:not(.${CLASS_PRINT_ONLY})`)
   const visibleSeparators = visibleElements.filter(el => el.tagName === 'HR')
 
@@ -203,13 +203,13 @@ function hideFootnoteContainer (container: HTMLElement): void {
   }
 }
 
-function hideOriginalFootnote (footnote: HTMLElement, link: HTMLElement) {
+function hideOriginalFootnote(footnote: HTMLElement, link: HTMLElement) {
   setPrintOnly(footnote)
   setPrintOnly(link)
   hideFootnoteContainer(footnote.parentNode as HTMLElement)
 }
 
-export function createDocumentAdapter (settings: Settings): DOMAdapter {
+export function createDocumentAdapter(settings: Settings): DOMAdapter {
   const {
     allowDuplicates,
     anchorParentSelector,

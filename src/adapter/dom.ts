@@ -1,10 +1,10 @@
-export function children (element: Element, selector?: string): Element[] {
+export function children(element: Element, selector?: string): Element[] {
   return Array.from(element.children).filter(
     child => child.nodeType !== 8 && (!selector || child.matches(selector))
   )
 }
 
-export function getStyle (
+export function getStyle(
   element: Element,
   property: keyof CSSStyleDeclaration
 ): string {
@@ -14,7 +14,7 @@ export function getStyle (
   return style.getPropertyValue(property as string) || style[property] || ''
 }
 
-export function getMaxHeight (element: HTMLElement): number {
+export function getMaxHeight(element: HTMLElement): number {
   const value = getStyle(element, 'maxHeight')
   const size = parseFloat(value)
 

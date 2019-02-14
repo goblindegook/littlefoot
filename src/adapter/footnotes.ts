@@ -24,7 +24,7 @@ import {
 
 const siblings = require('dom-siblings')
 
-function maybeCall<A extends any[], R> (
+function maybeCall<A extends any[], R>(
   fn: null | ((...args: A) => R),
   context: any,
   ...args: A
@@ -32,17 +32,17 @@ function maybeCall<A extends any[], R> (
   return typeof fn === 'function' ? fn.call(context, ...args) : null
 }
 
-function findOne (className: string, selector = ''): HTMLElement | null {
+function findOne(className: string, selector = ''): HTMLElement | null {
   return document.querySelector<HTMLElement>(`${selector}.${className}`)
 }
 
-function findAll (className: string, selector = ''): HTMLElement[] {
+function findAll(className: string, selector = ''): HTMLElement[] {
   return Array.from(
     document.querySelectorAll<HTMLElement>(`${selector}.${className}`)
   )
 }
 
-function findPopoverContent (popover: HTMLElement): HTMLElement | null {
+function findPopoverContent(popover: HTMLElement): HTMLElement | null {
   return popover.querySelector(`.${CLASS_CONTENT}`)
 }
 
@@ -73,7 +73,7 @@ type FootnoteElements = {
   popover: HTMLElement | null
 }
 
-function createFootnote ({
+function createFootnote({
   button,
   popover = null
 }: FootnoteElements): Footnote {
@@ -187,22 +187,22 @@ function createFootnote ({
   }
 }
 
-export function findFootnote (selector: string): Footnote | null {
+export function findFootnote(selector: string): Footnote | null {
   const button = findOne(CLASS_BUTTON, selector)
   return button && createFootnote({ button, popover: null })
 }
 
-export function findAllFootnotes (selector: string): Footnote[] {
+export function findAllFootnotes(selector: string): Footnote[] {
   return findAll(CLASS_BUTTON, selector).map(button =>
     createFootnote({ button, popover: null })
   )
 }
 
-function findMatching (className: string, element: Element): HTMLElement {
+function findMatching(className: string, element: Element): HTMLElement {
   return element && siblings(element, `.${className}`)[0]
 }
 
-export function forAllActiveFootnotes (
+export function forAllActiveFootnotes(
   fn: (footnote: Footnote) => void,
   selector = ''
 ): Footnote[] {
@@ -214,7 +214,7 @@ export function forAllActiveFootnotes (
   })
 }
 
-export function forOtherActiveFootnotes (
+export function forOtherActiveFootnotes(
   fn: (footnote: Footnote) => void,
   footnote: Footnote
 ): Footnote[] {
@@ -224,7 +224,7 @@ export function forOtherActiveFootnotes (
   )
 }
 
-export function findClosestFootnote (
+export function findClosestFootnote(
   target: HTMLElement | null
 ): Footnote | null {
   const button = target && (target.closest(`.${CLASS_BUTTON}`) as HTMLElement)
@@ -232,7 +232,7 @@ export function findClosestFootnote (
   return button && createFootnote({ button, popover })
 }
 
-export function hasHoveredFootnotes (): boolean {
+export function hasHoveredFootnotes(): boolean {
   return !!document.querySelector(
     `.${CLASS_BUTTON}:hover, .${CLASS_FOOTNOTE}:hover`
   )

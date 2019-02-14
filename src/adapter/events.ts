@@ -13,7 +13,7 @@ const delegate = require('dom-delegate')
 type FootnoteAction = (footnote?: any, popover?: any) => void
 type EventHandler<E extends Event> = (e: E) => void
 
-function handle (fn: FootnoteAction, hover = false): EventHandler<Event> {
+function handle(fn: FootnoteAction, hover = false): EventHandler<Event> {
   return event => {
     const target = event.target as HTMLElement
     const footnote = findClosestFootnote(target)
@@ -25,11 +25,11 @@ function handle (fn: FootnoteAction, hover = false): EventHandler<Event> {
   }
 }
 
-function handleEscape (fn: () => void): EventHandler<KeyboardEvent> {
+function handleEscape(fn: () => void): EventHandler<KeyboardEvent> {
   return event => event.key === '27' && fn()
 }
 
-function scrollHandler (event: WheelEvent): void {
+function scrollHandler(event: WheelEvent): void {
   const target = event.currentTarget as HTMLElement
   const delta = -event.deltaY
   const height = target.clientHeight
@@ -58,7 +58,7 @@ function scrollHandler (event: WheelEvent): void {
   }
 }
 
-export function bindContentScrollHandler (contentElement: Element): void {
+export function bindContentScrollHandler(contentElement: Element): void {
   const throttledScrollHandler = (throttle(
     scrollHandler
   ) as any) as EventListener
@@ -67,7 +67,7 @@ export function bindContentScrollHandler (contentElement: Element): void {
   contentElement.addEventListener('wheel', throttledScrollHandler)
 }
 
-function delegateEvent<K extends keyof WindowEventMap> (
+function delegateEvent<K extends keyof WindowEventMap>(
   type: K,
   root: Document | Element,
   selector: string,
@@ -76,7 +76,7 @@ function delegateEvent<K extends keyof WindowEventMap> (
   delegate(root).on(type, selector, listener)
 }
 
-export function bindEvents ({
+export function bindEvents({
   toggle,
   dismiss,
   reposition,

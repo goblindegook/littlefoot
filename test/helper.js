@@ -4,7 +4,7 @@ const fs = require('fs')
 /**
  * Checks whether IE is in use.
  */
-export function isIE () {
+export function isIE() {
   const ua = window.navigator.userAgent
   return (
     ua.indexOf('MSIE ') > 0 ||
@@ -19,7 +19,7 @@ export function isIE () {
  * @param  {String} fixture Fixture file to load (defaults to default.html).
  * @return {void}
  */
-export function setup (fixture) {
+export function setup(fixture) {
   const content = document.createElement('div')
 
   content.id = 'root'
@@ -44,7 +44,7 @@ export function setup (fixture) {
  * Load littlefoot stylesheet.
  * @return {void}
  */
-export function setupStylesheet () {
+export function setupStylesheet() {
   const stylesheet = document.createElement('link')
   stylesheet.rel = 'stylesheet'
   stylesheet.href = 'base/dist/littlefoot.css'
@@ -57,7 +57,7 @@ export function setupStylesheet () {
  *
  * @return {void}
  */
-export function teardown () {
+export function teardown() {
   while (document.body.firstChild) {
     document.body.removeChild(document.body.firstChild)
   }
@@ -69,43 +69,43 @@ export function teardown () {
  * @param  {Number}  timeout Sleep delay.
  * @return {Promise}         Promise.
  */
-export function sleep (timeout) {
+export function sleep(timeout) {
   return new Promise(resolve => setTimeout(resolve, timeout))
 }
 
-export function getButton (id) {
+export function getButton(id) {
   return document.querySelector(`button[data-footnote-id="${id}"]`)
 }
 
-export function getPopover (id) {
+export function getPopover(id) {
   return document.querySelector(`aside[data-footnote-id="${id}"]`)
 }
 
-export function getAllButtons () {
+export function getAllButtons() {
   return [...document.querySelectorAll('button[data-footnote-id]')]
 }
 
-export function getAllActiveButtons () {
+export function getAllActiveButtons() {
   return [...document.querySelectorAll('button[data-footnote-id].is-active')]
 }
 
-export function getAllPopovers () {
+export function getAllPopovers() {
   return [...document.querySelectorAll('aside[data-footnote-id]')]
 }
 
-export function click (element) {
+export function click(element) {
   simulant.fire(element, 'click')
 }
 
-export function mouseover (element) {
+export function mouseover(element) {
   simulant.fire(element, 'mouseover')
 }
 
-export function mouseout (element) {
+export function mouseout(element) {
   simulant.fire(element, 'mouseout')
 }
 
-export function keyup (element, key) {
+export function keyup(element, key) {
   simulant.fire(element, 'keyup', { key })
 }
 

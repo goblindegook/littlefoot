@@ -18,7 +18,7 @@
     "test:firefox": "NODE_ENV=test karma start --browsers FirefoxHeadless",
     "test:watch": "yarn test:firefox --no-single-run --browser-no-activity-timeout 0",
     "test": "yarn test:chrome",
-    "format": "prettier-standard '{src,test}/**/*.{js,jsx,ts,tsx,json,css,md}'",
+    "format": "prettier --write '{src,test}/**/*.{js,jsx,ts,tsx,json,css,md}'",
     "typecheck": "tsc --noEmit",
     "typecheck:watch": "yarn typecheck --watch",
     "watch": "watchify --extension=ts -s littlefoot -o dist/littlefoot.js src/index.ts"
@@ -77,8 +77,7 @@
     "karma-tap": "^4.1.4",
     "karma-typescript": "^4.0.0",
     "node-sass": "^4.9.3",
-    "prettier": "^1.14.2",
-    "prettier-standard": "^9.1.1",
+    "prettier": "^1.16.4",
     "simulant": "^0.2.2",
     "sinon": "^7.2.0",
     "standard": "^12.0.1",
