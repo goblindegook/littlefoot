@@ -1,6 +1,5 @@
 import { Settings } from './settings'
-import { Footnote } from './adapter/footnotes'
-import { DOMAdapter } from './adapter'
+import { Footnote, Adapter } from './types'
 
 export type Core = {
   activate: (footnote: Footnote, className?: string) => void
@@ -12,7 +11,7 @@ export type Core = {
   unhover: () => void
 }
 
-function createActivate(adapter: DOMAdapter, settings: Settings) {
+function createActivate(adapter: Adapter, settings: Settings) {
   return (footnote: Footnote, className = '') => {
     const { activateCallback, activateDelay, contentTemplate } = settings
 
@@ -53,7 +52,7 @@ function createDismiss(settings: Settings) {
   }
 }
 
-export function createCore(adapter: DOMAdapter, settings: Settings): Core {
+export function createCore(adapter: Adapter, settings: Settings): Core {
   const activate = createActivate(adapter, settings)
   const dismiss = createDismiss(settings)
 

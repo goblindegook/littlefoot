@@ -1,5 +1,5 @@
 import template from 'lodash.template'
-import { getMaxHeight, getStyle } from './dom'
+import { getMaxHeight, getStyle, findSibling } from './dom'
 import { bindContentScrollHandler } from './events'
 import {
   getAvailableRoom,
@@ -21,16 +21,7 @@ import {
   CLASS_WRAPPER,
   CLASS_CONTENT
 } from './constants'
-
-const siblings = require('dom-siblings')
-
-function maybeCall<A extends any[], R>(
-  fn: null | ((...args: A) => R),
-  context: any,
-  ...args: A
-): R | null {
-  return typeof fn === 'function' ? fn.call(context, ...args) : null
-}
+import { FootnoteAction, Footnote } from '../types'
 
 function findOne(className: string, selector = ''): HTMLElement | null {
   return document.querySelector<HTMLElement>(`${selector}.${className}`)
@@ -46,28 +37,6 @@ function findPopoverContent(popover: HTMLElement): HTMLElement | null {
   return popover.querySelector(`.${CLASS_CONTENT}`)
 }
 
-export const findClosestPopover = (element: Element) =>
-  element.closest(`.${CLASS_FOOTNOTE}`)
-
-export type Footnote = {
-  getId: () => string | null
-  activate: (
-    contentTemplate: string,
-    className: string,
-    onActivate: null | ((popover: HTMLElement, button: HTMLElement) => void)
-  ) => Footnote
-  dismiss: () => void
-  hover: () => void
-  isActive: () => boolean
-  isChanging: () => boolean
-  ready: () => void
-  remove: () => void
-  reposition: () => void
-  resize: () => void
-  startChanging: () => void
-  stopChanging: () => void
-}
-
 type FootnoteElements = {
   button: HTMLElement
   popover: HTMLElement | null
@@ -81,7 +50,7 @@ function createFootnote({
     getId: () => button.getAttribute(FOOTNOTE_ID),
 
     activate: (contentTemplate, className, onActivate) => {
-      maybeCall(button.blur, button)
+      button.blur()
       button.setAttribute('aria-expanded', 'true')
       button.classList.add(CLASS_ACTIVE)
 
@@ -108,12 +77,15 @@ function createFootnote({
         newPopover.classList.add(className)
       }
 
-      maybeCall(onActivate, null, newPopover, button)
+      if (typeof onActivate === 'function') {
+        onActivate(newPopover, button)
+      }
+
       return createFootnote({ button, popover: newPopover })
     },
 
     dismiss: () => {
-      maybeCall(button.blur, button)
+      button.blur()
       button.setAttribute('aria-expanded', 'false')
       button.classList.remove(CLASS_ACTIVE)
       button.classList.remove(CLASS_HOVERED)
@@ -198,16 +170,12 @@ export function findAllFootnotes(selector: string): Footnote[] {
   )
 }
 
-function findMatching(className: string, element: Element): HTMLElement {
-  return element && siblings(element, `.${className}`)[0]
-}
-
 export function forAllActiveFootnotes(
-  fn: (footnote: Footnote) => void,
+  fn: FootnoteAction,
   selector = ''
 ): Footnote[] {
   return findAll(CLASS_FOOTNOTE, selector).map(popover => {
-    const button = findMatching(CLASS_BUTTON, popover)
+    const button = findSibling(popover, `.${CLASS_BUTTON}`)!
     const footnote = createFootnote({ button, popover })
     fn(footnote)
     return footnote
@@ -215,7 +183,7 @@ export function forAllActiveFootnotes(
 }
 
 export function forOtherActiveFootnotes(
-  fn: (footnote: Footnote) => void,
+  fn: FootnoteAction,
   footnote: Footnote
 ): Footnote[] {
   return forAllActiveFootnotes(
@@ -228,7 +196,7 @@ export function findClosestFootnote(
   target: HTMLElement | null
 ): Footnote | null {
   const button = target && (target.closest(`.${CLASS_BUTTON}`) as HTMLElement)
-  const popover = button && findMatching(CLASS_FOOTNOTE, button)
+  const popover = button && findSibling(button, `.${CLASS_FOOTNOTE}`)!
   return button && createFootnote({ button, popover })
 }
 

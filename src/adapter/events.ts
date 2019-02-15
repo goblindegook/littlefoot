@@ -1,27 +1,29 @@
 import throttle from 'lodash.throttle'
-import {
-  findClosestFootnote,
-  findClosestPopover,
-  forAllActiveFootnotes
-} from './footnotes'
-import { CLASS_BUTTON, CLASS_FULLY_SCROLLED, CLASS_HOVERED } from './constants'
-import { Cancelable } from 'lodash'
+import { findClosestFootnote, forAllActiveFootnotes } from './footnotes'
+import { CLASS_BUTTON, CLASS_FULLY_SCROLLED, CLASS_FOOTNOTE } from './constants'
 import { Core } from '../core'
 
-const delegate = require('dom-delegate')
+const { on } = require('delegated-events')
 
-type FootnoteAction = (footnote?: any, popover?: any) => void
+type FootnoteEventHandler = (footnote?: any, popover?: any) => void
 type EventHandler<E extends Event> = (e: E) => void
 
-function handle(fn: FootnoteAction, hover = false): EventHandler<Event> {
+const findClosestPopover = (target: Element): Element | null =>
+  target.closest(`.${CLASS_FOOTNOTE}`)
+
+function handle(fn: FootnoteEventHandler): EventHandler<Event> {
   return event => {
     const target = event.target as HTMLElement
     const footnote = findClosestFootnote(target)
     const popover = findClosestPopover(target)
     fn(footnote, popover)
-    if (hover) {
-      event.preventDefault()
-    }
+  }
+}
+
+function handleHover(fn: FootnoteEventHandler): EventHandler<Event> {
+  return event => {
+    handle(fn)(event)
+    event.preventDefault()
   }
 }
 
@@ -67,15 +69,6 @@ export function bindContentScrollHandler(contentElement: Element): void {
   contentElement.addEventListener('wheel', throttledScrollHandler)
 }
 
-function delegateEvent<K extends keyof WindowEventMap>(
-  type: K,
-  root: Document | Element,
-  selector: string,
-  listener: EventListener
-) {
-  delegate(root).on(type, selector, listener)
-}
-
 export function bindEvents({
   toggle,
   dismiss,
@@ -93,6 +86,6 @@ export function bindEvents({
   window.addEventListener('scroll', throttle(reposition))
   window.addEventListener('resize', throttle(resize))
 
-  delegateEvent('mouseover', document, `.${CLASS_BUTTON}`, handle(hover, true))
-  delegateEvent('mouseout', document, `.${CLASS_BUTTON}`, handle(unhover, true))
+  on('mouseover', `.${CLASS_BUTTON}`, handleHover(hover))
+  on('mouseout', `.${CLASS_BUTTON}`, handleHover(unhover))
 }

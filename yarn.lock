@@ -2135,6 +2135,13 @@ delayed-stream@~1.0.0:
   resolved "https://registry.yarnpkg.com/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
   integrity sha1-3zrhmayt+31ECqrgsp4icrJOxhk=
 
+delegated-events@^1.0.10:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/delegated-events/-/delegated-events-1.0.10.tgz#bac0dd30549daa7f14830c11114c16df0562224e"
+  integrity sha512-OP+IyXmEr5ate3EF25F/WE5B5JB7GTs1VTS/61hXN8q9yXDft1GL+NKLCxAKl1pNaejFBpBsWbd/YgQJKi+4+A==
+  dependencies:
+    selector-set "^1.1.2"
+
 delegates@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/delegates/-/delegates-1.0.0.tgz#84c6e159b81904fdca59a0ef44cd870d31250f9a"
@@ -2214,11 +2221,6 @@ dom-delegate@^2.0.3:
   resolved "https://registry.yarnpkg.com/dom-delegate/-/dom-delegate-2.2.0.tgz#fcbe2e0de086f82bd03eaa2caaac51e4a87f2e6b"
   integrity sha512-uhzlGq+RIYiRrXo8jEe8SQ84UYyE1z5Ucq95oQGxW3KjLtqrxI0mNi0Un8t5QZXQ8U7ig0I1pJQNqDvr3aJg2Q==
 
-dom-matches@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/dom-matches/-/dom-matches-1.0.1.tgz#fa7b57cd8287895bf40936b8d8544ba8e8b35a1f"
-  integrity sha1-+ntXzYKHiVv0CTa42FRLqOizWh8=
-
 dom-serialize@^2.2.0:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/dom-serialize/-/dom-serialize-2.2.1.tgz#562ae8999f44be5ea3076f5419dcd59eb43ac95b"
@@ -2228,13 +2230,6 @@ dom-serialize@^2.2.0:
     ent "~2.2.0"
     extend "^3.0.0"
     void-elements "^2.0.0"
-
-dom-siblings@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/dom-siblings/-/dom-siblings-0.1.0.tgz#88025ffa0201f62cbede543066d7ef184c0ec1e9"
-  integrity sha1-iAJf+gIB9iy+3lQwZtfvGEwOwek=
-  dependencies:
-    dom-matches "^1.0.1"
 
 domain-browser@^1.2.0:
   version "1.2.0"
@@ -5595,6 +5590,11 @@ scss-tokenizer@^0.2.3:
   dependencies:
     js-base64 "^2.1.8"
     source-map "^0.4.2"
+
+selector-set@^1.1.2:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/selector-set/-/selector-set-1.1.3.tgz#be886bda6cbaae8b4a7c94b110c15de499d7484f"
+  integrity sha512-l+E0lobC3qAq2flOSNMqXddHlysKFyQL+8OIjb4x5WqgDJGHZos3YXLirq2eunZFIMG8uooXobexLO5C3j1Pwg==
 
 "semver@2 || 3 || 4 || 5", semver@^5.3.0, semver@^5.4.1, semver@^5.5.0, semver@^5.5.1:
   version "5.6.0"

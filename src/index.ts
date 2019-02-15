@@ -1,6 +1,6 @@
 import { createSettings, Settings } from './settings'
 import { createCore } from './core'
-import { createDocumentAdapter } from './adapter'
+import { createAdapter } from './adapter'
 import { bindEvents } from './adapter/events'
 
 type Littlefoot = {
@@ -14,7 +14,7 @@ export const littlefoot = function(
   options: Partial<Settings> = {}
 ): Littlefoot {
   const settings = createSettings(options)
-  const adapter = createDocumentAdapter(settings)
+  const adapter = createAdapter(settings)
   const core = createCore(adapter, settings)
   bindEvents(core)
 

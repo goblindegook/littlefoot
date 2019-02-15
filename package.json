@@ -90,8 +90,7 @@
     "watchify": "^3.7.0"
   },
   "dependencies": {
-    "dom-delegate": "^2.0.3",
-    "dom-siblings": "^0.1.0",
+    "delegated-events": "^1.0.10",
     "lodash.escape": "^4.0.1",
     "lodash.template": "^4.4.0",
     "lodash.throttle": "^4.1.1"

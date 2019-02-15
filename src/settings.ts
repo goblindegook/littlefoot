@@ -28,12 +28,7 @@ export type Settings = {
   scope: string | null
 }
 
-/**
- * Default settings.
- *
- * @type {Object}
- */
-const DEFAULTS: Settings = {
+export const DEFAULT_SETTINGS: Settings = {
   activateCallback: null,
   activateDelay: 100,
   activateOnHover: false,
@@ -53,5 +48,5 @@ const DEFAULTS: Settings = {
 }
 
 export function createSettings(settings: Partial<Settings>): Settings {
-  return { ...DEFAULTS, ...settings }
+  return { ...DEFAULT_SETTINGS, ...settings }
 }
