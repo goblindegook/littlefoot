@@ -2216,11 +2216,6 @@ doctrine@0.7.2:
     esutils "^1.1.6"
     isarray "0.0.1"
 
-dom-delegate@^2.0.3:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/dom-delegate/-/dom-delegate-2.2.0.tgz#fcbe2e0de086f82bd03eaa2caaac51e4a87f2e6b"
-  integrity sha512-uhzlGq+RIYiRrXo8jEe8SQ84UYyE1z5Ucq95oQGxW3KjLtqrxI0mNi0Un8t5QZXQ8U7ig0I1pJQNqDvr3aJg2Q==
-
 dom-serialize@^2.2.0:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/dom-serialize/-/dom-serialize-2.2.1.tgz#562ae8999f44be5ea3076f5419dcd59eb43ac95b"

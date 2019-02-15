@@ -1,9 +1,12 @@
 import { Settings } from './settings'
 import { Footnote, Adapter } from './types'
 
+type ActivateFn = (footnote: Footnote, className?: string) => void
+type DismissFn = (footnote: Footnote, delay?: number) => void
+
 export type Core = {
-  activate: (footnote: Footnote, className?: string) => void
-  dismiss: (footnote: Footnote, delay?: number) => void
+  activate: ActivateFn
+  dismiss: DismissFn
   reposition: () => void
   resize: () => void
   toggle: (footnote: Footnote, popover: HTMLElement | null) => void
@@ -11,8 +14,8 @@ export type Core = {
   unhover: () => void
 }
 
-function createActivate(adapter: Adapter, settings: Settings) {
-  return (footnote: Footnote, className = '') => {
+function createActivate(adapter: Adapter, settings: Settings): ActivateFn {
+  return (footnote, className = '') => {
     const { activateCallback, activateDelay, contentTemplate } = settings
 
     if (!footnote.isChanging()) {
@@ -38,8 +41,8 @@ function createActivate(adapter: Adapter, settings: Settings) {
   }
 }
 
-function createDismiss(settings: Settings) {
-  return (footnote: Footnote, delay = settings.dismissDelay) => {
+function createDismiss(settings: Settings): DismissFn {
+  return (footnote, delay = settings.dismissDelay) => {
     if (!footnote.isChanging()) {
       footnote.startChanging()
       footnote.dismiss()

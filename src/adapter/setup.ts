@@ -22,7 +22,6 @@ type FootnoteProps = {
 }
 
 const setPrintOnly = (el: Element) => el.classList.add(CLASS_PRINT_ONLY)
-const setProcessed = (el: Element) => el.classList.add(CLASS_PROCESSED)
 
 const getFootnoteRef = (element: Element): string =>
   element.getAttribute(FOOTNOTE_REF) || ''
@@ -66,8 +65,8 @@ function setLinkReferences(
 ): HTMLAnchorElement {
   const id = getFootnoteBacklinkId(link, anchorParentSelector) || ''
   const linkId = link.id || ''
-  const href = '#' + link.href.split('#')[1]
-  setFootnoteRef(link, href)
+  const [url, fragment] = link.href.split('#')
+  setFootnoteRef(link, `#${fragment}`)
   setFootnoteBacklinkRef(link, `${id}${linkId}`)
   return link
 }
@@ -145,7 +144,7 @@ function addLinkElements(
     const body = related && (related.closest(footnoteSelector) as HTMLElement)
 
     if (body) {
-      setProcessed(body)
+      body.classList.add(CLASS_PROCESSED)
       hideOriginalFootnote(body, link)
     }
 
