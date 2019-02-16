@@ -24,14 +24,14 @@ export function getStyle(
 }
 
 export function getMaxHeight(element: HTMLElement): number {
-  const value = getStyle(element, 'maxHeight')
-  const size = parseFloat(value)
+  const maxHeight = getStyle(element, 'maxHeight')
+  const size = parseFloat(maxHeight)
 
-  if (value === '' || value === 'none') {
+  if (maxHeight === '' || maxHeight === 'none') {
     return element.clientHeight
   }
 
-  if (/%/.test(value)) {
+  if (/%/.test(maxHeight)) {
     return Math.round((size / 100) * document.body.clientHeight)
   }
 

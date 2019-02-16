@@ -1,5 +1,5 @@
-import { setup, queryAllButtons } from './helper'
-import littlefoot from '../src'
+import { setup, queryAllButtons } from '../helper'
+import littlefoot from '../../src'
 
 beforeEach(() => {
   setup('multiple.html')

@@ -1,5 +1,5 @@
-import littlefoot from '../src'
-import { setup } from './helper'
+import littlefoot from '../../src'
+import { setup } from '../helper'
 
 test('creates buttons for all footnotes when scope is body', () => {
   setup('default.html')
