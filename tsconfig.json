@@ -10,7 +10,8 @@
     "strict": true,
     "esModuleInterop": true,
     "allowJs": false,
-    "checkJs": false
+    "checkJs": false,
+    "skipLibCheck": true
   },
   "include": ["src/**/*.ts", "test/**/*.ts"]
 }

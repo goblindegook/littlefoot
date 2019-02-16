@@ -6,3 +6,5 @@ node_modules/
 .vscode/.browse.VC.db
 sauce.json
 yarn-error.log
+cypress/screenshots/
+cypress/videos/
