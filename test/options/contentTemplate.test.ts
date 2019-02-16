@@ -1,5 +1,5 @@
 import littlefoot from '../../src'
-import { setup, getFixture, waitForTransition } from '../helper'
+import { setup, waitForTransition } from '../helper'
 import { fireEvent, getByTitle } from 'dom-testing-library'
 
 test('setup with custom contentTemplate', async () => {
@@ -7,7 +7,16 @@ test('setup with custom contentTemplate', async () => {
 
   littlefoot({
     activateDelay: 1,
-    contentTemplate: getFixture('contentTemplate.html')
+    contentTemplate: `<aside class="custom"
+      data-footnote-id="<%= id %>"
+      data-footnote-number="<%= number %>"
+      >
+      <div class="littlefoot-footnote__wrapper">
+        <div class="littlefoot-footnote__content">
+          <%= content %>
+        </div>
+      </div>
+    </aside>`
   })
 
   const button = getByTitle(document.body, 'See Footnote 1')

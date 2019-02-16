@@ -1,5 +1,5 @@
 import littlefoot from '../../src'
-import { setup, getFixture } from '../helper'
+import { setup } from '../helper'
 
 beforeEach(() => {
   setup('single.html')
@@ -15,7 +15,15 @@ test('default buttonTemplate', () => {
 })
 
 test('custom buttonTemplate', () => {
-  littlefoot({ buttonTemplate: getFixture('buttonTemplate.html') })
+  littlefoot({
+    buttonTemplate: `<button
+      class="custom"
+      data-reference="<%= reference %>"
+      data-id="<%= id %>"
+      data-number="<%= number %>"
+      data-content="<%= content %>"
+    >...</button>`
+  })
 
   const button = document.querySelector('button')
   expect(button).toHaveAttribute('data-id', '1')
