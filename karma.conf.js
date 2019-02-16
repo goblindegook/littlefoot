@@ -16,7 +16,7 @@ module.exports = karma => {
     customLaunchers: customLaunchers,
     reporters: ['dots', 'progress', 'coverage'],
     browserNoActivityTimeout: 60000,
-    frameworks: ['browserify', 'tap', 'sinon'],
+    frameworks: ['browserify', 'tap'],
     browserify: {
       extensions: ['.ts'],
       debug: true,

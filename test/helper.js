@@ -2,18 +2,6 @@ import simulant from 'simulant'
 const fs = require('fs')
 
 /**
- * Checks whether IE is in use.
- */
-export function isIE() {
-  const ua = window.navigator.userAgent
-  return (
-    ua.indexOf('MSIE ') > 0 ||
-    ua.indexOf('Trident/') > 0 ||
-    ua.indexOf('Edge/') > 0
-  )
-}
-
-/**
  * Setup fixtures.
  *
  * @param  {String} fixture Fixture file to load (defaults to default.html).
@@ -75,10 +63,6 @@ export function sleep(timeout) {
 
 export function getButton(id) {
   return document.querySelector(`button[data-footnote-id="${id}"]`)
-}
-
-export function getPopover(id) {
-  return document.querySelector(`aside[data-footnote-id="${id}"]`)
 }
 
 export function getAllButtons() {
