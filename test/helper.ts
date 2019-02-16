@@ -1,5 +1,6 @@
-import { readFileSync } from 'fs'
+import { wait } from 'dom-testing-library'
 import { join } from 'path'
+import { readFileSync } from 'fs'
 
 export function queryAll(selector: string) {
   return document.querySelectorAll(selector)
@@ -32,3 +33,6 @@ export function queryAllActiveButtons() {
 export function queryAllPopovers() {
   return Array.from(document.querySelectorAll('aside[data-footnote-id]'))
 }
+
+export const waitForTransition = async (button: Element) =>
+  wait(() => expect(button).not.toHaveClass('is-changing'))

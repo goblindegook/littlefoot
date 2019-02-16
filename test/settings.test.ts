@@ -1,12 +1,17 @@
 import littlefoot from '../src'
 
-test('allows getting values', () => {
-  const lf = littlefoot()
-  expect(lf.getSetting('anchorParentSelector')).toEqual('sup')
+test('allows getting default values', () => {
+  const instance = littlefoot()
+  expect(instance.getSetting('anchorParentSelector')).toBe('sup')
+})
+
+test('allows getting provided values', () => {
+  const instance = littlefoot({ scope: 'main' })
+  expect(instance.getSetting('scope')).toBe('main')
 })
 
 test('allows setting values', () => {
   const lf = littlefoot()
   lf.updateSetting('scope', 'article')
-  expect(lf.getSetting('scope')).toEqual('article')
+  expect(lf.getSetting('scope')).toBe('article')
 })

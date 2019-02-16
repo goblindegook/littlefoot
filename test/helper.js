@@ -89,10 +89,6 @@ export function getAllActiveButtons() {
   return [...document.querySelectorAll('button[data-footnote-id].is-active')]
 }
 
-export function getAllPopovers() {
-  return [...document.querySelectorAll('aside[data-footnote-id]')]
-}
-
 export function click(element) {
   simulant.fire(element, 'click')
 }
@@ -104,10 +100,3 @@ export function mouseover(element) {
 export function mouseout(element) {
   simulant.fire(element, 'mouseout')
 }
-
-export function keyup(element, key) {
-  simulant.fire(element, 'keyup', { key })
-}
-
-export const KEY_ENTER = '13'
-export const KEY_ESCAPE = '27'
