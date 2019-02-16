@@ -9,16 +9,14 @@ var customLaunchers = {
   }
 }
 
-var reporters = ['dots', 'coverage']
-
 module.exports = karma => {
   karma.set({
     singleRun: true,
     browsers: browsers.concat(Object.keys(customLaunchers)),
     customLaunchers: customLaunchers,
-    reporters: reporters,
+    reporters: ['dots', 'progress', 'coverage'],
     browserNoActivityTimeout: 60000,
-    frameworks: ['browserify', 'tap', 'sinon', 'karma-typescript'],
+    frameworks: ['browserify', 'tap', 'sinon'],
     browserify: {
       extensions: ['.ts'],
       debug: true,
@@ -32,9 +30,8 @@ module.exports = karma => {
         'brfs'
       ]
     },
-    files: ['dist/*.css', 'test/**/*.test.{js,ts}', 'test/**/*.html'],
+    files: ['dist/*.css', 'test/**/*.test.js', 'test/**/*.html'],
     preprocessors: {
-      '**/*.ts': 'karma-typescript',
       'test/**/*.js': ['browserify']
     },
     coverageReporter: {

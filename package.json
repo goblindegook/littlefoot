@@ -14,10 +14,11 @@
     "prepublish": "yarn rebuild",
     "pretest": "concurrently 'yarn lint' 'yarn build:styles'",
     "rebuild": "yarn clean && yarn build",
+    "test:unit": "jest",
     "test:chrome": "NODE_ENV=test karma start --browsers ChromeHeadlessNoSandbox",
     "test:firefox": "NODE_ENV=test karma start --browsers FirefoxHeadless",
     "test:watch": "yarn test:firefox --no-single-run --browser-no-activity-timeout 0",
-    "test": "yarn test:chrome",
+    "test": "yarn test:unit && yarn test:chrome",
     "format": "prettier --write '{src,test}/**/*.{js,jsx,ts,tsx,json,css,md}'",
     "typecheck": "tsc --noEmit",
     "typecheck:watch": "yarn typecheck --watch",
@@ -34,6 +35,22 @@
           ]
         }
       ]
+    ]
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(tsx?)$",
+    "testURL": "http://localhost",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
     ]
   },
   "author": {
@@ -55,6 +72,7 @@
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-typescript": "^7.1.0",
     "@babel/runtime": "^7.0.0",
+    "@types/jest": "^24.0.5",
     "@types/lodash.escape": "^4.0.5",
     "@types/lodash.template": "^4.4.5",
     "@types/lodash.throttle": "^4.1.5",
@@ -66,7 +84,10 @@
     "brfs": "^2.0.1",
     "browserify": "^16.2.2",
     "concurrently": "^4.0.1",
+    "dom-testing-library": "^3.16.8",
     "istanbul": "^0.4.3",
+    "jest": "^24.1.0",
+    "jest-dom": "^3.1.2",
     "karma": "^4.0.0",
     "karma-browserify": "^6.0.0",
     "karma-chrome-launcher": "^2.2.0",
@@ -82,6 +103,7 @@
     "sinon": "^7.2.0",
     "tape": "^4.8.0",
     "tinyify": "^2.5.0",
+    "ts-jest": "^23.10.5",
     "tslint": "^5.12.1",
     "tslint-config-prettier": "^1.18.0",
     "tslint-config-standard": "^8.0.1",
