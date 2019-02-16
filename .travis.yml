@@ -1,13 +1,6 @@
 language: node_js
 node_js:
   - stable
-addons:
-  chrome: stable
-  firefox: latest
-env:
-  - MOZ_HEADLESS=1
-before_script:
-  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
 cache:
   directories:
     - ~/.cache

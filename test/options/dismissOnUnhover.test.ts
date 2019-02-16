@@ -1,0 +1,26 @@
+import littlefoot from '../../src'
+import { setup, waitForTransition } from '../helper'
+import { fireEvent } from 'dom-testing-library'
+
+test('dismiss on unhover', async () => {
+  setup('single.html')
+
+  littlefoot({
+    activateDelay: 1,
+    activateOnHover: true,
+    dismissDelay: 1,
+    dismissOnUnhover: true,
+    hoverDelay: 1
+  })
+
+  const button = document.querySelector('button')!
+
+  fireEvent.mouseOver(button)
+  await waitForTransition(button)
+
+  fireEvent.mouseOut(button)
+  await waitForTransition(button)
+
+  expect(button).not.toHaveClass('is-hovered')
+  expect(button).not.toHaveClass('is-active')
+})

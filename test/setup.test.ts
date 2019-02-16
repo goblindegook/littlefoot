@@ -1,4 +1,3 @@
-import 'jest-dom/extend-expect'
 import littlefoot from '../src'
 import {
   setup,

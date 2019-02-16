@@ -1,17 +1,17 @@
-import 'jest-dom/extend-expect'
 import { fireEvent } from 'dom-testing-library'
 import littlefoot from '../src'
-import { setup, waitForTransition, getButton } from './helper'
+import { setup, waitForTransition } from './helper'
 
 const TEST_SETTINGS = { activateDelay: 1, dismissDelay: 1 }
 
 beforeEach(() => {
-  setup('default.html')
+  setup('single.html')
 })
 
 test('dismiss footnote when clicking the button again', async () => {
   littlefoot(TEST_SETTINGS)
-  const button = getButton('1')
+
+  const button = document.querySelector('button')!
   fireEvent.click(button)
   await waitForTransition(button)
 
@@ -24,7 +24,8 @@ test('dismiss footnote when clicking the button again', async () => {
 
 test('dismiss footnote when clicking the document body', async () => {
   littlefoot(TEST_SETTINGS)
-  const button = getButton('1')
+
+  const button = document.querySelector('button')!
   fireEvent.click(button)
   await waitForTransition(button)
 
@@ -37,7 +38,8 @@ test('dismiss footnote when clicking the document body', async () => {
 
 test('dismiss footnote when calling .dismiss()', async () => {
   const instance = littlefoot(TEST_SETTINGS)
-  const button = getButton('1')
+
+  const button = document.querySelector('button')!
   instance.activate('button[data-footnote-id="1"]')
   await waitForTransition(button)
 
@@ -51,7 +53,8 @@ test('dismiss footnote when calling .dismiss()', async () => {
 test('dismiss footnote when pressing the Escape key', async () => {
   const KEY_ESCAPE = '27'
   littlefoot(TEST_SETTINGS)
-  const button = getButton('1')
+
+  const button = document.querySelector('button')!
   fireEvent.click(button)
   await waitForTransition(button)
 

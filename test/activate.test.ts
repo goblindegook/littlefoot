@@ -1,18 +1,17 @@
-import 'jest-dom/extend-expect'
 import { wait, fireEvent } from 'dom-testing-library'
 import littlefoot from '../src'
-import { setup, getButton, waitForTransition } from './helper'
+import { setup, waitForTransition } from './helper'
 
 const TEST_SETTINGS = { activateDelay: 1 }
 
 beforeEach(() => {
-  setup('default.html')
+  setup('single.html')
 })
 
 test('activate footnote when clicking the button', async () => {
   littlefoot(TEST_SETTINGS)
-  const button = getButton('1')
 
+  const button = document.querySelector('button')!
   fireEvent.click(button)
 
   expect(button).toHaveClass('is-changing')
@@ -22,8 +21,8 @@ test('activate footnote when clicking the button', async () => {
 
 test('activate footnote when calling .activate()', async () => {
   const instance = littlefoot(TEST_SETTINGS)
-  const button = getButton('1')
 
+  const button = document.querySelector('button')!
   instance.activate('button[data-footnote-id="1"]')
 
   expect(button).toHaveClass('is-changing')
