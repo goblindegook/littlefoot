@@ -1,16 +1,16 @@
-export function findSibling(
-  target: Element,
-  selector: string
-): HTMLElement | undefined {
-  return Array.from(target.parentElement!.children).find(
-    element => element !== target && element.matches(selector)
-  ) as HTMLElement | undefined
-}
-
 export function children(element: Element, selector?: string): Element[] {
   return Array.from(element.children).filter(
     child => child.nodeType !== 8 && (!selector || child.matches(selector))
   )
+}
+
+export function findSibling(
+  target: Element,
+  selector: string
+): HTMLElement | undefined {
+  return children(target.parentElement!, selector).find(
+    element => element !== target
+  ) as HTMLElement | undefined
 }
 
 export function getStyle(

@@ -4,13 +4,15 @@ import { Footnote, Adapter } from './types'
 type ActivateFn = (footnote: Footnote, className?: string) => void
 type DismissFn = (footnote: Footnote, delay?: number) => void
 
+export type EventHandlerFn = (footnote: Footnote) => void
+
 export type Core = {
   activate: ActivateFn
   dismiss: DismissFn
+  hover: EventHandlerFn
   reposition: () => void
   resize: () => void
-  toggle: (footnote: Footnote, popover: HTMLElement | null) => void
-  hover: (footnote: Footnote) => void
+  tap: EventHandlerFn
   unhover: () => void
 }
 
@@ -72,25 +74,21 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
       adapter.forAllActiveFootnotes(footnote => footnote.resize())
     },
 
-    toggle(footnote, popover) {
+    tap(footnote) {
       const { allowMultiple } = settings
-      if (footnote) {
-        if (footnote.isActive()) {
-          dismiss(footnote)
-        } else {
-          if (!allowMultiple) {
-            adapter.forOtherActiveFootnotes(dismiss, footnote)
-          }
-          activate(footnote)
+      if (footnote.isActive()) {
+        dismiss(footnote)
+      } else {
+        if (!allowMultiple) {
+          adapter.forOtherActiveFootnotes(dismiss, footnote)
         }
-      } else if (!popover) {
-        adapter.forAllActiveFootnotes(dismiss)
+        activate(footnote)
       }
     },
 
     hover(footnote) {
       const { activateOnHover, allowMultiple } = settings
-      if (activateOnHover && !footnote.isActive()) {
+      if (activateOnHover && footnote && !footnote.isActive()) {
         if (!allowMultiple) {
           adapter.forOtherActiveFootnotes(dismiss, footnote)
         }
