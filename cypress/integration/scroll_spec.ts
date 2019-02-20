@@ -24,7 +24,7 @@ context('Scroll', () => {
 
     cy.get('.littlefoot-footnote__content').scrollTo('bottom')
 
-    // FIXME: Scroll events not triggering correctly.
+    // FIXME: Content scroll events not triggering correctly.
     // cy.get('.littlefoot-footnote').should('have.class', 'is-fully-scrolled')
 
     cy.get('.littlefoot-footnote__content').scrollTo('top')
