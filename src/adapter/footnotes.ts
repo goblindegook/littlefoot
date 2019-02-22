@@ -1,5 +1,5 @@
 import template from 'lodash.template'
-import { getMaxHeight, getStyle, findSibling } from './dom'
+import { getMaxHeight, getStyle } from './dom'
 import { bindContentScrollHandler } from './events'
 import {
   getAvailableRoom,
@@ -9,9 +9,7 @@ import {
 } from './layout'
 import {
   CLASS_ACTIVE,
-  CLASS_BUTTON,
   CLASS_CHANGING,
-  CLASS_FOOTNOTE,
   CLASS_HOVERED,
   FOOTNOTE_CONTENT,
   FOOTNOTE_ID,
@@ -21,10 +19,28 @@ import {
   CLASS_WRAPPER,
   CLASS_CONTENT
 } from './constants'
-import { FootnoteAction, Footnote } from '../types'
+import { Footnote } from '../types'
 
 function findPopoverContent(popover: HTMLElement): HTMLElement {
   return popover.querySelector<HTMLElement>(`.${CLASS_CONTENT}`)!
+}
+
+function insertPopover(button: HTMLElement, contentTemplate: string) {
+  const render = template(contentTemplate)
+  button.insertAdjacentHTML(
+    'afterend',
+    render({
+      content: button.getAttribute(FOOTNOTE_CONTENT),
+      id: button.getAttribute(FOOTNOTE_ID),
+      number: button.getAttribute(FOOTNOTE_NUMBER)
+    })
+  )
+  const popover = button.nextElementSibling as HTMLElement
+  const content = findPopoverContent(popover)
+  popover.setAttribute(FOOTNOTE_MAX_HEIGHT, `${getMaxHeight(content)}`)
+  popover.style.maxWidth = `${document.body.clientWidth}px`
+  bindContentScrollHandler(content)
+  return popover
 }
 
 export function createFootnote(
@@ -39,21 +55,7 @@ export function createFootnote(
       button.setAttribute('aria-expanded', 'true')
       button.classList.add(CLASS_ACTIVE)
 
-      const render = template(contentTemplate)
-      button.insertAdjacentHTML(
-        'afterend',
-        render({
-          content: button.getAttribute(FOOTNOTE_CONTENT),
-          id: button.getAttribute(FOOTNOTE_ID),
-          number: button.getAttribute(FOOTNOTE_NUMBER)
-        })
-      )
-
-      const newPopover = button.nextElementSibling as HTMLElement
-      const content = findPopoverContent(newPopover)
-      newPopover.setAttribute(FOOTNOTE_MAX_HEIGHT, `${getMaxHeight(content)}`)
-      newPopover.style.maxWidth = `${document.body.clientWidth}px`
-      bindContentScrollHandler(content)
+      const newPopover = insertPopover(button, contentTemplate)
 
       if (className) {
         newPopover.classList.add(className)
@@ -139,26 +141,4 @@ export function createFootnote(
       button.classList.remove(CLASS_CHANGING)
     }
   }
-}
-
-export function findOne(className: string, selector = ''): HTMLElement | null {
-  return document.querySelector<HTMLElement>(`${selector}.${className}`)
-}
-
-export function findAll(className: string, selector = ''): HTMLElement[] {
-  return Array.from(
-    document.querySelectorAll<HTMLElement>(`${selector}.${className}`)
-  )
-}
-
-export function forAllActiveFootnotes(
-  fn: FootnoteAction,
-  selector = ''
-): Footnote[] {
-  return findAll(CLASS_FOOTNOTE, selector).map(popover => {
-    const button = findSibling(popover, `.${CLASS_BUTTON}`)!
-    const footnote = createFootnote(button, popover)
-    fn(footnote)
-    return footnote
-  })
 }

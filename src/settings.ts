@@ -10,7 +10,7 @@ import {
 } from './adapter/constants'
 
 export type Settings = {
-  activateCallback: ((popover: HTMLElement, button: HTMLElement) => void) | null
+  activateCallback?: (popover: HTMLElement, button: HTMLElement) => void
   activateDelay: number
   activateOnHover: boolean
   allowDuplicates: boolean
@@ -24,12 +24,11 @@ export type Settings = {
   footnoteParentClass: string
   footnoteSelector: string
   hoverDelay: number
-  numberResetSelector: string | null
-  scope: string | null
+  numberResetSelector?: string
+  scope?: string
 }
 
 export const DEFAULT_SETTINGS: Settings = {
-  activateCallback: null,
   activateDelay: 100,
   activateOnHover: false,
   allowDuplicates: true,
@@ -41,8 +40,6 @@ export const DEFAULT_SETTINGS: Settings = {
   footnoteParentClass: 'footnote',
   footnoteSelector: 'li',
   hoverDelay: 250,
-  numberResetSelector: null,
-  scope: null,
   contentTemplate: `<aside class="${CLASS_FOOTNOTE} is-positioned-bottom" id="fncontent:<%= id %>" ${FOOTNOTE_ID}="<%= id %>" ${FOOTNOTE_NUMBER}="<%= number %>" alt="Footnote <%= number %>"><div class="${CLASS_WRAPPER}"><div class="${CLASS_CONTENT}" tabindex="0"><%= content %></div></div><div class="${CLASS_TOOLTIP}"></div></aside>`,
   buttonTemplate: `<span class="littlefoot-footnote__container"><button class="${CLASS_BUTTON} littlefoot-footnote__button__ellipsis" id="<%= reference %>" ${FOOTNOTE_CONTENT}="<%= content %>" ${FOOTNOTE_ID}="<%= id %>" ${FOOTNOTE_NUMBER}="<%= number %>" title="See Footnote <%= number %>" aria-controls="fncontent:<%= id %>" aria-expanded="false" aria-label="Footnote <%= number %>" rel="footnote"><svg viewbox="0 0 31 6" preserveAspectRatio="xMidYMid"><circle r="3" cx="3" cy="3" fill="white"></circle><circle r="3" cx="15" cy="3" fill="white"></circle><circle r="3" cx="27" cy="3" fill="white"></circle></svg></button></span>`
 }

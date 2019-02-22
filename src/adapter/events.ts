@@ -1,9 +1,10 @@
 import throttle from 'lodash.throttle'
-import { forAllActiveFootnotes, createFootnote } from './footnotes'
+import { createFootnote } from './footnotes'
 import { CLASS_BUTTON, CLASS_FULLY_SCROLLED, CLASS_FOOTNOTE } from './constants'
 import { Core, EventHandlerFn } from '../core'
 import { findSibling } from './dom'
 import { Footnote } from '../types'
+import { forAllActiveFootnotes } from '.'
 
 const { on } = require('delegated-events')
 

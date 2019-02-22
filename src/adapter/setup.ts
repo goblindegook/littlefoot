@@ -10,8 +10,6 @@ import {
   FOOTNOTE_ID
 } from './constants'
 
-type LinkBodyPair = [HTMLAnchorElement, HTMLElement | null]
-
 type FootnoteProps = {
   link: HTMLAnchorElement
   reset: HTMLElement | null
@@ -20,6 +18,8 @@ type FootnoteProps = {
   id: number
   reference: string
 }
+
+type LinkBodyPair = [HTMLAnchorElement, HTMLElement | null]
 
 const setPrintOnly = (el: Element) => el.classList.add(CLASS_PRINT_ONLY)
 
@@ -93,13 +93,6 @@ export function getFootnoteLinks({
       )
     })
     .map(link => setLinkReferences(link, anchorParentSelector))
-}
-
-const insertButton = (buttonTemplate: string) => (footnote: FootnoteProps) => {
-  footnote.link.insertAdjacentHTML(
-    'beforebegin',
-    template(buttonTemplate)(footnote)
-  )
 }
 
 function prepareContent(content: string, backlinkId: string): string {
@@ -187,7 +180,15 @@ function hideOriginalFootnote(footnote: HTMLElement, link: HTMLElement) {
   hideFootnoteContainer(footnote.parentNode as HTMLElement)
 }
 
-export function setupDocument(settings: Settings): void {
+const insertButton = (
+  buttonTemplate: string,
+  props: FootnoteProps
+): HTMLElement => {
+  props.link.insertAdjacentHTML('beforebegin', template(buttonTemplate)(props))
+  return props.link.previousElementSibling as HTMLElement
+}
+
+export function setupDocument(settings: Settings): HTMLElement[] {
   const {
     allowDuplicates,
     buttonTemplate,
@@ -195,10 +196,11 @@ export function setupDocument(settings: Settings): void {
     numberResetSelector
   } = settings
   const offset = parseInt(getLastFootnoteId(), 10) + 1
-  getFootnoteLinks(settings)
+
+  return getFootnoteLinks(settings)
     .map(addLinkElements(allowDuplicates, footnoteSelector))
-    .filter(([link, body]) => body)
+    .filter(([_, body]) => body)
     .map(footnoteProperties(offset))
     .map(numberResetSelector ? resetNumbers(numberResetSelector) : i => i)
-    .map(insertButton(buttonTemplate))
+    .map(props => insertButton(buttonTemplate, props))
 }

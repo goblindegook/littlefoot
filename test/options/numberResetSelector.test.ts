@@ -14,7 +14,7 @@ test('setup with numberResetSelector creates footnotes with duplicate numbers', 
 })
 
 test('setup without numberResetSelector creates footnotes with unique numbers', () => {
-  littlefoot({ numberResetSelector: null })
+  littlefoot({ numberResetSelector: undefined })
   const buttons = queryAllButtons()
   expect(
     buttons.map(button => button.getAttribute('data-footnote-number'))

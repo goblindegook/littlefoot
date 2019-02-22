@@ -1,13 +1,13 @@
-import {
-  forAllActiveFootnotes,
-  findAll,
-  createFootnote,
-  findOne
-} from './footnotes'
+import { createFootnote } from './footnotes'
 import { setupDocument } from './setup'
 import { Settings } from '../settings'
 import { Adapter, FootnoteAction, Footnote } from '../types'
 import { CLASS_BUTTON, CLASS_FOOTNOTE, FOOTNOTE_ID } from './constants'
+import { findSibling } from './dom'
+
+function findOne(className: string, selector = ''): HTMLElement | null {
+  return document.querySelector<HTMLElement>(`${selector}.${className}`)
+}
 
 function findFootnote(selector: string): Footnote | null {
   const button = findOne(CLASS_BUTTON, selector)
@@ -16,6 +16,24 @@ function findFootnote(selector: string): Footnote | null {
 
 function findAllFootnotes(selector: string): Footnote[] {
   return findAll(CLASS_BUTTON, selector).map(button => createFootnote(button))
+}
+
+export function findAll(className: string, selector = ''): HTMLElement[] {
+  return Array.from(
+    document.querySelectorAll<HTMLElement>(`${selector}.${className}`)
+  )
+}
+
+export function forAllActiveFootnotes(
+  fn: FootnoteAction,
+  selector = ''
+): Footnote[] {
+  return findAll(CLASS_FOOTNOTE, selector).map(popover => {
+    const button = findSibling(popover, `.${CLASS_BUTTON}`)!
+    const footnote = createFootnote(button, popover)
+    fn(footnote)
+    return footnote
+  })
 }
 
 function forOtherActiveFootnotes(

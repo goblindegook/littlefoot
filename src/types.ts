@@ -2,8 +2,8 @@ export type Footnote = {
   getId: () => string | null
   activate: (
     contentTemplate: string,
-    className: string,
-    onActivate: null | ((popover: HTMLElement, button: HTMLElement) => void)
+    className?: string,
+    onActivate?: (popover: HTMLElement, button: HTMLElement) => void
   ) => Footnote
   dismiss: () => void
   hover: () => void
