@@ -12,7 +12,6 @@ type RawFootnote = {
 
 type FootnoteData = {
   link: HTMLAnchorElement
-  reset: HTMLElement | null
   content: string
   id: number
   number: number
@@ -48,25 +47,19 @@ function getBacklinkId(
   return ''
 }
 
-function getHrefRel(link: HTMLAnchorElement): string {
-  return link.href + (link.rel !== 'null' ? link.rel : '')
-}
-
 function findFootnoteLinks({
   anchorPattern,
   anchorParentSelector,
   footnoteParentClass,
-  scope
+  scope = ''
 }: Settings): HTMLAnchorElement[] {
-  const footnoteLinkSelector = `${scope || ''} a[href*="#"]`.trim()
-
   return Array.from(
-    document.querySelectorAll<HTMLAnchorElement>(footnoteLinkSelector)
+    document.querySelectorAll<HTMLAnchorElement>(`${scope} a[href^="#"]`)
   ).filter(
     link =>
-      getHrefRel(link).match(anchorPattern) &&
+      `${link.href}${link.rel}`.match(anchorPattern) &&
       !link.closest(
-        `[class*="${footnoteParentClass}"]:not(a):not(${anchorParentSelector})`
+        `[class~="${footnoteParentClass}"]:not(a):not(${anchorParentSelector})`
       )
   )
 }
@@ -75,10 +68,7 @@ const createRawFootnote = ({
   anchorParentSelector,
   allowDuplicates,
   footnoteSelector
-}: Settings) => (
-  footnotes: RawFootnote[],
-  link: HTMLAnchorElement
-): RawFootnote[] => {
+}: Settings) => (link: HTMLAnchorElement): RawFootnote | null => {
   const id = getBacklinkId(link, anchorParentSelector) || ''
   const linkId = link.id || ''
   const reference = `${id}${linkId}`
@@ -93,10 +83,10 @@ const createRawFootnote = ({
 
   if (body) {
     body.classList.add(CLASS_PROCESSED)
-    return [...footnotes, { link, reference, body }]
+    return { link, reference, body }
   }
 
-  return footnotes
+  return null
 }
 
 function prepareContent(content: string, reference: string): string {
@@ -123,9 +113,11 @@ const resetNumbers = (resetSelector: string) => (
   i: number,
   footnotes: FootnoteData[]
 ): FootnoteData => {
-  const resetElement = footnote.link.closest(resetSelector)
-  const { reset, number: n } = i ? footnotes[i - 1] : { reset: null, number: 0 }
-  return { ...footnote, reset, number: resetElement === reset ? n + 1 : 1 }
+  const previousNumber = i ? footnotes[i - 1].number : 0
+  return {
+    ...footnote,
+    number: footnote.link.closest(resetSelector) ? 1 : previousNumber + 1
+  }
 }
 
 const templateData = (offset: number) => (
@@ -136,8 +128,7 @@ const templateData = (offset: number) => (
   reference,
   content: escape(prepareContent(body.innerHTML, reference)),
   id: offset + idx,
-  number: offset + idx,
-  reset: null
+  number: offset + idx
 })
 
 function hideFootnoteContainer(container: HTMLElement): void {
@@ -165,12 +156,17 @@ const insertButton = (
   return data.link.previousElementSibling as HTMLElement
 }
 
+function isNotNull<T>(value: T | null): value is T {
+  return value !== null
+}
+
 export function setupDocument(settings: Settings): HTMLElement[] {
   const { buttonTemplate, numberResetSelector } = settings
   const offset = parseInt(getLastFootnoteId(), 10) + 1
 
   return findFootnoteLinks(settings)
-    .reduce(createRawFootnote(settings), [])
+    .map(createRawFootnote(settings))
+    .filter(isNotNull)
     .map(hideOriginalFootnote)
     .map(templateData(offset))
     .map(numberResetSelector ? resetNumbers(numberResetSelector) : i => i)

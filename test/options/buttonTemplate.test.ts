@@ -1,14 +1,14 @@
 import littlefoot from '../../src'
-import { setup } from '../helper'
+import { setDocumentBody, query } from '../helper'
 
 beforeEach(() => {
-  setup('single.html')
+  setDocumentBody('single.html')
 })
 
 test('default buttonTemplate', () => {
   littlefoot()
 
-  const button = document.querySelector('button')
+  const button = query('button')
   expect(button).toHaveAttribute('id', 'fnref:1')
   expect(button).toHaveAttribute('data-footnote-id', '1')
   expect(button).toHaveAttribute('data-footnote-number', '1')
@@ -25,11 +25,11 @@ test('custom buttonTemplate', () => {
     >...</button>`
   })
 
-  const button = document.querySelector('button')
+  const button = query('button')
   expect(button).toHaveAttribute('data-id', '1')
   expect(button).toHaveAttribute('data-number', '1')
   expect(button).toHaveAttribute('data-reference', 'fnref:1')
-  expect(button!.getAttribute('data-content')).toContain(
+  expect(button.getAttribute('data-content')).toContain(
     `This is the document's only footnote.`
   )
 })

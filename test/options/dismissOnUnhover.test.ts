@@ -1,9 +1,9 @@
 import littlefoot from '../../src'
-import { setup, waitForTransition } from '../helper'
+import { setDocumentBody, waitForTransition, query } from '../helper'
 import { fireEvent } from 'dom-testing-library'
 
 test('dismiss on unhover', async () => {
-  setup('single.html')
+  setDocumentBody('single.html')
 
   littlefoot({
     activateDelay: 1,
@@ -13,7 +13,7 @@ test('dismiss on unhover', async () => {
     hoverDelay: 1
   })
 
-  const button = document.querySelector('button')!
+  const button = query('button')
 
   fireEvent.mouseOver(button)
   await waitForTransition(button)

@@ -3,36 +3,34 @@ import { wait } from 'dom-testing-library'
 import { join } from 'path'
 import { readFileSync } from 'fs'
 
-export function queryAll(selector: string) {
-  return document.querySelectorAll(selector)
+export function queryAll<E extends Element>(selector: string): Array<E> {
+  return Array.from(document.querySelectorAll<E>(selector))
 }
 
-export function getFixture(fixture: string): string {
-  return readFileSync(join(__dirname, 'fixtures', fixture), {
+export function query<E extends Element>(selector: string): E {
+  return document.querySelector<E>(selector)!
+}
+
+export function setDocumentBody(fixture: string): void {
+  document.body.innerHTML = readFileSync(join(__dirname, 'fixtures', fixture), {
     encoding: 'utf8'
   })
 }
 
-export function setup(fixture: string): void {
-  document.body.innerHTML = getFixture(fixture)
-}
-
 export function getButton(id: string) {
-  return document.querySelector(`button[data-footnote-id="${id}"]`)!
+  return query(`button[data-footnote-id="${id}"]`)
 }
 
 export function getPopover(id: string) {
-  return document.querySelector(`aside[data-footnote-id="${id}"]`)!
+  return query(`aside[data-footnote-id="${id}"]`)
 }
 
-export function queryAllButtons() {
-  return Array.from(document.querySelectorAll('button[data-footnote-id]'))
+export function getAllButtons() {
+  return queryAll('button[data-footnote-id]')
 }
 
-export function queryAllActiveButtons() {
-  return Array.from(
-    document.querySelectorAll('button[data-footnote-id].is-active')
-  )
+export function getAllActiveButtons() {
+  return queryAll('button[data-footnote-id].is-active')
 }
 
 export const waitForTransition = async (button: Element) =>

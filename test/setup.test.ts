@@ -1,20 +1,20 @@
 import littlefoot from '../src'
 import {
-  setup,
+  setDocumentBody,
   getButton,
-  queryAllButtons,
-  queryAllActiveButtons,
+  getAllButtons,
+  getAllActiveButtons,
   queryAll
 } from './helper'
 
 beforeEach(() => {
-  setup('default.html')
+  setDocumentBody('default.html')
 })
 
 test('creates one button and one container per footnote call', () => {
   littlefoot()
   expect(queryAll('.littlefoot-footnote__container')).toHaveLength(4)
-  expect(queryAllButtons()).toHaveLength(4)
+  expect(getAllButtons()).toHaveLength(4)
 })
 
 test('processes each called footnote', () => {
@@ -32,7 +32,7 @@ test('hides all footnotes', () => {
 
 test('starts with no active footnotes', () => {
   littlefoot()
-  expect(queryAllActiveButtons()).toHaveLength(0)
+  expect(getAllActiveButtons()).toHaveLength(0)
 })
 
 test('sets ARIA attributes on button', () => {

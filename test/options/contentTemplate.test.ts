@@ -1,9 +1,9 @@
 import littlefoot from '../../src'
-import { setup, waitForTransition } from '../helper'
+import { setDocumentBody, waitForTransition, query } from '../helper'
 import { fireEvent, getByTitle } from 'dom-testing-library'
 
 test('setup with custom contentTemplate', async () => {
-  setup('single.html')
+  setDocumentBody('single.html')
 
   littlefoot({
     activateDelay: 1,
@@ -23,7 +23,7 @@ test('setup with custom contentTemplate', async () => {
   fireEvent.click(button)
   await waitForTransition(button)
 
-  const footnote = document.querySelector('aside.custom')!
+  const footnote = query('aside.custom')
   const content = footnote.querySelector('.littlefoot-footnote__content')
 
   expect(footnote).toHaveAttribute('data-footnote-id', '1')

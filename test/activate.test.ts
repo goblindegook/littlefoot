@@ -1,17 +1,17 @@
 import { wait, fireEvent } from 'dom-testing-library'
 import littlefoot from '../src'
-import { setup, waitForTransition } from './helper'
+import { setDocumentBody, waitForTransition, query } from './helper'
 
 const TEST_SETTINGS = { activateDelay: 1 }
 
 beforeEach(() => {
-  setup('single.html')
+  setDocumentBody('single.html')
 })
 
 test('activate footnote when clicking the button', async () => {
   littlefoot(TEST_SETTINGS)
 
-  const button = document.querySelector('button')!
+  const button = query('button')
   fireEvent.click(button)
 
   expect(button).toHaveClass('is-changing')
@@ -22,16 +22,14 @@ test('activate footnote when clicking the button', async () => {
 test('activate footnote when calling .activate()', async () => {
   const instance = littlefoot(TEST_SETTINGS)
 
-  const button = document.querySelector('button')!
+  const button = query('button')
   instance.activate('button[data-footnote-id="1"]')
 
   expect(button).toHaveClass('is-changing')
   await wait(() => expect(button).not.toHaveClass('is-changing'))
 
-  const popover = document.querySelector<HTMLElement>('.littlefoot-footnote')!
-  const content = document.querySelector<HTMLElement>(
-    '.littlefoot-footnote__content'
-  )!
+  const popover = query<HTMLElement>('.littlefoot-footnote')
+  const content = query<HTMLElement>('.littlefoot-footnote__content')
 
   expect(button).toHaveClass('is-active')
   expect(button).toHaveAttribute('aria-expanded', 'true')
@@ -49,5 +47,5 @@ test('activation with invalid selector does not activate any popovers', () => {
 
   instance.activate('invalid')
 
-  expect(document.querySelector('.littlefoot-footnote')).toBeNull()
+  expect(query('.littlefoot-footnote')).toBeNull()
 })

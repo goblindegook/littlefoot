@@ -1,14 +1,14 @@
 import { fireEvent } from 'dom-testing-library'
 import littlefoot from '../../src'
 import {
-  setup,
+  setDocumentBody,
   getButton,
   waitForTransition,
-  queryAllActiveButtons
+  getAllActiveButtons
 } from '../helper'
 
 beforeEach(() => {
-  setup('default.html')
+  setDocumentBody('default.html')
 })
 
 // FIXME: document appears to be polluted, tests aren't isolated
@@ -23,7 +23,7 @@ xtest('disallow multiple activations', async () => {
   fireEvent.click(two)
   await waitForTransition(two)
 
-  expect(queryAllActiveButtons()).toHaveLength(1)
+  expect(getAllActiveButtons()).toHaveLength(1)
 })
 
 test('activate multiple footnotes on click', async () => {
@@ -37,7 +37,7 @@ test('activate multiple footnotes on click', async () => {
   fireEvent.click(two)
   await waitForTransition(two)
 
-  expect(queryAllActiveButtons()).toHaveLength(2)
+  expect(getAllActiveButtons()).toHaveLength(2)
 })
 
 test('activate multiple footnotes on hover', async () => {
@@ -51,7 +51,7 @@ test('activate multiple footnotes on hover', async () => {
   fireEvent.mouseOver(two)
   await waitForTransition(two)
 
-  expect(queryAllActiveButtons()).toHaveLength(2)
+  expect(getAllActiveButtons()).toHaveLength(2)
 })
 
 test('activate multiple buttons when calling .activate()', async () => {
@@ -63,7 +63,7 @@ test('activate multiple buttons when calling .activate()', async () => {
   await waitForTransition(getButton('3'))
   await waitForTransition(getButton('4'))
 
-  expect(queryAllActiveButtons()).toHaveLength(4)
+  expect(getAllActiveButtons()).toHaveLength(4)
 })
 
 test('dismiss multiple buttons when calling .dismiss()', async () => {
@@ -86,5 +86,5 @@ test('dismiss multiple buttons when calling .dismiss()', async () => {
   await waitForTransition(one)
   await waitForTransition(two)
 
-  expect(queryAllActiveButtons()).toHaveLength(0)
+  expect(getAllActiveButtons()).toHaveLength(0)
 })
