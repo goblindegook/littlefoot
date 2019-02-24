@@ -1,3 +1,10 @@
+export type TemplateData = {
+  content: string
+  id: number
+  number: number
+  reference: string
+}
+
 export type Footnote = {
   getId: () => string | null
   activate: (
@@ -21,7 +28,7 @@ export type FootnoteAction = (footnote: Footnote) => void
 
 export type Adapter = {
   findAllFootnotes: (selector: string) => Footnote[]
-  findFootnote: (Selection: string) => Footnote | null
+  findFootnote: (selector: string) => Footnote | null
   forAllActiveFootnotes: (fn: FootnoteAction, selector?: string) => Footnote[]
   forOtherActiveFootnotes: (
     fn: FootnoteAction,

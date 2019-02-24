@@ -1,9 +1,16 @@
 import { createFootnote } from './footnotes'
-import { setupDocument } from './setup'
+import { documentFootnotes } from './setup'
 import { Settings } from '../settings'
-import { Adapter, FootnoteAction, Footnote } from '../types'
+import { Adapter, FootnoteAction, Footnote, TemplateData } from '../types'
 import { CLASS_BUTTON, CLASS_FOOTNOTE, FOOTNOTE_ID } from './constants'
 import { findSibling } from './dom'
+
+export type HTMLFootnote = {
+  link: HTMLAnchorElement
+  body: HTMLElement
+  button: HTMLElement
+  data: TemplateData
+}
 
 function findOne(className: string, selector = ''): HTMLElement | null {
   return document.querySelector<HTMLElement>(`${selector}.${className}`)
@@ -53,7 +60,7 @@ function hasHoveredFootnotes(): boolean {
 }
 
 export function createAdapter(settings: Settings): Adapter {
-  setupDocument(settings)
+  documentFootnotes(settings)
 
   return {
     findAllFootnotes,

@@ -2,6 +2,7 @@ import { createSettings, Settings } from './settings'
 import { createCore } from './core'
 import { createAdapter } from './adapter'
 import { bindEvents } from './adapter/events'
+import { isNotNull } from './isNotNull'
 
 type Littlefoot = {
   activate: (selector: string, className?: string) => void
@@ -25,8 +26,8 @@ export function littlefoot(options: Partial<Settings> = {}): Littlefoot {
           : [adapter.findFootnote(selector)]
 
         footnotes
-          .filter(footnote => footnote)
-          .forEach(footnote => core.activate(footnote!, className))
+          .filter(isNotNull)
+          .forEach(footnote => core.activate(footnote, className))
       }
     },
 
