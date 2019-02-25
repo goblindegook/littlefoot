@@ -8,8 +8,8 @@ import { CLASS_PRINT_ONLY, CLASS_PROCESSED, FOOTNOTE_ID } from './constants'
 import { HTMLFootnote } from '.'
 import { TemplateData } from '../types'
 
-type LinkBody = [HTMLAnchorElement, HTMLElement]
-type LinkBodyData = [HTMLAnchorElement, HTMLElement, TemplateData]
+type LinkBody = Readonly<[HTMLAnchorElement, HTMLElement]>
+type LinkBodyData = Readonly<[HTMLAnchorElement, HTMLElement, TemplateData]>
 
 const setPrintOnly = (el: Element) => el.classList.add(CLASS_PRINT_ONLY)
 
@@ -26,7 +26,7 @@ function findFootnoteLinks({
   anchorParentSelector,
   footnoteParentClass,
   scope = ''
-}: Settings): HTMLAnchorElement[] {
+}: Settings): ReadonlyArray<HTMLAnchorElement> {
   return Array.from(
     document.querySelectorAll<HTMLAnchorElement>(`${scope} a[href^="#"]`)
   ).filter(
@@ -143,12 +143,8 @@ const addButton = (render: TemplateExecutor) => ([
   data
 ]: LinkBodyData): HTMLFootnote => {
   link.insertAdjacentHTML('beforebegin', render(data))
-  return {
-    data,
-    link,
-    body,
-    button: link.previousElementSibling as HTMLElement
-  }
+  const button = link.previousElementSibling as HTMLElement
+  return { data, link, body, button }
 }
 
 function hideOriginalFootnote([link, body]: LinkBody): LinkBody {
@@ -158,7 +154,7 @@ function hideOriginalFootnote([link, body]: LinkBody): LinkBody {
   return [link, body]
 }
 
-export function documentFootnotes(settings: Settings): HTMLFootnote[] {
+export function createDocumentFootnotes(settings: Settings): HTMLFootnote[] {
   const { anchorParentSelector, buttonTemplate, numberResetSelector } = settings
   const offset = parseInt(getLastFootnoteId(), 10) + 1
 

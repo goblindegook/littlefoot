@@ -1,5 +1,5 @@
 import { createFootnote } from './footnotes'
-import { documentFootnotes } from './setup'
+import { createDocumentFootnotes } from './setup'
 import { Settings } from '../settings'
 import { Adapter, FootnoteAction, Footnote, TemplateData } from '../types'
 import { CLASS_BUTTON, CLASS_FOOTNOTE, FOOTNOTE_ID } from './constants'
@@ -60,7 +60,11 @@ function hasHoveredFootnotes(): boolean {
 }
 
 export function createAdapter(settings: Settings): Adapter {
-  documentFootnotes(settings)
+  const footnotes = createDocumentFootnotes(settings)
+
+  // console.log(
+  //   footnotes.map(({ data }) => `ID = ${data.id} REF = ${data.reference}`)
+  // )
 
   return {
     findAllFootnotes,
