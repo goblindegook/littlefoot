@@ -1,20 +1,16 @@
 {
   "presets": [
-    ["@babel/preset-env", {
-      "targets": "> 0.2%, not dead, last 1 version"
-    }],
+    [
+      "@babel/preset-env",
+      {
+        "targets": "> 0.2%, not dead, last 1 version"
+      }
+    ],
     "@babel/typescript"
   ],
   "plugins": [
     "@babel/plugin-transform-runtime",
     "@babel/proposal-class-properties",
     "@babel/proposal-object-rest-spread"
-  ],
-  "env": {
-    "test": {
-      "plugins": [
-        "istanbul"
-      ]
-    }
-  }
+  ]
 }
