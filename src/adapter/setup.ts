@@ -3,7 +3,6 @@ import escape from 'lodash.escape'
 import template from 'lodash.template'
 import { Settings } from '../settings'
 import { children } from './dom'
-import { isNotNull } from '../isNotNull'
 import { CLASS_PRINT_ONLY, CLASS_PROCESSED, FOOTNOTE_ID } from './constants'
 import { HTMLFootnote } from '.'
 import { TemplateData } from '../types'
@@ -12,6 +11,10 @@ type LinkBody = Readonly<[HTMLAnchorElement, HTMLElement]>
 type LinkBodyData = Readonly<[HTMLAnchorElement, HTMLElement, TemplateData]>
 
 const setPrintOnly = (el: Element) => el.classList.add(CLASS_PRINT_ONLY)
+
+function isNotNull<T>(value: T | null): value is T {
+  return value !== null
+}
 
 function getLastFootnoteId(): string {
   const footnotes = document.querySelectorAll(`[${FOOTNOTE_ID}]`)

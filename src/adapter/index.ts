@@ -12,30 +12,18 @@ export type HTMLFootnote = {
   data: TemplateData
 }
 
-function findOne(className: string, selector = ''): HTMLElement | null {
-  return document.querySelector<HTMLElement>(`${selector}.${className}`)
-}
-
-function findFootnote(selector: string): Footnote | null {
-  const button = findOne(CLASS_BUTTON, selector)
-  return button && createFootnote(button)
-}
-
-function findAllFootnotes(selector: string): Footnote[] {
-  return findAll(CLASS_BUTTON, selector).map(button => createFootnote(button))
-}
-
-export function findAll(className: string, selector = ''): HTMLElement[] {
+function find(className: string, selector = ''): HTMLElement[] {
   return Array.from(
     document.querySelectorAll<HTMLElement>(`${selector}.${className}`)
   )
 }
 
-export function forAllActiveFootnotes(
-  fn: FootnoteAction,
-  selector = ''
-): Footnote[] {
-  return findAll(CLASS_FOOTNOTE, selector).map(popover => {
+function findFootnotes(selector: string): Footnote[] {
+  return find(CLASS_BUTTON, selector).map(button => createFootnote(button))
+}
+
+function forAllActiveFootnotes(fn: FootnoteAction, selector = ''): Footnote[] {
+  return find(CLASS_FOOTNOTE, selector).map(popover => {
     const button = findSibling(popover, `.${CLASS_BUTTON}`)!
     const footnote = createFootnote(button, popover)
     fn(footnote)
@@ -67,8 +55,7 @@ export function createAdapter(settings: Settings): Adapter {
   // )
 
   return {
-    findAllFootnotes,
-    findFootnote,
+    findFootnotes,
     forAllActiveFootnotes,
     forOtherActiveFootnotes,
     hasHoveredFootnotes

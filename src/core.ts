@@ -9,6 +9,7 @@ export type EventHandlerFn = (footnote: Footnote) => void
 export type Core = {
   activate: ActivateFn
   dismiss: DismissFn
+  dismissAll: () => void
   hover: EventHandlerFn
   reposition: () => void
   resize: () => void
@@ -65,6 +66,10 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
     activate,
 
     dismiss,
+
+    dismissAll() {
+      adapter.forAllActiveFootnotes(dismiss)
+    },
 
     reposition() {
       adapter.forAllActiveFootnotes(footnote => footnote.reposition())

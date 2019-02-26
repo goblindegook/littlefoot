@@ -4,7 +4,6 @@ import { CLASS_BUTTON, CLASS_FULLY_SCROLLED, CLASS_FOOTNOTE } from './constants'
 import { Core, EventHandlerFn } from '../core'
 import { findSibling } from './dom'
 import { Footnote } from '../types'
-import { forAllActiveFootnotes } from '.'
 
 const { on } = require('delegated-events')
 
@@ -89,14 +88,12 @@ export function bindContentScrollHandler(contentElement: Element): void {
 
 export function bindEvents({
   tap,
-  dismiss,
+  dismissAll,
   reposition,
   resize,
   hover,
   unhover
 }: Core): void {
-  const dismissAll = () => forAllActiveFootnotes(dismiss)
-
   document.addEventListener('touchend', handleToggle(tap, dismissAll))
   document.addEventListener('click', handleToggle(tap, dismissAll))
   document.addEventListener('keyup', handleEscape(dismissAll))
