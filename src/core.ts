@@ -1,7 +1,7 @@
 import { Settings } from './settings'
 import { Footnote, Adapter } from './types'
 
-type ActivateFn = (footnote: Footnote, className?: string) => void
+type ActivateFn = (footnote: Footnote) => void
 type DismissFn = (footnote: Footnote, delay?: number) => void
 
 export type EventHandlerFn = (footnote: Footnote) => void
@@ -18,17 +18,13 @@ export type Core = {
 }
 
 function createActivate(adapter: Adapter, settings: Settings): ActivateFn {
-  return (footnote, className = '') => {
+  return footnote => {
     const { activateCallback, activateDelay, contentTemplate } = settings
 
     if (!footnote.isChanging()) {
       footnote.startChanging()
 
-      const activated = footnote.activate(
-        contentTemplate,
-        className,
-        activateCallback
-      )
+      const activated = footnote.activate(contentTemplate, activateCallback)
 
       adapter.forAllActiveFootnotes(fn => {
         fn.reposition()

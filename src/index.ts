@@ -17,11 +17,11 @@ export function littlefoot(options: Partial<Settings> = {}): Littlefoot {
   bindEvents(core)
 
   return {
-    activate(selector = '', className = '') {
+    activate(selector = '') {
       adapter
         .findFootnotes(selector)
         .filter((_, idx) => settings.allowMultiple || idx === 0)
-        .forEach(footnote => core.activate(footnote, className))
+        .forEach(footnote => core.activate(footnote))
     },
 
     dismiss(selector, delay) {

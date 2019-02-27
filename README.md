@@ -303,7 +303,7 @@ Methods on the returning object were overhauled, removing breakpoint logic.
 
 #### Changed methods
 
-- `activate()` will not activate any footnotes if called without a selector and will no longer return a list of activated popovers.
+- `activate()` will no longer return a list of activated popovers and no longer allows setting a custom class on the popover element through it. Use `activateCallback` if you wish to manipulate the button or popover elements.
 - `close()` was renamed `dismiss()` and will no longer return the list of deactivated buttons.
 
 #### Removed methods

@@ -50,16 +50,12 @@ export function createFootnote(
   return {
     getId: () => button.getAttribute(FOOTNOTE_ID),
 
-    activate: (contentTemplate, className, onActivate) => {
+    activate: (contentTemplate, onActivate) => {
       button.blur()
       button.setAttribute('aria-expanded', 'true')
       button.classList.add(CLASS_ACTIVE)
 
       const newPopover = insertPopover(button, contentTemplate)
-
-      if (className) {
-        newPopover.classList.add(className)
-      }
 
       if (typeof onActivate === 'function') {
         onActivate(newPopover, button)
