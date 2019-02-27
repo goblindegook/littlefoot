@@ -1,7 +1,7 @@
 import throttle from 'lodash.throttle'
 import { createFootnote } from './footnotes'
 import { CLASS_BUTTON, CLASS_FULLY_SCROLLED, CLASS_FOOTNOTE } from './constants'
-import { Core, EventHandlerFn } from '../core'
+import { Core, ActivateFn } from '../core'
 import { findSibling } from './dom'
 import { Footnote } from '../types'
 
@@ -18,23 +18,20 @@ function findClosestFootnote(target: HTMLElement | null): Footnote | null {
 const findClosestPopover = (target: Element): Element | null =>
   target.closest(`.${CLASS_FOOTNOTE}`)
 
-function handleToggle(
-  tap: EventHandlerFn,
-  dismissAll: () => void
-): EventListener {
+function handleTap(toggle: ActivateFn, dismissAll: () => void): EventListener {
   return event => {
     const target = event.target as HTMLElement
     const footnote = findClosestFootnote(target)
 
     if (footnote) {
-      tap(footnote)
+      toggle(footnote)
     } else if (!findClosestPopover(target)) {
       dismissAll()
     }
   }
 }
 
-function handleHover(hover: EventHandlerFn): EventListener {
+function handleHover(hover: ActivateFn): EventListener {
   return event => {
     event.preventDefault()
     const target = event.target as HTMLElement
@@ -87,15 +84,15 @@ export function bindContentScrollHandler(contentElement: Element): void {
 }
 
 export function bindEvents({
-  tap,
+  toggle,
   dismissAll,
   reposition,
   resize,
   hover,
   unhover
 }: Core): void {
-  document.addEventListener('touchend', handleToggle(tap, dismissAll))
-  document.addEventListener('click', handleToggle(tap, dismissAll))
+  document.addEventListener('touchend', handleTap(toggle, dismissAll))
+  document.addEventListener('click', handleTap(toggle, dismissAll))
   document.addEventListener('keyup', handleEscape(dismissAll))
   document.addEventListener('gestureend', throttle(reposition))
   window.addEventListener('scroll', throttle(reposition))

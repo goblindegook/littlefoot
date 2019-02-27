@@ -1,19 +1,17 @@
 import { Settings } from './settings'
 import { Footnote, Adapter } from './types'
 
-type ActivateFn = (footnote: Footnote) => void
+export type ActivateFn = (footnote: Footnote) => void
 type DismissFn = (footnote: Footnote, delay?: number) => void
-
-export type EventHandlerFn = (footnote: Footnote) => void
 
 export type Core = {
   activate: ActivateFn
   dismiss: DismissFn
   dismissAll: () => void
-  hover: EventHandlerFn
+  hover: ActivateFn
   reposition: () => void
   resize: () => void
-  tap: EventHandlerFn
+  toggle: ActivateFn
   unhover: () => void
 }
 
@@ -75,7 +73,7 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
       adapter.forAllActiveFootnotes(footnote => footnote.resize())
     },
 
-    tap(footnote) {
+    toggle(footnote) {
       const { allowMultiple } = settings
       if (footnote.isActive()) {
         dismiss(footnote)
