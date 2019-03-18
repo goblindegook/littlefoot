@@ -12,7 +12,7 @@ test('getMaxHeight (none)', () => {
   expect(getMaxHeight(fixture)).toBe(fixture.clientHeight)
 })
 
-test.each([
+test.each<[string, string, number]>([
   ['10em', '100%', 10],
   ['10em', '200%', 10],
   ['10em', '2em', 10],
@@ -28,7 +28,7 @@ test.each([
   expect(getMaxHeight(fixture)).toBe(expected) // FIXME: fixture.clientHeight
 })
 
-test.each([
+test.each<[string, number]>([
   ['100cm', 100],
   ['100in', 100],
   ['100mm', 100],
