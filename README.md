@@ -88,17 +88,12 @@ You'll also want to include styles for the button and popovers, a number of whic
 
    ```js
    import littlefoot from 'littlefoot'
+   import 'littlefoot/dist/littlefoot.css'
 
    export function onRouteUpdate() {
      littlefoot() // Pass any littlefoot settings here.
    }
    ```
-
-3. (Optional) At the top of the [page or template file(s) that will display footnotes](https://www.gatsbyjs.org/docs/adding-markdown-pages/#create-a-page-template-for-the-markdown-data), import the style sheets.
-
-```
-import 'littlefoot/dist/littlefoot.css'
-```
 
 ## Options
 
