@@ -1,21 +1,24 @@
 import { Settings } from './settings'
 import { Footnote, Adapter } from './types'
 
-export type ActivateFn = (footnote: Footnote) => void
-type DismissFn = (footnote: Footnote, delay?: number) => void
+export type ActivateFootnote = (footnote: Footnote) => void
+type DismissFootnote = (footnote: Footnote, delay?: number) => void
 
 export type Core = {
-  activate: ActivateFn
-  dismiss: DismissFn
+  activate: ActivateFootnote
+  dismiss: DismissFootnote
   dismissAll: () => void
-  hover: ActivateFn
+  hover: ActivateFootnote
   reposition: () => void
   resize: () => void
-  toggle: ActivateFn
+  toggle: ActivateFootnote
   unhover: () => void
 }
 
-function createActivate(adapter: Adapter, settings: Settings): ActivateFn {
+function createActivate(
+  adapter: Adapter,
+  settings: Settings
+): ActivateFootnote {
   return footnote => {
     const { activateCallback, activateDelay, contentTemplate } = settings
 
@@ -38,7 +41,7 @@ function createActivate(adapter: Adapter, settings: Settings): ActivateFn {
   }
 }
 
-function createDismiss(settings: Settings): DismissFn {
+function createDismiss(settings: Settings): DismissFootnote {
   return (footnote, delay = settings.dismissDelay) => {
     if (!footnote.isChanging()) {
       footnote.startChanging()
@@ -87,7 +90,7 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
 
     hover(footnote) {
       const { activateOnHover, allowMultiple } = settings
-      if (activateOnHover && footnote && !footnote.isActive()) {
+      if (activateOnHover && !footnote.isActive()) {
         if (!allowMultiple) {
           adapter.forOtherActiveFootnotes(dismiss, footnote)
         }

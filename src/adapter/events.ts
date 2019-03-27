@@ -1,44 +1,41 @@
 import throttle from 'lodash.throttle'
-import { createFootnote } from './footnotes'
 import { CLASS_BUTTON, CLASS_FULLY_SCROLLED, CLASS_FOOTNOTE } from './constants'
-import { Core, ActivateFn } from '../core'
-import { findSibling } from './dom'
-import { Footnote } from '../types'
+import { Core, ActivateFootnote } from '../core'
+import { Adapter, Footnote } from '../types'
 
 const { on } = require('delegated-events')
 
 type EventHandler<E extends Event> = (e: E) => void
 
-function findClosestFootnote(target: HTMLElement | null): Footnote | null {
-  const button = target && target.closest(`.${CLASS_BUTTON}`)
-  const popover = button && findSibling(button, `.${CLASS_FOOTNOTE}`)
-  return button && createFootnote(button as HTMLElement, popover)
-}
-
 const findClosestPopover = (target: Element): Element | null =>
   target.closest(`.${CLASS_FOOTNOTE}`)
 
-function handleTap(toggle: ActivateFn, dismissAll: () => void): EventListener {
+function handleTap(
+  findByElement: (target: HTMLElement) => Footnote | undefined,
+  activate: ActivateFootnote,
+  dismissAll: () => void
+): EventListener {
   return event => {
-    const target = event.target as HTMLElement
-    const footnote = findClosestFootnote(target)
+    const footnote = event.target && findByElement(event.target as HTMLElement)
 
     if (footnote) {
-      toggle(footnote)
-    } else if (!findClosestPopover(target)) {
+      activate(footnote)
+    } else if (!findClosestPopover(event.target as HTMLElement)) {
       dismissAll()
     }
   }
 }
 
-function handleHover(hover: ActivateFn): EventListener {
+function handleHover(
+  findByElement: (target: HTMLElement) => Footnote | undefined,
+  activate: ActivateFootnote
+): EventListener {
   return event => {
     event.preventDefault()
-    const target = event.target as HTMLElement
-    const footnote = findClosestFootnote(target)
+    const footnote = event.target && findByElement(event.target as HTMLElement)
 
     if (footnote) {
-      hover(footnote)
+      activate(footnote)
     }
   }
 }
@@ -78,26 +75,27 @@ function scrollHandler(event: WheelEvent): void {
 
 export function bindContentScrollHandler(contentElement: Element): void {
   const throttledScrollHandler = throttle<EventHandler<any>>(scrollHandler)
-
   contentElement.addEventListener('mousewheel', throttledScrollHandler)
   contentElement.addEventListener('wheel', throttledScrollHandler)
 }
 
-export function bindEvents({
-  toggle,
-  dismissAll,
-  reposition,
-  resize,
-  hover,
-  unhover
-}: Core): void {
-  document.addEventListener('touchend', handleTap(toggle, dismissAll))
-  document.addEventListener('click', handleTap(toggle, dismissAll))
+export function bindEvents(
+  { findByElement }: Adapter,
+  { toggle, dismissAll, reposition, resize, hover, unhover }: Core
+): void {
+  document.addEventListener(
+    'touchend',
+    handleTap(findByElement, toggle, dismissAll)
+  )
+  document.addEventListener(
+    'click',
+    handleTap(findByElement, toggle, dismissAll)
+  )
   document.addEventListener('keyup', handleEscape(dismissAll))
   document.addEventListener('gestureend', throttle(reposition))
   window.addEventListener('scroll', throttle(reposition))
   window.addEventListener('resize', throttle(resize))
 
-  on('mouseover', `.${CLASS_BUTTON}`, handleHover(hover))
-  on('mouseout', `.${CLASS_BUTTON}`, handleHover(unhover))
+  on('mouseover', `.${CLASS_BUTTON}`, handleHover(findByElement, hover))
+  on('mouseout', `.${CLASS_BUTTON}`, handleHover(findByElement, unhover))
 }

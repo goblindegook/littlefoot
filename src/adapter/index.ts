@@ -18,10 +18,6 @@ function find(className: string, selector = ''): HTMLElement[] {
   )
 }
 
-function findFootnotes(selector: string): Footnote[] {
-  return find(CLASS_BUTTON, selector).map(button => createFootnote(button))
-}
-
 function forAllActiveFootnotes(fn: FootnoteAction, selector = ''): Footnote[] {
   return find(CLASS_FOOTNOTE, selector).map(popover => {
     const button = findSibling(popover, `.${CLASS_BUTTON}`)!
@@ -35,16 +31,24 @@ function forOtherActiveFootnotes(
   fn: FootnoteAction,
   footnote: Footnote
 ): Footnote[] {
-  return forAllActiveFootnotes(
-    fn,
-    `:not([${FOOTNOTE_ID}="${footnote.getId()}"])`
-  )
+  const selector = `:not([${FOOTNOTE_ID}="${footnote.getId()}"])`
+  return forAllActiveFootnotes(fn, selector)
 }
 
 function hasHoveredFootnotes(): boolean {
   return !!document.querySelector(
     `.${CLASS_BUTTON}:hover, .${CLASS_FOOTNOTE}:hover`
   )
+}
+
+function findByElement(target: HTMLElement): Footnote | undefined {
+  const button = target.closest(`.${CLASS_BUTTON}`) as HTMLElement | null
+  const popover = button && findSibling(button, `.${CLASS_FOOTNOTE}`)
+  return button ? createFootnote(button, popover) : undefined
+}
+
+function findBySelector(selector: string): Footnote[] {
+  return find(CLASS_BUTTON, selector).map(button => createFootnote(button))
 }
 
 export function createAdapter(settings: Settings): Adapter {
@@ -55,7 +59,8 @@ export function createAdapter(settings: Settings): Adapter {
   // )
 
   return {
-    findFootnotes,
+    findByElement,
+    findBySelector,
     forAllActiveFootnotes,
     forOtherActiveFootnotes,
     hasHoveredFootnotes

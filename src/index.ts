@@ -14,12 +14,12 @@ export function littlefoot(options: Partial<Settings> = {}): Littlefoot {
   const settings = createSettings(options)
   const adapter = createAdapter(settings)
   const core = createCore(adapter, settings)
-  bindEvents(core)
+  bindEvents(adapter, core)
 
   return {
     activate(selector = '') {
       adapter
-        .findFootnotes(selector)
+        .findBySelector(selector)
         .filter((_, idx) => settings.allowMultiple || idx === 0)
         .forEach(footnote => core.activate(footnote))
     },

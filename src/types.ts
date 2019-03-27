@@ -26,7 +26,8 @@ export type Footnote = {
 export type FootnoteAction = (footnote: Footnote) => void
 
 export type Adapter = {
-  findFootnotes: (selector: string) => Footnote[]
+  findByElement: (target: HTMLElement) => Footnote | undefined
+  findBySelector: (selector: string) => Footnote[]
   forAllActiveFootnotes: (fn: FootnoteAction, selector?: string) => Footnote[]
   forOtherActiveFootnotes: (
     fn: FootnoteAction,
