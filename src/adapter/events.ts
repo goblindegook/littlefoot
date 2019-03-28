@@ -1,6 +1,6 @@
 import throttle from 'lodash.throttle'
 import { CLASS_BUTTON, CLASS_FULLY_SCROLLED, CLASS_FOOTNOTE } from './constants'
-import { Core, ActivateFootnote } from '../core'
+import { Core, FootnoteAction } from '../core'
 import { Adapter, Footnote } from '../types'
 
 const { on } = require('delegated-events')
@@ -12,14 +12,14 @@ const findClosestPopover = (target: Element): Element | null =>
 
 function handleTap(
   findByElement: (target: HTMLElement) => Footnote | undefined,
-  activate: ActivateFootnote,
+  toggle: FootnoteAction,
   dismissAll: () => void
 ): EventListener {
   return event => {
     const footnote = event.target && findByElement(event.target as HTMLElement)
 
     if (footnote) {
-      activate(footnote)
+      toggle(footnote)
     } else if (!findClosestPopover(event.target as HTMLElement)) {
       dismissAll()
     }
@@ -28,14 +28,14 @@ function handleTap(
 
 function handleHover(
   findByElement: (target: HTMLElement) => Footnote | undefined,
-  activate: ActivateFootnote
+  toggle: FootnoteAction
 ): EventListener {
   return event => {
     event.preventDefault()
     const footnote = event.target && findByElement(event.target as HTMLElement)
 
     if (footnote) {
-      activate(footnote)
+      toggle(footnote)
     }
   }
 }

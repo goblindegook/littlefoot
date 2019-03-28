@@ -1,26 +1,22 @@
 import { Settings } from './settings'
 import { Footnote, Adapter } from './types'
 
-export type ActivateFootnote = (footnote: Footnote) => void
-type DismissFootnote = (footnote: Footnote, delay?: number) => void
+export type FootnoteAction = (footnote: Footnote, delay?: number) => void
 
 export type Core = {
-  activate: ActivateFootnote
-  dismiss: DismissFootnote
+  activate: FootnoteAction
+  dismiss: FootnoteAction
   dismissAll: () => void
-  hover: ActivateFootnote
+  hover: FootnoteAction
   reposition: () => void
   resize: () => void
-  toggle: ActivateFootnote
+  toggle: FootnoteAction
   unhover: () => void
 }
 
-function createActivate(
-  adapter: Adapter,
-  settings: Settings
-): ActivateFootnote {
-  return footnote => {
-    const { activateCallback, activateDelay, contentTemplate } = settings
+function createActivate(adapter: Adapter, settings: Settings): FootnoteAction {
+  return (footnote, delay = settings.activateDelay) => {
+    const { activateCallback, contentTemplate } = settings
 
     if (!footnote.isChanging()) {
       footnote.startChanging()
@@ -36,12 +32,12 @@ function createActivate(
         // FIXME: reposition and resize here?
         activated.ready()
         activated.stopChanging()
-      }, activateDelay)
+      }, delay)
     }
   }
 }
 
-function createDismiss(settings: Settings): DismissFootnote {
+function createDismiss(settings: Settings): FootnoteAction {
   return (footnote, delay = settings.dismissDelay) => {
     if (!footnote.isChanging()) {
       footnote.startChanging()
@@ -88,13 +84,13 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
       }
     },
 
-    hover(footnote) {
+    hover(footnote, delay = settings.hoverDelay) {
       const { activateOnHover, allowMultiple } = settings
       if (activateOnHover && !footnote.isActive()) {
         if (!allowMultiple) {
           adapter.forOtherActiveFootnotes(dismiss, footnote)
         }
-        activate(footnote)
+        activate(footnote, delay)
         footnote.hover()
       }
     },
