@@ -1,5 +1,5 @@
 import 'jest-dom/extend-expect'
-import { wait } from 'dom-testing-library'
+import { wait, queryByText } from 'dom-testing-library'
 import { join } from 'path'
 import { readFileSync } from 'fs'
 
@@ -9,6 +9,14 @@ export function queryAll<E extends Element>(selector: string): Array<E> {
 
 export function query<E extends Element>(selector: string): E {
   return document.querySelector<E>(selector)!
+}
+
+export function queryPopoverByText(
+  matcher: string | RegExp
+): HTMLElement | null {
+  return queryByText(document.body, matcher, {
+    selector: '.littlefoot-footnote *'
+  })
 }
 
 export function setDocumentBody(fixture: string): void {

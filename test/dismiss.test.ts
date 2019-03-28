@@ -1,8 +1,13 @@
 import { fireEvent } from 'dom-testing-library'
 import littlefoot from '../src'
-import { setDocumentBody, waitForTransition, query } from './helper'
+import {
+  setDocumentBody,
+  waitForTransition,
+  query,
+  queryPopoverByText
+} from './helper'
 
-const TEST_SETTINGS = { activateDelay: 1, dismissDelay: 1 }
+const TEST_SETTINGS = { activateDelay: 0, dismissDelay: 0 }
 
 beforeEach(() => {
   setDocumentBody('single.html')
@@ -19,6 +24,9 @@ test('dismiss footnote when clicking the button again', async () => {
 
   expect(button).toHaveClass('is-changing')
   await waitForTransition(button)
+  expect(
+    queryPopoverByText(/This is the document's only footnote./)
+  ).not.toBeInTheDocument()
   expect(button).not.toHaveClass('is-active')
 })
 
