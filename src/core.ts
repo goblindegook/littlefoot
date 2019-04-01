@@ -1,6 +1,7 @@
 import { Settings } from './settings'
 import { Footnote, Adapter } from './types'
 
+// TODO: Core to rely only on footnote IDs, not Footnote objects
 export type FootnoteAction = (footnote: Footnote, delay?: number) => void
 
 export type Core = {

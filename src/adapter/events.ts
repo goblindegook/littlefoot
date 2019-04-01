@@ -11,7 +11,7 @@ const findClosestPopover = (target: Element): Element | null =>
   target.closest(`.${CLASS_FOOTNOTE}`)
 
 function handleTap(
-  findByElement: (target: HTMLElement) => Footnote | undefined,
+  findByElement: (target: HTMLElement) => Footnote | null,
   toggle: FootnoteAction,
   dismissAll: () => void
 ): EventListener {
@@ -27,7 +27,7 @@ function handleTap(
 }
 
 function handleHover(
-  findByElement: (target: HTMLElement) => Footnote | undefined,
+  findByElement: (target: HTMLElement) => Footnote | null,
   toggle: FootnoteAction
 ): EventListener {
   return event => {
