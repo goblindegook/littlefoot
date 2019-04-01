@@ -1,7 +1,7 @@
 import { createFootnote } from './footnotes'
 import { createDocumentFootnotes } from './setup'
 import { Settings } from '../settings'
-import { Adapter, FootnoteAction, Footnote, TemplateData } from '../types'
+import { Adapter, Footnote, TemplateData } from '../types'
 import { CLASS_BUTTON, CLASS_FOOTNOTE, FOOTNOTE_ID } from './constants'
 import { findSibling } from './dom'
 
@@ -31,15 +31,15 @@ export function createAdapter(settings: Settings): Adapter {
   // )
 
   return {
-    findByElement: target => {
-      const button = target.closest(`.${CLASS_BUTTON}`) as HTMLElement | null
-      const popover = button && findSibling(button, `.${CLASS_FOOTNOTE}`)
-      return button && createFootnote(button, popover)
-    },
     findById: id => {
-      const selector = `[${FOOTNOTE_ID}="${id}"].${CLASS_BUTTON}`
-      const button = document.querySelector<HTMLElement>(selector)
-      return button && createFootnote(button)
+      const selector = `[${FOOTNOTE_ID}="${id}"]`
+      const button = document.querySelector<HTMLElement>(
+        `${selector}.${CLASS_BUTTON}`
+      )
+      const popover = document.querySelector<HTMLElement>(
+        `${selector}.${CLASS_FOOTNOTE}`
+      )
+      return button && createFootnote(button, popover)
     },
     forAllActiveFootnotes: fn => {
       const active = findActiveFootnotes()

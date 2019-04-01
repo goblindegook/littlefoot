@@ -14,7 +14,7 @@ export function littlefoot(options: Partial<Settings> = {}): Littlefoot {
   const settings = createSettings(options)
   const adapter = createAdapter(settings)
   const core = createCore(adapter, settings)
-  bindEvents(adapter, core)
+  bindEvents(core)
 
   return {
     activate(id: string) {
@@ -29,7 +29,7 @@ export function littlefoot(options: Partial<Settings> = {}): Littlefoot {
       if (footnote) {
         core.dismiss(footnote, delay)
       } else {
-        adapter.forAllActiveFootnotes(fn => core.dismiss(fn, delay))
+        core.dismissAll(delay)
       }
     },
 

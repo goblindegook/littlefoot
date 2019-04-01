@@ -1,38 +1,51 @@
 import throttle from 'lodash.throttle'
-import { CLASS_BUTTON, CLASS_FULLY_SCROLLED, CLASS_FOOTNOTE } from './constants'
+import {
+  CLASS_BUTTON,
+  CLASS_FULLY_SCROLLED,
+  CLASS_FOOTNOTE,
+  FOOTNOTE_ID
+} from './constants'
 import { Core, FootnoteAction } from '../core'
-import { Adapter, Footnote } from '../types'
+import { Footnote } from '../types'
 
 const { on } = require('delegated-events')
 
 type EventHandler<E extends Event> = (e: E) => void
 
-const findClosestPopover = (target: Element): Element | null =>
-  target.closest(`.${CLASS_FOOTNOTE}`)
+function closestPopover(target: Element): Element | null {
+  return target.closest(`.${CLASS_FOOTNOTE}`)
+}
+
+function closestFootnoteId(target: HTMLElement): string | null {
+  const button = target.closest(`.${CLASS_BUTTON}`) as HTMLElement | null
+  return button && button.getAttribute(FOOTNOTE_ID)
+}
 
 function handleTap(
-  findByElement: (target: HTMLElement) => Footnote | null,
+  get: (id: string) => Footnote | null,
   toggle: FootnoteAction,
   dismissAll: () => void
 ): EventListener {
   return event => {
-    const footnote = event.target && findByElement(event.target as HTMLElement)
+    const id = closestFootnoteId(event.target as HTMLElement)
+    const footnote = id && get(id)
 
     if (footnote) {
       toggle(footnote)
-    } else if (!findClosestPopover(event.target as HTMLElement)) {
+    } else if (!closestPopover(event.target as HTMLElement)) {
       dismissAll()
     }
   }
 }
 
 function handleHover(
-  findByElement: (target: HTMLElement) => Footnote | null,
+  get: (id: string) => Footnote | null,
   toggle: FootnoteAction
 ): EventListener {
   return event => {
     event.preventDefault()
-    const footnote = event.target && findByElement(event.target as HTMLElement)
+    const id = closestFootnoteId(event.target as HTMLElement)
+    const footnote = id && get(id)
 
     if (footnote) {
       toggle(footnote)
@@ -48,7 +61,7 @@ function scrollHandler(event: WheelEvent): void {
   const target = event.currentTarget as HTMLElement
   const delta = -event.deltaY
   const height = target.clientHeight
-  const popover = findClosestPopover(target)
+  const popover = closestPopover(target)
 
   if (
     popover &&
@@ -79,23 +92,22 @@ export function bindContentScrollHandler(contentElement: Element): void {
   contentElement.addEventListener('wheel', throttledScrollHandler)
 }
 
-export function bindEvents(
-  { findByElement }: Adapter,
-  { toggle, dismissAll, reposition, resize, hover, unhover }: Core
-): void {
-  document.addEventListener(
-    'touchend',
-    handleTap(findByElement, toggle, dismissAll)
-  )
-  document.addEventListener(
-    'click',
-    handleTap(findByElement, toggle, dismissAll)
-  )
+export function bindEvents({
+  dismissAll,
+  get,
+  hover,
+  reposition,
+  resize,
+  toggle,
+  unhover
+}: Core): void {
+  document.addEventListener('touchend', handleTap(get, toggle, dismissAll))
+  document.addEventListener('click', handleTap(get, toggle, dismissAll))
   document.addEventListener('keyup', handleEscape(dismissAll))
   document.addEventListener('gestureend', throttle(reposition))
   window.addEventListener('scroll', throttle(reposition))
   window.addEventListener('resize', throttle(resize))
 
-  on('mouseover', `.${CLASS_BUTTON}`, handleHover(findByElement, hover))
-  on('mouseout', `.${CLASS_BUTTON}`, handleHover(findByElement, unhover))
+  on('mouseover', `.${CLASS_BUTTON}`, handleHover(get, hover))
+  on('mouseout', `.${CLASS_BUTTON}`, handleHover(get, unhover))
 }

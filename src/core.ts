@@ -1,14 +1,13 @@
 import { Settings } from './settings'
 import { Footnote, Adapter } from './types'
 
-// TODO: Core to rely only on footnote IDs, not Footnote objects
 export type FootnoteAction = (footnote: Footnote, delay?: number) => void
 
 export type Core = {
-  get: (id: string) => Footnote | null
   activate: FootnoteAction
   dismiss: FootnoteAction
-  dismissAll: () => void
+  dismissAll: (delay?: number) => void
+  get: (id: string) => Footnote | null
   hover: FootnoteAction
   reposition: () => void
   resize: () => void
@@ -64,8 +63,8 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
 
     dismiss,
 
-    dismissAll() {
-      adapter.forAllActiveFootnotes(dismiss)
+    dismissAll(delay = settings.dismissDelay) {
+      adapter.forAllActiveFootnotes(footnote => dismiss(footnote, delay))
     },
 
     reposition() {
