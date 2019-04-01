@@ -17,18 +17,20 @@ export function littlefoot(options: Partial<Settings> = {}): Littlefoot {
   bindEvents(adapter, core)
 
   return {
-    activate(selector = '') {
-      adapter
-        .findBySelector(selector)
-        .filter((_, idx) => settings.allowMultiple || idx === 0)
-        .forEach(footnote => core.activate(footnote))
+    activate(id: string) {
+      const footnote = core.get(id)
+      if (footnote) {
+        core.activate(footnote)
+      }
     },
 
-    dismiss(selector, delay) {
-      adapter.forAllActiveFootnotes(
-        footnote => core.dismiss(footnote, delay),
-        selector
-      )
+    dismiss(id, delay) {
+      const footnote = id && core.get(id)
+      if (footnote) {
+        core.dismiss(footnote, delay)
+      } else {
+        adapter.forAllActiveFootnotes(fn => core.dismiss(fn, delay))
+      }
     },
 
     getSetting(key) {

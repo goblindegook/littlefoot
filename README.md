@@ -248,13 +248,13 @@ Default:
 
 Running the function will return an object that can be stored and used to manipulate the footnote buttons/content. The following methods are available in this return object:
 
-### `dismiss([footnoteSelector[, timeout]])`
+### `dismiss([footnoteId[, timeout]])`
 
-This function will close any footnote popovers matching the (string) selector provided for footnotes. `timeout` specifies the amount of time after the footnote's active class is removed before the element itself is removed. If excluded, `timeout` will default to the `dismissDelay` option.
+This function will close the popover matching the footnote ID. If omitted, all popovers are dismissed. `timeout` specifies the amount of time after the footnote's active class is removed before the element itself is removed. If excluded, `timeout` will default to the `dismissDelay` option.
 
-### `activate(buttonSelector)`
+### `activate(footnoteId)`
 
-This will activate the footnote button (and its associated popover) matching the (string) selector provided for button. If the option to allow multiple footnotes is false, only the first matching footnote will be activated.
+This will activate the footnote button (and its associated popover) matching the footnote ID.
 
 ### `getSetting(key)`
 

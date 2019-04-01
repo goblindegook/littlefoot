@@ -12,43 +12,15 @@ export type HTMLFootnote = {
   data: TemplateData
 }
 
-function find(className: string, selector = ''): HTMLElement[] {
-  return Array.from(
-    document.querySelectorAll<HTMLElement>(`${selector}.${className}`)
+function findActiveFootnotes(selector = ''): Footnote[] {
+  const popovers = document.querySelectorAll<HTMLElement>(
+    `${selector}.${CLASS_FOOTNOTE}`
   )
-}
-
-function forAllActiveFootnotes(fn: FootnoteAction, selector = ''): Footnote[] {
-  return find(CLASS_FOOTNOTE, selector).map(popover => {
+  return Array.from(popovers).map(popover => {
     const button = findSibling(popover, `.${CLASS_BUTTON}`)!
     const footnote = createFootnote(button, popover)
-    fn(footnote)
     return footnote
   })
-}
-
-function forOtherActiveFootnotes(
-  fn: FootnoteAction,
-  footnote: Footnote
-): Footnote[] {
-  const selector = `:not([${FOOTNOTE_ID}="${footnote.getId()}"])`
-  return forAllActiveFootnotes(fn, selector)
-}
-
-function hasHoveredFootnotes(): boolean {
-  return !!document.querySelector(
-    `.${CLASS_BUTTON}:hover, .${CLASS_FOOTNOTE}:hover`
-  )
-}
-
-function findByElement(target: HTMLElement): Footnote | undefined {
-  const button = target.closest(`.${CLASS_BUTTON}`) as HTMLElement | null
-  const popover = button && findSibling(button, `.${CLASS_FOOTNOTE}`)
-  return button ? createFootnote(button, popover) : undefined
-}
-
-function findBySelector(selector: string): Footnote[] {
-  return find(CLASS_BUTTON, selector).map(button => createFootnote(button))
 }
 
 export function createAdapter(settings: Settings): Adapter {
@@ -59,10 +31,31 @@ export function createAdapter(settings: Settings): Adapter {
   // )
 
   return {
-    findByElement,
-    findBySelector,
-    forAllActiveFootnotes,
-    forOtherActiveFootnotes,
-    hasHoveredFootnotes
+    findByElement: target => {
+      const button = target.closest(`.${CLASS_BUTTON}`) as HTMLElement | null
+      const popover = button && findSibling(button, `.${CLASS_FOOTNOTE}`)
+      return button && createFootnote(button, popover)
+    },
+    findById: id => {
+      const selector = `[${FOOTNOTE_ID}="${id}"].${CLASS_BUTTON}`
+      const button = document.querySelector<HTMLElement>(selector)
+      return button && createFootnote(button)
+    },
+    forAllActiveFootnotes: fn => {
+      const active = findActiveFootnotes()
+      active.forEach(fn)
+      return active
+    },
+    forOtherActiveFootnotes: (fn, footnote) => {
+      const selector = `:not([${FOOTNOTE_ID}="${footnote.getId()}"])`
+      const active = findActiveFootnotes(selector)
+      active.forEach(fn)
+      return active
+    },
+    hasHoveredFootnotes: () => {
+      return !!document.querySelector(
+        `.${CLASS_BUTTON}:hover, .${CLASS_FOOTNOTE}:hover`
+      )
+    }
   }
 }

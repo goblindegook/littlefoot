@@ -57,13 +57,14 @@ test('activate multiple footnotes on hover', async () => {
 test('activate multiple buttons when calling .activate()', async () => {
   const instance = littlefoot({ activateDelay: 1, allowMultiple: true })
 
-  instance.activate('button[data-footnote-id]')
+  instance.activate('1')
+  instance.activate('2')
+  instance.activate('3')
   await waitForTransition(getButton('1'))
   await waitForTransition(getButton('2'))
   await waitForTransition(getButton('3'))
-  await waitForTransition(getButton('4'))
 
-  expect(getAllActiveButtons()).toHaveLength(4)
+  expect(getAllActiveButtons()).toHaveLength(3)
 })
 
 test('dismiss multiple buttons when calling .dismiss()', async () => {

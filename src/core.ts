@@ -4,6 +4,7 @@ import { Footnote, Adapter } from './types'
 export type FootnoteAction = (footnote: Footnote, delay?: number) => void
 
 export type Core = {
+  get: (id: string) => Footnote | null
   activate: FootnoteAction
   dismiss: FootnoteAction
   dismissAll: () => void
@@ -56,6 +57,8 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
   const dismiss = createDismiss(settings)
 
   return {
+    get: adapter.findById,
+
     activate,
 
     dismiss,

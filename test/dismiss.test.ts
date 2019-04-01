@@ -44,11 +44,25 @@ test('dismiss footnote when clicking the document body', async () => {
   expect(button).not.toHaveClass('is-active')
 })
 
-test('dismiss footnote when calling .dismiss()', async () => {
+test('dismiss a single footnote by ID when calling .dismiss()', async () => {
   const instance = littlefoot(TEST_SETTINGS)
 
   const button = query('button')
-  instance.activate('button[data-footnote-id="1"]')
+  instance.activate('1')
+  await waitForTransition(button)
+
+  instance.dismiss('1')
+
+  expect(button).toHaveClass('is-changing')
+  await waitForTransition(button)
+  expect(button).not.toHaveClass('is-active')
+})
+
+test('dismiss all footnotes when calling .dismiss()', async () => {
+  const instance = littlefoot(TEST_SETTINGS)
+
+  const button = query('button')
+  instance.activate('1')
   await waitForTransition(button)
 
   instance.dismiss()

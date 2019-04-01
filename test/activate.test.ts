@@ -27,11 +27,11 @@ test('activate footnote when clicking the button', async () => {
   ).toBeInTheDocument()
 })
 
-test('activate footnote when calling .activate()', async () => {
+test('activate footnote by ID when calling .activate()', async () => {
   const instance = littlefoot(TEST_SETTINGS)
 
   const button = query('button')
-  instance.activate('button[data-footnote-id="1"]')
+  instance.activate('1')
 
   expect(button).toHaveClass('is-changing')
   await wait(() => expect(button).not.toHaveClass('is-changing'))
@@ -50,7 +50,7 @@ test('activate footnote when calling .activate()', async () => {
   expect(popover).toHaveStyle(`max-width: ${document.body.clientWidth}px`)
 })
 
-test('activation with invalid selector does not activate any popovers', () => {
+test('activation with unknown ID does not activate any popovers', () => {
   const instance = littlefoot({ activateDelay: 0 })
 
   instance.activate('invalid')
