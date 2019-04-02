@@ -197,10 +197,11 @@ Default:
 
 ```html
 <aside
+  alt="Footnote <%= number %>"
   class="littlefoot-footnote is-positioned-bottom"
   data-footnote-id="<%= id %>"
   data-footnote-number="<%= number %>"
-  alt="Footnote <%= number %>"
+  data-footnote-popover
 >
   <div class="littlefoot-footnote__wrapper">
     <div class="littlefoot-footnote__content">
@@ -228,12 +229,13 @@ Default:
 <div class="littlefoot-footnote__container">
   <button
     class="littlefoot-footnote__button littlefoot-footnote__button__ellipsis"
-    id="<%= reference %>"
+    data-footnote-button
+    data-footnote-content="<%= content %>"
     data-footnote-id="<%= id %>"
     data-footnote-number="<%= number %>"
-    title="See Footnote <%= number %>"
+    id="<%= reference %>"
     rel="footnote"
-    data-littlefoot-footnote="<%= content %>"
+    title="See Footnote <%= number %>"
   >
     <svg viewbox="0 0 31 6" preserveAspectRatio="xMidYMid">
       <circle r="3" cx="3" cy="3" fill="white"></circle>

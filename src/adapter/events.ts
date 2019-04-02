@@ -1,9 +1,9 @@
 import throttle from 'lodash.throttle'
 import {
-  CLASS_BUTTON,
   CLASS_FULLY_SCROLLED,
-  CLASS_FOOTNOTE,
-  FOOTNOTE_ID
+  FOOTNOTE_BUTTON,
+  FOOTNOTE_ID,
+  FOOTNOTE_POPOVER
 } from './constants'
 import { Core, FootnoteAction } from '../core'
 import { Footnote } from '../types'
@@ -13,7 +13,7 @@ const { on } = require('delegated-events')
 type EventHandler<E extends Event> = (e: E) => void
 
 function closestPopover(target: Element): Element | null {
-  return target.closest(`.${CLASS_FOOTNOTE}`)
+  return target.closest(`[${FOOTNOTE_POPOVER}]`)
 }
 
 function closestFootnoteId(target: HTMLElement): string | null {
@@ -108,6 +108,6 @@ export function bindEvents({
   window.addEventListener('scroll', throttle(reposition))
   window.addEventListener('resize', throttle(resize))
 
-  on('mouseover', `.${CLASS_BUTTON}`, handleHover(get, hover))
-  on('mouseout', `.${CLASS_BUTTON}`, handleHover(get, unhover))
+  on('mouseover', `[${FOOTNOTE_BUTTON}]`, handleHover(get, hover))
+  on('mouseout', `[${FOOTNOTE_BUTTON}]`, handleHover(get, unhover))
 }

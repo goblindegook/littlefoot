@@ -2,7 +2,7 @@ import { footnoteFromButton, footnoteFromPopover } from './footnotes'
 import { createDocumentFootnotes } from './setup'
 import { Settings } from '../settings'
 import { Adapter, Footnote, TemplateData } from '../types'
-import { CLASS_BUTTON, CLASS_FOOTNOTE, FOOTNOTE_ID } from './constants'
+import { FOOTNOTE_ID, FOOTNOTE_POPOVER, FOOTNOTE_BUTTON } from './constants'
 
 export type HTMLFootnote = {
   link: HTMLAnchorElement
@@ -14,7 +14,7 @@ export type HTMLFootnote = {
 
 function findActiveFootnotes(selector = ''): Footnote[] {
   return Array.from(
-    document.querySelectorAll<HTMLElement>(`${selector}.${CLASS_FOOTNOTE}`)
+    document.querySelectorAll<HTMLElement>(`${selector}[${FOOTNOTE_POPOVER}]`)
   ).map(footnoteFromPopover)
 }
 
@@ -27,19 +27,15 @@ export function createAdapter(settings: Settings): Adapter {
       return footnote && footnoteFromButton(footnote.button)
     },
     forAllActiveFootnotes: fn => {
-      const active = findActiveFootnotes()
-      active.forEach(fn)
-      return active
+      findActiveFootnotes().forEach(fn)
     },
     forOtherActiveFootnotes: (fn, footnote) => {
       const selector = `:not([${FOOTNOTE_ID}="${footnote.getId()}"])`
-      const active = findActiveFootnotes(selector)
-      active.forEach(fn)
-      return active
+      findActiveFootnotes(selector).forEach(fn)
     },
     hasHoveredFootnotes: () => {
       return !!document.querySelector(
-        `.${CLASS_BUTTON}:hover, .${CLASS_FOOTNOTE}:hover`
+        `[${FOOTNOTE_BUTTON}]:hover, [${FOOTNOTE_POPOVER}]:hover`
       )
     }
   }

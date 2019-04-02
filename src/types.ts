@@ -27,10 +27,7 @@ export type FootnoteAction = (footnote: Footnote) => void
 
 export type Adapter = {
   findById: (id: string) => Footnote | null
-  forAllActiveFootnotes: (fn: FootnoteAction, selector?: string) => Footnote[]
-  forOtherActiveFootnotes: (
-    fn: FootnoteAction,
-    footnote: Footnote
-  ) => Footnote[]
+  forAllActiveFootnotes: (fn: FootnoteAction, selector?: string) => void
+  forOtherActiveFootnotes: (fn: FootnoteAction, footnote: Footnote) => void
   hasHoveredFootnotes: () => boolean
 }

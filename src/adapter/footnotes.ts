@@ -10,16 +10,16 @@ import {
 import {
   CLASS_ACTIVE,
   CLASS_CHANGING,
+  CLASS_CONTENT,
   CLASS_HOVERED,
+  CLASS_SCROLLABLE,
+  CLASS_WRAPPER,
+  FOOTNOTE_BUTTON,
   FOOTNOTE_CONTENT,
   FOOTNOTE_ID,
   FOOTNOTE_MAX_HEIGHT,
   FOOTNOTE_NUMBER,
-  CLASS_SCROLLABLE,
-  CLASS_WRAPPER,
-  CLASS_CONTENT,
-  CLASS_FOOTNOTE,
-  CLASS_BUTTON
+  FOOTNOTE_POPOVER
 } from './constants'
 import { Footnote } from '../types'
 
@@ -46,12 +46,12 @@ function insertPopover(button: HTMLElement, contentTemplate: string) {
 }
 
 export function footnoteFromButton(button: HTMLElement): Footnote {
-  const popover = findSibling(button, `.${CLASS_FOOTNOTE}`)
+  const popover = findSibling(button, `[${FOOTNOTE_POPOVER}]`)
   return createFootnote(button, popover)
 }
 
 export function footnoteFromPopover(popover: HTMLElement): Footnote {
-  const button = findSibling(popover, `.${CLASS_BUTTON}`)!
+  const button = findSibling(popover, `[${FOOTNOTE_BUTTON}]`)!
   return createFootnote(button, popover)
 }
 

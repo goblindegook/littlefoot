@@ -3,7 +3,12 @@ import escape from 'lodash.escape'
 import template from 'lodash.template'
 import { Settings } from '../settings'
 import { children } from './dom'
-import { CLASS_PRINT_ONLY, CLASS_PROCESSED, FOOTNOTE_ID } from './constants'
+import {
+  CLASS_PRINT_ONLY,
+  CLASS_PROCESSED,
+  FOOTNOTE_ID,
+  FOOTNOTE_BUTTON
+} from './constants'
 import { HTMLFootnote } from '.'
 import { TemplateData } from '../types'
 
@@ -147,10 +152,9 @@ const addButton = (render: TemplateExecutor) => ([
   data
 ]: LinkBodyData): HTMLFootnote => {
   link.insertAdjacentHTML('beforebegin', render(data))
-  // TODO: Consider separate template for the container.
   const container = link.previousElementSibling as HTMLElement
   const button =
-    container.querySelector<HTMLElement>(`[${FOOTNOTE_ID}]`) || container
+    container.querySelector<HTMLElement>(`[${FOOTNOTE_BUTTON}]`) || container
   return { data, container, link, body, button }
 }
 
