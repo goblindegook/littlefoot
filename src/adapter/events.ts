@@ -17,7 +17,7 @@ function closestPopover(target: Element): Element | null {
 }
 
 function closestFootnoteId(target: HTMLElement): string | null {
-  const button = target.closest(`.${CLASS_BUTTON}`) as HTMLElement | null
+  const button = target.closest(`[${FOOTNOTE_ID}]`) as HTMLElement | null
   return button && button.getAttribute(FOOTNOTE_ID)
 }
 

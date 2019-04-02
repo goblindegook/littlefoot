@@ -146,8 +146,11 @@ const addButton = (render: TemplateExecutor) => ([
   data
 ]: LinkBodyData): HTMLFootnote => {
   link.insertAdjacentHTML('beforebegin', render(data))
-  const button = link.previousElementSibling as HTMLElement
-  return { data, link, body, button }
+  // TODO: Consider separate template for the container.
+  const container = link.previousElementSibling as HTMLElement
+  const button =
+    container.querySelector<HTMLElement>(`[${FOOTNOTE_ID}]`) || container
+  return { data, container, link, body, button }
 }
 
 function hideOriginalFootnote([link, body]: LinkBody): LinkBody {

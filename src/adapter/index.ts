@@ -8,6 +8,7 @@ import { findSibling } from './dom'
 export type HTMLFootnote = {
   link: HTMLAnchorElement
   body: HTMLElement
+  container: HTMLElement
   button: HTMLElement
   data: TemplateData
 }
@@ -26,20 +27,15 @@ function findActiveFootnotes(selector = ''): Footnote[] {
 export function createAdapter(settings: Settings): Adapter {
   const footnotes = createDocumentFootnotes(settings)
 
-  // console.log(
-  //   footnotes.map(({ data }) => `ID = ${data.id} REF = ${data.reference}`)
-  // )
-
   return {
     findById: id => {
-      const selector = `[${FOOTNOTE_ID}="${id}"]`
-      const button = document.querySelector<HTMLElement>(
-        `${selector}.${CLASS_BUTTON}`
-      )
-      const popover = document.querySelector<HTMLElement>(
-        `${selector}.${CLASS_FOOTNOTE}`
-      )
-      return button && createFootnote(button, popover)
+      const footnote = footnotes.find(({ data }) => `${data.id}` === id)
+      return footnote
+        ? createFootnote(
+            footnote.button,
+            findSibling(footnote.button, `.${CLASS_FOOTNOTE}`)
+          )
+        : null
     },
     forAllActiveFootnotes: fn => {
       const active = findActiveFootnotes()
