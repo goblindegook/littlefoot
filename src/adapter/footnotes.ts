@@ -1,5 +1,5 @@
 import template from 'lodash.template'
-import { getMaxHeight, getStyle } from './dom'
+import { getMaxHeight, getStyle, findSibling } from './dom'
 import { bindContentScrollHandler } from './events'
 import {
   getAvailableRoom,
@@ -17,7 +17,9 @@ import {
   FOOTNOTE_NUMBER,
   CLASS_SCROLLABLE,
   CLASS_WRAPPER,
-  CLASS_CONTENT
+  CLASS_CONTENT,
+  CLASS_FOOTNOTE,
+  CLASS_BUTTON
 } from './constants'
 import { Footnote } from '../types'
 
@@ -43,10 +45,17 @@ function insertPopover(button: HTMLElement, contentTemplate: string) {
   return popover
 }
 
-export function createFootnote(
-  button: HTMLElement,
-  popover: HTMLElement | null = null
-): Footnote {
+export function footnoteFromButton(button: HTMLElement): Footnote {
+  const popover = findSibling(button, `.${CLASS_FOOTNOTE}`)
+  return createFootnote(button, popover)
+}
+
+export function footnoteFromPopover(popover: HTMLElement): Footnote {
+  const button = findSibling(popover, `.${CLASS_BUTTON}`)!
+  return createFootnote(button, popover)
+}
+
+function createFootnote(button: HTMLElement, popover?: HTMLElement): Footnote {
   return {
     getId: () => button.getAttribute(FOOTNOTE_ID),
 

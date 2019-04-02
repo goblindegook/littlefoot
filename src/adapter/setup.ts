@@ -117,6 +117,7 @@ const templateData = (anchorParentSelector: string, offset: number) => (
 ): LinkBodyData => {
   const backlinkId = getBacklinkId(link, anchorParentSelector)
   const reference = `${backlinkId}${link.id}`
+  const footnoteNumber = offset + idx
 
   return [
     link,
@@ -124,8 +125,8 @@ const templateData = (anchorParentSelector: string, offset: number) => (
     {
       reference,
       content: escape(prepareContent(body.innerHTML, reference)),
-      id: offset + idx,
-      number: offset + idx
+      id: `${footnoteNumber}`,
+      number: footnoteNumber
     }
   ]
 }

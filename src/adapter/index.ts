@@ -1,9 +1,8 @@
-import { createFootnote } from './footnotes'
+import { footnoteFromButton, footnoteFromPopover } from './footnotes'
 import { createDocumentFootnotes } from './setup'
 import { Settings } from '../settings'
 import { Adapter, Footnote, TemplateData } from '../types'
 import { CLASS_BUTTON, CLASS_FOOTNOTE, FOOTNOTE_ID } from './constants'
-import { findSibling } from './dom'
 
 export type HTMLFootnote = {
   link: HTMLAnchorElement
@@ -14,14 +13,9 @@ export type HTMLFootnote = {
 }
 
 function findActiveFootnotes(selector = ''): Footnote[] {
-  const popovers = document.querySelectorAll<HTMLElement>(
-    `${selector}.${CLASS_FOOTNOTE}`
-  )
-  return Array.from(popovers).map(popover => {
-    const button = findSibling(popover, `.${CLASS_BUTTON}`)!
-    const footnote = createFootnote(button, popover)
-    return footnote
-  })
+  return Array.from(
+    document.querySelectorAll<HTMLElement>(`${selector}.${CLASS_FOOTNOTE}`)
+  ).map(footnoteFromPopover)
 }
 
 export function createAdapter(settings: Settings): Adapter {
@@ -29,13 +23,8 @@ export function createAdapter(settings: Settings): Adapter {
 
   return {
     findById: id => {
-      const footnote = footnotes.find(({ data }) => `${data.id}` === id)
-      return footnote
-        ? createFootnote(
-            footnote.button,
-            findSibling(footnote.button, `.${CLASS_FOOTNOTE}`)
-          )
-        : null
+      const footnote = footnotes.find(({ data }) => data.id === id) || null
+      return footnote && footnoteFromButton(footnote.button)
     },
     forAllActiveFootnotes: fn => {
       const active = findActiveFootnotes()

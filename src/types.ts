@@ -1,6 +1,6 @@
 export type TemplateData = {
   content: string
-  id: number
+  id: string
   number: number
   reference: string
 }
