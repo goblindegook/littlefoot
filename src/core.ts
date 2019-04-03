@@ -1,5 +1,4 @@
-import { Settings } from './settings'
-import { Footnote, Adapter } from './types'
+import { Footnote, Adapter, Settings } from './types'
 
 export type FootnoteAction = (footnote: Footnote, delay?: number) => void
 

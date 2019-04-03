@@ -1,7 +1,6 @@
 import { createFootnote } from './footnote'
 import { createDocumentFootnotes } from './setup'
-import { Settings } from '../settings'
-import { Adapter, TemplateData } from '../types'
+import { Adapter, TemplateData, Settings } from '../types'
 import { FOOTNOTE_POPOVER, FOOTNOTE_BUTTON } from './constants'
 
 export type RawFootnote = {

@@ -1,6 +1,5 @@
 import { TemplateExecutor } from 'lodash'
 import template from 'lodash.template'
-import { Settings } from '../settings'
 import { children } from './dom'
 import {
   CLASS_PRINT_ONLY,
@@ -9,7 +8,7 @@ import {
   FOOTNOTE_BUTTON
 } from './constants'
 import { RawFootnote } from '.'
-import { TemplateData } from '../types'
+import { TemplateData, Settings } from '../types'
 
 type LinkBody = Readonly<[HTMLAnchorElement, HTMLElement]>
 type LinkBodyData = Readonly<[HTMLAnchorElement, HTMLElement, TemplateData]>

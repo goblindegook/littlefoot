@@ -5,13 +5,13 @@
     "module": "system",
     "moduleResolution": "node",
     "declaration": true,
-    "declarationDir": "dist",
-    "outDir": "dist",
+    "declarationDir": "./dist",
+    "outDir": "./dist",
     "strict": true,
     "esModuleInterop": true,
     "allowJs": false,
     "checkJs": false,
     "skipLibCheck": true
   },
-  "include": ["src/**/*.ts", "test/**/*.ts"]
+  "include": ["./src"]
 }
