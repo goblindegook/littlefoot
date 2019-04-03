@@ -1,5 +1,4 @@
 import { TemplateExecutor } from 'lodash'
-import escape from 'lodash.escape'
 import template from 'lodash.template'
 import { Settings } from '../settings'
 import { children } from './dom'
@@ -9,7 +8,7 @@ import {
   FOOTNOTE_ID,
   FOOTNOTE_BUTTON
 } from './constants'
-import { HTMLFootnote } from '.'
+import { RawFootnote } from '.'
 import { TemplateData } from '../types'
 
 type LinkBody = Readonly<[HTMLAnchorElement, HTMLElement]>
@@ -129,7 +128,7 @@ const templateData = (anchorParentSelector: string, offset: number) => (
     body,
     {
       reference,
-      content: escape(prepareContent(body.innerHTML, reference)),
+      content: prepareContent(body.innerHTML, reference),
       id: `${footnoteNumber}`,
       number: footnoteNumber
     }
@@ -150,7 +149,7 @@ const addButton = (render: TemplateExecutor) => ([
   link,
   body,
   data
-]: LinkBodyData): HTMLFootnote => {
+]: LinkBodyData): RawFootnote => {
   link.insertAdjacentHTML('beforebegin', render(data))
   const container = link.previousElementSibling as HTMLElement
   const button =
@@ -165,7 +164,7 @@ function hideOriginalFootnote([link, body]: LinkBody): LinkBody {
   return [link, body]
 }
 
-export function createDocumentFootnotes(settings: Settings): HTMLFootnote[] {
+export function createDocumentFootnotes(settings: Settings): RawFootnote[] {
   const { anchorParentSelector, buttonTemplate, numberResetSelector } = settings
   const offset = parseInt(getLastFootnoteId(), 10) + 1
 

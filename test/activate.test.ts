@@ -43,7 +43,7 @@ test('activate footnote by ID when calling .activate()', async () => {
   expect(button).toHaveAttribute('aria-expanded', 'true')
   expect(button).toHaveAttribute('aria-controls', popover.id)
 
-  expect(content).toContainHTML(button.getAttribute('data-footnote-content')!)
+  expect(content).toContainHTML(`This is the document's only footnote.`)
   expect(content.offsetWidth).toBe(document.body.clientWidth)
 
   expect(popover).toHaveAttribute('data-footnote-max-height', '0')

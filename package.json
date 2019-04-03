@@ -89,7 +89,6 @@
     "@babel/runtime": "^7.0.0",
     "@cypress/webpack-preprocessor": "^4.0.3",
     "@types/jest": "^24.0.5",
-    "@types/lodash.escape": "^4.0.5",
     "@types/lodash.template": "^4.4.5",
     "@types/lodash.throttle": "^4.1.5",
     "@types/node": "^11.9.3",
@@ -117,7 +116,6 @@
   },
   "dependencies": {
     "delegated-events": "^1.0.10",
-    "lodash.escape": "^4.0.1",
     "lodash.template": "^4.4.0",
     "lodash.throttle": "^4.1.1"
   }

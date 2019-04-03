@@ -4,15 +4,6 @@ export function children(element: Element, selector?: string): Element[] {
   )
 }
 
-export function findSibling(
-  target: Element,
-  selector: string
-): HTMLElement | undefined {
-  return children(target.parentElement!, selector).find(
-    element => element !== target
-  ) as HTMLElement | undefined
-}
-
 export function getStyle(
   element: Element,
   property: keyof CSSStyleDeclaration

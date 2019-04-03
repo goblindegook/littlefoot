@@ -44,6 +44,21 @@ test('dismiss footnote when clicking the document body', async () => {
   expect(button).not.toHaveClass('is-active')
 })
 
+test('do not dismiss footnote when clicking the popover', async () => {
+  littlefoot(TEST_SETTINGS)
+
+  const button = query('button')
+  fireEvent.click(button)
+  await waitForTransition(button)
+
+  const popover = queryPopoverByText(/This is the document's only footnote./)!
+  fireEvent.click(popover)
+
+  await waitForTransition(button)
+  expect(popover).toBeInTheDocument()
+  expect(button).toHaveClass('is-active')
+})
+
 test('dismiss a single footnote by ID when calling .dismiss()', async () => {
   const instance = littlefoot(TEST_SETTINGS)
 

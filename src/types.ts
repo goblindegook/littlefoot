@@ -6,11 +6,11 @@ export type TemplateData = {
 }
 
 export type Footnote = {
-  getId: () => string | null
+  getId: () => string
   activate: (
     contentTemplate: string,
     onActivate?: (popover: HTMLElement, button: HTMLElement) => void
-  ) => Footnote
+  ) => void
   dismiss: () => void
   hover: () => void
   isActive: () => boolean
@@ -23,11 +23,11 @@ export type Footnote = {
   stopChanging: () => void
 }
 
-export type FootnoteAction = (footnote: Footnote) => void
+type FootnoteCallback = (current: Footnote) => void
 
 export type Adapter = {
-  findById: (id: string) => Footnote | null
-  forAllActiveFootnotes: (fn: FootnoteAction, selector?: string) => void
-  forOtherActiveFootnotes: (fn: FootnoteAction, footnote: Footnote) => void
+  findFootnote: (id: string) => Footnote | null
+  forEachFootnote: (callback: FootnoteCallback, selector?: string) => void
+  forEachFootnoteExcept: (callback: FootnoteCallback, id: string) => void
   hasHoveredFootnotes: () => boolean
 }

@@ -28,5 +28,5 @@ test('setup with custom contentTemplate', async () => {
 
   expect(footnote).toHaveAttribute('data-footnote-id', '1')
   expect(footnote).toHaveAttribute('data-footnote-number', '1')
-  expect(content).toContainHTML(button.getAttribute('data-footnote-content')!)
+  expect(content).toContainHTML(`This is the document's only footnote.`)
 })

@@ -22,17 +22,17 @@ function createActivate(adapter: Adapter, settings: Settings): FootnoteAction {
     if (!footnote.isChanging()) {
       footnote.startChanging()
 
-      const activated = footnote.activate(contentTemplate, activateCallback)
+      footnote.activate(contentTemplate, activateCallback)
 
-      adapter.forAllActiveFootnotes(fn => {
-        fn.reposition()
-        fn.resize()
+      adapter.forEachFootnote(current => {
+        current.reposition()
+        current.resize()
       })
 
       setTimeout(() => {
         // FIXME: reposition and resize here?
-        activated.ready()
-        activated.stopChanging()
+        footnote.ready()
+        footnote.stopChanging()
       }, delay)
     }
   }
@@ -57,22 +57,22 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
   const dismiss = createDismiss(settings)
 
   return {
-    get: adapter.findById,
+    get: adapter.findFootnote,
 
     activate,
 
     dismiss,
 
     dismissAll(delay = settings.dismissDelay) {
-      adapter.forAllActiveFootnotes(footnote => dismiss(footnote, delay))
+      adapter.forEachFootnote(current => dismiss(current, delay))
     },
 
     reposition() {
-      adapter.forAllActiveFootnotes(footnote => footnote.reposition())
+      adapter.forEachFootnote(current => current.reposition())
     },
 
     resize() {
-      adapter.forAllActiveFootnotes(footnote => footnote.resize())
+      adapter.forEachFootnote(current => current.resize())
     },
 
     toggle(footnote) {
@@ -81,7 +81,7 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
         dismiss(footnote)
       } else {
         if (!allowMultiple) {
-          adapter.forOtherActiveFootnotes(dismiss, footnote)
+          adapter.forEachFootnoteExcept(dismiss, footnote.getId())
         }
         activate(footnote)
       }
@@ -91,7 +91,7 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
       const { activateOnHover, allowMultiple } = settings
       if (activateOnHover && !footnote.isActive()) {
         if (!allowMultiple) {
-          adapter.forOtherActiveFootnotes(dismiss, footnote)
+          adapter.forEachFootnoteExcept(dismiss, footnote.getId())
         }
         activate(footnote, delay)
         footnote.hover()
@@ -103,7 +103,7 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
       if (dismissOnUnhover) {
         setTimeout(() => {
           if (!adapter.hasHoveredFootnotes()) {
-            adapter.forAllActiveFootnotes(dismiss)
+            adapter.forEachFootnote(dismiss)
           }
         }, hoverDelay)
       }
