@@ -23,8 +23,11 @@ export function createAdapter(settings: Settings): Adapter {
     forEachFootnote: callback => {
       footnotes.forEach(callback)
     },
-    forEachFootnoteExcept: (callback, id) => {
-      footnotes.filter(footnote => footnote.getId() !== id).forEach(callback)
+    forEachFootnoteExcept: (callback, except) => {
+      const exceptId = except.getId()
+      footnotes
+        .filter(footnote => footnote.getId() !== exceptId)
+        .forEach(callback)
     },
     hasHoveredFootnotes: () => {
       return !!document.querySelector(

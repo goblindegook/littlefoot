@@ -81,7 +81,7 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
         dismiss(footnote)
       } else {
         if (!allowMultiple) {
-          adapter.forEachFootnoteExcept(dismiss, footnote.getId())
+          adapter.forEachFootnoteExcept(dismiss, footnote)
         }
         activate(footnote)
       }
@@ -91,7 +91,7 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
       const { activateOnHover, allowMultiple } = settings
       if (activateOnHover && !footnote.isActive()) {
         if (!allowMultiple) {
-          adapter.forEachFootnoteExcept(dismiss, footnote.getId())
+          adapter.forEachFootnoteExcept(dismiss, footnote)
         }
         activate(footnote, delay)
         footnote.hover()
