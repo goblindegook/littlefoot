@@ -17,7 +17,7 @@ export function createAdapter(settings: Settings): Adapter {
 
   return {
     findFootnote: id => {
-      return footnotes.find(footnote => footnote.getId() === id) || null
+      return footnotes.find(footnote => footnote.getId() === id)
     },
     forEachFootnote: callback => {
       footnotes.forEach(callback)

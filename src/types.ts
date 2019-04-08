@@ -45,7 +45,7 @@ export type Footnote = {
 type FootnoteCallback = (current: Footnote) => void
 
 export type Adapter = {
-  findFootnote: (id: string) => Footnote | null
+  findFootnote: (id: string) => Footnote | undefined
   forEachFootnote: (callback: FootnoteCallback, selector?: string) => void
   forEachFootnoteExcept: (callback: FootnoteCallback, except: Footnote) => void
   hasHoveredFootnotes: () => boolean

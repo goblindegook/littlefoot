@@ -3,7 +3,7 @@ import littlefoot from '../../src'
 import {
   setDocumentBody,
   getButton,
-  waitForTransition,
+  waitForChange,
   getAllActiveButtons
 } from '../helper'
 
@@ -17,11 +17,11 @@ xtest('disallow multiple activations', async () => {
 
   const one = getButton('1')
   fireEvent.click(one)
-  await waitForTransition(one)
+  await waitForChange(one)
 
   const two = getButton('2')
   fireEvent.click(two)
-  await waitForTransition(two)
+  await waitForChange(two)
 
   expect(getAllActiveButtons()).toHaveLength(1)
 })
@@ -31,11 +31,11 @@ test('activate multiple footnotes on click', async () => {
 
   const one = getButton('1')
   fireEvent.click(one)
-  await waitForTransition(one)
+  await waitForChange(one)
 
   const two = getButton('2')
   fireEvent.click(two)
-  await waitForTransition(two)
+  await waitForChange(two)
 
   expect(getAllActiveButtons()).toHaveLength(2)
 })
@@ -45,11 +45,11 @@ test('activate multiple footnotes on hover', async () => {
 
   const one = getButton('1')
   fireEvent.mouseOver(one)
-  await waitForTransition(one)
+  await waitForChange(one)
 
   const two = getButton('2')
   fireEvent.mouseOver(two)
-  await waitForTransition(two)
+  await waitForChange(two)
 
   expect(getAllActiveButtons()).toHaveLength(2)
 })
@@ -60,9 +60,9 @@ test('activate multiple buttons when calling .activate()', async () => {
   instance.activate('1')
   instance.activate('2')
   instance.activate('3')
-  await waitForTransition(getButton('1'))
-  await waitForTransition(getButton('2'))
-  await waitForTransition(getButton('3'))
+  await waitForChange(getButton('1'))
+  await waitForChange(getButton('2'))
+  await waitForChange(getButton('3'))
 
   expect(getAllActiveButtons()).toHaveLength(3)
 })
@@ -76,16 +76,16 @@ test('dismiss multiple buttons when calling .dismiss()', async () => {
 
   const one = getButton('1')
   fireEvent.click(one)
-  await waitForTransition(one)
+  await waitForChange(one)
 
   const two = getButton('2')
   fireEvent.click(two)
-  await waitForTransition(two)
+  await waitForChange(two)
 
   instance.dismiss()
 
-  await waitForTransition(one)
-  await waitForTransition(two)
+  await waitForChange(one)
+  await waitForChange(two)
 
   expect(getAllActiveButtons()).toHaveLength(0)
 })

@@ -6,7 +6,7 @@ export type Core = {
   activate: FootnoteAction
   dismiss: FootnoteAction
   dismissAll: (delay?: number) => void
-  get: (id: string) => Footnote | null
+  get: (id: string) => Footnote | undefined
   hover: FootnoteAction
   reposition: () => void
   resize: () => void

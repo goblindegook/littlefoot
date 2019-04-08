@@ -17,12 +17,12 @@ function closestPopover(target: Element): Element | null {
 }
 
 function closestFootnoteId(target: HTMLElement): string | null {
-  const button = target.closest(`[${FOOTNOTE_BUTTON}]`) as HTMLElement | null
+  const button = target.closest(`[${FOOTNOTE_BUTTON}]`)
   return button && button.getAttribute(FOOTNOTE_ID)
 }
 
 function handleTap(
-  get: (id: string) => Footnote | null,
+  get: (id: string) => Footnote | undefined,
   toggle: FootnoteAction,
   dismissAll: () => void
 ): EventListener {
@@ -39,7 +39,7 @@ function handleTap(
 }
 
 function handleHover(
-  get: (id: string) => Footnote | null,
+  get: (id: string) => Footnote | undefined,
   toggle: FootnoteAction
 ): EventListener {
   return event => {

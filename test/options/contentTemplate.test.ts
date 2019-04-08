@@ -1,5 +1,5 @@
 import littlefoot from '../../src'
-import { setDocumentBody, waitForTransition, query } from '../helper'
+import { setDocumentBody, waitForChange, query } from '../helper'
 import { fireEvent, getByTitle } from 'dom-testing-library'
 
 test('setup with custom contentTemplate', async () => {
@@ -21,7 +21,7 @@ test('setup with custom contentTemplate', async () => {
 
   const button = getByTitle(document.body, 'See Footnote 1')
   fireEvent.click(button)
-  await waitForTransition(button)
+  await waitForChange(button)
 
   const footnote = query('aside.custom')
   const content = footnote.querySelector('.littlefoot-footnote__content')

@@ -15,8 +15,8 @@ type LinkBodyData = Readonly<[HTMLAnchorElement, HTMLElement, TemplateData]>
 
 const setPrintOnly = (el: Element) => el.classList.add(CLASS_PRINT_ONLY)
 
-function isNotNull<T>(value: T | null): value is T {
-  return value !== null
+function isDefined<T>(value?: T): value is T {
+  return value !== undefined
 }
 
 function getLastFootnoteId(): string {
@@ -46,7 +46,7 @@ function findFootnoteLinks({
 
 const findFootnoteBody = ({ allowDuplicates, footnoteSelector }: Settings) => (
   link: HTMLAnchorElement
-): LinkBody | null => {
+): LinkBody | undefined => {
   const [_, fragment] = link.href.split('#')
   const selector = '#' + fragment.replace(/[:.+~*[\]]/g, '\\$&')
   const strictSelector = `${selector}:not(.${CLASS_PROCESSED})`
@@ -59,8 +59,6 @@ const findFootnoteBody = ({ allowDuplicates, footnoteSelector }: Settings) => (
     body.classList.add(CLASS_PROCESSED)
     return [link, body]
   }
-
-  return null
 }
 
 function prepareContent(content: string, reference: string): string {
@@ -169,7 +167,7 @@ export function createDocumentFootnotes(settings: Settings): RawFootnote[] {
 
   return findFootnoteLinks(settings)
     .map(findFootnoteBody(settings))
-    .filter(isNotNull)
+    .filter(isDefined)
     .map(hideOriginalFootnote)
     .map(templateData(anchorParentSelector, offset))
     .map(numberResetSelector ? resetNumbers(numberResetSelector) : i => i)

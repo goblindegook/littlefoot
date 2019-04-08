@@ -1,5 +1,5 @@
 import littlefoot from '../../src'
-import { setDocumentBody, waitForTransition, query } from '../helper'
+import { setDocumentBody, waitForChange, query } from '../helper'
 import { fireEvent } from 'dom-testing-library'
 
 test('activate on hover', async () => {
@@ -8,7 +8,7 @@ test('activate on hover', async () => {
 
   const button = query('button')
   fireEvent.mouseOver(button, {})
-  await waitForTransition(button)
+  await waitForChange(button)
 
   expect(button).toHaveClass('is-hovered')
   expect(button).toHaveClass('is-active')

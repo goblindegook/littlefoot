@@ -1,5 +1,5 @@
 import littlefoot from '../../src'
-import { setDocumentBody, waitForTransition, query } from '../helper'
+import { setDocumentBody, waitForChange, query } from '../helper'
 import { fireEvent } from 'dom-testing-library'
 
 test('dismiss on unhover', async () => {
@@ -16,10 +16,10 @@ test('dismiss on unhover', async () => {
   const button = query('button')
 
   fireEvent.mouseOver(button)
-  await waitForTransition(button)
+  await waitForChange(button)
 
   fireEvent.mouseOut(button)
-  await waitForTransition(button)
+  await waitForChange(button)
 
   expect(button).not.toHaveClass('is-hovered')
   expect(button).not.toHaveClass('is-active')

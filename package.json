@@ -13,7 +13,7 @@
     "watch": "watchify --extension=ts -s littlefoot -o dist/littlefoot.js src/index.ts",
     "typecheck": "tsc --noEmit",
     "typecheck:watch": "yarn typecheck --watch",
-    "lint": "tslint --project tsconfig.json '{src,test}/**/*.ts'",
+    "lint": "tslint --project tsconfig.tslint.json '{src,test}/**/*.ts'",
     "format": "prettier --write '{cypress,src,test}/**/*.{js,jsx,ts,tsx,json,css,md}'",
     "test": "yarn lint && concurrently 'yarn test:jest' 'yarn test:cypress'",
     "test:jest": "jest",
@@ -43,7 +43,7 @@
     "linters": {
       "{src,test}/**/*.ts": [
         "prettier --write",
-        "tslint --project tsconfig.json",
+        "tslint --project tsconfig.tslint.json",
         "git add"
       ],
       "{src,test/**/*.{js,json,css,md}": [

@@ -2,9 +2,9 @@ import { wait, fireEvent } from 'dom-testing-library'
 import littlefoot from '../src'
 import {
   setDocumentBody,
-  waitForTransition,
+  waitForChange,
   query,
-  queryPopoverByText
+  getPopoverByText
 } from './helper'
 
 const TEST_SETTINGS = { activateDelay: 1 }
@@ -20,11 +20,10 @@ test('activate footnote when clicking the button', async () => {
   fireEvent.click(button)
 
   expect(button).toHaveClass('is-changing')
-  await waitForTransition(button)
+  await waitForChange(button)
   expect(button).toHaveClass('is-active')
-  expect(
-    queryPopoverByText(/This is the document's only footnote./)
-  ).toBeInTheDocument()
+
+  getPopoverByText(/This is the document's only footnote./)
 })
 
 test('activate footnote by ID when calling .activate()', async () => {

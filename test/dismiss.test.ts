@@ -2,8 +2,9 @@ import { fireEvent } from 'dom-testing-library'
 import littlefoot from '../src'
 import {
   setDocumentBody,
-  waitForTransition,
+  waitForChange,
   query,
+  getPopoverByText,
   queryPopoverByText
 } from './helper'
 
@@ -18,12 +19,12 @@ test('dismiss footnote when clicking the button again', async () => {
 
   const button = query('button')
   fireEvent.click(button)
-  await waitForTransition(button)
+  await waitForChange(button)
 
   fireEvent.click(button)
 
   expect(button).toHaveClass('is-changing')
-  await waitForTransition(button)
+  await waitForChange(button)
   expect(
     queryPopoverByText(/This is the document's only footnote./)
   ).not.toBeInTheDocument()
@@ -35,12 +36,12 @@ test('dismiss footnote when clicking the document body', async () => {
 
   const button = query('button')
   fireEvent.click(button)
-  await waitForTransition(button)
+  await waitForChange(button)
 
   fireEvent.click(document.body)
 
   expect(button).toHaveClass('is-changing')
-  await waitForTransition(button)
+  await waitForChange(button)
   expect(button).not.toHaveClass('is-active')
 })
 
@@ -49,12 +50,12 @@ test('do not dismiss footnote when clicking the popover', async () => {
 
   const button = query('button')
   fireEvent.click(button)
-  await waitForTransition(button)
+  await waitForChange(button)
 
-  const popover = queryPopoverByText(/This is the document's only footnote./)!
+  const popover = getPopoverByText(/This is the document's only footnote./)
   fireEvent.click(popover)
 
-  await waitForTransition(button)
+  await waitForChange(button)
   expect(popover).toBeInTheDocument()
   expect(button).toHaveClass('is-active')
 })
@@ -64,12 +65,12 @@ test('dismiss a single footnote by ID when calling .dismiss()', async () => {
 
   const button = query('button')
   instance.activate('1')
-  await waitForTransition(button)
+  await waitForChange(button)
 
   instance.dismiss('1')
 
   expect(button).toHaveClass('is-changing')
-  await waitForTransition(button)
+  await waitForChange(button)
   expect(button).not.toHaveClass('is-active')
 })
 
@@ -78,12 +79,12 @@ test('dismiss all footnotes when calling .dismiss()', async () => {
 
   const button = query('button')
   instance.activate('1')
-  await waitForTransition(button)
+  await waitForChange(button)
 
   instance.dismiss()
 
   expect(button).toHaveClass('is-changing')
-  await waitForTransition(button)
+  await waitForChange(button)
   expect(button).not.toHaveClass('is-active')
 })
 
@@ -93,11 +94,11 @@ test('dismiss footnote when pressing the Escape key', async () => {
 
   const button = query('button')
   fireEvent.click(button)
-  await waitForTransition(button)
+  await waitForChange(button)
 
   fireEvent.keyUp(document.body, { key: KEY_ESCAPE })
 
   expect(button).toHaveClass('is-changing')
-  await waitForTransition(button)
+  await waitForChange(button)
   expect(button).not.toHaveClass('is-active')
 })

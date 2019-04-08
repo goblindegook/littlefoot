@@ -1,5 +1,5 @@
 import 'jest-dom/extend-expect'
-import { wait, queryByText } from 'dom-testing-library'
+import { wait, getByText, queryByText } from 'dom-testing-library'
 import { join } from 'path'
 import { readFileSync } from 'fs'
 
@@ -15,6 +15,12 @@ export function queryPopoverByText(
   matcher: string | RegExp
 ): HTMLElement | null {
   return queryByText(document.body, matcher, {
+    selector: '.littlefoot-footnote *'
+  })
+}
+
+export function getPopoverByText(matcher: string | RegExp): HTMLElement {
+  return getByText(document.body, matcher, {
     selector: '.littlefoot-footnote *'
   })
 }
@@ -41,5 +47,5 @@ export function getAllActiveButtons() {
   return queryAll('button[data-footnote-id].is-active')
 }
 
-export const waitForTransition = async (button: Element) =>
+export const waitForChange = async (button: Element) =>
   wait(() => expect(button).not.toHaveClass('is-changing'))
