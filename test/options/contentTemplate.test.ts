@@ -8,7 +8,7 @@ test('setup with custom contentTemplate', async () => {
   littlefoot({
     activateDelay: 1,
     contentTemplate: `<aside class="custom"
-      data-footnote-id="<%= id %>"
+      data-footnote-popover-id="<%= id %>"
       data-footnote-number="<%= number %>"
       >
       <div class="littlefoot-footnote__wrapper">
@@ -26,7 +26,7 @@ test('setup with custom contentTemplate', async () => {
   const footnote = query('aside.custom')
   const content = footnote.querySelector('.littlefoot-footnote__content')
 
-  expect(footnote).toHaveAttribute('data-footnote-id', '1')
+  expect(footnote).toHaveAttribute('data-footnote-popover-id', '1')
   expect(footnote).toHaveAttribute('data-footnote-number', '1')
   expect(content).toContainHTML(`This is the document's only footnote.`)
 })

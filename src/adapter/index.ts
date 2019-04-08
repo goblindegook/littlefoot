@@ -1,7 +1,7 @@
 import { createFootnote } from './footnote'
 import { createDocumentFootnotes } from './setup'
 import { Adapter, TemplateData, Settings } from '../types'
-import { FOOTNOTE_POPOVER, FOOTNOTE_BUTTON } from './constants'
+import { FOOTNOTE_BUTTON_ID, FOOTNOTE_POPOVER_ID } from './constants'
 
 export type RawFootnote = {
   link: HTMLAnchorElement
@@ -30,7 +30,7 @@ export function createAdapter(settings: Settings): Adapter {
     },
     hasHoveredFootnotes: () => {
       return !!document.querySelector(
-        `[${FOOTNOTE_BUTTON}]:hover, [${FOOTNOTE_POPOVER}]:hover`
+        `[${FOOTNOTE_BUTTON_ID}]:hover, [${FOOTNOTE_POPOVER_ID}]:hover`
       )
     }
   }

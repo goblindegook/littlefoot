@@ -32,19 +32,19 @@ export function setDocumentBody(fixture: string): void {
 }
 
 export function getButton(id: string) {
-  return query(`button[data-footnote-id="${id}"]`)
+  return query(`button[data-footnote-button-id="${id}"]`)
 }
 
 export function getPopover(id: string) {
-  return query(`aside[data-footnote-id="${id}"]`)
+  return query(`aside[data-footnote-popover-id="${id}"]`)
 }
 
 export function getAllButtons() {
-  return queryAll('button[data-footnote-id]')
+  return queryAll('button[data-footnote-button-id]')
 }
 
 export function getAllActiveButtons() {
-  return queryAll('button[data-footnote-id].is-active')
+  return queryAll('button[data-footnote-button-id].is-active')
 }
 
 export const waitForChange = async (button: Element) =>

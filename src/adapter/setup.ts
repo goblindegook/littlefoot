@@ -4,8 +4,7 @@ import { children } from './dom'
 import {
   CLASS_PRINT_ONLY,
   CLASS_PROCESSED,
-  FOOTNOTE_ID,
-  FOOTNOTE_BUTTON
+  FOOTNOTE_BUTTON_ID
 } from './constants'
 import { RawFootnote } from '.'
 import { TemplateData, Settings } from '../types'
@@ -20,10 +19,10 @@ function isDefined<T>(value?: T): value is T {
 }
 
 function getLastFootnoteId(): string {
-  const footnotes = document.querySelectorAll(`[${FOOTNOTE_ID}]`)
+  const footnotes = document.querySelectorAll(`[${FOOTNOTE_BUTTON_ID}]`)
   const lastFootnoteId =
     footnotes.length &&
-    footnotes[footnotes.length - 1].getAttribute(FOOTNOTE_ID)
+    footnotes[footnotes.length - 1].getAttribute(FOOTNOTE_BUTTON_ID)
   return lastFootnoteId || '0'
 }
 
@@ -150,7 +149,7 @@ const addButton = (render: TemplateExecutor) => ([
   link.insertAdjacentHTML('beforebegin', render(data))
   const container = link.previousElementSibling as HTMLElement
   const button =
-    container.querySelector<HTMLElement>(`[${FOOTNOTE_BUTTON}]`) || container
+    container.querySelector<HTMLElement>(`[${FOOTNOTE_BUTTON_ID}]`) || container
   return { data, container, link, body, button }
 }
 

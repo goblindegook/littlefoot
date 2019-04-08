@@ -6,7 +6,7 @@ test('creates buttons for all footnotes when scope is body', () => {
 
   littlefoot({ scope: 'body' })
 
-  expect(queryAll('[data-footnote-id]')).toHaveLength(4)
+  expect(queryAll('[data-footnote-button-id]')).toHaveLength(4)
   expect(queryAll('.footnote-processed')).toHaveLength(3)
 })
 
@@ -15,6 +15,6 @@ test('creates no footnote buttons when scope is invalid', () => {
 
   littlefoot({ scope: '#invalid' })
 
-  expect(queryAll('[data-footnote-id]')).toHaveLength(0)
+  expect(queryAll('[data-footnote-button-id]')).toHaveLength(0)
   expect(queryAll('.footnote-processed')).toHaveLength(0)
 })
