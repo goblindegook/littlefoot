@@ -11,7 +11,8 @@
     "esModuleInterop": true,
     "allowJs": false,
     "checkJs": false,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "incremental": true
   },
   "include": ["./src"]
 }

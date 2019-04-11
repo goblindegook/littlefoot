@@ -16,15 +16,13 @@ export function getStyle(
 
 export function getMaxHeight(element: HTMLElement): number {
   const maxHeight = getStyle(element, 'maxHeight')
-  const size = parseFloat(maxHeight)
-
   if (maxHeight === '' || maxHeight === 'none') {
     return element.clientHeight
   }
 
-  if (/%/.test(maxHeight)) {
-    return Math.round((size / 100) * document.body.clientHeight)
-  }
+  const size = parseFloat(maxHeight)
 
-  return Math.round(size)
+  return /%/.test(maxHeight)
+    ? Math.round((size / 100) * document.body.clientHeight)
+    : Math.round(size)
 }
