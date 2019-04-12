@@ -1,10 +1,11 @@
-import { wait, fireEvent } from 'dom-testing-library'
+import { wait, fireEvent, getByText } from 'dom-testing-library'
 import littlefoot from '../src'
 import {
   setDocumentBody,
   waitForChange,
   query,
-  getPopoverByText
+  getPopoverByText,
+  queryAll
 } from './helper'
 
 const TEST_SETTINGS = { activateDelay: 1 }
