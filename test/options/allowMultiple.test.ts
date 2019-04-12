@@ -1,11 +1,11 @@
 import { fireEvent } from 'dom-testing-library'
-import littlefoot from '../../src'
 import {
   setDocumentBody,
-  getButton,
   waitForChange,
-  getAllActiveButtons
+  getAllActiveButtons,
+  getButton
 } from '../helper'
+import littlefoot from '../../src'
 
 beforeEach(() => {
   setDocumentBody('default.html')

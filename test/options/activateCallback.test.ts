@@ -1,5 +1,5 @@
 import { fireEvent } from 'dom-testing-library'
-import { setDocumentBody, getPopover, query } from '../helper'
+import { setDocumentBody, getPopover, getButton } from '../helper'
 import littlefoot from '../../src'
 
 test('setup with activateCallback', () => {
@@ -7,7 +7,7 @@ test('setup with activateCallback', () => {
   const activateCallback = jest.fn()
   littlefoot({ activateCallback })
 
-  const button = query('button')
+  const button = getButton('1')
   fireEvent.click(button)
 
   const popover = getPopover('1')

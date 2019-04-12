@@ -1,10 +1,10 @@
 import littlefoot from '../src'
 import {
   setDocumentBody,
-  getButton,
   getAllButtons,
   getAllActiveButtons,
-  queryAll
+  queryAll,
+  getButton
 } from './helper'
 
 beforeEach(() => {

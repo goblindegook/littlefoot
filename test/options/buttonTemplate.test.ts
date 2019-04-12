@@ -1,5 +1,6 @@
+import { getByTitle } from 'dom-testing-library'
+import { setDocumentBody, getButton } from '../helper'
 import littlefoot from '../../src'
-import { setDocumentBody, query } from '../helper'
 
 beforeEach(() => {
   setDocumentBody('single.html')
@@ -8,7 +9,7 @@ beforeEach(() => {
 test('default buttonTemplate', () => {
   littlefoot()
 
-  const button = query('button')
+  const button = getButton('1')
   expect(button).toHaveAttribute('id', 'fnref:1')
   expect(button).toHaveAttribute('data-footnote-button-id', '1')
   expect(button).toHaveAttribute('data-footnote-number', '1')
@@ -22,10 +23,11 @@ test('custom buttonTemplate', () => {
       data-id="<%= id %>"
       data-number="<%= number %>"
       data-content="<%= content %>"
+      title="Footnote <%= number %>"
     >...</button>`
   })
 
-  const button = query('button')
+  const button = getByTitle(document.body, 'Footnote 1')
   expect(button).toHaveAttribute('data-id', '1')
   expect(button).toHaveAttribute('data-number', '1')
   expect(button).toHaveAttribute('data-reference', 'fnref:1')

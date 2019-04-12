@@ -1,12 +1,11 @@
-import { fireEvent } from 'dom-testing-library'
-import littlefoot from '../src'
+import { fireEvent, queryByText } from 'dom-testing-library'
 import {
   setDocumentBody,
   waitForChange,
-  query,
   getPopoverByText,
-  queryPopoverByText
+  getButton
 } from './helper'
+import littlefoot from '../src'
 
 const TEST_SETTINGS = { activateDelay: 0, dismissDelay: 0 }
 
@@ -17,7 +16,7 @@ beforeEach(() => {
 test('dismiss footnote when clicking the button again', async () => {
   littlefoot(TEST_SETTINGS)
 
-  const button = query('button')
+  const button = getButton('1')
   fireEvent.click(button)
   await waitForChange(button)
 
@@ -26,7 +25,9 @@ test('dismiss footnote when clicking the button again', async () => {
   expect(button).toHaveClass('is-changing')
   await waitForChange(button)
   expect(
-    queryPopoverByText(/This is the document's only footnote./)
+    queryByText(document.body, /This is the document's only footnote./, {
+      selector: '.littlefoot-footnote *'
+    })
   ).not.toBeInTheDocument()
   expect(button).not.toHaveClass('is-active')
 })
@@ -34,7 +35,7 @@ test('dismiss footnote when clicking the button again', async () => {
 test('dismiss footnote when clicking the document body', async () => {
   littlefoot(TEST_SETTINGS)
 
-  const button = query('button')
+  const button = getButton('1')
   fireEvent.click(button)
   await waitForChange(button)
 
@@ -48,7 +49,7 @@ test('dismiss footnote when clicking the document body', async () => {
 test('do not dismiss footnote when clicking the popover', async () => {
   littlefoot(TEST_SETTINGS)
 
-  const button = query('button')
+  const button = getButton('1')
   fireEvent.click(button)
   await waitForChange(button)
 
@@ -63,7 +64,7 @@ test('do not dismiss footnote when clicking the popover', async () => {
 test('dismiss a single footnote by ID when calling .dismiss()', async () => {
   const instance = littlefoot(TEST_SETTINGS)
 
-  const button = query('button')
+  const button = getButton('1')
   instance.activate('1')
   await waitForChange(button)
 
@@ -77,7 +78,7 @@ test('dismiss a single footnote by ID when calling .dismiss()', async () => {
 test('dismiss all footnotes when calling .dismiss()', async () => {
   const instance = littlefoot(TEST_SETTINGS)
 
-  const button = query('button')
+  const button = getButton('1')
   instance.activate('1')
   await waitForChange(button)
 
@@ -92,7 +93,7 @@ test('dismiss footnote when pressing the Escape key', async () => {
   const KEY_ESCAPE = '27'
   littlefoot(TEST_SETTINGS)
 
-  const button = query('button')
+  const button = getButton('1')
   fireEvent.click(button)
   await waitForChange(button)
 

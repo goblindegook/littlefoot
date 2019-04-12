@@ -1,6 +1,6 @@
-import littlefoot from '../../src'
-import { setDocumentBody, waitForChange, query } from '../helper'
 import { fireEvent } from 'dom-testing-library'
+import { setDocumentBody, waitForChange, getButton } from '../helper'
+import littlefoot from '../../src'
 
 test('dismiss on unhover', async () => {
   setDocumentBody('single.html')
@@ -13,7 +13,7 @@ test('dismiss on unhover', async () => {
     hoverDelay: 1
   })
 
-  const button = query('button')
+  const button = getButton('1')
 
   fireEvent.mouseOver(button)
   await waitForChange(button)

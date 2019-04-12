@@ -1,6 +1,6 @@
+import { fireEvent } from 'dom-testing-library'
+import { setDocumentBody, waitForChange, getButton } from '../helper'
 import littlefoot from '../../src'
-import { setDocumentBody, waitForChange, query } from '../helper'
-import { fireEvent, getByTitle } from 'dom-testing-library'
 
 test('setup with custom contentTemplate', async () => {
   setDocumentBody('single.html')
@@ -19,14 +19,14 @@ test('setup with custom contentTemplate', async () => {
     </aside>`
   })
 
-  const button = getByTitle(document.body, 'See Footnote 1')
+  const button = getButton('1')
   fireEvent.click(button)
   await waitForChange(button)
 
-  const footnote = query('aside.custom')
-  const content = footnote.querySelector('.littlefoot-footnote__content')
-
+  const footnote = document.querySelector('aside.custom')
   expect(footnote).toHaveAttribute('data-footnote-popover-id', '1')
   expect(footnote).toHaveAttribute('data-footnote-number', '1')
+
+  const content = footnote!.querySelector('.littlefoot-footnote__content')
   expect(content).toContainHTML(`This is the document's only footnote.`)
 })

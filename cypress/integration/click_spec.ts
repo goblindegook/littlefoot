@@ -6,7 +6,7 @@ context('Scroll', () => {
   })
 
   it('allows clicking links in popovers', () => {
-    cy.get('button').click()
+    cy.getByTitle('See Footnote 1').click()
     cy.getByText('a link').click()
     cy.getByText('OK')
   })
