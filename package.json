@@ -54,7 +54,6 @@
   },
   "jest": {
     "testEnvironment": "jsdom",
-    "preset": "ts-jest",
     "testURL": "http://localhost"
   },
   "author": {
@@ -94,7 +93,6 @@
     "node-sass": "^4.9.3",
     "prettier": "^1.16.4",
     "tinyify": "^2.5.0",
-    "ts-jest": "^24.0.0",
     "ts-loader": "^5.3.3",
     "tslint": "^5.12.1",
     "tslint-config-prettier": "^1.18.0",
