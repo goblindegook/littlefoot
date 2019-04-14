@@ -11,14 +11,13 @@
     "optimize": "uglifyjs dist/littlefoot.js --compress unused=false --mangle > dist/littlefoot.min.js",
     "build": "yarn clean && mkdir -p dist && concurrently 'yarn build:types' 'yarn build:scripts' 'yarn build:styles' && yarn optimize",
     "watch": "watchify --extension=ts -s littlefoot -o dist/littlefoot.js src/index.ts",
-    "typecheck": "tsc --noEmit",
-    "typecheck:watch": "yarn typecheck --watch",
-    "lint": "tslint --project tsconfig.tslint.json '{src,test}/**/*.ts'",
     "format": "prettier --write '{cypress,src,test}/**/*.{js,jsx,ts,tsx,json,css,md}'",
-    "test": "yarn lint && concurrently 'yarn test:jest' 'yarn test:cypress'",
-    "test:jest": "jest",
+    "lint": "tslint --project tsconfig.tslint.json '{src,test}/**/*.ts'",
+    "test": "yarn lint && concurrently 'yarn test:types' 'yarn test:jest' 'yarn test:cypress'",
     "test:cypress": "yarn build && cypress run",
     "test:cypress:open": "yarn build && cypress open",
+    "test:jest": "jest",
+    "test:types": "tsc --noEmit",
     "prepublish": "yarn build"
   },
   "browserify": {
