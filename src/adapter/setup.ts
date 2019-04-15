@@ -9,8 +9,8 @@ import {
 import { RawFootnote } from '.'
 import { TemplateData, Settings } from '../types'
 
-type LinkBody = Readonly<[HTMLAnchorElement, HTMLElement]>
-type LinkBodyData = Readonly<[HTMLAnchorElement, HTMLElement, TemplateData]>
+type LinkBody = readonly [HTMLAnchorElement, HTMLElement]
+type LinkBodyData = readonly [HTMLAnchorElement, HTMLElement, TemplateData]
 
 const setPrintOnly = (el: Element) => el.classList.add(CLASS_PRINT_ONLY)
 
@@ -31,7 +31,7 @@ function findFootnoteLinks({
   anchorParentSelector,
   footnoteParentClass,
   scope = ''
-}: Settings): ReadonlyArray<HTMLAnchorElement> {
+}: Settings): readonly HTMLAnchorElement[] {
   return Array.from(
     document.querySelectorAll<HTMLAnchorElement>(`${scope} a[href^="#"]`)
   ).filter(

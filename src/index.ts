@@ -10,12 +10,12 @@ import {
   FOOTNOTE_BUTTON_ID
 } from './adapter/constants'
 
-type Littlefoot = {
+type Littlefoot = Readonly<{
   activate: (id: string) => void
   dismiss: (id?: string, delay?: number) => void
   getSetting: <K extends keyof Settings>(key: K) => Settings[K]
   updateSetting: <K extends keyof Settings>(key: K, value: Settings[K]) => void
-}
+}>
 
 const DEFAULT_SETTINGS: Settings = {
   activateDelay: 100,
@@ -34,7 +34,7 @@ const DEFAULT_SETTINGS: Settings = {
 }
 
 export function littlefoot(userSettings: Partial<Settings> = {}): Littlefoot {
-  const settings: Settings = { ...DEFAULT_SETTINGS, ...userSettings }
+  const settings = { ...DEFAULT_SETTINGS, ...userSettings }
   const adapter = createAdapter(settings)
   const core = createCore(adapter, settings)
   bindEvents(core)

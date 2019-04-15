@@ -9,11 +9,11 @@ const CLASS_POSITION_PREFIX = 'is-positioned-'
 const BOTTOM = 'bottom'
 const TOP = 'top'
 
-type Room = {
+type Room = Readonly<{
   top: number
   bottom: number
   leftRelative: number
-}
+}>
 
 export function getAvailableRoom(element: HTMLElement): Room {
   const marginLeft = parseFloat(getStyle(element, 'marginLeft'))

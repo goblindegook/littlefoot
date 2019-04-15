@@ -1,4 +1,4 @@
-export type Settings = {
+export type Settings = Readonly<{
   activateCallback?: (popover: HTMLElement, button: HTMLElement) => void
   activateDelay: number
   activateOnHover: boolean
@@ -15,16 +15,16 @@ export type Settings = {
   hoverDelay: number
   numberResetSelector?: string
   scope?: string
-}
+}>
 
-export type TemplateData = {
+export type TemplateData = Readonly<{
   content: string
   id: string
   number: number
   reference: string
-}
+}>
 
-export type Footnote = {
+export type Footnote = Readonly<{
   getId: () => string
   activate: (
     contentTemplate: string,
@@ -40,13 +40,13 @@ export type Footnote = {
   resize: () => void
   startChanging: () => void
   stopChanging: () => void
-}
+}>
 
 type FootnoteCallback = (current: Footnote) => void
 
-export type Adapter = {
+export type Adapter = Readonly<{
   findFootnote: (id: string) => Footnote | undefined
   forEachFootnote: (callback: FootnoteCallback, selector?: string) => void
   forEachFootnoteExcept: (callback: FootnoteCallback, except: Footnote) => void
   hasHoveredFootnotes: () => boolean
-}
+}>

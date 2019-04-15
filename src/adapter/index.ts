@@ -4,12 +4,12 @@ import { Adapter, TemplateData, Settings } from '../types'
 import { FOOTNOTE_BUTTON_ID, FOOTNOTE_POPOVER_ID } from './constants'
 
 export type RawFootnote = {
-  link: HTMLAnchorElement
-  body: HTMLElement
-  container: HTMLElement
-  button: HTMLElement
+  readonly link: HTMLAnchorElement
+  readonly body: HTMLElement
+  readonly container: HTMLElement
+  readonly button: HTMLElement
   popover?: HTMLElement
-  data: TemplateData
+  readonly data: TemplateData
 }
 
 export function createAdapter(settings: Settings): Adapter {

@@ -2,7 +2,7 @@ import { Footnote, Adapter, Settings } from './types'
 
 export type FootnoteAction = (footnote: Footnote, delay?: number) => void
 
-export type Core = {
+export type Core = Readonly<{
   activate: FootnoteAction
   dismiss: FootnoteAction
   dismissAll: (delay?: number) => void
@@ -12,7 +12,7 @@ export type Core = {
   resize: () => void
   toggle: FootnoteAction
   unhover: () => void
-}
+}>
 
 function createActivate(adapter: Adapter, settings: Settings): FootnoteAction {
   return (footnote, delay = settings.activateDelay) => {
