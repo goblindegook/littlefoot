@@ -18,13 +18,12 @@ test('default buttonTemplate', () => {
 test('custom buttonTemplate', () => {
   littlefoot({
     buttonTemplate: `<button
-      class="custom"
-      data-reference="<%= reference %>"
+      title="Footnote <%= number %>"
       data-id="<%= id %>"
       data-number="<%= number %>"
+      data-reference="<%= reference %>"
       data-content="<%= content %>"
-      title="Footnote <%= number %>"
-    >...</button>`
+    />`
   })
 
   const button = getByTitle(document.body, 'Footnote 1')

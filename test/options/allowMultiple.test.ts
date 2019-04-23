@@ -11,8 +11,7 @@ beforeEach(() => {
   setDocumentBody('default.html')
 })
 
-// FIXME: document appears to be polluted, tests aren't isolated
-xtest('disallow multiple activations', async () => {
+test('disallow multiple activations', async () => {
   littlefoot({ activateDelay: 1, allowMultiple: false })
 
   const one = getButton('1')

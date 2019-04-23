@@ -15,6 +15,11 @@ function closestPopover(target: Element): Element | null {
   return target.closest(`[${FOOTNOTE_POPOVER_ID}]`)
 }
 
+function closestPopoverId(target: HTMLElement): string | null {
+  const popover = closestPopover(target)
+  return popover && popover.getAttribute(FOOTNOTE_POPOVER_ID)
+}
+
 function closestFootnoteId(target: HTMLElement): string | null {
   const button = target.closest(`[${FOOTNOTE_BUTTON_ID}]`)
   return button && button.getAttribute(FOOTNOTE_BUTTON_ID)
@@ -43,7 +48,8 @@ function handleHover(
 ): EventListener {
   return event => {
     event.preventDefault()
-    const id = closestFootnoteId(event.target as HTMLElement)
+    const target = event.target as HTMLElement
+    const id = closestFootnoteId(target) || closestPopoverId(target)
     const footnote = id && get(id)
 
     if (footnote) {
@@ -109,4 +115,5 @@ export function bindEvents({
 
   on('mouseover', `[${FOOTNOTE_BUTTON_ID}]`, handleHover(get, hover))
   on('mouseout', `[${FOOTNOTE_BUTTON_ID}]`, handleHover(get, unhover))
+  on('mouseout', `[${FOOTNOTE_POPOVER_ID}]`, handleHover(get, unhover))
 }

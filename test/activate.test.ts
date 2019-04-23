@@ -62,9 +62,11 @@ test('popup layout dimensions', async () => {
   fireEvent.click(button)
 
   await waitForChange(button)
+
   const popover = document.querySelector('.littlefoot-footnote')
-  const content = document.querySelector('.littlefoot-footnote__content')
-  expect(content).toHaveProperty('offsetWidth', document.body.clientWidth)
   expect(popover).toHaveAttribute('data-footnote-max-height', '0')
   expect(popover).toHaveStyle(`max-width: ${document.body.clientWidth}px`)
+
+  const content = document.querySelector('.littlefoot-footnote__content')
+  expect(content).toHaveProperty('offsetWidth', document.body.clientWidth)
 })
