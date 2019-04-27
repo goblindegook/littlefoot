@@ -50,9 +50,11 @@ test('popup ARIA properties', async () => {
   fireEvent.click(button)
 
   await waitForChange(button)
+
   const popover = document.querySelector('.littlefoot-footnote')
-  expect(button).toHaveAttribute('aria-expanded', 'true')
   expect(button).toHaveAttribute('aria-controls', popover!.id)
+  expect(button).toHaveAttribute('aria-expanded', 'true')
+  expect(popover).toHaveAttribute('aria-live', 'polite')
 })
 
 test('popup layout dimensions', async () => {

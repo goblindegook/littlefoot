@@ -136,7 +136,7 @@ function hideFootnoteContainer(container: HTMLElement): void {
   const visibleSeparators = visibleElements.filter(el => el.tagName === 'HR')
 
   if (visibleElements.length === visibleSeparators.length) {
-    ;[...visibleSeparators, container].forEach(setPrintOnly)
+    visibleSeparators.concat(container).forEach(setPrintOnly)
     hideFootnoteContainer(container.parentNode as HTMLElement)
   }
 }
@@ -146,11 +146,13 @@ const addButton = (render: TemplateExecutor) => ([
   body,
   data
 ]: LinkBodyData): RawFootnote => {
-  link.insertAdjacentHTML('beforebegin', render(data))
-  const container = link.previousElementSibling as HTMLElement
-  const button =
-    container.querySelector<HTMLElement>(`[${FOOTNOTE_BUTTON_ID}]`) || container
-  return { data, container, link, body, button }
+  link.insertAdjacentHTML(
+    'beforebegin',
+    `<span class="littlefoot-footnote__host">${render(data)}</span>`
+  )
+  const host = link.previousElementSibling as HTMLElement
+  const button = host.querySelector<HTMLElement>(`[${FOOTNOTE_BUTTON_ID}]`)!
+  return { data, host, link, body, button }
 }
 
 function hideOriginalFootnote([link, body]: LinkBody): LinkBody {

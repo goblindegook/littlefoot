@@ -29,8 +29,8 @@ const DEFAULT_SETTINGS: Settings = {
   footnoteParentClass: 'footnote',
   footnoteSelector: 'li',
   hoverDelay: 250,
-  contentTemplate: `<aside class="littlefoot-footnote is-positioned-bottom" id="fncontent:<%= id %>" ${FOOTNOTE_POPOVER_ID}="<%= id %>" alt="Footnote <%= number %>"><div class="${CLASS_WRAPPER}"><div class="${CLASS_CONTENT}" tabindex="0"><%= content %></div></div><div class="${CLASS_TOOLTIP}"></div></aside>`,
-  buttonTemplate: `<span class="littlefoot-footnote__container"><button class="littlefoot-footnote__button littlefoot-footnote__button__ellipsis" id="<%= reference %>" ${FOOTNOTE_BUTTON_ID}="<%= id %>" data-footnote-number="<%= number %>" title="See Footnote <%= number %>" aria-controls="fncontent:<%= id %>" aria-expanded="false" aria-label="Footnote <%= number %>" rel="footnote"><svg viewbox="0 0 31 6" preserveAspectRatio="xMidYMid"><circle r="3" cx="3" cy="3" fill="white"></circle><circle r="3" cx="15" cy="3" fill="white"></circle><circle r="3" cx="27" cy="3" fill="white"></circle></svg></button></span>`
+  contentTemplate: `<aside class="littlefoot-footnote is-positioned-bottom" id="fncontent:<%= id %>" ${FOOTNOTE_POPOVER_ID}="<%= id %>" alt="Footnote <%= number %>" aria-live="polite"><div class="${CLASS_WRAPPER}"><div class="${CLASS_CONTENT}" tabindex="0"><%= content %></div></div><div class="${CLASS_TOOLTIP}"></div></aside>`,
+  buttonTemplate: `<button class="littlefoot-footnote__button littlefoot-footnote__button__ellipsis" id="<%= reference %>" ${FOOTNOTE_BUTTON_ID}="<%= id %>" data-footnote-number="<%= number %>" title="See Footnote <%= number %>" aria-controls="fncontent:<%= id %>" aria-expanded="false" aria-label="Footnote <%= number %>" rel="footnote"><svg viewbox="0 0 31 6" preserveAspectRatio="xMidYMid"><circle r="3" cx="3" cy="3" fill="white"></circle><circle r="3" cx="15" cy="3" fill="white"></circle><circle r="3" cx="27" cy="3" fill="white"></circle></svg></button>`
 }
 
 export function littlefoot(userSettings: Partial<Settings> = {}): Littlefoot {

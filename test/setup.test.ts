@@ -11,9 +11,9 @@ beforeEach(() => {
   setDocumentBody('default.html')
 })
 
-test('creates one button and one container per footnote call', () => {
+test('creates one button and one host per footnote call', () => {
   littlefoot()
-  expect(queryAll('.littlefoot-footnote__container')).toHaveLength(4)
+  expect(queryAll('.littlefoot-footnote__host')).toHaveLength(4)
   expect(getAllButtons()).toHaveLength(4)
 })
 

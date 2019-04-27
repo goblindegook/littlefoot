@@ -103,3 +103,16 @@ test('dismiss footnote when pressing the Escape key', async () => {
   await waitForChange(button)
   expect(button).not.toHaveClass('is-active')
 })
+
+test('set ARIA expanded state to false', async () => {
+  littlefoot(TEST_SETTINGS)
+
+  const button = getButton('1')
+
+  fireEvent.click(button)
+  await waitForChange(button)
+  fireEvent.click(button)
+  await waitForChange(button)
+
+  expect(button).toHaveAttribute('aria-expanded', 'false')
+})

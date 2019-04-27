@@ -30,7 +30,10 @@
   }
 
   &:active {
-    background-color: rgba($button-activating-color, $button-activating-opacity);
+    background-color: rgba(
+      $button-activating-color,
+      $button-activating-opacity
+    );
   }
 
   &.is-active {
@@ -61,16 +64,17 @@
   width: 1.5em;
 
   &::after {
-    color: rgba($button-color, .5);
+    color: rgba($button-color, 0.5);
     content: attr(data-footnote-number);
     display: block;
-    font-size: $button-height * .6;
+    font-size: $button-height * 0.6;
     font-weight: bold;
     left: 50%;
     position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
-    transition: color $popover-transition-default-duration $popover-transition-default-timing-function;
+    transition: color $popover-transition-default-duration
+      $popover-transition-default-timing-function;
   }
 
   &:hover,
@@ -89,7 +93,7 @@
 // is guaranteed to have a relatively-positioned container, and to help with the
 // positioning calculation.
 
-.littlefoot-footnote__container {
+.littlefoot-footnote__host {
   display: inline-block;
   position: relative;
   text-indent: 0;

@@ -225,25 +225,23 @@ Variables should be added between interpolation delimiters. For example, `<%= co
 Default:
 
 ```html
-<div class="littlefoot-footnote__container">
-  <button
-    aria-controls="fncontent:<%= id %>"
-    aria-expanded="false"
-    aria-label="Footnote <%= number %>"
-    class="littlefoot-footnote__button littlefoot-footnote__button__ellipsis"
-    data-footnote-button-id="<%= id %>"
-    data-footnote-number="<%= number %>"
-    id="<%= reference %>"
-    rel="footnote"
-    title="See Footnote <%= number %>"
-  >
-    <svg viewbox="0 0 31 6" preserveAspectRatio="xMidYMid">
-      <circle r="3" cx="3" cy="3" fill="white"></circle>
-      <circle r="3" cx="15" cy="3" fill="white"></circle>
-      <circle r="3" cx="27" cy="3" fill="white"></circle>
-    </svg>
-  </button>
-</div>
+<button
+  aria-controls="fncontent:<%= id %>"
+  aria-expanded="false"
+  aria-label="Footnote <%= number %>"
+  class="littlefoot-footnote__button littlefoot-footnote__button__ellipsis"
+  data-footnote-button-id="<%= id %>"
+  data-footnote-number="<%= number %>"
+  id="<%= reference %>"
+  rel="footnote"
+  title="See Footnote <%= number %>"
+>
+  <svg viewbox="0 0 31 6" preserveAspectRatio="xMidYMid">
+    <circle r="3" cx="3" cy="3" fill="white"></circle>
+    <circle r="3" cx="15" cy="3" fill="white"></circle>
+    <circle r="3" cx="27" cy="3" fill="white"></circle>
+  </svg>
+</button>
 ```
 
 ## Methods
