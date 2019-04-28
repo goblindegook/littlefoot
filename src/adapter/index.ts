@@ -6,7 +6,6 @@ import { FOOTNOTE_BUTTON_ID, FOOTNOTE_POPOVER_ID } from './constants'
 export type RawFootnote = {
   readonly link: HTMLAnchorElement
   readonly body: HTMLElement
-  readonly host: HTMLElement
   readonly button: HTMLElement
   popover?: HTMLElement
   readonly data: TemplateData

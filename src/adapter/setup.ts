@@ -33,12 +33,12 @@ function findFootnoteLinks({
   scope = ''
 }: Settings): readonly HTMLAnchorElement[] {
   return Array.from(
-    document.querySelectorAll<HTMLAnchorElement>(`${scope} a[href^="#"]`)
+    document.querySelectorAll<HTMLAnchorElement>(scope + ' a[href^="#"]')
   ).filter(
     link =>
-      `${link.href}${link.rel}`.match(anchorPattern) &&
+      (link.href + link.rel).match(anchorPattern) &&
       !link.closest(
-        `[class~="${footnoteParentClass}"]:not(a):not(${anchorParentSelector})`
+        `.${footnoteParentClass}:not(a):not(${anchorParentSelector})`
       )
   )
 }
@@ -48,9 +48,8 @@ const findFootnoteBody = ({ allowDuplicates, footnoteSelector }: Settings) => (
 ): LinkBody | undefined => {
   const [_, fragment] = link.href.split('#')
   const selector = '#' + fragment.replace(/[:.+~*[\]]/g, '\\$&')
-  const strictSelector = `${selector}:not(.${CLASS_PROCESSED})`
   const related = document.querySelector(
-    allowDuplicates ? selector : strictSelector
+    allowDuplicates ? selector : `${selector}:not(.${CLASS_PROCESSED})`
   )
   const body = related && (related.closest(footnoteSelector) as HTMLElement)
 
@@ -81,10 +80,10 @@ function prepareContent(content: string, reference: string): string {
 
 const resetNumbers = (resetSelector: string) => (
   [link, body, data]: LinkBodyData,
-  i: number,
+  n: number,
   footnotes: LinkBodyData[]
 ): LinkBodyData => {
-  const previousNumber = i ? footnotes[i - 1][2].number : 0
+  const previousNumber = n ? footnotes[n - 1][2].number : 0
   return [
     link,
     body,
@@ -151,8 +150,8 @@ const addButton = (render: TemplateExecutor) => ([
     `<span class="littlefoot-footnote__host">${render(data)}</span>`
   )
   const host = link.previousElementSibling as HTMLElement
-  const button = host.querySelector<HTMLElement>(`[${FOOTNOTE_BUTTON_ID}]`)!
-  return { data, host, link, body, button }
+  const button = host.firstElementChild as HTMLInputElement
+  return { data, link, body, button }
 }
 
 function hideOriginalFootnote([link, body]: LinkBody): LinkBody {
