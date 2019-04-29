@@ -169,6 +169,8 @@
   box-sizing: inherit;
   display: inline-block;
   line-height: normal;
+  font-size: initial;
+  font-weight: initial;
   max-height: $popover-max-height;
   overflow: auto;
   padding: $popover-padding-content-top $popover-padding-content-horizontal $popover-padding-content-bottom;
