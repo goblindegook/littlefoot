@@ -1,8 +1,8 @@
 import throttle from 'lodash.throttle'
 import {
   CLASS_FULLY_SCROLLED,
-  FOOTNOTE_POPOVER_ID,
-  FOOTNOTE_BUTTON_ID
+  DATA_POPOVER_ID,
+  DATA_BUTTON_ID
 } from './constants'
 import { Core, FootnoteAction } from '../core'
 import { Footnote } from '../types'
@@ -12,17 +12,17 @@ const { on } = require('delegated-events')
 type EventHandler<E extends Event> = (e: E) => void
 
 function closestPopover(target: Element): Element | null {
-  return target.closest(`[${FOOTNOTE_POPOVER_ID}]`)
+  return target.closest(`[${DATA_POPOVER_ID}]`)
 }
 
-function closestPopoverId(target: HTMLElement): string | null {
+function closestPopoverId(target: Element): string | null {
   const popover = closestPopover(target)
-  return popover && popover.getAttribute(FOOTNOTE_POPOVER_ID)
+  return popover && popover.getAttribute(DATA_POPOVER_ID)
 }
 
-function closestFootnoteId(target: HTMLElement): string | null {
-  const button = target.closest(`[${FOOTNOTE_BUTTON_ID}]`)
-  return button && button.getAttribute(FOOTNOTE_BUTTON_ID)
+function closestFootnoteId(target: Element): string | null {
+  const button = target.closest(`[${DATA_BUTTON_ID}]`)
+  return button && button.getAttribute(DATA_BUTTON_ID)
 }
 
 function handleTap(
@@ -113,7 +113,7 @@ export function bindEvents({
   window.addEventListener('scroll', throttle(reposition))
   window.addEventListener('resize', throttle(resize))
 
-  on('mouseover', `[${FOOTNOTE_BUTTON_ID}]`, handleHover(get, hover))
-  on('mouseout', `[${FOOTNOTE_BUTTON_ID}]`, handleHover(get, unhover))
-  on('mouseout', `[${FOOTNOTE_POPOVER_ID}]`, handleHover(get, unhover))
+  on('mouseover', `[${DATA_BUTTON_ID}]`, handleHover(get, hover))
+  on('mouseout', `[${DATA_BUTTON_ID}]`, handleHover(get, unhover))
+  on('mouseout', `[${DATA_POPOVER_ID}]`, handleHover(get, unhover))
 }

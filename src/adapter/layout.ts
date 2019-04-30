@@ -1,8 +1,8 @@
 import { getStyle } from './dom'
 import {
   CLASS_TOOLTIP,
-  FOOTNOTE_MAX_HEIGHT,
-  POPOVER_POSITION
+  DATA_MAX_HEIGHT,
+  DATA_POPOVER_POSITION
 } from './constants'
 
 const CLASS_POSITION_PREFIX = 'is-positioned-'
@@ -39,10 +39,7 @@ function isPopoverOnTop(footnote: HTMLElement, room: Room): boolean {
 
 export function getPopoverMaxHeight(footnote: HTMLElement, room: Room): number {
   const isTop = isPopoverOnTop(footnote, room)
-  const maxHeight = parseInt(
-    footnote.getAttribute(FOOTNOTE_MAX_HEIGHT) || '0',
-    10
-  )
+  const maxHeight = parseInt(footnote.getAttribute(DATA_MAX_HEIGHT) || '0', 10)
   const marginSize = parseInt(getStyle(footnote, 'marginTop'), 10)
   const availableHeight = room[isTop ? TOP : BOTTOM] - marginSize - 15
 
@@ -51,13 +48,13 @@ export function getPopoverMaxHeight(footnote: HTMLElement, room: Room): number {
 
 export function repositionPopover(popover: HTMLElement, room: Room): void {
   const isTop = isPopoverOnTop(popover, room)
-  const previous = popover.getAttribute(POPOVER_POSITION) || BOTTOM
+  const previous = popover.getAttribute(DATA_POPOVER_POSITION) || BOTTOM
   const position = isTop ? TOP : BOTTOM
 
   if (previous !== position) {
+    popover.setAttribute(DATA_POPOVER_POSITION, position)
     popover.classList.remove(`${CLASS_POSITION_PREFIX}${previous}`)
     popover.classList.add(`${CLASS_POSITION_PREFIX}${position}`)
-    popover.setAttribute(POPOVER_POSITION, position)
     popover.style.transformOrigin = `${room.leftRelative * 100}% ${
       isTop ? '100%' : '0'
     }`

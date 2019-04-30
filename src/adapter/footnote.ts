@@ -14,7 +14,7 @@ import {
   CLASS_HOVERED,
   CLASS_SCROLLABLE,
   CLASS_WRAPPER,
-  FOOTNOTE_MAX_HEIGHT
+  DATA_MAX_HEIGHT
 } from './constants'
 import { Footnote, TemplateData } from '../types'
 import { RawFootnote } from '.'
@@ -32,7 +32,8 @@ function insertPopover(
   button.insertAdjacentHTML('afterend', render(data))
   const popover = button.nextElementSibling as HTMLElement
   const content = findPopoverContent(popover)
-  popover.setAttribute(FOOTNOTE_MAX_HEIGHT, `${getMaxHeight(content)}`)
+  // TODO: Layout function?
+  popover.setAttribute(DATA_MAX_HEIGHT, `${getMaxHeight(content)}`)
   popover.style.maxWidth = `${document.body.clientWidth}px`
   bindContentScrollHandler(content)
   return popover

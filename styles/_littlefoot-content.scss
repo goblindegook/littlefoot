@@ -9,10 +9,10 @@
 // rounded corners, and a tooltip pointing to the footnote button.
 //
 // @state .is-active            - The popover has been activated and is visible.
-// @state .is-positioned-top    - The popover is above the button.
-// @state .is-positioned-bottom - The popover is below the button.
 // @state .is-scrollable        - The popover content is greater than the popover height.
 // @state .is-fully-scrolled    - The popover content is scrolled to the bottom.
+// @state .is-positioned-top    - The popover is above the button.
+// @state .is-positioned-bottom - The popover is below the button.
 
 .littlefoot-footnote {
   background: $popover-color-background;
@@ -23,7 +23,11 @@
   display: inline-block;
   left: 0;
   line-height: 0;
-  margin: ((1.4142135624 * $popover-tooltip-size / 2) + $button-height + $popover-margin-top) 0;
+  margin: (
+      (1.4142135624 * $popover-tooltip-size / 2) + $button-height +
+        $popover-margin-top
+    )
+    0;
   max-width: $popover-max-width;
   opacity: $popover-inactive-opacity;
   position: absolute;
@@ -54,7 +58,9 @@
       left: $popover-scroll-indicator-padding;
       z-index: ($popover-z-index + 4);
       display: block;
-      height: ($popover-scroll-indicator-width * $popover-scroll-indicator-aspect-ratio);
+      height: (
+        $popover-scroll-indicator-width * $popover-scroll-indicator-aspect-ratio
+      );
       width: $popover-scroll-indicator-width;
       background-image: $popover-scroll-indicator-icon;
       background-size: cover;
@@ -75,14 +81,24 @@
       }
 
       &::before {
-        background-image: linear-gradient(to bottom, $popover-color-background $popover-scrolly-fade-gradient-start-location, transparentize($popover-color-background, 1) 100%);
+        background-image: linear-gradient(
+          to bottom,
+          $popover-color-background
+            $popover-scrolly-fade-gradient-start-location,
+          transparentize($popover-color-background, 1) 100%
+        );
         border-radius: $popover-border-radius $popover-border-radius 0 0;
         height: $popover-padding-content-top;
         top: -1px;
       }
 
       &::after {
-        background-image: linear-gradient(to top, $popover-color-background $popover-scrolly-fade-gradient-start-location, transparentize($popover-color-background, 1) 100%);
+        background-image: linear-gradient(
+          to top,
+          $popover-color-background
+            $popover-scrolly-fade-gradient-start-location,
+          transparentize($popover-color-background, 1) 100%
+        );
         border-radius: 0 0 $popover-border-radius $popover-border-radius;
         bottom: -1px;
         height: $popover-padding-content-bottom;
@@ -114,7 +130,7 @@
       right: auto;
       top: auto;
       transform: translateY(100%);
-      transition: transform .3s ease;
+      transition: transform 0.3s ease;
       width: 100%;
 
       &.is-active {
@@ -154,7 +170,9 @@
   overflow: hidden;
   position: relative;
   width: $popover-width;
-  z-index: ($popover-z-index + 4); // Above the outer tooltip, below the inner tooltip
+  z-index: (
+    $popover-z-index + 4
+  ); // Above the outer tooltip, below the inner tooltip
 }
 
 // Contains the actual footnote content. There is very little prescription here
@@ -173,7 +191,8 @@
   font-weight: initial;
   max-height: $popover-max-height;
   overflow: auto;
-  padding: $popover-padding-content-top $popover-padding-content-horizontal $popover-padding-content-bottom;
+  padding: $popover-padding-content-top $popover-padding-content-horizontal
+    $popover-padding-content-bottom;
   position: relative;
   z-index: ($popover-z-index - 2); // Below fading bars
 
@@ -199,17 +218,19 @@
   box-shadow: $popover-box-shadow;
   box-sizing: border-box;
   height: $popover-tooltip-size;
-  margin-left: (-.5 * $popover-tooltip-size);
+  margin-left: (-0.5 * $popover-tooltip-size);
   position: absolute;
   transform: rotate(45deg);
   width: $popover-tooltip-size; // Smaller by one border-width's worth
-  z-index: ($popover-z-index + 2); // Above the footnote-main-wrapper and the outer tooltip
+  z-index: (
+    $popover-z-index + 2
+  ); // Above the footnote-main-wrapper and the outer tooltip
 
   .is-positioned-bottom & {
-    top: (-.5 * $popover-tooltip-size);
+    top: (-0.5 * $popover-tooltip-size);
   }
 
   .is-positioned-top & {
-    bottom: (-.5 * $popover-tooltip-size);
+    bottom: (-0.5 * $popover-tooltip-size);
   }
 }

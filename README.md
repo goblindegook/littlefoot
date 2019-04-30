@@ -201,6 +201,7 @@ Default:
   class="littlefoot-footnote is-positioned-bottom"
   id="fncontent:<%= id %>"
   data-footnote-popover-id="<%= id %>"
+  data-footnote-position="bottom"
 >
   <div class="littlefoot-footnote__wrapper">
     <div class="littlefoot-footnote__content">

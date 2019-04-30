@@ -1,13 +1,12 @@
 import { TemplateExecutor } from 'lodash'
 import template from 'lodash.template'
 import { children } from './dom'
-import {
-  CLASS_PRINT_ONLY,
-  CLASS_PROCESSED,
-  FOOTNOTE_BUTTON_ID
-} from './constants'
+import { DATA_BUTTON_ID, CLASS_HOST } from './constants'
 import { RawFootnote } from '.'
 import { TemplateData, Settings } from '../types'
+
+const CLASS_PRINT_ONLY = 'footnote-print-only'
+const CLASS_PROCESSED = 'footnote-processed'
 
 type LinkBody = readonly [HTMLAnchorElement, HTMLElement]
 type LinkBodyData = readonly [HTMLAnchorElement, HTMLElement, TemplateData]
@@ -19,10 +18,10 @@ function isDefined<T>(value?: T): value is T {
 }
 
 function getLastFootnoteId(): string {
-  const footnotes = document.querySelectorAll(`[${FOOTNOTE_BUTTON_ID}]`)
+  const footnotes = document.querySelectorAll(`[${DATA_BUTTON_ID}]`)
   const lastFootnoteId =
     footnotes.length &&
-    footnotes[footnotes.length - 1].getAttribute(FOOTNOTE_BUTTON_ID)
+    footnotes[footnotes.length - 1].getAttribute(DATA_BUTTON_ID)
   return lastFootnoteId || '0'
 }
 
@@ -147,7 +146,7 @@ const addButton = (render: TemplateExecutor) => ([
 ]: LinkBodyData): RawFootnote => {
   link.insertAdjacentHTML(
     'beforebegin',
-    `<span class="littlefoot-footnote__host">${render(data)}</span>`
+    `<span class="${CLASS_HOST}">${render(data)}</span>`
   )
   const host = link.previousElementSibling as HTMLElement
   const button = host.firstElementChild as HTMLInputElement
