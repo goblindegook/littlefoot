@@ -150,7 +150,7 @@ const addButton = (render: TemplateExecutor) => ([
   )
   const host = link.previousElementSibling as HTMLElement
   const button = host.firstElementChild as HTMLInputElement
-  return { data, link, body, button }
+  return { data, link, body, button, maxHeight: 0 }
 }
 
 function hideOriginalFootnote([link, body]: LinkBody): LinkBody {

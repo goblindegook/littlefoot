@@ -1,9 +1,5 @@
 import { getStyle } from './dom'
-import {
-  CLASS_TOOLTIP,
-  DATA_MAX_HEIGHT,
-  DATA_POPOVER_POSITION
-} from './constants'
+import { CLASS_TOOLTIP, DATA_POPOVER_POSITION } from './constants'
 
 const CLASS_POSITION_PREFIX = 'is-positioned-'
 const BOTTOM = 'bottom'
@@ -37,13 +33,10 @@ function isPopoverOnTop(footnote: HTMLElement, room: Room): boolean {
   return room.bottom < totalHeight && room.bottom < room.top
 }
 
-export function getPopoverMaxHeight(footnote: HTMLElement, room: Room): number {
+export function getAvailableHeight(footnote: HTMLElement, room: Room): number {
   const isTop = isPopoverOnTop(footnote, room)
-  const maxHeight = parseInt(footnote.getAttribute(DATA_MAX_HEIGHT) || '0', 10)
   const marginSize = parseInt(getStyle(footnote, 'marginTop'), 10)
-  const availableHeight = room[isTop ? TOP : BOTTOM] - marginSize - 15
-
-  return Math.min(maxHeight, availableHeight)
+  return room[isTop ? TOP : BOTTOM] - marginSize - 15
 }
 
 export function repositionPopover(popover: HTMLElement, room: Room): void {

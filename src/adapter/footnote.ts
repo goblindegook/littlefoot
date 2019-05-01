@@ -3,7 +3,7 @@ import { getMaxHeight, getStyle } from './dom'
 import { bindContentScrollHandler } from './events'
 import {
   getAvailableRoom,
-  getPopoverMaxHeight,
+  getAvailableHeight,
   repositionPopover,
   repositionTooltip
 } from './layout'
@@ -13,30 +13,13 @@ import {
   CLASS_CONTENT,
   CLASS_HOVERED,
   CLASS_SCROLLABLE,
-  CLASS_WRAPPER,
-  DATA_MAX_HEIGHT
+  CLASS_WRAPPER
 } from './constants'
-import { Footnote, TemplateData } from '../types'
+import { Footnote } from '../types'
 import { RawFootnote } from '.'
 
 function findPopoverContent(popover: HTMLElement): HTMLElement {
   return popover.querySelector<HTMLElement>(`.${CLASS_CONTENT}`)!
-}
-
-function insertPopover(
-  button: HTMLElement,
-  contentTemplate: string,
-  data: TemplateData
-) {
-  const render = template(contentTemplate)
-  button.insertAdjacentHTML('afterend', render(data))
-  const popover = button.nextElementSibling as HTMLElement
-  const content = findPopoverContent(popover)
-  // TODO: Layout function?
-  popover.setAttribute(DATA_MAX_HEIGHT, `${getMaxHeight(content)}`)
-  popover.style.maxWidth = `${document.body.clientWidth}px`
-  bindContentScrollHandler(content)
-  return popover
 }
 
 export function createFootnote(footnote: RawFootnote): Footnote {
@@ -48,11 +31,15 @@ export function createFootnote(footnote: RawFootnote): Footnote {
       footnote.button.setAttribute('aria-expanded', 'true')
       footnote.button.classList.add(CLASS_ACTIVE)
 
-      footnote.popover = insertPopover(
-        footnote.button,
-        contentTemplate,
-        footnote.data
-      ) // mutation
+      const render = template(contentTemplate)
+      footnote.button.insertAdjacentHTML('afterend', render(footnote.data))
+      footnote.popover = footnote.button.nextElementSibling as HTMLElement // mutation
+
+      const content = findPopoverContent(footnote.popover)
+      footnote.popover.style.maxWidth = `${document.body.clientWidth}px`
+      bindContentScrollHandler(content)
+
+      footnote.maxHeight = getMaxHeight(content) // mutation
 
       if (typeof onActivate === 'function') {
         onActivate(footnote.popover, footnote.button)
@@ -91,7 +78,10 @@ export function createFootnote(footnote: RawFootnote): Footnote {
       if (footnote.popover) {
         const room = getAvailableRoom(footnote.button)
         const content = findPopoverContent(footnote.popover)
-        const maxHeight = getPopoverMaxHeight(footnote.popover, room)
+        const maxHeight = Math.min(
+          footnote.maxHeight,
+          getAvailableHeight(footnote.popover, room)
+        )
         content.style.maxHeight = maxHeight + 'px'
         repositionPopover(footnote.popover, room)
 

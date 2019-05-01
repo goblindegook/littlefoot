@@ -20,6 +20,7 @@ export function getMaxHeight(element: HTMLElement): number {
     return element.clientHeight
   }
 
+  // TODO: Improve unit conversion to px.
   const size = parseFloat(maxHeight)
 
   return /%/.test(maxHeight)

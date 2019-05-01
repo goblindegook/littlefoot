@@ -7,6 +7,7 @@ export type RawFootnote = {
   readonly link: HTMLAnchorElement
   readonly body: HTMLElement
   readonly button: HTMLElement
+  maxHeight: number
   popover?: HTMLElement
   readonly data: TemplateData
 }

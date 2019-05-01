@@ -10,6 +10,5 @@ export const CLASS_TOOLTIP = 'littlefoot-footnote__tooltip'
 export const CLASS_WRAPPER = 'littlefoot-footnote__wrapper'
 
 export const DATA_BUTTON_ID = 'data-footnote-button-id'
-export const DATA_MAX_HEIGHT = 'data-footnote-max-height'
 export const DATA_POPOVER_ID = 'data-footnote-popover-id'
 export const DATA_POPOVER_POSITION = 'data-footnote-position'
