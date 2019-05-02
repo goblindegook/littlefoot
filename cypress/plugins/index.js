@@ -11,13 +11,22 @@
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
 
-const webpack = require('@cypress/webpack-preprocessor')
+const browserify = require('@cypress/browserify-preprocessor')
 
-module.exports = (on, config) => {
+module.exports = on => {
   on(
     'file:preprocessor',
-    webpack({
-      webpackOptions: require('../webpack.config')
+    browserify({
+      browserifyOptions: {
+        transform: [
+          [
+            'babelify',
+            {
+              extensions: ['.js', '.ts']
+            }
+          ]
+        ]
+      }
     })
   )
 }
