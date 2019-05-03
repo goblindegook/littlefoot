@@ -1,6 +1,5 @@
 import { TemplateExecutor } from 'lodash'
 import template from 'lodash.template'
-import { children } from './dom'
 import { DATA_BUTTON_ID, CLASS_HOST } from './constants'
 import { RawFootnote } from '.'
 import { TemplateData, Settings } from '../types'
@@ -12,6 +11,12 @@ type LinkBody = readonly [HTMLAnchorElement, HTMLElement]
 type LinkBodyData = readonly [HTMLAnchorElement, HTMLElement, TemplateData]
 
 const setPrintOnly = (el: Element) => el.classList.add(CLASS_PRINT_ONLY)
+
+function children(element: Element, selector?: string): Element[] {
+  return Array.from(element.children).filter(
+    child => child.nodeType !== 8 && (!selector || child.matches(selector))
+  )
+}
 
 function isDefined<T>(value?: T): value is T {
   return value !== undefined

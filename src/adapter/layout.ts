@@ -1,4 +1,4 @@
-import { getStyle } from './dom'
+import { getStyle } from '@pacote/get-style'
 import { CLASS_TOOLTIP, DATA_POPOVER_POSITION } from './constants'
 
 const CLASS_POSITION_PREFIX = 'is-positioned-'

@@ -1,5 +1,6 @@
 import template from 'lodash.template'
-import { getMaxHeight, getStyle } from './dom'
+import { getStyle } from '@pacote/get-style'
+import { pixels } from '@pacote/pixels'
 import { bindContentScrollHandler } from './events'
 import {
   getAvailableRoom,
@@ -39,7 +40,8 @@ export function createFootnote(footnote: RawFootnote): Footnote {
       footnote.popover.style.maxWidth = `${document.body.clientWidth}px`
       bindContentScrollHandler(content)
 
-      footnote.maxHeight = getMaxHeight(content) // mutation
+      const maxHeight = getStyle(content, 'maxHeight')
+      footnote.maxHeight = Math.round(pixels(maxHeight, content)) // mutation
 
       if (typeof onActivate === 'function') {
         onActivate(footnote.popover, footnote.button)

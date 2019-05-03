@@ -100,6 +100,8 @@
     "watchify": "^3.7.0"
   },
   "dependencies": {
+    "@pacote/get-style": "^1.0.0",
+    "@pacote/pixels": "^1.0.0-alpha.0",
     "delegated-events": "^1.0.10",
     "lodash.template": "^4.4.0",
     "lodash.throttle": "^4.1.1"

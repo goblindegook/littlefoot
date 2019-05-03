@@ -1063,6 +1063,16 @@
     "@types/istanbul-lib-coverage" "^2.0.0"
     "@types/yargs" "^12.0.9"
 
+"@pacote/get-style@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@pacote/get-style/-/get-style-1.0.0.tgz#a4cb94913ee459656f6778b1fe26f7fa4c4d10b6"
+  integrity sha512-pajqFJY5xqT1vLGEtKBotELcL+Vxh3P35psgWngvqZtmMKsDsNrMYMOvtlTGByyadh8mfM70QGN3TKnaJqkaUA==
+
+"@pacote/pixels@^1.0.0-alpha.0":
+  version "1.0.0-alpha.0"
+  resolved "https://registry.yarnpkg.com/@pacote/pixels/-/pixels-1.0.0-alpha.0.tgz#cabea2d6788411fe940a656c6493b21d29e1be07"
+  integrity sha512-hOGaMeB2wD1nEpjFoAQon7R03QrQvRAZsG6AJXtwKt6ePUkzaJmcfL6FNe4UvM0EdPds4KcQ+LuqEwAAKjUfNg==
+
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@samverschueren/stream-to-observable/-/stream-to-observable-0.3.0.tgz#ecdf48d532c58ea477acfcab80348424f8d0662f"
@@ -1145,9 +1155,9 @@
   integrity sha512-pQvPkc4Nltyx7G1Ww45OjVqUsJP4UsZm+GWJpigXgkikZqJgRm4c48g027o6tdgubWHwFRF15iFd+Y4Pmqv6+Q==
 
 "@types/node@^11.9.3":
-  version "11.13.8"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.13.8.tgz#e5d71173c95533be9842b2c798978f095f912aab"
-  integrity sha512-szA3x/3miL90ZJxUCzx9haNbK5/zmPieGraZEe4WI+3srN0eGLiT22NXeMHmyhNEopn+IrxqMc7wdVwvPl8meg==
+  version "11.13.9"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.13.9.tgz#f80697caca7f7fb2526527a5c5a2743487f05ccc"
+  integrity sha512-NJ4yuEVw5podZbINp3tEqUIImMSAEHaCXRiWCf3KC32l6hIKf0iPJEh2uZdT0fELfRYk310yLmMXqy2leZQUbg==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
