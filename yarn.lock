@@ -1113,6 +1113,11 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
+"@types/delegated-events@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@types/delegated-events/-/delegated-events-1.0.0.tgz#b1ba6f27afe139b0a3286da03d7d1cda0a3ceadc"
+  integrity sha512-nFmIcCI7ZFA41G9Lxp5vA5oQZoMUTQ0CqjTcbVQl/OrO8uyVvV3oIztTYd2fDL6TgbyIzN/cZ300yg3GuFvODw==
+
 "@types/istanbul-lib-coverage@^2.0.0":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@types/istanbul-lib-coverage/-/istanbul-lib-coverage-2.0.1.tgz#42995b446db9a48a11a07ec083499a860e9138ff"

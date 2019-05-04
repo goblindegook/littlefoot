@@ -1,4 +1,5 @@
 import throttle from 'lodash.throttle'
+import { off, on } from 'delegated-events'
 import {
   CLASS_FULLY_SCROLLED,
   DATA_POPOVER_ID,
@@ -6,8 +7,6 @@ import {
 } from './constants'
 import { Core, FootnoteAction } from '../core'
 import { Footnote } from '../types'
-
-const { on } = require('delegated-events')
 
 type EventHandler<E extends Event> = (e: E) => void
 
@@ -105,15 +104,33 @@ export function bindEvents({
   resize,
   toggle,
   unhover
-}: Core): void {
-  document.addEventListener('touchend', handleTap(get, toggle, dismissAll))
-  document.addEventListener('click', handleTap(get, toggle, dismissAll))
-  document.addEventListener('keyup', handleEscape(dismissAll))
-  document.addEventListener('gestureend', throttle(reposition))
-  window.addEventListener('scroll', throttle(reposition))
-  window.addEventListener('resize', throttle(resize))
+}: Core): () => void {
+  const toggleOnTap = handleTap(get, toggle, dismissAll)
+  const dismissOnEscape = handleEscape(dismissAll)
+  const throttledReposition = throttle(reposition)
+  const throttledResize = throttle(resize)
+  const showOnHover = handleHover(get, hover)
+  const hideOnHover = handleHover(get, unhover)
 
-  on('mouseover', `[${DATA_BUTTON_ID}]`, handleHover(get, hover))
-  on('mouseout', `[${DATA_BUTTON_ID}]`, handleHover(get, unhover))
-  on('mouseout', `[${DATA_POPOVER_ID}]`, handleHover(get, unhover))
+  document.addEventListener('touchend', toggleOnTap)
+  document.addEventListener('click', toggleOnTap)
+  document.addEventListener('keyup', dismissOnEscape)
+  document.addEventListener('gestureend', throttledReposition)
+  window.addEventListener('scroll', throttledReposition)
+  window.addEventListener('resize', throttledResize)
+  on('mouseover', `[${DATA_BUTTON_ID}]`, showOnHover)
+  on('mouseout', `[${DATA_BUTTON_ID}]`, hideOnHover)
+  on('mouseout', `[${DATA_POPOVER_ID}]`, hideOnHover)
+
+  return () => {
+    document.removeEventListener('touchend', toggleOnTap)
+    document.removeEventListener('click', toggleOnTap)
+    document.removeEventListener('keyup', dismissOnEscape)
+    document.removeEventListener('gestureend', throttledReposition)
+    window.removeEventListener('scroll', throttledReposition)
+    window.removeEventListener('resize', throttledResize)
+    off('mouseover', `[${DATA_BUTTON_ID}]`, showOnHover)
+    off('mouseout', `[${DATA_BUTTON_ID}]`, hideOnHover)
+    off('mouseout', `[${DATA_POPOVER_ID}]`, hideOnHover)
+  }
 }
