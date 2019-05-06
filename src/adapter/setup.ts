@@ -47,7 +47,7 @@ function findFootnoteLinks({
   )
 }
 
-const findFootnoteRefBody = ({
+const findRefBody = ({
   allowDuplicates,
   anchorParentSelector,
   footnoteSelector
@@ -57,12 +57,12 @@ const findFootnoteRefBody = ({
   const related = document.querySelector(
     allowDuplicates ? selector : `${selector}:not(.${CLASS_PROCESSED})`
   )
-  const parent = link.closest(anchorParentSelector) as HTMLElement
   const body = related && (related.closest(footnoteSelector) as HTMLElement)
 
   if (body) {
     body.classList.add(CLASS_PROCESSED)
-    return [parent || link, body]
+    const reference = link.closest(anchorParentSelector) as HTMLElement
+    return [reference || link, body]
   }
 }
 
@@ -73,16 +73,14 @@ function prepareContent(content: string, reference: string): string {
     'g'
   )
 
-  let preparedContent = content
+  const preparedContent = content
     .trim()
     .replace(regex, '')
     .replace('[]', '')
 
-  if (preparedContent.indexOf('<') !== 0) {
-    preparedContent = '<p>' + preparedContent + '</p>'
-  }
-
-  return preparedContent
+  return preparedContent.startsWith('<')
+    ? preparedContent
+    : '<p>' + preparedContent + '</p>'
 }
 
 const resetNumbers = (resetSelector: string) => (
@@ -94,29 +92,22 @@ const resetNumbers = (resetSelector: string) => (
   return [
     ref,
     body,
-    {
-      ...data,
-      number: ref.closest(resetSelector) ? 1 : previousNumber + 1
-    }
+    { ...data, number: ref.closest(resetSelector) ? 1 : previousNumber + 1 }
   ]
 }
 
 const templateData = (offset: number) => (
-  [ref, body]: RefBody,
+  [reference, body]: RefBody,
   idx: number
 ): RefBodyData => {
-  const reference = ref.id
-  const footnoteNumber = offset + idx
-  return [
-    ref,
-    body,
-    {
-      reference,
-      content: prepareContent(body.innerHTML, reference),
-      id: `${footnoteNumber}`,
-      number: footnoteNumber
-    }
-  ]
+  const data: TemplateData = {
+    reference: reference.id,
+    content: prepareContent(body.innerHTML, reference.id),
+    id: `${offset + idx}`,
+    number: offset + idx
+  }
+
+  return [reference, body, data]
 }
 
 function hideFootnoteContainer(container: HTMLElement): void {
@@ -151,11 +142,11 @@ function hideOriginalFootnote([reference, body]: RefBody): RefBody {
 }
 
 export function createDocumentFootnotes(settings: Settings): RawFootnote[] {
-  const { anchorParentSelector, buttonTemplate, numberResetSelector } = settings
+  const { buttonTemplate, numberResetSelector } = settings
   const offset = parseInt(getLastFootnoteId(), 10) + 1
 
   return findFootnoteLinks(settings)
-    .map(findFootnoteRefBody(settings))
+    .map(findRefBody(settings))
     .filter(isDefined)
     .map(hideOriginalFootnote)
     .map(templateData(offset))
