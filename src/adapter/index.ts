@@ -4,7 +4,7 @@ import { Adapter, TemplateData, Settings } from '../types'
 import { DATA_BUTTON_ID, DATA_POPOVER_ID } from './constants'
 
 export type RawFootnote = {
-  readonly link: HTMLAnchorElement
+  readonly reference: HTMLElement
   readonly body: HTMLElement
   readonly button: HTMLElement
   maxHeight: number

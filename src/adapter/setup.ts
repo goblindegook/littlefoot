@@ -7,8 +7,8 @@ import { TemplateData, Settings } from '../types'
 const CLASS_PRINT_ONLY = 'footnote-print-only'
 const CLASS_PROCESSED = 'footnote-processed'
 
-type LinkBody = readonly [HTMLAnchorElement, HTMLElement]
-type LinkBodyData = readonly [HTMLAnchorElement, HTMLElement, TemplateData]
+type RefBody = readonly [HTMLElement, HTMLElement]
+type RefBodyData = readonly [HTMLElement, HTMLElement, TemplateData]
 
 const setPrintOnly = (el: Element) => el.classList.add(CLASS_PRINT_ONLY)
 
@@ -49,7 +49,7 @@ function findFootnoteLinks({
 
 const findFootnoteBody = ({ allowDuplicates, footnoteSelector }: Settings) => (
   link: HTMLAnchorElement
-): LinkBody | undefined => {
+): RefBody | undefined => {
   const [_, fragment] = link.href.split('#')
   const selector = '#' + fragment.replace(/[:.+~*[\]]/g, '\\$&')
   const related = document.querySelector(
@@ -83,47 +83,29 @@ function prepareContent(content: string, reference: string): string {
 }
 
 const resetNumbers = (resetSelector: string) => (
-  [link, body, data]: LinkBodyData,
+  [ref, body, data]: RefBodyData,
   n: number,
-  footnotes: LinkBodyData[]
-): LinkBodyData => {
+  footnotes: RefBodyData[]
+): RefBodyData => {
   const previousNumber = n ? footnotes[n - 1][2].number : 0
   return [
-    link,
+    ref,
     body,
-    { ...data, number: link.closest(resetSelector) ? 1 : previousNumber + 1 }
+    {
+      ...data,
+      number: ref.closest(resetSelector) ? 1 : previousNumber + 1
+    }
   ]
 }
 
-function getBacklinkId(
-  link: HTMLAnchorElement,
-  anchorParentSelector: string
-): string {
-  const parent = link.closest(anchorParentSelector)
-
-  if (parent) {
-    return parent.id
-  }
-
-  const child = link.querySelector(anchorParentSelector)
-
-  if (child) {
-    return child.id
-  }
-
-  return ''
-}
-
-const templateData = (anchorParentSelector: string, offset: number) => (
-  [link, body]: LinkBody,
+const templateData = (offset: number) => (
+  [ref, body]: RefBody,
   idx: number
-): LinkBodyData => {
-  const backlinkId = getBacklinkId(link, anchorParentSelector)
-  const reference = `${backlinkId}${link.id}`
+): RefBodyData => {
+  const reference = ref.id
   const footnoteNumber = offset + idx
-
   return [
-    link,
+    ref,
     body,
     {
       reference,
@@ -145,24 +127,33 @@ function hideFootnoteContainer(container: HTMLElement): void {
 }
 
 const addButton = (render: TemplateExecutor) => ([
-  link,
+  reference,
   body,
   data
-]: LinkBodyData): RawFootnote => {
-  link.insertAdjacentHTML(
+]: RefBodyData): RawFootnote => {
+  reference.insertAdjacentHTML(
     'beforebegin',
     `<span class="${CLASS_HOST}">${render(data)}</span>`
   )
-  const host = link.previousElementSibling as HTMLElement
-  const button = host.firstElementChild as HTMLInputElement
-  return { data, link, body, button, maxHeight: 0 }
+  const host = reference.previousElementSibling!
+  const button = host.firstElementChild as HTMLElement
+  return { data, reference, body, button, maxHeight: 0 }
 }
 
-function hideOriginalFootnote([link, body]: LinkBody): LinkBody {
-  setPrintOnly(link)
+function hideOriginalFootnote([reference, body]: RefBody): RefBody {
+  setPrintOnly(reference)
   setPrintOnly(body)
   hideFootnoteContainer(body.parentNode as HTMLElement)
-  return [link, body]
+  return [reference, body]
+}
+
+function findAnchorParent(
+  anchorParentSelector: string
+): (refBody: RefBody) => RefBody {
+  return ([link, body]) => {
+    const parent = link.closest(anchorParentSelector) as HTMLElement
+    return [parent || link, body]
+  }
 }
 
 export function createDocumentFootnotes(settings: Settings): RawFootnote[] {
@@ -172,8 +163,9 @@ export function createDocumentFootnotes(settings: Settings): RawFootnote[] {
   return findFootnoteLinks(settings)
     .map(findFootnoteBody(settings))
     .filter(isDefined)
+    .map<RefBody>(findAnchorParent(anchorParentSelector))
     .map(hideOriginalFootnote)
-    .map(templateData(anchorParentSelector, offset))
+    .map(templateData(offset))
     .map(numberResetSelector ? resetNumbers(numberResetSelector) : i => i)
     .map(addButton(template(buttonTemplate)))
 }
