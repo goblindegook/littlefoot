@@ -47,19 +47,22 @@ function findFootnoteLinks({
   )
 }
 
-const findFootnoteBody = ({ allowDuplicates, footnoteSelector }: Settings) => (
-  link: HTMLAnchorElement
-): RefBody | undefined => {
+const findFootnoteRefBody = ({
+  allowDuplicates,
+  anchorParentSelector,
+  footnoteSelector
+}: Settings) => (link: HTMLAnchorElement): RefBody | undefined => {
   const [_, fragment] = link.href.split('#')
   const selector = '#' + fragment.replace(/[:.+~*[\]]/g, '\\$&')
   const related = document.querySelector(
     allowDuplicates ? selector : `${selector}:not(.${CLASS_PROCESSED})`
   )
+  const parent = link.closest(anchorParentSelector) as HTMLElement
   const body = related && (related.closest(footnoteSelector) as HTMLElement)
 
   if (body) {
     body.classList.add(CLASS_PROCESSED)
-    return [link, body]
+    return [parent || link, body]
   }
 }
 
@@ -147,23 +150,13 @@ function hideOriginalFootnote([reference, body]: RefBody): RefBody {
   return [reference, body]
 }
 
-function findAnchorParent(
-  anchorParentSelector: string
-): (refBody: RefBody) => RefBody {
-  return ([link, body]) => {
-    const parent = link.closest(anchorParentSelector) as HTMLElement
-    return [parent || link, body]
-  }
-}
-
 export function createDocumentFootnotes(settings: Settings): RawFootnote[] {
   const { anchorParentSelector, buttonTemplate, numberResetSelector } = settings
   const offset = parseInt(getLastFootnoteId(), 10) + 1
 
   return findFootnoteLinks(settings)
-    .map(findFootnoteBody(settings))
+    .map(findFootnoteRefBody(settings))
     .filter(isDefined)
-    .map<RefBody>(findAnchorParent(anchorParentSelector))
     .map(hideOriginalFootnote)
     .map(templateData(offset))
     .map(numberResetSelector ? resetNumbers(numberResetSelector) : i => i)
