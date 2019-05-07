@@ -2,8 +2,9 @@ import throttle from 'lodash.throttle'
 import { off, on } from 'delegated-events'
 import {
   CLASS_FULLY_SCROLLED,
-  DATA_POPOVER_ID,
-  DATA_BUTTON_ID
+  DATA_ID,
+  DATA_POPOVER,
+  DATA_BUTTON
 } from './constants'
 import { Core, FootnoteAction } from '../core'
 import { Footnote } from '../types'
@@ -11,22 +12,22 @@ import { Footnote } from '../types'
 type EventHandler<E extends Event> = (e: E) => void
 
 function closestPopover(target: Element): Element | null {
-  return target.closest(`[${DATA_POPOVER_ID}]`)
+  return target.closest(`[${DATA_POPOVER}]`)
 }
 
 function closestPopoverId(target: Element): string | null {
   const popover = closestPopover(target)
-  return popover && popover.getAttribute(DATA_POPOVER_ID)
+  return popover && popover.getAttribute(DATA_ID)
 }
 
 function closestFootnoteId(target: Element): string | null {
-  const button = target.closest(`[${DATA_BUTTON_ID}]`)
-  return button && button.getAttribute(DATA_BUTTON_ID)
+  const button = target.closest(`[${DATA_BUTTON}]`)
+  return button && button.getAttribute(DATA_ID)
 }
 
 function handleTap(
   get: (id: string) => Footnote | undefined,
-  toggle: FootnoteAction,
+  action: FootnoteAction,
   dismissAll: () => void
 ): EventListener {
   return event => {
@@ -34,7 +35,7 @@ function handleTap(
     const footnote = id && get(id)
 
     if (footnote) {
-      toggle(footnote)
+      action(footnote)
     } else if (!closestPopover(event.target as HTMLElement)) {
       dismissAll()
     }
@@ -43,7 +44,7 @@ function handleTap(
 
 function handleHover(
   get: (id: string) => Footnote | undefined,
-  toggle: FootnoteAction
+  action: FootnoteAction
 ): EventListener {
   return event => {
     event.preventDefault()
@@ -52,7 +53,7 @@ function handleHover(
     const footnote = id && get(id)
 
     if (footnote) {
-      toggle(footnote)
+      action(footnote)
     }
   }
 }
@@ -118,9 +119,8 @@ export function bindEvents({
   document.addEventListener('gestureend', throttledReposition)
   window.addEventListener('scroll', throttledReposition)
   window.addEventListener('resize', throttledResize)
-  on('mouseover', `[${DATA_BUTTON_ID}]`, showOnHover)
-  on('mouseout', `[${DATA_BUTTON_ID}]`, hideOnHover)
-  on('mouseout', `[${DATA_POPOVER_ID}]`, hideOnHover)
+  on('mouseover', `[${DATA_ID}]`, showOnHover)
+  on('mouseout', `[${DATA_ID}]`, hideOnHover)
 
   return () => {
     document.removeEventListener('touchend', toggleOnTap)
@@ -129,8 +129,7 @@ export function bindEvents({
     document.removeEventListener('gestureend', throttledReposition)
     window.removeEventListener('scroll', throttledReposition)
     window.removeEventListener('resize', throttledResize)
-    off('mouseover', `[${DATA_BUTTON_ID}]`, showOnHover)
-    off('mouseout', `[${DATA_BUTTON_ID}]`, hideOnHover)
-    off('mouseout', `[${DATA_POPOVER_ID}]`, hideOnHover)
+    off('mouseover', `[${DATA_ID}]`, showOnHover)
+    off('mouseout', `[${DATA_ID}]`, hideOnHover)
   }
 }

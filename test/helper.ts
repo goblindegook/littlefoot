@@ -24,15 +24,15 @@ export function getButton(id: string) {
 }
 
 export function getPopover(id: string) {
-  return document.querySelector(`aside[data-footnote-popover-id="${id}"]`)
+  return document.querySelector(`aside[data-footnote-id="${id}"]`)
 }
 
 export function getAllButtons() {
-  return queryAll('button[data-footnote-button-id]')
+  return queryAll('button[data-footnote-button]')
 }
 
 export function getAllActiveButtons() {
-  return queryAll('button[data-footnote-button-id].is-active')
+  return queryAll('button[data-footnote-button].is-active')
 }
 
 export const waitForChange = async (button: Element) =>

@@ -1,6 +1,6 @@
 import { TemplateExecutor } from 'lodash'
 import template from 'lodash.template'
-import { DATA_BUTTON_ID, CLASS_HOST } from './constants'
+import { DATA_ID, CLASS_HOST } from './constants'
 import { RawFootnote } from '.'
 import { TemplateData, Settings } from '../types'
 
@@ -23,10 +23,9 @@ function isDefined<T>(value?: T): value is T {
 }
 
 function getLastFootnoteId(): string {
-  const footnotes = document.querySelectorAll(`[${DATA_BUTTON_ID}]`)
+  const footnotes = document.querySelectorAll(`[${DATA_ID}]`)
   const lastFootnoteId =
-    footnotes.length &&
-    footnotes[footnotes.length - 1].getAttribute(DATA_BUTTON_ID)
+    footnotes.length && footnotes[footnotes.length - 1].getAttribute(DATA_ID)
   return lastFootnoteId || '0'
 }
 

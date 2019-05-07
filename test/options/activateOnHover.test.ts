@@ -10,6 +10,5 @@ test('activate on hover', async () => {
   fireEvent.mouseOver(button)
   await waitForChange(button)
 
-  expect(button).toHaveClass('is-hovered')
   expect(button).toHaveClass('is-active')
 })

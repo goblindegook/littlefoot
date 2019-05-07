@@ -11,7 +11,7 @@ test('default buttonTemplate', () => {
 
   const button = getButton('1')
   expect(button).toHaveAttribute('id', 'fnref:1')
-  expect(button).toHaveAttribute('data-footnote-button-id', '1')
+  expect(button).toHaveAttribute('data-footnote-id', '1')
   expect(button).toHaveAttribute('data-footnote-number', '1')
 })
 

@@ -12,7 +12,6 @@ import {
   CLASS_ACTIVE,
   CLASS_CHANGING,
   CLASS_CONTENT,
-  CLASS_HOVERED,
   CLASS_SCROLLABLE,
   CLASS_WRAPPER
 } from './constants'
@@ -52,11 +51,6 @@ export function createFootnote(footnote: RawFootnote): Footnote {
       footnote.button.blur()
       footnote.button.setAttribute('aria-expanded', 'false')
       footnote.button.classList.remove(CLASS_ACTIVE)
-      footnote.button.classList.remove(CLASS_HOVERED)
-    },
-
-    hover: () => {
-      footnote.button.classList.add(CLASS_HOVERED)
     },
 
     isActive: () => footnote.button.classList.contains(CLASS_ACTIVE),

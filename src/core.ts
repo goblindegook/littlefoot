@@ -93,7 +93,6 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
           adapter.forEachFootnoteExcept(dismiss, footnote)
         }
         activate(footnote, delay)
-        footnote.hover()
       }
     },
 

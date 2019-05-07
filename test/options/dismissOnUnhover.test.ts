@@ -26,7 +26,6 @@ test('dismiss on button unhover', async () => {
   fireEvent.mouseOut(button)
   await waitForChange(button)
 
-  expect(button).not.toHaveClass('is-hovered')
   expect(button).not.toHaveClass('is-active')
 })
 
@@ -53,6 +52,5 @@ test('dismiss on popover unhover', async () => {
   fireEvent.mouseOut(popover)
   await waitForChange(button)
 
-  expect(button).not.toHaveClass('is-hovered')
   expect(button).not.toHaveClass('is-active')
 })

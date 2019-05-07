@@ -31,7 +31,6 @@ export type Footnote = Readonly<{
     onActivate?: (popover: HTMLElement, button: HTMLElement) => void
   ) => void
   dismiss: () => void
-  hover: () => void
   isActive: () => boolean
   isChanging: () => boolean
   ready: () => void
