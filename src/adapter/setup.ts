@@ -130,7 +130,7 @@ const addButton = (render: TemplateExecutor) => ([
   )
   const host = reference.previousElementSibling!
   const button = host.firstElementChild as HTMLElement
-  return { data, reference, body, button, maxHeight: 0 }
+  return { data, reference, body, button, isHovered: false, maxHeight: 0 }
 }
 
 function hideOriginalFootnote([reference, body]: RefBody): RefBody {

@@ -11,7 +11,7 @@ export type Core = Readonly<{
   reposition: () => void
   resize: () => void
   toggle: FootnoteAction
-  unhover: () => void
+  unhover: FootnoteAction
 }>
 
 function createActivate(adapter: Adapter, settings: Settings): FootnoteAction {
@@ -88,6 +88,7 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
 
     hover(footnote, delay = settings.hoverDelay) {
       const { activateOnHover, allowMultiple } = settings
+      footnote.startHovering()
       if (activateOnHover && !footnote.isActive()) {
         if (!allowMultiple) {
           adapter.forEachFootnoteExcept(dismiss, footnote)
@@ -96,14 +97,15 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
       }
     },
 
-    unhover() {
-      const { dismissOnUnhover, hoverDelay } = settings
+    unhover(footnote, delay = settings.hoverDelay) {
+      const { dismissOnUnhover } = settings
+      footnote.stopHovering()
       if (dismissOnUnhover) {
         setTimeout(() => {
           if (!adapter.hasHoveredFootnotes()) {
             adapter.forEachFootnote(dismiss)
           }
-        }, hoverDelay)
+        }, delay)
       }
     }
   }

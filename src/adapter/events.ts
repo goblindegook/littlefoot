@@ -15,12 +15,12 @@ function closestPopover(target: Element): Element | null {
   return target.closest(`[${DATA_POPOVER}]`)
 }
 
-function closestPopoverId(target: Element): string | null {
-  const popover = closestPopover(target)
-  return popover && popover.getAttribute(DATA_ID)
+function closestFootnoteId(target: Element): string | null {
+  const element = target.closest(`[${DATA_ID}]`)
+  return element && element.getAttribute(DATA_ID)
 }
 
-function closestFootnoteId(target: Element): string | null {
+function closestButtonId(target: Element): string | null {
   const button = target.closest(`[${DATA_BUTTON}]`)
   return button && button.getAttribute(DATA_ID)
 }
@@ -31,7 +31,7 @@ function handleTap(
   dismissAll: () => void
 ): EventListener {
   return event => {
-    const id = closestFootnoteId(event.target as HTMLElement)
+    const id = closestButtonId(event.target as HTMLElement)
     const footnote = id && get(id)
 
     if (footnote) {
@@ -48,8 +48,7 @@ function handleHover(
 ): EventListener {
   return event => {
     event.preventDefault()
-    const target = event.target as HTMLElement
-    const id = closestFootnoteId(target) || closestPopoverId(target)
+    const id = closestFootnoteId(event.target as HTMLElement)
     const footnote = id && get(id)
 
     if (footnote) {
@@ -75,7 +74,6 @@ function scrollHandler(event: WheelEvent): void {
   ) {
     popover.classList.add(CLASS_FULLY_SCROLLED)
     target.scrollTop = target.scrollHeight
-    event.stopPropagation()
     event.preventDefault()
     return
   }
@@ -85,7 +83,6 @@ function scrollHandler(event: WheelEvent): void {
 
     if (target.scrollTop < delta) {
       target.scrollTop = 0
-      event.stopPropagation()
       event.preventDefault()
     }
   }

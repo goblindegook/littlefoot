@@ -33,12 +33,15 @@ export type Footnote = Readonly<{
   dismiss: () => void
   isActive: () => boolean
   isChanging: () => boolean
+  isHovered: () => boolean
   ready: () => void
   remove: () => void
   reposition: () => void
   resize: () => void
   startChanging: () => void
   stopChanging: () => void
+  startHovering: () => void
+  stopHovering: () => void
 }>
 
 type FootnoteCallback = (current: Footnote) => void

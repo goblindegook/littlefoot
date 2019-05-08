@@ -57,6 +57,8 @@ export function createFootnote(footnote: RawFootnote): Footnote {
 
     isChanging: () => footnote.button.classList.contains(CLASS_CHANGING),
 
+    isHovered: () => footnote.isHovered,
+
     ready: () => {
       if (footnote.popover) {
         footnote.popover.classList.add(CLASS_ACTIVE)
@@ -120,6 +122,14 @@ export function createFootnote(footnote: RawFootnote): Footnote {
 
     stopChanging: () => {
       footnote.button.classList.remove(CLASS_CHANGING)
+    },
+
+    startHovering: () => {
+      footnote.isHovered = true
+    },
+
+    stopHovering: () => {
+      footnote.isHovered = false
     }
   }
 }

@@ -1,13 +1,13 @@
 import { createFootnote } from './footnote'
 import { createDocumentFootnotes } from './setup'
 import { Adapter, TemplateData, Settings } from '../types'
-import { DATA_ID } from './constants'
 
 export type RawFootnote = {
   readonly reference: HTMLElement
   readonly body: HTMLElement
   readonly button: HTMLElement
   maxHeight: number
+  isHovered: boolean
   popover?: HTMLElement
   readonly data: TemplateData
 }
@@ -29,7 +29,7 @@ export function createAdapter(settings: Settings): Adapter {
         .forEach(callback)
     },
     hasHoveredFootnotes: () => {
-      return !!document.querySelector(`[${DATA_ID}]:hover`)
+      return footnotes.some(footnote => footnote.isHovered())
     }
   }
 }
