@@ -1,11 +1,8 @@
 import { TemplateExecutor } from 'lodash'
 import template from 'lodash.template'
-import { DATA_ID, CLASS_HOST } from './constants'
+import { DATA_ID, CLASS_HOST, CLASS_PRINT_ONLY } from './constants'
 import { RawFootnote } from '.'
 import { TemplateData, Settings } from '../types'
-
-const CLASS_PRINT_ONLY = 'footnote-print-only'
-const CLASS_PROCESSED = 'footnote-processed'
 
 type RefBody = readonly [HTMLElement, HTMLElement]
 type RefBodyData = readonly [HTMLElement, HTMLElement, TemplateData]
@@ -50,18 +47,22 @@ const findRefBody = ({
   allowDuplicates,
   anchorParentSelector,
   footnoteSelector
-}: Settings) => (link: HTMLAnchorElement): RefBody | undefined => {
-  const [_, fragment] = link.href.split('#')
-  const selector = '#' + fragment.replace(/[:.+~*[\]]/g, '\\$&')
-  const related = document.querySelector(
-    allowDuplicates ? selector : `${selector}:not(.${CLASS_PROCESSED})`
-  )
-  const body = related && (related.closest(footnoteSelector) as HTMLElement)
+}: Settings) => {
+  const processed: Element[] = []
 
-  if (body) {
-    body.classList.add(CLASS_PROCESSED)
-    const reference = link.closest(anchorParentSelector) as HTMLElement
-    return [reference || link, body]
+  return (link: HTMLAnchorElement): RefBody | undefined => {
+    const [_, fragment] = link.href.split('#')
+    const selector = '#' + fragment.replace(/[:.+~*[\]]/g, '\\$&')
+    const related = Array.from(document.querySelectorAll(selector)).find(
+      footnote => allowDuplicates || !processed.includes(footnote)
+    )
+    const body = related && (related.closest(footnoteSelector) as HTMLElement)
+
+    if (body) {
+      processed.push(body)
+      const reference = link.closest(anchorParentSelector) as HTMLElement
+      return [reference || link, body]
+    }
   }
 }
 

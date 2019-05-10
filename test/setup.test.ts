@@ -19,7 +19,6 @@ test('creates one button and one host per footnote call', () => {
 
 test('processes each called footnote', () => {
   littlefoot()
-  expect(queryAll('.footnote-processed')).toHaveLength(3)
   expect(queryAll('.footnotes')).toHaveLength(1)
 })
 

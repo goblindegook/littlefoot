@@ -161,7 +161,7 @@ Default: `'footnote'`
 
 ### `footnoteSelector`
 
-The element that contains the footnote content. This element will be hidden and given a `footnote-processed` class once littlefoot has finished with it.
+The element that contains the footnote content. This element will be hidden and given a `footnote-print-only` class once littlefoot has finished with it.
 
 Default: `'li'`
 
