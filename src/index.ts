@@ -1,7 +1,7 @@
 import { Settings } from './types'
 import { createCore } from './core'
 import { createAdapter } from './adapter'
-import { bindEvents } from './adapter/events'
+import { addEventListeners } from './adapter/events'
 import {
   CLASS_CONTENT,
   CLASS_TOOLTIP,
@@ -15,6 +15,7 @@ import {
 type Littlefoot = Readonly<{
   activate: (id: string) => void
   dismiss: (id?: string, delay?: number) => void
+  unmount: () => void
   getSetting: <K extends keyof Settings>(key: K) => Settings[K]
   updateSetting: <K extends keyof Settings>(key: K, value: Settings[K]) => void
 }>
@@ -39,7 +40,7 @@ export function littlefoot(userSettings: Partial<Settings> = {}): Littlefoot {
   const settings = { ...DEFAULT_SETTINGS, ...userSettings }
   const adapter = createAdapter(settings)
   const core = createCore(adapter, settings)
-  bindEvents(core)
+  const removeEventListeners = addEventListeners(core)
 
   return {
     activate(id) {
@@ -56,6 +57,11 @@ export function littlefoot(userSettings: Partial<Settings> = {}): Littlefoot {
       } else {
         core.dismissAll(delay)
       }
+    },
+
+    unmount() {
+      removeEventListeners()
+      core.unmount()
     },
 
     getSetting(key) {

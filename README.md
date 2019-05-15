@@ -267,6 +267,13 @@ Returns the script setting matching the string provided for setting, if such a s
 
 Updates the script setting matching the string provided for setting with newValue, or adds the option if none exists. In either case, the old value for the setting will be returned.
 
+### `unmount()`
+
+This will disable littlefoot and restore the document to its original structure,
+clearing event handlers. Once `unmount()` is called, all other methods provided
+in the littlefoot instance will stop working, requiring you to call the
+`littlefoot()` function again.
+
 ## Changes from Bigfoot.js
 
 In forking the Bigfoot.js project and adapting it for simplicity, I have embraced a [_Decisions, not options_](https://nacin.com/2011/12/18/in-open-source-learn-to-decide/) philosophy. As such, some features provided by Bigfoot.js have been replaced with simpler alternatives, a sensible set of defaults, and in some cases removed altogether.

@@ -8,15 +8,13 @@ import {
   repositionPopover,
   repositionTooltip
 } from './layout'
-import {
-  CLASS_ACTIVE,
-  CLASS_CHANGING,
-  CLASS_CONTENT,
-  CLASS_SCROLLABLE,
-  CLASS_WRAPPER
-} from './constants'
+import { CLASS_CONTENT, CLASS_WRAPPER } from './constants'
 import { Footnote } from '../types'
 import { RawFootnote } from '.'
+
+const CLASS_ACTIVE = 'is-active'
+const CLASS_CHANGING = 'is-changing'
+const CLASS_SCROLLABLE = 'is-scrollable'
 
 function findPopoverContent(popover: HTMLElement): HTMLElement {
   return popover.querySelector<HTMLElement>(`.${CLASS_CONTENT}`)!

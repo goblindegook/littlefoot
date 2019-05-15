@@ -1,15 +1,12 @@
 import throttle from 'lodash.throttle'
 import { off, on } from 'delegated-events'
-import {
-  CLASS_FULLY_SCROLLED,
-  DATA_ID,
-  DATA_POPOVER,
-  DATA_BUTTON
-} from './constants'
+import { DATA_ID, DATA_POPOVER, DATA_BUTTON } from './constants'
 import { Core, FootnoteAction } from '../core'
 import { Footnote } from '../types'
 
 type EventHandler<E extends Event> = (e: E) => void
+
+const CLASS_FULLY_SCROLLED = 'is-fully-scrolled'
 
 function closestPopover(target: Element): Element | null {
   return target.closest(`[${DATA_POPOVER}]`)
@@ -94,7 +91,7 @@ export function bindContentScrollHandler(contentElement: Element): void {
   contentElement.addEventListener('wheel', throttledScrollHandler)
 }
 
-export function bindEvents({
+export function addEventListeners({
   dismissAll,
   get,
   hover,

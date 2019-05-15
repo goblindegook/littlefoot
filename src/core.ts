@@ -12,6 +12,7 @@ export type Core = Readonly<{
   resize: () => void
   toggle: FootnoteAction
   unhover: FootnoteAction
+  unmount: () => void
 }>
 
 function createActivate(adapter: Adapter, settings: Settings): FootnoteAction {
@@ -57,6 +58,8 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
 
   return {
     get: adapter.findFootnote,
+
+    unmount: adapter.unmount,
 
     activate,
 

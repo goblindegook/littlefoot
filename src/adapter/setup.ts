@@ -1,11 +1,13 @@
 import { TemplateExecutor } from 'lodash'
 import template from 'lodash.template'
-import { DATA_ID, CLASS_HOST, CLASS_PRINT_ONLY } from './constants'
+import { DATA_ID, CLASS_PRINT_ONLY } from './constants'
 import { RawFootnote } from '.'
 import { TemplateData, Settings } from '../types'
 
 type RefBody = readonly [HTMLElement, HTMLElement]
 type RefBodyData = readonly [HTMLElement, HTMLElement, TemplateData]
+
+const CLASS_HOST = 'littlefoot-footnote__host'
 
 const setPrintOnly = (el: Element) => el.classList.add(CLASS_PRINT_ONLY)
 
@@ -129,15 +131,15 @@ const addButton = (render: TemplateExecutor) => ([
     'beforebegin',
     `<span class="${CLASS_HOST}">${render(data)}</span>`
   )
-  const host = reference.previousElementSibling!
+  const host = reference.previousElementSibling as HTMLElement
   const button = host.firstElementChild as HTMLElement
-  return { data, reference, body, button, isHovered: false, maxHeight: 0 }
+  return { data, reference, body, button, host, isHovered: false, maxHeight: 0 }
 }
 
 function hideOriginalFootnote([reference, body]: RefBody): RefBody {
   setPrintOnly(reference)
   setPrintOnly(body)
-  hideFootnoteContainer(body.parentNode as HTMLElement)
+  hideFootnoteContainer(body.parentElement as HTMLElement)
   return [reference, body]
 }
 

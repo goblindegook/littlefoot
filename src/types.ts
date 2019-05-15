@@ -51,4 +51,5 @@ export type Adapter = Readonly<{
   forEachFootnote: (callback: FootnoteCallback, selector?: string) => void
   forEachFootnoteExcept: (callback: FootnoteCallback, except: Footnote) => void
   hasHoveredFootnotes: () => boolean
+  unmount: () => void
 }>
