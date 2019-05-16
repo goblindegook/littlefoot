@@ -5,7 +5,7 @@ beforeEach(() => {
   setDocumentBody('default.html')
 })
 
-test('hides original footnote anchor parent', async () => {
+test('hides original footnote anchor parent', () => {
   littlefoot({ anchorParentSelector: 'sup' })
   expect(queryAll('sup.footnote-print-only')).toHaveLength(4)
 })

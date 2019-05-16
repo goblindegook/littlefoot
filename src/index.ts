@@ -29,7 +29,6 @@ const DEFAULT_SETTINGS: Settings = {
   anchorPattern: /(fn|footnote|note)[:\-_\d]/gi,
   dismissDelay: 100,
   dismissOnUnhover: false,
-  footnoteParentClass: 'footnote',
   footnoteSelector: 'li',
   hoverDelay: 250,
   contentTemplate: `<aside class="littlefoot-footnote is-positioned-bottom" id="fncontent:<%= id %>" ${DATA_POPOVER} ${DATA_ID}="<%= id %>" ${DATA_POPOVER_POSITION}="bottom" alt="Footnote <%= number %>" aria-live="polite"><div class="${CLASS_WRAPPER}"><div class="${CLASS_CONTENT}" tabindex="0"><%= content %></div></div><div class="${CLASS_TOOLTIP}"></div></aside>`,

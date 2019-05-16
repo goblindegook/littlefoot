@@ -36,7 +36,7 @@ export function createAdapter(settings: Settings): Adapter {
     },
     unmount: () => {
       rawFootnotes.forEach(({ host }) => {
-        host.parentElement!.removeChild(host)
+        host.parentNode!.removeChild(host)
       })
 
       Array.from(document.querySelectorAll(`.${CLASS_PRINT_ONLY}`)).forEach(

@@ -153,12 +153,6 @@ Determines whether footnotes that were presented when hovering on a footnote but
 
 Default: `false`
 
-### `footnoteParentClass`
-
-The class name for the containing element of the original footnote content. Typically, this will be a class on an `li` that contained the footnote. This string does not have to be an exact match --- the class names will simply be tested for whether they include this string.
-
-Default: `'footnote'`
-
 ### `footnoteSelector`
 
 The element that contains the footnote content. This element will be hidden and given a `footnote-print-only` class once littlefoot has finished with it.
@@ -298,6 +292,7 @@ Users planning to migrate from Bigfoot should therefore be aware of the followin
 
 - `actionOriginalFN` was removed. All original footnotes are only hidden, leaving you free to select footnote DOM elements for removal if you need them gone from the document.
 - `breakpoints` was removed. All size-aware display changes should be declared via CSS `@media` queries.
+- `footnoteParentClass` was removed. After some tests, we couldn't determine its purpose or benefits.
 - `maxWidthRelativeTo` was removed. It was undocumented and will not be missed.
 - `preventPageScroll` was removed. Scrolling inside a scrollable footnote will not trigger a page scroll.
 - `positionContent` was removed. Popover positioning is now always in effect.

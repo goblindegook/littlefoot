@@ -30,19 +30,11 @@ function getLastFootnoteId(): string {
 
 function findFootnoteLinks({
   anchorPattern,
-  anchorParentSelector,
-  footnoteParentClass,
   scope = ''
 }: Settings): readonly HTMLAnchorElement[] {
   return Array.from(
     document.querySelectorAll<HTMLAnchorElement>(scope + ' a[href^="#"]')
-  ).filter(
-    link =>
-      (link.href + link.rel).match(anchorPattern) &&
-      !link.closest(
-        `.${footnoteParentClass}:not(a):not(${anchorParentSelector})`
-      )
-  )
+  ).filter(link => (link.href + link.rel).match(anchorPattern))
 }
 
 const findRefBody = ({

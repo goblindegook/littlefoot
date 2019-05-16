@@ -10,7 +10,6 @@ export type Settings = Readonly<{
   contentTemplate: string
   dismissDelay: number
   dismissOnUnhover: boolean
-  footnoteParentClass: string
   footnoteSelector: string
   hoverDelay: number
   numberResetSelector?: string
