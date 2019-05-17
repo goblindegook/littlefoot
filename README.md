@@ -255,11 +255,11 @@ This will activate the footnote button (and its associated popover) matching the
 
 ### `getSetting(key)`
 
-Returns the script setting matching the string provided for setting, if such a setting exists.
+Returns the instance setting matching the provided string key.
 
 ### `updateSetting(key, value)`
 
-Updates the script setting matching the string provided for setting with newValue, or adds the option if none exists. In either case, the old value for the setting will be returned.
+Updates the littlefoot instance settings for the provided string key with a new value.
 
 ### `unmount()`
 
