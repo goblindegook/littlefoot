@@ -1,5 +1,5 @@
 import { getStyle } from '@pacote/get-style'
-import { CLASS_TOOLTIP, DATA_POPOVER_POSITION } from './constants'
+import { CLASS_TOOLTIP } from './constants'
 
 const CLASS_POSITION_PREFIX = 'is-positioned-'
 const BOTTOM = 'bottom'
@@ -41,11 +41,11 @@ export function getAvailableHeight(footnote: HTMLElement, room: Room): number {
 
 export function repositionPopover(popover: HTMLElement, room: Room): void {
   const isTop = isPopoverOnTop(popover, room)
-  const previous = popover.getAttribute(DATA_POPOVER_POSITION) || BOTTOM
+  const previous = popover.dataset.footnotePosition || BOTTOM
   const position = isTop ? TOP : BOTTOM
 
   if (previous !== position) {
-    popover.setAttribute(DATA_POPOVER_POSITION, position)
+    popover.dataset.footnotePosition = position
     popover.classList.remove(`${CLASS_POSITION_PREFIX}${previous}`)
     popover.classList.add(`${CLASS_POSITION_PREFIX}${position}`)
     popover.style.transformOrigin = `${room.leftRelative * 100}% ${

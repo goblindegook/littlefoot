@@ -5,11 +5,7 @@ import { addEventListeners } from './adapter/events'
 import {
   CLASS_CONTENT,
   CLASS_TOOLTIP,
-  CLASS_WRAPPER,
-  DATA_BUTTON,
-  DATA_ID,
-  DATA_POPOVER_POSITION,
-  DATA_POPOVER
+  CLASS_WRAPPER
 } from './adapter/constants'
 
 type Littlefoot = Readonly<{
@@ -31,8 +27,8 @@ const DEFAULT_SETTINGS: Settings = {
   dismissOnUnhover: false,
   footnoteSelector: 'li',
   hoverDelay: 250,
-  contentTemplate: `<aside class="littlefoot-footnote is-positioned-bottom" id="fncontent:<%= id %>" ${DATA_POPOVER} ${DATA_ID}="<%= id %>" ${DATA_POPOVER_POSITION}="bottom" alt="Footnote <%= number %>" aria-live="polite"><div class="${CLASS_WRAPPER}"><div class="${CLASS_CONTENT}" tabindex="0"><%= content %></div></div><div class="${CLASS_TOOLTIP}"></div></aside>`,
-  buttonTemplate: `<button class="littlefoot-footnote__button littlefoot-footnote__button__ellipsis" id="<%= reference %>" ${DATA_BUTTON} ${DATA_ID}="<%= id %>" data-footnote-number="<%= number %>" title="See Footnote <%= number %>" aria-controls="fncontent:<%= id %>" aria-expanded="false" aria-label="Footnote <%= number %>" rel="footnote"><svg viewbox="0 0 31 6" preserveAspectRatio="xMidYMid"><circle r="3" cx="3" cy="3" fill="white"></circle><circle r="3" cx="15" cy="3" fill="white"></circle><circle r="3" cx="27" cy="3" fill="white"></circle></svg></button>`
+  contentTemplate: `<aside class="littlefoot-footnote is-positioned-bottom" id="fncontent:<%= id %>" alt="Footnote <%= number %>" aria-live="polite"><div class="${CLASS_WRAPPER}"><div class="${CLASS_CONTENT}" tabindex="0"><%= content %></div></div><div class="${CLASS_TOOLTIP}"></div></aside>`,
+  buttonTemplate: `<button class="littlefoot-footnote__button littlefoot-footnote__button__ellipsis" id="<%= reference %>" title="See Footnote <%= number %>" aria-controls="fncontent:<%= id %>" aria-expanded="false" aria-label="Footnote <%= number %>" rel="footnote"><svg viewbox="0 0 31 6" preserveAspectRatio="xMidYMid"><circle r="3" cx="3" cy="3" fill="white"></circle><circle r="3" cx="15" cy="3" fill="white"></circle><circle r="3" cx="27" cy="3" fill="white"></circle></svg></button>`
 }
 
 export function littlefoot(userSettings: Partial<Settings> = {}): Littlefoot {

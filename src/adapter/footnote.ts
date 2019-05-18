@@ -33,6 +33,10 @@ export function createFootnote(footnote: RawFootnote): Footnote {
       footnote.button.insertAdjacentHTML('afterend', render(footnote.data))
       footnote.popover = footnote.button.nextElementSibling as HTMLElement // mutation
 
+      footnote.popover.dataset.footnotePopover = ''
+      footnote.popover.dataset.footnoteId = footnote.data.id
+      footnote.popover.dataset.footnotePosition = 'bottom'
+
       const content = findPopoverContent(footnote.popover)
       footnote.popover.style.maxWidth = `${document.body.clientWidth}px`
       bindContentScrollHandler(content)
@@ -128,6 +132,10 @@ export function createFootnote(footnote: RawFootnote): Footnote {
 
     stopHovering: () => {
       footnote.isHovered = false
+    },
+
+    unmount: () => {
+      footnote.host.parentNode!.removeChild(footnote.host)
     }
   }
 }

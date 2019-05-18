@@ -1,6 +1,6 @@
 import throttle from 'lodash.throttle'
 import { off, on } from 'delegated-events'
-import { DATA_ID, DATA_POPOVER, DATA_BUTTON } from './constants'
+import { DATA_ID } from './constants'
 import { Core, FootnoteAction } from '../core'
 import { Footnote } from '../types'
 
@@ -8,18 +8,18 @@ type EventHandler<E extends Event> = (e: E) => void
 
 const CLASS_FULLY_SCROLLED = 'is-fully-scrolled'
 
-function closestPopover(target: Element): Element | null {
-  return target.closest(`[${DATA_POPOVER}]`)
+function closestPopover(target: Element): HTMLElement | null {
+  return target.closest('[data-footnote-popover]') as HTMLElement | null
 }
 
-function closestFootnoteId(target: Element): string | null {
-  const element = target.closest(`[${DATA_ID}]`)
-  return element && element.getAttribute(DATA_ID)
+function closestFootnoteId(target: Element): string | null | undefined {
+  const element = target.closest(`[${DATA_ID}]`) as HTMLElement | null
+  return element && element.dataset.footnoteId
 }
 
-function closestButtonId(target: Element): string | null {
-  const button = target.closest(`[${DATA_BUTTON}]`)
-  return button && button.getAttribute(DATA_ID)
+function closestButtonId(target: Element): string | null | undefined {
+  const button = target.closest('[data-footnote-button]') as HTMLElement | null
+  return button && button.dataset.footnoteId
 }
 
 function handleTap(

@@ -1,7 +1,6 @@
 import { createFootnote } from './footnote'
-import { createDocumentFootnotes } from './setup'
+import { createDocumentFootnotes, restoreOriginalFootnotes } from './setup'
 import { Adapter, TemplateData, Settings } from '../types'
-import { CLASS_PRINT_ONLY } from './constants'
 
 export type RawFootnote = {
   readonly reference: HTMLElement
@@ -15,8 +14,7 @@ export type RawFootnote = {
 }
 
 export function createAdapter(settings: Settings): Adapter {
-  const rawFootnotes = createDocumentFootnotes(settings)
-  const footnotes = rawFootnotes.map(createFootnote)
+  const footnotes = createDocumentFootnotes(settings).map(createFootnote)
 
   return {
     findFootnote: id => {
@@ -35,13 +33,8 @@ export function createAdapter(settings: Settings): Adapter {
       return footnotes.some(footnote => footnote.isHovered())
     },
     unmount: () => {
-      rawFootnotes.forEach(({ host }) => {
-        host.parentNode!.removeChild(host)
-      })
-
-      Array.from(document.querySelectorAll(`.${CLASS_PRINT_ONLY}`)).forEach(
-        element => element.classList.remove(CLASS_PRINT_ONLY)
-      )
+      footnotes.forEach(footnote => footnote.unmount())
+      restoreOriginalFootnotes()
     }
   }
 }

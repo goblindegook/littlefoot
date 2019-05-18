@@ -41,6 +41,7 @@ export type Footnote = Readonly<{
   stopChanging: () => void
   startHovering: () => void
   stopHovering: () => void
+  unmount: () => void
 }>
 
 type FootnoteCallback = (current: Footnote) => void

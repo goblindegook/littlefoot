@@ -28,7 +28,7 @@ export function getPopover(id: string) {
 }
 
 export function getAllButtons() {
-  return queryAll('button[data-footnote-button]')
+  return queryAll<HTMLInputElement>('button[data-footnote-button]')
 }
 
 export function getAllActiveButtons() {

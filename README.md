@@ -194,9 +194,6 @@ Default:
   alt="Footnote <%= number %>"
   class="littlefoot-footnote is-positioned-bottom"
   id="fncontent:<%= id %>"
-  data-footnote-popover
-  data-footnote-id="<%= id %>"
-  data-footnote-position="bottom"
 >
   <div class="littlefoot-footnote__wrapper">
     <div class="littlefoot-footnote__content">
@@ -226,9 +223,6 @@ Default:
   aria-expanded="false"
   aria-label="Footnote <%= number %>"
   class="littlefoot-footnote__button littlefoot-footnote__button__ellipsis"
-  data-footnote-button
-  data-footnote-id="<%= id %>"
-  data-footnote-number="<%= number %>"
   id="<%= reference %>"
   rel="footnote"
   title="See Footnote <%= number %>"

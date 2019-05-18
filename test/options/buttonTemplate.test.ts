@@ -10,27 +10,33 @@ test('default buttonTemplate', () => {
   littlefoot()
 
   const button = getButton('1')
-  expect(button).toHaveAttribute('id', 'fnref:1')
-  expect(button).toHaveAttribute('data-footnote-id', '1')
-  expect(button).toHaveAttribute('data-footnote-number', '1')
+  expect(button.id).toBe('fnref:1')
+  expect(button.dataset).toMatchObject({
+    footnoteButton: '',
+    footnoteId: '1',
+    footnoteNumber: '1'
+  })
 })
 
 test('custom buttonTemplate', () => {
   littlefoot({
     buttonTemplate: `<button
       title="Footnote <%= number %>"
-      data-id="<%= id %>"
-      data-number="<%= number %>"
-      data-reference="<%= reference %>"
-      data-content="<%= content %>"
+      data-test-content="<%= content %>"
+      data-test-id="<%= id %>"
+      data-test-number="<%= number %>"
+      data-test-reference="<%= reference %>"
     />`
   })
 
   const button = getByTitle(document.body, 'Footnote 1')
-  expect(button).toHaveAttribute('data-id', '1')
-  expect(button).toHaveAttribute('data-number', '1')
-  expect(button).toHaveAttribute('data-reference', 'fnref:1')
-  expect(button.getAttribute('data-content')).toContain(
-    `This is the document's only footnote.`
-  )
+  expect(button.dataset).toMatchObject({
+    footnoteButton: '',
+    footnoteId: '1',
+    footnoteNumber: '1',
+    testContent: /This is the document's only footnote\./,
+    testId: '1',
+    testNumber: '1',
+    testReference: 'fnref:1'
+  })
 })
