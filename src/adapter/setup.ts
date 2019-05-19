@@ -1,6 +1,6 @@
 import { TemplateExecutor } from 'lodash'
 import template from 'lodash.template'
-import { DATA_ID } from './constants'
+import { FOOTNOTE_SELECTOR } from './constants'
 import { RawFootnote } from '.'
 import { TemplateData, Settings } from '../types'
 
@@ -23,7 +23,7 @@ function isDefined<T>(value?: T): value is T {
 }
 
 function getNextFootnoteId(): number {
-  const footnotes = document.querySelectorAll<HTMLElement>(`[${DATA_ID}]`)
+  const footnotes = document.querySelectorAll<HTMLElement>(FOOTNOTE_SELECTOR)
   const lastFootnoteId = footnotes.length
     ? footnotes[footnotes.length - 1].dataset.footnoteId!
     : '0'

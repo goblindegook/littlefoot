@@ -41,7 +41,7 @@ export function getAvailableHeight(footnote: HTMLElement, room: Room): number {
 
 export function repositionPopover(popover: HTMLElement, room: Room): void {
   const isTop = isPopoverOnTop(popover, room)
-  const previous = popover.dataset.footnotePosition || BOTTOM
+  const previous = popover.dataset.footnotePosition
   const position = isTop ? TOP : BOTTOM
 
   if (previous !== position) {

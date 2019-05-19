@@ -35,7 +35,6 @@ export function createFootnote(footnote: RawFootnote): Footnote {
 
       footnote.popover.dataset.footnotePopover = ''
       footnote.popover.dataset.footnoteId = footnote.data.id
-      footnote.popover.dataset.footnotePosition = 'bottom'
 
       const content = findPopoverContent(footnote.popover)
       footnote.popover.style.maxWidth = `${document.body.clientWidth}px`

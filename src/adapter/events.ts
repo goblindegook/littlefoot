@@ -1,6 +1,6 @@
 import throttle from 'lodash.throttle'
 import { off, on } from 'delegated-events'
-import { DATA_ID } from './constants'
+import { FOOTNOTE_SELECTOR } from './constants'
 import { Core, FootnoteAction } from '../core'
 import { Footnote } from '../types'
 
@@ -13,7 +13,7 @@ function closestPopover(target: Element): HTMLElement | null {
 }
 
 function closestFootnoteId(target: Element): string | null | undefined {
-  const element = target.closest(`[${DATA_ID}]`) as HTMLElement | null
+  const element = target.closest(FOOTNOTE_SELECTOR) as HTMLElement | null
   return element && element.dataset.footnoteId
 }
 
@@ -113,8 +113,8 @@ export function addEventListeners({
   document.addEventListener('gestureend', throttledReposition)
   window.addEventListener('scroll', throttledReposition)
   window.addEventListener('resize', throttledResize)
-  on('mouseover', `[${DATA_ID}]`, showOnHover)
-  on('mouseout', `[${DATA_ID}]`, hideOnHover)
+  on('mouseover', FOOTNOTE_SELECTOR, showOnHover)
+  on('mouseout', FOOTNOTE_SELECTOR, hideOnHover)
 
   return () => {
     document.removeEventListener('touchend', toggleOnTap)
@@ -123,7 +123,7 @@ export function addEventListeners({
     document.removeEventListener('gestureend', throttledReposition)
     window.removeEventListener('scroll', throttledReposition)
     window.removeEventListener('resize', throttledResize)
-    off('mouseover', `[${DATA_ID}]`, showOnHover)
-    off('mouseout', `[${DATA_ID}]`, hideOnHover)
+    off('mouseover', FOOTNOTE_SELECTOR, showOnHover)
+    off('mouseout', FOOTNOTE_SELECTOR, hideOnHover)
   }
 }
