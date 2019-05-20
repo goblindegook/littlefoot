@@ -17,12 +17,12 @@ export type Core = Readonly<{
 
 function createActivate(adapter: Adapter, settings: Settings): FootnoteAction {
   return (footnote, delay = settings.activateDelay) => {
-    const { activateCallback, contentTemplate } = settings
+    const { activateCallback } = settings
 
     if (!footnote.isChanging()) {
       footnote.startChanging()
 
-      footnote.activate(contentTemplate, activateCallback)
+      footnote.activate(activateCallback)
 
       adapter.forEachFootnote(current => {
         current.reposition()

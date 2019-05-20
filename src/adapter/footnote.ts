@@ -17,24 +17,23 @@ const CLASS_CHANGING = 'is-changing'
 const CLASS_SCROLLABLE = 'is-scrollable'
 
 function findPopoverContent(popover: HTMLElement): HTMLElement {
-  return popover.querySelector<HTMLElement>(`.${CLASS_CONTENT}`)!
+  return popover.querySelector<HTMLElement>('.' + CLASS_CONTENT)!
 }
 
 export function createFootnote(footnote: RawFootnote): Footnote {
   return {
-    getId: () => footnote.data.id,
+    getId: () => footnote.id,
 
-    activate: (contentTemplate, onActivate) => {
+    activate: onActivate => {
       footnote.button.blur()
       footnote.button.setAttribute('aria-expanded', 'true')
       footnote.button.classList.add(CLASS_ACTIVE)
 
-      const render = template(contentTemplate)
-      footnote.button.insertAdjacentHTML('afterend', render(footnote.data))
+      footnote.button.insertAdjacentHTML('afterend', footnote.content)
       footnote.popover = footnote.button.nextElementSibling as HTMLElement // mutation
 
       footnote.popover.dataset.footnotePopover = ''
-      footnote.popover.dataset.footnoteId = footnote.data.id
+      footnote.popover.dataset.footnoteId = footnote.id
 
       const content = findPopoverContent(footnote.popover)
       footnote.popover.style.maxWidth = `${document.body.clientWidth}px`
@@ -104,7 +103,7 @@ export function createFootnote(footnote: RawFootnote): Footnote {
           buttonMarginLeft +
           footnote.button.offsetWidth / 2
         const wrapper = footnote.popover.querySelector<HTMLElement>(
-          `.${CLASS_WRAPPER}`
+          '.' + CLASS_WRAPPER
         )
 
         footnote.popover.style.left = left + 'px'

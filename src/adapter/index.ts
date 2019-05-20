@@ -1,16 +1,17 @@
 import { createFootnote } from './footnote'
 import { createDocumentFootnotes, restoreOriginalFootnotes } from './setup'
-import { Adapter, TemplateData, Settings } from '../types'
+import { Adapter, Settings } from '../types'
 
 export type RawFootnote = {
-  readonly reference: HTMLElement
+  readonly id: string
   readonly body: HTMLElement
   readonly button: HTMLElement
   readonly host: HTMLElement
+  readonly content: string
   maxHeight: number
   isHovered: boolean
+  // TODO: Return immutable, non-nullable popover element from setup instead of content:
   popover?: HTMLElement
-  readonly data: TemplateData
 }
 
 export function createAdapter(settings: Settings): Adapter {

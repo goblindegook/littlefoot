@@ -16,17 +16,9 @@ export type Settings = Readonly<{
   scope?: string
 }>
 
-export type TemplateData = Readonly<{
-  content: string
-  id: string
-  number: number
-  reference: string
-}>
-
 export type Footnote = Readonly<{
   getId: () => string
   activate: (
-    contentTemplate: string,
     onActivate?: (popover: HTMLElement, button: HTMLElement) => void
   ) => void
   dismiss: () => void

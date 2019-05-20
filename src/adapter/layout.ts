@@ -58,7 +58,7 @@ export function repositionTooltip(
   popover: HTMLElement,
   leftRelative = 0.5
 ): void {
-  const tooltip = popover.querySelector<HTMLElement>(`.${CLASS_TOOLTIP}`)
+  const tooltip = popover.querySelector<HTMLElement>('.' + CLASS_TOOLTIP)
 
   if (tooltip) {
     tooltip.style.left = leftRelative * 100 + '%'

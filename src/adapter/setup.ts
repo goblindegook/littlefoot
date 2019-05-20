@@ -2,10 +2,10 @@ import { TemplateExecutor } from 'lodash'
 import template from 'lodash.template'
 import { FOOTNOTE_SELECTOR } from './constants'
 import { RawFootnote } from '.'
-import { TemplateData, Settings } from '../types'
+import { Settings } from '../types'
 
 type RefBody = readonly [HTMLElement, HTMLElement]
-type RefBodyData = readonly [HTMLElement, HTMLElement, TemplateData]
+type RefBodyNumber = readonly [HTMLElement, HTMLElement, number]
 
 const CLASS_PRINT_ONLY = 'footnote-print-only'
 const CLASS_HOST = 'littlefoot-footnote__host'
@@ -39,11 +39,11 @@ function findFootnoteLinks({
   ).filter(link => (link.href + link.rel).match(anchorPattern))
 }
 
-const findRefBody = ({
+function findRefBody({
   allowDuplicates,
   anchorParentSelector,
   footnoteSelector
-}: Settings) => {
+}: Settings) {
   const processed: Element[] = []
 
   return (link: HTMLAnchorElement): RefBody | undefined => {
@@ -80,31 +80,18 @@ function prepareContent(content: string, reference: string): string {
 }
 
 const resetNumbers = (resetSelector: string) => (
-  [ref, body, data]: RefBodyData,
-  n: number,
-  footnotes: RefBodyData[]
-): RefBodyData => {
-  const previousNumber = n ? footnotes[n - 1][2].number : 0
-  return [
-    ref,
-    body,
-    { ...data, number: ref.closest(resetSelector) ? 1 : previousNumber + 1 }
-  ]
+  [ref, body, n]: RefBodyNumber,
+  idx: number,
+  footnotes: RefBodyNumber[]
+): RefBodyNumber => {
+  const previousNumber = n ? footnotes[n - 1][2] : 0
+  return [ref, body, ref.closest(resetSelector) ? 1 : previousNumber + 1]
 }
 
-const templateData = (offset: number) => (
+const footnoteNumbers = (offset: number) => (
   [reference, body]: RefBody,
   idx: number
-): RefBodyData => {
-  const data: TemplateData = {
-    reference: reference.id,
-    content: prepareContent(body.innerHTML, reference.id),
-    id: `${offset + idx}`,
-    number: offset + idx
-  }
-
-  return [reference, body, data]
-}
+): RefBodyNumber => [reference, body, offset + idx]
 
 function hideFootnoteContainer(container: HTMLElement): void {
   const visibleElements = children(container, `:not(.${CLASS_PRINT_ONLY})`)
@@ -116,21 +103,41 @@ function hideFootnoteContainer(container: HTMLElement): void {
   }
 }
 
-const addButton = (render: TemplateExecutor) => ([
-  reference,
-  body,
-  data
-]: RefBodyData): RawFootnote => {
-  reference.insertAdjacentHTML(
-    'beforebegin',
-    `<span class="${CLASS_HOST}">${render(data)}</span>`
-  )
-  const host = reference.previousElementSibling as HTMLElement
-  const button = host.firstElementChild as HTMLElement
-  button.dataset.footnoteButton = ''
-  button.dataset.footnoteId = data.id
-  button.dataset.footnoteNumber = `${data.number}`
-  return { data, reference, body, button, host, isHovered: false, maxHeight: 0 }
+function addButton(buttonTemplate: string, contentTemplate: string) {
+  const renderButton = template(buttonTemplate)
+  const renderContent = template(contentTemplate)
+
+  return ([reference, body, n]: RefBodyNumber, index: number): RawFootnote => {
+    const id = `${index + 1}`
+
+    const templateData = {
+      number: n,
+      id,
+      content: prepareContent(body.innerHTML, reference.id),
+      reference: reference.id
+    }
+
+    reference.insertAdjacentHTML(
+      'beforebegin',
+      `<span class="${CLASS_HOST}">${renderButton(templateData)}</span>`
+    )
+
+    const host = reference.previousElementSibling as HTMLElement
+    const button = host.firstElementChild as HTMLElement
+    button.dataset.footnoteButton = ''
+    button.dataset.footnoteId = id
+    button.dataset.footnoteNumber = `${n}`
+
+    return {
+      id,
+      body,
+      button,
+      host,
+      content: renderContent(templateData),
+      isHovered: false,
+      maxHeight: 0
+    }
+  }
 }
 
 function hideOriginalFootnote([reference, body]: RefBody): RefBody {
@@ -141,20 +148,20 @@ function hideOriginalFootnote([reference, body]: RefBody): RefBody {
 }
 
 export function createDocumentFootnotes(settings: Settings): RawFootnote[] {
-  const { buttonTemplate, numberResetSelector } = settings
+  const { buttonTemplate, contentTemplate, numberResetSelector } = settings
   const offset = getNextFootnoteId()
 
   return findFootnoteLinks(settings)
     .map(findRefBody(settings))
     .filter(isDefined)
     .map(hideOriginalFootnote)
-    .map(templateData(offset))
+    .map(footnoteNumbers(offset))
     .map(numberResetSelector ? resetNumbers(numberResetSelector) : i => i)
-    .map(addButton(template(buttonTemplate)))
+    .map(addButton(buttonTemplate, contentTemplate))
 }
 
 export function restoreOriginalFootnotes(): void {
-  Array.from(document.querySelectorAll(`.${CLASS_PRINT_ONLY}`)).forEach(
+  Array.from(document.querySelectorAll('.' + CLASS_PRINT_ONLY)).forEach(
     element => element.classList.remove(CLASS_PRINT_ONLY)
   )
 }
