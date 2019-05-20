@@ -4,7 +4,6 @@ import { Adapter, Settings } from '../types'
 
 export type RawFootnote = {
   readonly id: string
-  readonly body: HTMLElement
   readonly button: HTMLElement
   readonly host: HTMLElement
   readonly content: string

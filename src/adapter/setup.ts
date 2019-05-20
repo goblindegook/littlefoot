@@ -103,40 +103,32 @@ function hideFootnoteContainer(container: HTMLElement): void {
   }
 }
 
-function addButton(buttonTemplate: string, contentTemplate: string) {
+function insertFootnote(buttonTemplate: string, contentTemplate: string) {
   const renderButton = template(buttonTemplate)
   const renderContent = template(contentTemplate)
 
   return ([reference, body, n]: RefBodyNumber, index: number): RawFootnote => {
     const id = `${index + 1}`
-
-    const templateData = {
+    const data = {
       number: n,
       id,
       content: prepareContent(body.innerHTML, reference.id),
       reference: reference.id
     }
+    const content = renderContent(data)
 
     reference.insertAdjacentHTML(
       'beforebegin',
-      `<span class="${CLASS_HOST}">${renderButton(templateData)}</span>`
+      `<span class="${CLASS_HOST}">${renderButton(data)}</span>`
     )
 
-    const host = reference.previousElementSibling as HTMLElement
+    const host = reference.previousElementSibling! as HTMLElement
     const button = host.firstElementChild as HTMLElement
     button.dataset.footnoteButton = ''
     button.dataset.footnoteId = id
     button.dataset.footnoteNumber = `${n}`
 
-    return {
-      id,
-      body,
-      button,
-      host,
-      content: renderContent(templateData),
-      isHovered: false,
-      maxHeight: 0
-    }
+    return { id, button, host, content, isHovered: false, maxHeight: 0 }
   }
 }
 
@@ -145,6 +137,12 @@ function hideOriginalFootnote([reference, body]: RefBody): RefBody {
   setPrintOnly(body)
   hideFootnoteContainer(body.parentElement as HTMLElement)
   return [reference, body]
+}
+
+export function restoreOriginalFootnotes(): void {
+  Array.from(document.querySelectorAll('.' + CLASS_PRINT_ONLY)).forEach(
+    element => element.classList.remove(CLASS_PRINT_ONLY)
+  )
 }
 
 export function createDocumentFootnotes(settings: Settings): RawFootnote[] {
@@ -157,11 +155,5 @@ export function createDocumentFootnotes(settings: Settings): RawFootnote[] {
     .map(hideOriginalFootnote)
     .map(footnoteNumbers(offset))
     .map(numberResetSelector ? resetNumbers(numberResetSelector) : i => i)
-    .map(addButton(buttonTemplate, contentTemplate))
-}
-
-export function restoreOriginalFootnotes(): void {
-  Array.from(document.querySelectorAll('.' + CLASS_PRINT_ONLY)).forEach(
-    element => element.classList.remove(CLASS_PRINT_ONLY)
-  )
+    .map(insertFootnote(buttonTemplate, contentTemplate))
 }
