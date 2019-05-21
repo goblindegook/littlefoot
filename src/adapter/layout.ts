@@ -1,5 +1,8 @@
 import { getStyle } from '@pacote/get-style'
-import { CLASS_TOOLTIP } from './constants'
+
+export const CLASS_CONTENT = 'littlefoot-footnote__content'
+export const CLASS_TOOLTIP = 'littlefoot-footnote__tooltip'
+export const CLASS_WRAPPER = 'littlefoot-footnote__wrapper'
 
 const CLASS_POSITION_PREFIX = 'is-positioned-'
 const BOTTOM = 'bottom'

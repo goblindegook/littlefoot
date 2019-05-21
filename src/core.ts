@@ -6,10 +6,10 @@ export type Core = Readonly<{
   activate: FootnoteAction
   dismiss: FootnoteAction
   dismissAll: (delay?: number) => void
-  get: (id: string) => Footnote | undefined
+  findFootnote: (id: string) => Footnote | undefined
   hover: FootnoteAction
-  reposition: () => void
-  resize: () => void
+  repositionAll: () => void
+  resizeAll: () => void
   toggle: FootnoteAction
   unhover: FootnoteAction
   unmount: () => void
@@ -57,7 +57,7 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
   const dismiss = createDismiss(settings)
 
   return {
-    get: adapter.findFootnote,
+    findFootnote: adapter.findFootnote,
 
     unmount: adapter.unmount,
 
@@ -69,11 +69,11 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
       adapter.forEachFootnote(current => dismiss(current, delay))
     },
 
-    reposition() {
+    repositionAll() {
       adapter.forEachFootnote(current => current.reposition())
     },
 
-    resize() {
+    resizeAll() {
       adapter.forEachFootnote(current => current.resize())
     },
 

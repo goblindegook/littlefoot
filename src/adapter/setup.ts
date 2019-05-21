@@ -1,8 +1,7 @@
-import { TemplateExecutor } from 'lodash'
 import template from 'lodash.template'
-import { FOOTNOTE_SELECTOR } from './constants'
 import { RawFootnote } from '.'
 import { Settings } from '../types'
+import { FOOTNOTE_SELECTOR } from './events'
 
 type RefBody = readonly [HTMLElement, HTMLElement]
 type RefBodyNumber = readonly [HTMLElement, HTMLElement, number]

@@ -6,9 +6,10 @@ import {
   getAvailableRoom,
   getAvailableHeight,
   repositionPopover,
-  repositionTooltip
+  repositionTooltip,
+  CLASS_CONTENT,
+  CLASS_WRAPPER
 } from './layout'
-import { CLASS_CONTENT, CLASS_WRAPPER } from './constants'
 import { Footnote } from '../types'
 import { RawFootnote } from '.'
 

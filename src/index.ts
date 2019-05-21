@@ -2,11 +2,7 @@ import { Settings } from './types'
 import { createCore } from './core'
 import { createAdapter } from './adapter'
 import { addEventListeners } from './adapter/events'
-import {
-  CLASS_CONTENT,
-  CLASS_TOOLTIP,
-  CLASS_WRAPPER
-} from './adapter/constants'
+import { CLASS_WRAPPER, CLASS_CONTENT, CLASS_TOOLTIP } from './adapter/layout'
 
 type Littlefoot = Readonly<{
   activate: (id: string) => void
@@ -39,14 +35,14 @@ export function littlefoot(userSettings: Partial<Settings> = {}): Littlefoot {
 
   return {
     activate(id) {
-      const footnote = core.get(id)
+      const footnote = core.findFootnote(id)
       if (footnote) {
         core.activate(footnote)
       }
     },
 
     dismiss(id, delay) {
-      const footnote = id && core.get(id)
+      const footnote = id && core.findFootnote(id)
       if (footnote) {
         core.dismiss(footnote, delay)
       } else {

@@ -1,10 +1,11 @@
 import throttle from 'lodash.throttle'
 import { off, on } from 'delegated-events'
-import { FOOTNOTE_SELECTOR } from './constants'
 import { Core, FootnoteAction } from '../core'
 import { Footnote } from '../types'
 
 type EventHandler<E extends Event> = (e: E) => void
+
+export const FOOTNOTE_SELECTOR = '[data-footnote-id]'
 
 const CLASS_FULLY_SCROLLED = 'is-fully-scrolled'
 
@@ -40,13 +41,13 @@ function handleTap(
 }
 
 function handleHover(
-  get: (id: string) => Footnote | undefined,
+  findFootnote: (id: string) => Footnote | undefined,
   action: FootnoteAction
 ): EventListener {
   return event => {
     event.preventDefault()
     const id = closestFootnoteId(event.target as HTMLElement)
-    const footnote = id && get(id)
+    const footnote = id && findFootnote(id)
 
     if (footnote) {
       action(footnote)
@@ -93,19 +94,19 @@ export function bindContentScrollHandler(contentElement: Element): void {
 
 export function addEventListeners({
   dismissAll,
-  get,
+  findFootnote,
   hover,
-  reposition,
-  resize,
+  repositionAll,
+  resizeAll,
   toggle,
   unhover
 }: Core): () => void {
-  const toggleOnTap = handleTap(get, toggle, dismissAll)
+  const toggleOnTap = handleTap(findFootnote, toggle, dismissAll)
   const dismissOnEscape = handleEscape(dismissAll)
-  const throttledReposition = throttle(reposition)
-  const throttledResize = throttle(resize)
-  const showOnHover = handleHover(get, hover)
-  const hideOnHover = handleHover(get, unhover)
+  const throttledReposition = throttle(repositionAll)
+  const throttledResize = throttle(resizeAll)
+  const showOnHover = handleHover(findFootnote, hover)
+  const hideOnHover = handleHover(findFootnote, unhover)
 
   document.addEventListener('touchend', toggleOnTap)
   document.addEventListener('click', toggleOnTap)
