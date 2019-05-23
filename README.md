@@ -95,6 +95,30 @@ You'll also want to include styles for the button and popovers, a number of whic
    }
    ```
 
+### Usage from a CDN
+
+Follow these steps to add littlefoot to a plain HTML document without package
+management support. While this method is simpler to use, bear in mind that
+including files from external sources will slightly degrade the page's loading
+performance.
+
+1. Add the required footnote stylesheet at the top of your HTML file, inside the
+   `<head>` tag:
+
+    ```html
+    <link rel="stylesheet" href="https://unpkg.com/littlefoot/dist/littlefoot.css">
+    ```
+
+2. Add the following script tags at the end of the document, just before the
+   closing `</body>` tag:
+
+    ```html
+    <script src="https://unpkg.com/littlefoot/dist/littlefoot.min.js" type="application/javascript"></script>
+    <script type="application/javascript">
+      littlefoot.default()
+    </script>
+    ```
+
 ## Options
 
 The script has many configurable options from having popovers instantiated on hover, to allowing multiple active footnotes, to setting specific timeouts for popover activation and dismissal. It also returns an object that allows you to activate and dismiss popovers.

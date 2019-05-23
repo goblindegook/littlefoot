@@ -3,7 +3,7 @@ import { wait, getByText, getByTitle } from 'dom-testing-library'
 import { join } from 'path'
 import { readFileSync } from 'fs'
 
-export function queryAll<E extends Element>(selector: string): Array<E> {
+export function queryAll<E extends Element>(selector: string): E[] {
   return Array.from(document.querySelectorAll<E>(selector))
 }
 
@@ -19,21 +19,22 @@ export function setDocumentBody(fixture: string): void {
   })
 }
 
-export function getButton(id: string) {
+export function getButton(id: string): HTMLElement {
   return getByTitle(document.body, `See Footnote ${id}`)
 }
 
-export function getPopover(id: string) {
+export function getPopover(id: string): HTMLElement {
   return document.querySelector(`aside[data-footnote-id="${id}"]`)
 }
 
-export function getAllButtons() {
-  return queryAll<HTMLInputElement>('button[data-footnote-button]')
+export function getAllButtons(): HTMLInputElement[] {
+  return queryAll('button[data-footnote-button]')
 }
 
-export function getAllActiveButtons() {
+export function getAllActiveButtons(): HTMLInputElement[] {
   return queryAll('button[data-footnote-button].is-active')
 }
 
-export const waitForChange = async (button: Element) =>
-  wait(() => expect(button).not.toHaveClass('is-changing'))
+export async function waitForChange(button: Element): Promise<void> {
+  await wait(() => expect(button).not.toHaveClass('is-changing'))
+}
