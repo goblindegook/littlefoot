@@ -119,6 +119,8 @@ performance.
     </script>
     ```
 
+See [an example on CodePen](https://codepen.io/goblindegook/pen/oPNzGE).
+
 ## Options
 
 The script has many configurable options from having popovers instantiated on hover, to allowing multiple active footnotes, to setting specific timeouts for popover activation and dismissal. It also returns an object that allows you to activate and dismiss popovers.
