@@ -4,9 +4,9 @@ The project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html
 
 ## [Unreleased]
 
-## [2.0.0-alpha.9] - 2019-06-01
+## [2.0.0] - 2019-06-01
 
-littlefoot has been rewritten in [TypeScript], which enabled a cleaner architecture and slight reduction in bundle size. Testing framework was replaced with [Jest](http://jestjs.io) and [Cypress](http://cypress.io).
+littlefoot has been rewritten in [TypeScript](https://www.typescriptlang.org), which enabled a cleaner architecture and slight reduction in bundle size. Testing framework was replaced with [Jest](http://jestjs.io) and [Cypress](http://cypress.io).
 
 ### Added
 
@@ -83,4 +83,4 @@ Breakpoint methods were dropped in favour of a CSS-based approach. Override the 
 The markup for the footnote button ellipsis changed from three `<svg>` elements with a `<circle>` each to a single `<svg>` element containing all three `<circle>`s.
 
 [Unreleased]: https://github.com/goblindegook/littlefoot/compare/v2.0.0...HEAD
-[2.0.0-alpha.9]: https://github.com/goblindegook/littlefoot/compare/v1.0.9...v2.0.0-alpha.9
+[2.0.0]: https://github.com/goblindegook/littlefoot/compare/v1.0.9...v2.0.0-alpha.9
