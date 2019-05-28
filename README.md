@@ -261,6 +261,29 @@ Default:
 </button>
 ```
 
+#### Numerical footnotes
+
+To display the footnote number instead of an ellipsis, provide the following `buttonTemplate` instead:
+
+```html
+<button
+  aria-controls="fncontent:<%= id %>"
+  aria-expanded="false"
+  aria-label="Footnote <%= number %>"
+  class="littlefoot-footnote__button littlefoot-footnote__button__number"
+  data-footnote-number="<%= number %>"
+  id="<%= reference %>"
+  rel="footnote"
+  title="See Footnote <%= number %>"
+>
+  <svg viewbox="0 0 31 6" preserveAspectRatio="xMidYMid">
+    <circle r="3" cx="3" cy="3" fill="white"></circle>
+    <circle r="3" cx="15" cy="3" fill="white"></circle>
+    <circle r="3" cx="27" cy="3" fill="white"></circle>
+  </svg>
+</button>
+```
+
 ## Methods
 
 Running the function will return an object that can be stored and used to manipulate the footnote buttons/content. The following methods are available in this return object:
@@ -290,56 +313,7 @@ in the littlefoot instance will stop working, requiring you to call the
 
 ## Changes from Bigfoot.js
 
-In forking the Bigfoot.js project and adapting it for simplicity, I have embraced a [_Decisions, not options_](https://nacin.com/2011/12/18/in-open-source-learn-to-decide/) philosophy. As such, some features provided by Bigfoot.js have been replaced with simpler alternatives, a sensible set of defaults, and in some cases removed altogether.
-
-Users planning to migrate from Bigfoot should therefore be aware of the following changes.
-
-### Settings
-
-#### Changed settings
-
-- `allowMultipleFN` was renamed to `allowMultiple`.
-- `anchorParentTagname` was renamed to `anchorParentSelector`.
-- `deleteOnUnhover` was renamed to `dismissOnUnhover`.
-- `footnoteTagname` was renamed to `footnoteSelector`.
-- `popoverCreateDelay` was renamed to `activateDelay`.
-- `popoverDeleteDelay` was renamed to `dismissDelay`.
-- `buttonMarkup` was replaced with `buttonTemplate`. Please refer to the documentation for a list of valid tokens.
-- `contentMarkup` was replaced with `contentTemplate`. Please refer to the documentation for a list of valid tokens.
-- `useFootnoteOnlyOnce` was replaced with `allowDuplicates`. The truth value should be flipped.
-
-#### Removed settings
-
-- `actionOriginalFN` was removed. All original footnotes are only hidden, leaving you free to select footnote DOM elements for removal if you need them gone from the document.
-- `breakpoints` was removed. All size-aware display changes should be declared via CSS `@media` queries.
-- `footnoteParentClass` was removed. After some tests, we couldn't determine its purpose or benefits.
-- `maxWidthRelativeTo` was removed. It was undocumented and will not be missed.
-- `preventPageScroll` was removed. Scrolling inside a scrollable footnote will not trigger a page scroll.
-- `positionContent` was removed. Popover positioning is now always in effect.
-
-### Methods
-
-Methods on the returning object were overhauled, removing breakpoint logic.
-
-#### Changed methods
-
-- `activate()` will no longer return a list of activated popovers, it takes a footnote ID instead of a selector, and no longer allows setting a custom class on the popover element through it. Use `activateCallback` if you wish to manipulate the button or popover elements.
-- `close()` was renamed `dismiss()`, it optionally takes a footnote ID instead of a selector, and will no longer return the list of deactivated buttons.
-
-#### Removed methods
-
-- `addBreakpoint()` and `removeBreakpoint()` were removed, set breakpoint-dependent styles using CSS.
-- The `createPopover()` alias was removed, use `activate()`.
-- The `removePopovers()` alias was removed, use `dismiss()`.
-- `reposition()` and `repositionFeet()` were removed.
-
-### Presentation
-
-All style variants have been folded into a single stylesheet. The footnote popover is now automatically fixed to the bottom of the viewport on smaller screens, and you may alter this behaviour by overriding the CSS.
-
-Breakpoint methods were dropped in favour of a CSS-based approach. Override the stylesheets to customize screen width limits.
-
-The markup for the footnote button ellipsis changed from three `<svg>` elements with a `<circle>` each to a single `<svg>` element containing all three `<circle>`s.
+Consult the [changelog](CHANGELOG.md).
 
 ## License
 
