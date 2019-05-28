@@ -275,13 +275,7 @@ To display the footnote number instead of an ellipsis, provide the following `bu
   id="<%= reference %>"
   rel="footnote"
   title="See Footnote <%= number %>"
->
-  <svg viewbox="0 0 31 6" preserveAspectRatio="xMidYMid">
-    <circle r="3" cx="3" cy="3" fill="white"></circle>
-    <circle r="3" cx="15" cy="3" fill="white"></circle>
-    <circle r="3" cx="27" cy="3" fill="white"></circle>
-  </svg>
-</button>
+/>
 ```
 
 ## Methods
