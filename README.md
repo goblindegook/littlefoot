@@ -313,7 +313,7 @@ in the littlefoot instance will stop working, requiring you to call the
 
 ## Changes from Bigfoot.js
 
-Consult the [changelog](CHANGELOG.md).
+Consult the [changelog](CHANGELOG.md#differences-from-bigfootjs).
 
 ## License
 
