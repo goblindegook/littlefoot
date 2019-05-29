@@ -99,4 +99,15 @@
   text-indent: 0;
 }
 
-@include print-styles;
+@media not print {
+  .footnote-print-only {
+    display: none !important;
+  }
+}
+
+@media print {
+  .littlefoot-footnote,
+  .littlefoot-footnote__button {
+    display: none !important;
+  }
+}
