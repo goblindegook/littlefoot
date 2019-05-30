@@ -7,30 +7,27 @@
   -webkit-font-smoothing: antialiased;
   backface-visibility: hidden;
   background-color: rgba($button-color, $button-standard-opacity);
-  border: 0;
   border-radius: $button-border-radius;
+  border: 0;
   box-sizing: border-box;
+  color: rgba($button-color, 0.5);
   cursor: pointer;
   display: inline-block;
-  font-size: 1rem;
+  font-size: $button-height * 0.9;
+  font-weight: bold;
+  height: $button-height;
   line-height: 1;
   margin: 0 $button-right-margin 0 $button-left-margin;
-  padding: $button-per-side-padding;
+  min-width: 1.5em;
+  padding: 0 $button-horizontal-padding;
   position: relative;
   text-decoration: none;
   top: $button-vertical-offset;
   transition-duration: $popover-transition-default-duration;
   transition-property: $button-transition-properties;
+  transition-timing-function: $popover-transition-default-timing-function;
   vertical-align: middle;
   z-index: 5;
-
-  height: $button-height;
-  min-width: 1.5em;
-  color: rgba($button-color, 0.5);
-  font-size: $button-height;
-  font-weight: bold;
-  transition: color $popover-transition-default-duration
-    $popover-transition-default-timing-function;
 
   &:hover,
   &:focus {
@@ -61,6 +58,8 @@
 }
 
 .littlefoot-footnote__button__ellipsis {
+  padding: $button-vertical-padding $button-horizontal-padding;
+
   svg {
     float: left;
     height: $button-dot-size;
@@ -68,23 +67,20 @@
 }
 
 .littlefoot-footnote__button__number {
-  border-radius: $button-height / 2;
-  height: $button-height;
-  position: relative;
-  width: 1.5em;
-
   &::after {
     color: rgba($button-color, 0.5);
     content: attr(data-footnote-number);
     display: block;
-    font-size: $button-height * 0.6;
+    font-size: $button-height * 0.9;
     font-weight: bold;
     left: 50%;
+    padding: $button-vertical-padding $button-horizontal-padding;
     position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
-    transition: color $popover-transition-default-duration
-      $popover-transition-default-timing-function;
+    transition-duration: $popover-transition-default-duration;
+    transition-property: $button-transition-properties;
+    transition-timing-function: $popover-transition-default-timing-function;
   }
 
   &:hover,

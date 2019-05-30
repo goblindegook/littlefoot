@@ -87,5 +87,6 @@ $button-active-style-delay: 0.1s !default; // Delay before applying .active styl
 
 // OTHER VARIABLES
 
-$button-per-side-padding: 0.5 * ($button-height - $button-dot-size) !default;
-$button-transition-properties: background-color !default;
+$button-horizontal-padding: 0.5em !default;
+$button-vertical-padding: 0.5 * ($button-height - $button-dot-size) !default;
+$button-transition-properties: background-color color !default;
