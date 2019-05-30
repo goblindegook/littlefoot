@@ -7,11 +7,7 @@
 $popover-width: 22em !default; // Ideal width of the popover
 $popover-max-width: 90% !default; // Best as a % to accommodate smaller viewports
 $popover-max-height: 15em !default; // Maximum size of the content area
-$popover-color-background: rgb(
-  250,
-  250,
-  250
-) !default; // Color of the popover background
+$popover-color-background: rgb(250, 250, 250) !default;
 $popover-border-radius: 0.5em !default; // Radius of the corners of the popover
 $popover-border: 1px solid rgb(195, 195, 195) !default; // Border of the popover/ tooltip
 $popover-inactive-opacity: 0 !default; // Opacity of the popover when instantiated/ deactivating
@@ -72,12 +68,12 @@ $popover-transition-default-timing-function: ease !default;
 // KEY VARIABLES
 // =============================================================================
 
-$button-height: 0.95em !default; // The total height of the button
-$button-inner-circle-size: 0.25em !default; // Total height/width of the ellipsis circles
-$button-border-radius: 0.3em !default; // Border radius on the button itself
+$button-height: 1em !default; // The total height of the button
+$button-dot-size: 0.3em !default; // Total height/width of the ellipsis circles
+$button-border-radius: $button-height / 2 !default; // Border radius on the button itself
 $button-left-margin: 0.2em !default; // Margin between the button and the text to its left
 $button-right-margin: 0.1em !default; // Margin between the button and the text to its right
-$button-vertical-adjust: -0.1em !default; // Pushes the buttons along the vertical axis to align it with text as desired
+$button-vertical-offset: -0.1em !default; // Pushes the buttons along the vertical axis to align it with text as desired
 
 $button-color: rgb(110, 110, 110) !default; // Background color of the button
 $button-hovered-color: $button-color !default; // Background color of the button when being hovered
@@ -91,6 +87,5 @@ $button-active-style-delay: 0.1s !default; // Delay before applying .active styl
 
 // OTHER VARIABLES
 
-$button-total-padding: $button-height - $button-inner-circle-size !default;
-$button-per-side-padding: 0.5 * $button-total-padding !default;
+$button-per-side-padding: 0.5 * ($button-height - $button-dot-size) !default;
 $button-transition-properties: background-color !default;

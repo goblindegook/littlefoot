@@ -1,29 +1,36 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <link href="../../dist/littlefoot.css" rel="stylesheet">
-</head>
-<body>
-<article>
-  <p>
-    This paragraph is footnoted.
-    <sup id="fnref:1"><a href="#fn:1">[1]</a></sup>
-  </p>
-  <aside class="footnotes">
-    <hr>
-    <ol>
-      <li id="fn:1">
-        <p>
-          This is a footnote. It contains <a href="/cypress/fixtures/ok.html">a link</a>.
-          <a href="#fnref:1" class="reversefootnote">&#160;&#8617;</a>
-        </p>
-      </li>
-    </ol>
-  </aside>
-</article>
-<script src="../../dist/littlefoot.js" type="application/javascript"></script>
-<script type="application/javascript">
-  littlefoot.littlefoot()
-</script>
-</body>
+  <head>
+    <link href="../../dist/littlefoot.css" rel="stylesheet" />
+  </head>
+  <body>
+    <article>
+      <p>
+        This paragraph is footnoted.
+        <sup id="fnref:1"><a href="#fn:1">[1]</a></sup>
+      </p>
+      <aside class="footnotes">
+        <hr />
+        <ol>
+          <li id="fn:1">
+            <p>
+              This is a footnote. It contains
+              <a href="/cypress/fixtures/ok.html">a link</a>.
+              <a href="#fnref:1" class="reversefootnote">&#160;&#8617;</a>
+            </p>
+          </li>
+        </ol>
+      </aside>
+    </article>
+    <script
+      src="../../dist/littlefoot.js"
+      type="application/javascript"
+    ></script>
+    <script type="application/javascript">
+      littlefoot.littlefoot({
+        // buttonTemplate: `<button class="littlefoot-footnote__button" id="<%= reference %>" title="See Footnote <%= number %>" aria-controls="fncontent:<%= id %>" aria-expanded="false" aria-label="Footnote <%= number %>" rel="footnote"><%= number %></button>`
+        // buttonTemplate: `<button class="littlefoot-footnote__button littlefoot-footnote__button__number" id="<%= reference %>" title="See Footnote <%= number %>" aria-controls="fncontent:<%= id %>" aria-expanded="false" aria-label="Footnote <%= number %>" rel="footnote"></button>`
+      })
+    </script>
+  </body>
 </html>

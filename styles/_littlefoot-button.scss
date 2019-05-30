@@ -7,26 +7,35 @@
   -webkit-font-smoothing: antialiased;
   backface-visibility: hidden;
   background-color: rgba($button-color, $button-standard-opacity);
-  border-radius: $button-border-radius;
   border: 0;
+  border-radius: $button-border-radius;
   box-sizing: border-box;
   cursor: pointer;
   display: inline-block;
   font-size: 1rem;
-  line-height: 0;
+  line-height: 1;
   margin: 0 $button-right-margin 0 $button-left-margin;
   padding: $button-per-side-padding;
   position: relative;
   text-decoration: none;
-  top: $button-vertical-adjust;
+  top: $button-vertical-offset;
   transition-duration: $popover-transition-default-duration;
   transition-property: $button-transition-properties;
   vertical-align: middle;
   z-index: 5;
 
+  height: $button-height;
+  min-width: 1.5em;
+  color: rgba($button-color, 0.5);
+  font-size: $button-height;
+  font-weight: bold;
+  transition: color $popover-transition-default-duration
+    $popover-transition-default-timing-function;
+
   &:hover,
   &:focus {
     background-color: rgba($button-hovered-color, $button-hovered-opacity);
+    color: white;
   }
 
   &:active {
@@ -34,10 +43,12 @@
       $button-activating-color,
       $button-activating-opacity
     );
+    color: white;
   }
 
   &.is-active {
     background-color: rgba($button-active-color, $button-active-opacity);
+    color: white;
     transition-delay: $button-active-style-delay;
   }
 
@@ -51,9 +62,8 @@
 
 .littlefoot-footnote__button__ellipsis {
   svg {
-    display: inline-block;
     float: left;
-    height: $button-inner-circle-size;
+    height: $button-dot-size;
   }
 }
 
