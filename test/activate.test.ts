@@ -1,4 +1,4 @@
-import { wait, fireEvent } from 'dom-testing-library'
+import { wait, fireEvent } from '@testing-library/dom'
 import {
   setDocumentBody,
   waitForChange,

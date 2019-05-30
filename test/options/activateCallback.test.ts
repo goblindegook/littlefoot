@@ -1,4 +1,4 @@
-import { fireEvent } from 'dom-testing-library'
+import { fireEvent } from '@testing-library/dom'
 import { setDocumentBody, getPopover, getButton } from '../helper'
 import littlefoot from '../../src'
 

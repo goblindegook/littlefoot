@@ -1,4 +1,4 @@
-import { fireEvent, queryByText } from 'dom-testing-library'
+import { fireEvent, queryByText } from '@testing-library/dom'
 import {
   setDocumentBody,
   waitForChange,

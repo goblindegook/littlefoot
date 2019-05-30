@@ -1,5 +1,5 @@
 import 'jest-dom/extend-expect'
-import { wait, getByText, getByTitle } from 'dom-testing-library'
+import { wait, getByText, getByTitle } from '@testing-library/dom'
 import { join } from 'path'
 import { readFileSync } from 'fs'
 

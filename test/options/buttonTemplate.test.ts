@@ -1,4 +1,4 @@
-import { getByTitle } from 'dom-testing-library'
+import { getByTitle } from '@testing-library/dom'
 import { setDocumentBody, getButton } from '../helper'
 import littlefoot from '../../src'
 

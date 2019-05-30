@@ -1,6 +1,6 @@
 import littlefoot from '../../src'
 import { setDocumentBody, waitForChange, getButton } from '../helper'
-import { fireEvent } from 'dom-testing-library'
+import { fireEvent } from '@testing-library/dom'
 
 test('activate on hover', async () => {
   setDocumentBody('single.html')
