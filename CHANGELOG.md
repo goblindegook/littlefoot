@@ -4,7 +4,7 @@ The project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html
 
 ## [Unreleased]
 
-## [2.0.0] - 2019-06-01
+## [2.0.0] - 2019-06-10
 
 littlefoot has been rewritten in [TypeScript](https://www.typescriptlang.org), which enabled a cleaner architecture and slight reduction in bundle size. Browser compatibility is not as extensive as with 1.0.x, and I will no longer support older versions of Internet Explorer.
 
@@ -26,6 +26,7 @@ Testing framework was replaced with [Jest](http://jestjs.io) and [Cypress](http:
 
 ### Removed
 
+- The `scope` setting was removed, you may still use the `footnoteSelector` setting to limit the scope of footnotes to enhance.
 - The purpose of the `footnoteParentClass` setting ported over from Bigfoot wasn't clear, and it did not appear to change behaviour, so it was removed.
 - The `.activate()` method no longer takes a custom class name to be added to the popover, as the feature is redundant. You can manipulate both the button and the popover upoon activation via the `activateCallback` setting.
 - The `footnote-processed` class is no longer applied to processed footnotes. Only the `footnote-print-only` is used now.
@@ -44,7 +45,7 @@ Users planning to migrate from Bigfoot should therefore be aware of the followin
 - `allowMultipleFN` was renamed to `allowMultiple`.
 - `anchorParentTagname` was renamed to `anchorParentSelector`.
 - `deleteOnUnhover` was renamed to `dismissOnUnhover`.
-- `footnoteTagname` was renamed to `footnoteSelector`.
+- `scope` and `footnoteTagname` were folded into `footnoteSelector`.
 - `popoverCreateDelay` was renamed to `activateDelay`.
 - `popoverDeleteDelay` was renamed to `dismissDelay`.
 - `buttonMarkup` was replaced with `buttonTemplate`. Please refer to the documentation for a list of valid tokens.

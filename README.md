@@ -181,7 +181,7 @@ Default: `false`
 
 ### `footnoteSelector`
 
-The element that contains the footnote content. This element will be hidden and given a `footnote-print-only` class once littlefoot has finished with it.
+A selector string for the elements that contain the footnote content. These elements will be hidden and given a `footnote-print-only` class once littlefoot has finished with them. For example, setting a `'.littlefoot-active li'` selector would enhance only footnotes for those `li` elements with an ancestor that has a class of `littlefoot-active`.
 
 Default: `'li'`
 
@@ -194,12 +194,6 @@ Default: `250`
 ### `numberResetSelector`
 
 A string representing the selector at which you would like the numbering of footnotes to restart at 1. For example, you may be using the numbered style of footnote and wish to have the numbers restart for each `<article>` on your main page with a class of `'article-container'` In this case, you would set this option to `'article.article-container'` (or an equivalent CSS selector). Leaving the option undefined will simply number all footnotes on a given page sequentially.
-
-Default: `undefined`
-
-### `scope`
-
-If any truthy value is provided, only the footnotes within the scope you define will be affected by the script. The scope should be a selector string, as you would typically use in jQuery. For example, setting a scope of `'.littlefoot-active'` would work only on those elements with an ancestor that has a class of `littlefoot-active`.
 
 Default: `undefined`
 

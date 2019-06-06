@@ -6,12 +6,12 @@ test('allows getting default values', () => {
 })
 
 test('allows getting provided values', () => {
-  const instance = littlefoot({ scope: 'main' })
-  expect(instance.getSetting('scope')).toBe('main')
+  const instance = littlefoot({ footnoteSelector: 'main li' })
+  expect(instance.getSetting('footnoteSelector')).toBe('main li')
 })
 
 test('allows setting values', () => {
   const lf = littlefoot()
-  lf.updateSetting('scope', 'article')
-  expect(lf.getSetting('scope')).toBe('article')
+  lf.updateSetting('footnoteSelector', 'article li')
+  expect(lf.getSetting('footnoteSelector')).toBe('article li')
 })
