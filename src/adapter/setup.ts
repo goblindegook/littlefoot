@@ -29,11 +29,12 @@ function getNextFootnoteId(): number {
   return 1 + parseInt(lastFootnoteId, 10)
 }
 
-function findFootnoteLinks(
-  anchorPattern: RegExp
-): readonly HTMLAnchorElement[] {
+function findFootnoteLinks({
+  anchorPattern,
+  scope = ''
+}: Settings): readonly HTMLAnchorElement[] {
   return Array.from(
-    document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]')
+    document.querySelectorAll<HTMLAnchorElement>(scope + ' a[href^="#"]')
   ).filter(link => (link.href + link.rel).match(anchorPattern))
 }
 
@@ -147,7 +148,7 @@ export function createDocumentFootnotes(settings: Settings): RawFootnote[] {
   const { buttonTemplate, contentTemplate, numberResetSelector } = settings
   const offset = getNextFootnoteId()
 
-  return findFootnoteLinks(settings.anchorPattern)
+  return findFootnoteLinks(settings)
     .map(findRefBody(settings))
     .filter(isDefined)
     .map(hideOriginalFootnote)

@@ -13,6 +13,7 @@ export type Settings = Readonly<{
   footnoteSelector: string
   hoverDelay: number
   numberResetSelector?: string
+  scope?: string
 }>
 
 export type Footnote = Readonly<{
