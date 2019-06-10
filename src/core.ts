@@ -1,4 +1,9 @@
-import { Footnote, Adapter, Settings } from './types'
+import { Footnote, Settings } from './types'
+
+export type Adapter = Readonly<{
+  footnotes: () => readonly Footnote[]
+  unmount: () => void
+}>
 
 export type FootnoteAction = (footnote: Footnote, delay?: number) => void
 
@@ -6,7 +11,7 @@ export type Core = Readonly<{
   activate: FootnoteAction
   dismiss: FootnoteAction
   dismissAll: (delay?: number) => void
-  findFootnote: (id: string) => Footnote | undefined
+  findById: (id: string) => Footnote | undefined
   hover: FootnoteAction
   repositionAll: () => void
   resizeAll: () => void
@@ -24,7 +29,7 @@ function createActivate(adapter: Adapter, settings: Settings): FootnoteAction {
 
       footnote.activate(activateCallback)
 
-      adapter.forEachFootnote(current => {
+      adapter.footnotes().forEach(current => {
         current.reposition()
         current.resize()
       })
@@ -57,24 +62,25 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
   const dismiss = createDismiss(settings)
 
   return {
-    findFootnote: adapter.findFootnote,
-
-    unmount: adapter.unmount,
-
     activate,
 
     dismiss,
 
+    findById: id =>
+      adapter.footnotes().find(footnote => footnote.getId() === id),
+
+    unmount: adapter.unmount,
+
     dismissAll(delay = settings.dismissDelay) {
-      adapter.forEachFootnote(current => dismiss(current, delay))
+      adapter.footnotes().forEach(current => dismiss(current, delay))
     },
 
     repositionAll() {
-      adapter.forEachFootnote(current => current.reposition())
+      adapter.footnotes().forEach(current => current.reposition())
     },
 
     resizeAll() {
-      adapter.forEachFootnote(current => current.resize())
+      adapter.footnotes().forEach(current => current.resize())
     },
 
     toggle(footnote) {
@@ -83,7 +89,10 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
         dismiss(footnote)
       } else {
         if (!allowMultiple) {
-          adapter.forEachFootnoteExcept(dismiss, footnote)
+          adapter
+            .footnotes()
+            .filter(current => current.getId() !== footnote.getId())
+            .forEach(dismiss)
         }
         activate(footnote)
       }
@@ -94,7 +103,10 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
       footnote.startHovering()
       if (activateOnHover && !footnote.isActive()) {
         if (!allowMultiple) {
-          adapter.forEachFootnoteExcept(dismiss, footnote)
+          adapter
+            .footnotes()
+            .filter(current => current.getId() !== footnote.getId())
+            .forEach(dismiss)
         }
         activate(footnote, delay)
       }
@@ -105,8 +117,8 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
       footnote.stopHovering()
       if (dismissOnUnhover) {
         setTimeout(() => {
-          if (!adapter.hasHoveredFootnotes()) {
-            adapter.forEachFootnote(dismiss)
+          if (!adapter.footnotes().some(f => f.isHovered())) {
+            adapter.footnotes().forEach(dismiss)
           }
         }, delay)
       }

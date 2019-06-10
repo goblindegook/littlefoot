@@ -35,14 +35,14 @@ export function littlefoot(userSettings: Partial<Settings> = {}): Littlefoot {
 
   return {
     activate(id) {
-      const footnote = core.findFootnote(id)
+      const footnote = core.findById(id)
       if (footnote) {
         core.activate(footnote)
       }
     },
 
     dismiss(id, delay) {
-      const footnote = id && core.findFootnote(id)
+      const footnote = id && core.findById(id)
       if (footnote) {
         core.dismiss(footnote, delay)
       } else {

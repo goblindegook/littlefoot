@@ -1,6 +1,7 @@
 import { createFootnote } from './footnote'
 import { createDocumentFootnotes, restoreOriginalFootnotes } from './setup'
-import { Adapter, Settings } from '../types'
+import { Settings } from '../types'
+import { Adapter } from '../core'
 
 export type RawFootnote = {
   readonly id: string
@@ -17,21 +18,7 @@ export function createAdapter(settings: Settings): Adapter {
   const footnotes = createDocumentFootnotes(settings).map(createFootnote)
 
   return {
-    findFootnote: id => {
-      return footnotes.find(footnote => footnote.getId() === id)
-    },
-    forEachFootnote: callback => {
-      footnotes.forEach(callback)
-    },
-    forEachFootnoteExcept: (callback, except) => {
-      const exceptId = except.getId()
-      footnotes
-        .filter(footnote => footnote.getId() !== exceptId)
-        .forEach(callback)
-    },
-    hasHoveredFootnotes: () => {
-      return footnotes.some(footnote => footnote.isHovered())
-    },
+    footnotes: () => footnotes,
     unmount: () => {
       footnotes.forEach(footnote => footnote.unmount())
       restoreOriginalFootnotes()

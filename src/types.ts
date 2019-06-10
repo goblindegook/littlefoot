@@ -35,13 +35,3 @@ export type Footnote = Readonly<{
   stopHovering: () => void
   unmount: () => void
 }>
-
-type FootnoteCallback = (current: Footnote) => void
-
-export type Adapter = Readonly<{
-  findFootnote: (id: string) => Footnote | undefined
-  forEachFootnote: (callback: FootnoteCallback, selector?: string) => void
-  forEachFootnoteExcept: (callback: FootnoteCallback, except: Footnote) => void
-  hasHoveredFootnotes: () => boolean
-  unmount: () => void
-}>
