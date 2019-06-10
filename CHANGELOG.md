@@ -4,11 +4,13 @@ The project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html
 
 ## [Unreleased]
 
-## [2.0.0] - 2019-06-01
+## [2.0.0] - 2019-06-10
 
 littlefoot has been rewritten in [TypeScript](https://www.typescriptlang.org), which enabled a cleaner architecture and slight reduction in bundle size. Browser compatibility is not as extensive as with 1.0.x, and I will no longer support older versions of Internet Explorer.
 
 Testing framework was replaced with [Jest](http://jestjs.io) and [Cypress](http://cypress.io), and tests were adapted for simplicity.
+
+This version introduces a number of breaking changes to advanced features. If you've been using littlefoot without relying on custom templates or its `.activate()` and `.dismiss()` methods, and don't need to provide support for older browsers, it should be safe to upgrade.
 
 ### Added
 
@@ -16,7 +18,7 @@ Testing framework was replaced with [Jest](http://jestjs.io) and [Cypress](http:
 
 ### Changed
 
-- `.activate()` and `.dismiss()` methods now receive the footnote identifier instead of a selector. The identifier is the sequential ordering of all footnotes on the document, starting from 1.
+- **Breaking change**: `.activate()` and `.dismiss()` methods now receive the footnote identifier instead of a selector. The identifier is the sequential ordering of all footnotes on the document, starting from 1.
 - Default `contentTemplate` and `buttonTemplate` templates include fewer attributes and improperly-defined custom templates are now less likely to break functionality.
 - Improved pixel size calculations to determine popover height.
 - Improved handling of popover hover state when dismissing.
@@ -26,10 +28,10 @@ Testing framework was replaced with [Jest](http://jestjs.io) and [Cypress](http:
 
 ### Removed
 
+- **Breaking change**: The `.activate()` method no longer takes a custom class name to be added to the popover, as the feature is redundant. You can manipulate both the button and the popover upoon activation via the `activateCallback` setting.
+- **Breaking change**: The `footnote-processed` class is no longer applied to processed footnotes. Only the `footnote-print-only` is used now.
+- **Breaking change**: The `is-hover` class is no longer applied to hovered footnotes.
 - The purpose of the `footnoteParentClass` setting ported over from Bigfoot wasn't clear, and it did not appear to change behaviour, so it was removed.
-- The `.activate()` method no longer takes a custom class name to be added to the popover, as the feature is redundant. You can manipulate both the button and the popover upoon activation via the `activateCallback` setting.
-- The `footnote-processed` class is no longer applied to processed footnotes. Only the `footnote-print-only` is used now.
-- The `is-hover` class is no longer applied to hovered footnotes.
 
 ## Differences from Bigfoot.js
 
