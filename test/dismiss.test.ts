@@ -90,17 +90,15 @@ test('dismiss all footnotes when calling .dismiss()', async () => {
 })
 
 test('dismiss footnote when pressing the Escape key', async () => {
-  const KEY_ESCAPE = '27'
   littlefoot(TEST_SETTINGS)
 
   const button = getButton('1')
   fireEvent.click(button)
   await waitForChange(button)
 
-  fireEvent.keyUp(document.body, { key: KEY_ESCAPE })
-
-  expect(button).toHaveClass('is-changing')
+  fireEvent.keyUp(document.body, { keyCode: 27 })
   await waitForChange(button)
+
   expect(button).not.toHaveClass('is-active')
 })
 

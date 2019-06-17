@@ -55,7 +55,8 @@ function handleHover(
 }
 
 function handleEscape(fn: () => void): EventHandler<KeyboardEvent> {
-  return event => event.key === '27' && fn()
+  // tslint:disable-next-line:deprecation
+  return event => event.keyCode === 27 && fn()
 }
 
 function scrollHandler(event: WheelEvent): void {
