@@ -3,12 +3,11 @@
 ![version](https://badgen.net/npm/v/littlefoot)
 ![minified + gzip](https://badgen.net/bundlephobia/minzip/littlefoot)
 [![Build Status](https://travis-ci.org/goblindegook/littlefoot.svg?branch=master)](https://travis-ci.org/goblindegook/littlefoot)
-[![Codacy Badge](https://api.codacy.com/project/badge/grade/d3c8383d65d047118fd7201d8028d823)](https://www.codacy.com/app/goblindegook/littlefoot)
 [![Code Climate](https://codeclimate.com/github/goblindegook/littlefoot/badges/gpa.svg)](https://codeclimate.com/github/goblindegook/littlefoot)
 [![Dependency Status](https://david-dm.org/goblindegook/littlefoot.svg)](https://david-dm.org/goblindegook/littlefoot)
 [![devDependency Status](https://david-dm.org/goblindegook/littlefoot/dev-status.svg)](https://david-dm.org/goblindegook/littlefoot#info=devDependencies)
 
-littlefoot is a lightweight JavaScript library that creates exceptional footnotes. It was forked from [Bigfoot.js](https://github.com/lemonmade/bigfoot/) by [Chris Sauve](http://cmsauve.com/projects) and does not require jQuery.
+littlefoot is a lightweight JavaScript library that creates exceptional footnotes. It was forked from [Bigfoot.js](https://github.com/lemonmade/bigfoot/) by [Chris Sauvé](http://cmsauve.com/projects) and does not require jQuery.
 
 Simply include the code on your pages and footnotes will be detected automatically and improved in the following ways:
 
@@ -312,4 +311,4 @@ Consult the [changelog](CHANGELOG.md#differences-from-bigfootjs).
 
 ## License
 
-MIT © [Chris Sauve](http://cmsauve.com/projects) and [Luís Rodrigues](https://goblindegook.com).
+MIT © [Chris Sauvé](http://cmsauve.com/projects) and [Luís Rodrigues](https://goblindegook.com).

@@ -18,7 +18,7 @@ This version introduces a number of breaking changes to advanced features. If yo
 
 ### Changed
 
-- **Breaking change**: `.activate()` and `.dismiss()` methods now receive the footnote identifier instead of a selector. The identifier is the sequential ordering of all footnotes on the document, starting from 1.
+- **Breaking change**: `.activate()` and `.dismiss()` methods now receive the footnote identifier instead of a selector. The identifier is the sequential ordering of all footnotes in the document, starting from 1.
 - Default `contentTemplate` and `buttonTemplate` templates include fewer attributes and improperly-defined custom templates are now less likely to break functionality.
 - Improved pixel size calculations to determine popover height.
 - Improved handling of popover hover state when dismissing.
@@ -28,7 +28,7 @@ This version introduces a number of breaking changes to advanced features. If yo
 
 ### Removed
 
-- **Breaking change**: The `.activate()` method no longer takes a custom class name to be added to the popover, as the feature is redundant. You can manipulate both the button and the popover upoon activation via the `activateCallback` setting.
+- **Breaking change**: The `.activate()` method no longer takes a custom class name to be added to the popover, as the feature is redundant. You can manipulate both the button and the popover upon activation via the `activateCallback` setting.
 - **Breaking change**: The `footnote-processed` class is no longer applied to processed footnotes. Only the `footnote-print-only` is used now.
 - **Breaking change**: The `is-hover` class is no longer applied to hovered footnotes.
 - The purpose of the `footnoteParentClass` setting ported over from Bigfoot wasn't clear, and it did not appear to change behaviour, so it was removed.
