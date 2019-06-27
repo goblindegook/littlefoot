@@ -4,7 +4,7 @@ The project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html
 
 ## [Unreleased]
 
-## [2.0.1] - 2019-06-27
+## [2.0.2] - 2019-06-27
 
 ### Changed
 
@@ -93,5 +93,5 @@ Breakpoint methods were dropped in favour of a CSS-based approach. Override the 
 The markup for the footnote button ellipsis changed from three `<svg>` elements with a `<circle>` each to a single `<svg>` element containing all three `<circle>`s.
 
 [Unreleased]: https://github.com/goblindegook/littlefoot/compare/v2.0.0...HEAD
-[2.0.1]: https://github.com/goblindegook/littlefoot/compare/v2.0.0...v2.0.1
+[2.0.1]: https://github.com/goblindegook/littlefoot/compare/v2.0.0...v2.0.2
 [2.0.0]: https://github.com/goblindegook/littlefoot/compare/v1.0.9...v2.0.0
