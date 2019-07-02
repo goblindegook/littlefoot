@@ -3,7 +3,7 @@ import { createDocumentFootnotes, restoreOriginalFootnotes } from './setup'
 import { Settings } from '../types'
 import { Adapter } from '../core'
 
-export type RawFootnote = {
+export interface RawFootnote {
   readonly id: string
   readonly button: HTMLElement
   readonly host: HTMLElement

@@ -24,7 +24,8 @@ function isDefined<T>(value?: T): value is T {
 function getNextFootnoteId(): number {
   const footnotes = document.querySelectorAll<HTMLElement>(FOOTNOTE_SELECTOR)
   const lastFootnoteId = footnotes.length
-    ? footnotes[footnotes.length - 1].dataset.footnoteId!
+    ? // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      footnotes[footnotes.length - 1].dataset.footnoteId!
     : '0'
   return 1 + parseInt(lastFootnoteId, 10)
 }
@@ -46,7 +47,7 @@ function findRefBody({
   const processed: Element[] = []
 
   return (link: HTMLAnchorElement): RefBody | undefined => {
-    const [_, fragment] = link.href.split('#')
+    const fragment = link.href.split('#')[1]
     const selector = '#' + fragment.replace(/[:.+~*[\]]/g, '\\$&')
     const related = Array.from(document.querySelectorAll(selector)).find(
       footnote => allowDuplicates || !processed.includes(footnote)
@@ -121,7 +122,7 @@ function insertFootnote(buttonTemplate: string, contentTemplate: string) {
       `<span class="${CLASS_HOST}">${renderButton(data)}</span>`
     )
 
-    const host = reference.previousElementSibling! as HTMLElement
+    const host = reference.previousElementSibling as HTMLElement
     const button = host.firstElementChild as HTMLElement
     button.dataset.footnoteButton = ''
     button.dataset.footnoteId = id

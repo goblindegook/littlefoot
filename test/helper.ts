@@ -1,3 +1,4 @@
+/* globals expect */
 import 'jest-dom/extend-expect'
 import { wait, getByText, getByTitle } from '@testing-library/dom'
 import { join } from 'path'

@@ -55,7 +55,6 @@ function handleHover(
 }
 
 function handleEscape(fn: () => void): EventHandler<KeyboardEvent> {
-  // tslint:disable-next-line:deprecation
   return event => event.keyCode === 27 && fn()
 }
 
@@ -87,6 +86,7 @@ function scrollHandler(event: WheelEvent): void {
 }
 
 export function bindContentScrollHandler(contentElement: Element): void {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const throttledScrollHandler = throttle<EventHandler<any>>(scrollHandler)
   contentElement.addEventListener('mousewheel', throttledScrollHandler)
   contentElement.addEventListener('wheel', throttledScrollHandler)

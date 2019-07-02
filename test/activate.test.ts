@@ -1,4 +1,4 @@
-import { wait, fireEvent } from '@testing-library/dom'
+import { fireEvent } from '@testing-library/dom'
 import {
   setDocumentBody,
   waitForChange,
@@ -52,7 +52,7 @@ test('popup ARIA properties', async () => {
   await waitForChange(button)
 
   const popover = document.querySelector('.littlefoot-footnote')
-  expect(button).toHaveAttribute('aria-controls', popover!.id)
+  expect(button).toHaveAttribute('aria-controls', popover.id)
   expect(button).toHaveAttribute('aria-expanded', 'true')
   expect(popover).toHaveAttribute('aria-live', 'polite')
 })

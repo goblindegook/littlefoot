@@ -13,8 +13,9 @@
     "watch:scripts": "watchify --extension=ts -s littlefoot -o dist/littlefoot.js src/index.ts",
     "watch:styles": "node-sass --watch --output-style compressed --include-path styles -o dist/ styles/",
     "format": "prettier --write '{cypress,src,test}/**/*.{js,jsx,ts,tsx,json,css,md}'",
-    "lint": "tslint --project tsconfig.tslint.json '{src,test}/**/*.ts'",
-    "test": "yarn lint && concurrently 'yarn test:types' 'yarn test:jest' 'yarn test:cypress'",
+    "lint": "eslint '{cypress,src,test}/**/*.ts'",
+    "pretest": "yarn lint",
+    "test": "concurrently 'yarn test:types' 'yarn test:jest' 'yarn test:cypress'",
     "test:cypress": "yarn build && cypress run",
     "test:cypress:open": "yarn build && cypress open",
     "test:jest": "jest",
@@ -42,7 +43,7 @@
   "lint-staged": {
     "{src,test}/**/*.ts": [
       "prettier --write",
-      "tslint --project tsconfig.tslint.json",
+      "eslint",
       "git add"
     ],
     "{src,test/**/*.{js,json,css,md}": [
@@ -81,6 +82,16 @@
     "@types/lodash.template": "^4.4.5",
     "@types/lodash.throttle": "^4.1.5",
     "@types/node": "^12.0.0",
+    "@typescript-eslint/eslint-plugin": "^1.11.0",
+    "@typescript-eslint/parser": "^1.11.0",
+    "eslint": "^6.0.1",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.0",
     "babelify": "^10.0.0",
     "browserify": "^16.2.2",
     "concurrently": "^4.0.1",
@@ -92,9 +103,6 @@
     "node-sass": "^4.9.3",
     "prettier": "^1.16.4",
     "tinyify": "^2.5.0",
-    "tslint": "^5.12.1",
-    "tslint-config-prettier": "^1.18.0",
-    "tslint-config-standard": "^8.0.1",
     "typescript": "^3.0.3",
     "uglify-js": "^3.4.9",
     "watchify": "^3.7.0"

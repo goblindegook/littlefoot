@@ -1,4 +1,3 @@
-import template from 'lodash.template'
 import { getStyle } from '@pacote/get-style'
 import { pixels } from '@pacote/pixels'
 import { bindContentScrollHandler } from './events'
@@ -18,6 +17,7 @@ const CLASS_CHANGING = 'is-changing'
 const CLASS_SCROLLABLE = 'is-scrollable'
 
 function findPopoverContent(popover: HTMLElement): HTMLElement {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   return popover.querySelector<HTMLElement>('.' + CLASS_CONTENT)!
 }
 
@@ -68,6 +68,7 @@ export function createFootnote(footnote: RawFootnote): Footnote {
 
     remove: () => {
       if (footnote.popover) {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         footnote.popover.parentNode!.removeChild(footnote.popover)
         delete footnote.popover // mutation
       }
@@ -134,6 +135,7 @@ export function createFootnote(footnote: RawFootnote): Footnote {
     },
 
     unmount: () => {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       footnote.host.parentNode!.removeChild(footnote.host)
     }
   }
