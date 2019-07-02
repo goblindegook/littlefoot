@@ -40,17 +40,15 @@
     }
   },
   "lint-staged": {
-    "linters": {
-      "{src,test}/**/*.ts": [
-        "prettier --write",
-        "tslint --project tsconfig.tslint.json",
-        "git add"
-      ],
-      "{src,test/**/*.{js,json,css,md}": [
-        "prettier --write",
-        "git add"
-      ]
-    }
+    "{src,test}/**/*.ts": [
+      "prettier --write",
+      "tslint --project tsconfig.tslint.json",
+      "git add"
+    ],
+    "{src,test/**/*.{js,json,css,md}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "jest": {
     "testEnvironment": "jsdom",
@@ -87,10 +85,10 @@
     "browserify": "^16.2.2",
     "concurrently": "^4.0.1",
     "cypress": "^3.1.5",
-    "husky": "^2.1.0",
+    "husky": "^3.0.0",
     "jest": "^24.1.0",
     "jest-dom": "^3.1.2",
-    "lint-staged": "^8.1.4",
+    "lint-staged": "^9.0.0",
     "node-sass": "^4.9.3",
     "prettier": "^1.16.4",
     "tinyify": "^2.5.0",
