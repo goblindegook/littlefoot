@@ -207,6 +207,14 @@
   *:last-child {
     margin-bottom: 0;
   }
+
+  .is-scrollable & {
+    padding-bottom: 0;
+
+    *:last-child {
+      margin-bottom: $popover-padding-content-bottom;
+    }
+  }
 }
 
 // A triangular shape pointing towards the footnote button.
