@@ -20,6 +20,7 @@
     "test:cypress:open": "yarn build && cypress open",
     "test:jest": "jest",
     "test:types": "tsc --noEmit",
+    "release": "standard-version",
     "prepublish": "yarn build"
   },
   "browserify": {
@@ -37,6 +38,7 @@
   },
   "husky": {
     "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
       "pre-commit": "lint-staged"
     }
   },
@@ -74,6 +76,8 @@
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-typescript": "^7.1.0",
     "@babel/runtime": "^7.0.0",
+    "@commitlint/cli": "^8.1.0",
+    "@commitlint/config-conventional": "^8.1.0",
     "@cypress/browserify-preprocessor": "^2.0.0",
     "@testing-library/cypress": "^4.0.0",
     "@testing-library/dom": "^5.0.1",
@@ -89,6 +93,7 @@
     "browserify": "^16.2.2",
     "concurrently": "^4.0.1",
     "cypress": "^3.1.5",
+    "cz-conventional-changelog": "3.0.2",
     "eslint": "^6.0.1",
     "eslint-config-prettier": "^6.0.0",
     "eslint-config-standard": "^13.0.1",
@@ -103,6 +108,7 @@
     "lint-staged": "^9.0.0",
     "node-sass": "^4.9.3",
     "prettier": "^1.16.4",
+    "standard-version": "^6.0.1",
     "tinyify": "^2.5.0",
     "typescript": "^3.0.3",
     "uglify-js": "^3.4.9",
@@ -114,5 +120,10 @@
     "delegated-events": "^1.0.10",
     "lodash.template": "^4.4.0",
     "lodash.throttle": "^4.1.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
