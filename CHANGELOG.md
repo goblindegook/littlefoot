@@ -2,21 +2,21 @@
 
 The project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Starting with version 2.0.0, notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [Unreleased](https://github.com/goblindegook/littlefoot/compare/v2.0.3...HEAD)
 
-## [2.0.3] - 2019-07-15
+## [2.0.3](https://github.com/goblindegook/littlefoot/compare/v2.0.2...v2.0.3) (2019-07-15)
 
 ### Changed
 
 - Fixes an issue with the popover's bottom padding on Firefox ([#21](https://github.com/goblindegook/littlefoot/issues/21)).
 
-## [2.0.2] - 2019-06-27
+## [2.0.2](https://github.com/goblindegook/littlefoot/compare/v2.0.0...v2.0.2) (2019-06-27)
 
 ### Changed
 
 - Fixed regression with pressing the Escape key to dismiss footnotes.
 
-## [2.0.0] - 2019-06-10
+## [2.0.0] (2019-06-10)
 
 littlefoot has been rewritten in [TypeScript](https://www.typescriptlang.org), which enabled a cleaner architecture and slight reduction in bundle size. Browser compatibility is not as extensive as with 1.0.x, and I will no longer support older versions of Internet Explorer.
 
@@ -97,8 +97,3 @@ All style variants have been folded into a single stylesheet. The footnote popov
 Breakpoint methods were dropped in favour of a CSS-based approach. Override the stylesheets to customize screen width limits.
 
 The markup for the footnote button ellipsis changed from three `<svg>` elements with a `<circle>` each to a single `<svg>` element containing all three `<circle>`s.
-
-[Unreleased]: https://github.com/goblindegook/littlefoot/compare/v2.0.3...HEAD
-[2.0.3]: https://github.com/goblindegook/littlefoot/compare/v2.0.2...v2.0.3
-[2.0.2]: https://github.com/goblindegook/littlefoot/compare/v2.0.0...v2.0.2
-[2.0.0]: https://github.com/goblindegook/littlefoot/compare/v1.0.9...v2.0.0
