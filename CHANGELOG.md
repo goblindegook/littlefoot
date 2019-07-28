@@ -2,8 +2,6 @@
 
 The project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Starting with version 2.0.0, notable changes to this project will be documented in this file.
 
-## [Unreleased](https://github.com/goblindegook/littlefoot/compare/v2.0.3...HEAD)
-
 ## [2.0.3](https://github.com/goblindegook/littlefoot/compare/v2.0.2...v2.0.3) (2019-07-15)
 
 ### Changed
