@@ -61,6 +61,13 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
   const activate = createActivate(adapter, settings)
   const dismiss = createDismiss(settings)
 
+  function dismissOthers(footnote: Footnote): void {
+    adapter
+      .footnotes()
+      .filter(current => current.getId() !== footnote.getId())
+      .forEach(dismiss)
+  }
+
   return {
     activate,
 
@@ -89,10 +96,7 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
         dismiss(footnote)
       } else {
         if (!allowMultiple) {
-          adapter
-            .footnotes()
-            .filter(current => current.getId() !== footnote.getId())
-            .forEach(dismiss)
+          dismissOthers(footnote)
         }
         activate(footnote)
       }
@@ -103,10 +107,7 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
       footnote.startHovering()
       if (activateOnHover && !footnote.isActive()) {
         if (!allowMultiple) {
-          adapter
-            .footnotes()
-            .filter(current => current.getId() !== footnote.getId())
-            .forEach(dismiss)
+          dismissOthers(footnote)
         }
         activate(footnote, delay)
       }
