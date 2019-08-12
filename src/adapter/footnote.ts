@@ -4,8 +4,7 @@ import {
   getAvailableRoom,
   getAvailableHeight,
   repositionPopover,
-  repositionTooltip,
-  CLASS_WRAPPER
+  repositionTooltip
 } from './layout'
 import { Footnote } from '../types'
 import { FootnoteElements } from './types'
@@ -25,7 +24,8 @@ export function createFootnote({
   button,
   content,
   host,
-  popover
+  popover,
+  wrapper
 }: FootnoteElements): Footnote {
   let isHovered = false
   let maxHeight = 0
@@ -94,13 +94,9 @@ export function createFootnote({
           -room.leftRelative * maxWidth +
           buttonMarginLeft +
           button.offsetWidth / 2
-        const wrapper = popover.querySelector<HTMLElement>('.' + CLASS_WRAPPER)
 
         popover.style.left = left + 'px'
-
-        if (wrapper) {
-          wrapper.style.maxWidth = maxWidth + 'px'
-        }
+        wrapper.style.maxWidth = maxWidth + 'px'
 
         repositionTooltip(popover, room.leftRelative)
       }

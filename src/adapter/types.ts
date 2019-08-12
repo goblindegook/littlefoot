@@ -4,4 +4,5 @@ export type FootnoteElements = Readonly<{
   button: HTMLElement
   popover: HTMLElement
   content: HTMLElement
+  wrapper: HTMLElement
 }>

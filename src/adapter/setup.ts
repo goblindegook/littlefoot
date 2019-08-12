@@ -2,7 +2,7 @@ import template from 'lodash.template'
 import { Settings, Footnote } from '../types'
 import { FootnoteElements } from './types'
 import { createFootnote } from './footnote'
-import { CLASS_CONTENT } from './layout'
+import { CLASS_CONTENT, CLASS_WRAPPER } from './layout'
 import { bindContentScrollHandler } from './events'
 
 type RefBody = readonly [HTMLElement, HTMLElement]
@@ -18,6 +18,19 @@ function queryAll<E extends Element>(
   selector: string
 ): readonly E[] {
   return Array.from(container.querySelectorAll<E>(selector))
+}
+
+function getFirstElementByClass<E extends HTMLElement>(
+  container: HTMLElement,
+  className: string
+): E | null {
+  return container.querySelector<E>('.' + className)
+}
+
+function createElementFromHTML(html: string): HTMLElement {
+  const container = document.createElement('div')
+  container.innerHTML = html
+  return container.firstElementChild as HTMLElement
 }
 
 function children(element: Element, selector?: string): Element[] {
@@ -103,17 +116,6 @@ function hideFootnoteContainer(container: HTMLElement): void {
   }
 }
 
-function createElementFromHTML(html: string): HTMLElement {
-  const container = document.createElement('div')
-  container.innerHTML = html
-  return container.firstElementChild as HTMLElement
-}
-
-function findPopoverContent(popover: HTMLElement): HTMLElement {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  return popover.querySelector<HTMLElement>('.' + CLASS_CONTENT)!
-}
-
 function insertFootnoteElements(
   buttonTemplate: string,
   popoverTemplate: string
@@ -149,10 +151,12 @@ function insertFootnoteElements(
     popover.dataset.footnotePopover = ''
     popover.dataset.footnoteId = id
 
-    const content = findPopoverContent(popover)
+    const wrapper = getFirstElementByClass(popover, CLASS_WRAPPER) || popover
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const content = getFirstElementByClass(popover, CLASS_CONTENT)!
     bindContentScrollHandler(content)
 
-    return { id, button, host, popover, content }
+    return { id, button, host, popover, content, wrapper }
   }
 }
 
@@ -161,12 +165,6 @@ function hideOriginalFootnote([reference, body]: RefBody): RefBody {
   setPrintOnly(body)
   hideFootnoteContainer(body.parentElement as HTMLElement)
   return [reference, body]
-}
-
-export function restoreOriginalFootnotes(): void {
-  queryAll(document, '.' + CLASS_PRINT_ONLY).forEach(element =>
-    element.classList.remove(CLASS_PRINT_ONLY)
-  )
 }
 
 export function createDocumentFootnotes(settings: Settings): Footnote[] {
@@ -189,4 +187,10 @@ export function createDocumentFootnotes(settings: Settings): Footnote[] {
     .map(numberResetSelector ? resetNumbers(numberResetSelector) : i => i)
     .map(insertFootnoteElements(buttonTemplate, contentTemplate))
     .map(createFootnote)
+}
+
+export function restoreOriginalFootnotes(): void {
+  queryAll(document, '.' + CLASS_PRINT_ONLY).forEach(element =>
+    element.classList.remove(CLASS_PRINT_ONLY)
+  )
 }
