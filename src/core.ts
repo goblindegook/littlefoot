@@ -64,7 +64,7 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
   function dismissOthers(footnote: Footnote): void {
     adapter
       .footnotes()
-      .filter(current => current.getId() !== footnote.getId())
+      .filter(current => current.id !== footnote.id)
       .forEach(dismiss)
   }
 
@@ -73,8 +73,7 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
 
     dismiss,
 
-    findById: id =>
-      adapter.footnotes().find(footnote => footnote.getId() === id),
+    findById: id => adapter.footnotes().find(footnote => footnote.id === id),
 
     unmount: adapter.unmount,
 

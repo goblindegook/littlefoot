@@ -1,142 +1,129 @@
 import { getStyle } from '@pacote/get-style'
 import { pixels } from '@pacote/pixels'
-import { bindContentScrollHandler } from './events'
 import {
   getAvailableRoom,
   getAvailableHeight,
   repositionPopover,
   repositionTooltip,
-  CLASS_CONTENT,
   CLASS_WRAPPER
 } from './layout'
 import { Footnote } from '../types'
-import { RawFootnote } from '.'
+import { FootnoteElements } from './types'
 
 const CLASS_ACTIVE = 'is-active'
 const CLASS_CHANGING = 'is-changing'
 const CLASS_SCROLLABLE = 'is-scrollable'
 
-function findPopoverContent(popover: HTMLElement): HTMLElement {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  return popover.querySelector<HTMLElement>('.' + CLASS_CONTENT)!
+function unmountElement(element: HTMLElement): void {
+  if (element.parentNode) {
+    element.parentNode.removeChild(element)
+  }
 }
 
-export function createFootnote(footnote: RawFootnote): Footnote {
+export function createFootnote({
+  id,
+  button,
+  content,
+  host,
+  popover
+}: FootnoteElements): Footnote {
+  let isHovered = false
+  let maxHeight = 0
+
   return {
-    getId: () => footnote.id,
+    id,
 
     activate: onActivate => {
-      footnote.button.blur()
-      footnote.button.setAttribute('aria-expanded', 'true')
-      footnote.button.classList.add(CLASS_ACTIVE)
+      button.blur()
+      button.setAttribute('aria-expanded', 'true')
+      button.classList.add(CLASS_ACTIVE)
 
-      footnote.button.insertAdjacentHTML('afterend', footnote.content)
-      footnote.popover = footnote.button.nextElementSibling as HTMLElement // mutation
+      button.insertAdjacentElement('afterend', popover)
 
-      footnote.popover.dataset.footnotePopover = ''
-      footnote.popover.dataset.footnoteId = footnote.id
-
-      const content = findPopoverContent(footnote.popover)
-      footnote.popover.style.maxWidth = `${document.body.clientWidth}px`
-      bindContentScrollHandler(content)
-
-      const maxHeight = getStyle(content, 'maxHeight')
-      footnote.maxHeight = Math.round(pixels(maxHeight, content)) // mutation
+      popover.style.maxWidth = `${document.body.clientWidth}px`
+      const contentMaxHeight = getStyle(content, 'maxHeight')
+      maxHeight = Math.round(pixels(contentMaxHeight, content))
 
       if (typeof onActivate === 'function') {
-        onActivate(footnote.popover, footnote.button)
+        onActivate(popover, button)
       }
     },
 
     dismiss: () => {
-      footnote.button.blur()
-      footnote.button.setAttribute('aria-expanded', 'false')
-      footnote.button.classList.remove(CLASS_ACTIVE)
+      button.blur()
+      button.setAttribute('aria-expanded', 'false')
+      button.classList.remove(CLASS_ACTIVE)
     },
 
-    isActive: () => footnote.button.classList.contains(CLASS_ACTIVE),
+    isActive: () => button.classList.contains(CLASS_ACTIVE),
 
-    isChanging: () => footnote.button.classList.contains(CLASS_CHANGING),
+    isChanging: () => button.classList.contains(CLASS_CHANGING),
 
-    isHovered: () => footnote.isHovered,
+    isHovered: () => isHovered,
 
     ready: () => {
-      if (footnote.popover) {
-        footnote.popover.classList.add(CLASS_ACTIVE)
-      }
+      popover.classList.add(CLASS_ACTIVE)
     },
 
     remove: () => {
-      if (footnote.popover) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        footnote.popover.parentNode!.removeChild(footnote.popover)
-        delete footnote.popover // mutation
-      }
+      unmountElement(popover)
     },
 
     reposition: () => {
-      if (footnote.popover) {
-        const room = getAvailableRoom(footnote.button)
-        const content = findPopoverContent(footnote.popover)
-        const maxHeight = Math.min(
-          footnote.maxHeight,
-          getAvailableHeight(footnote.popover, room)
+      if (popover.parentElement) {
+        const room = getAvailableRoom(button)
+        const minMaxHeight = Math.min(
+          maxHeight,
+          getAvailableHeight(popover, room)
         )
-        content.style.maxHeight = maxHeight + 'px'
-        repositionPopover(footnote.popover, room)
+        content.style.maxHeight = minMaxHeight + 'px'
+        repositionPopover(popover, room)
 
-        if (footnote.popover.offsetHeight <= content.scrollHeight) {
-          footnote.popover.classList.add(CLASS_SCROLLABLE)
+        if (popover.offsetHeight <= content.scrollHeight) {
+          popover.classList.add(CLASS_SCROLLABLE)
         }
       }
     },
 
     resize: () => {
-      if (footnote.popover) {
-        const room = getAvailableRoom(footnote.button)
-        const content = findPopoverContent(footnote.popover)
+      if (popover.parentElement) {
+        const room = getAvailableRoom(button)
         const maxWidth = content.offsetWidth
-        const buttonMarginLeft = parseInt(
-          getStyle(footnote.button, 'marginLeft'),
-          10
-        )
+        const buttonMarginLeft = parseInt(getStyle(button, 'marginLeft'), 10)
         const left =
           -room.leftRelative * maxWidth +
           buttonMarginLeft +
-          footnote.button.offsetWidth / 2
-        const wrapper = footnote.popover.querySelector<HTMLElement>(
-          '.' + CLASS_WRAPPER
-        )
+          button.offsetWidth / 2
+        const wrapper = popover.querySelector<HTMLElement>('.' + CLASS_WRAPPER)
 
-        footnote.popover.style.left = left + 'px'
+        popover.style.left = left + 'px'
 
         if (wrapper) {
           wrapper.style.maxWidth = maxWidth + 'px'
         }
 
-        repositionTooltip(footnote.popover, room.leftRelative)
+        repositionTooltip(popover, room.leftRelative)
       }
     },
 
     startChanging: () => {
-      footnote.button.classList.add(CLASS_CHANGING)
+      button.classList.add(CLASS_CHANGING)
     },
 
     stopChanging: () => {
-      footnote.button.classList.remove(CLASS_CHANGING)
+      button.classList.remove(CLASS_CHANGING)
     },
 
     startHovering: () => {
-      footnote.isHovered = true
+      isHovered = true
     },
 
     stopHovering: () => {
-      footnote.isHovered = false
+      isHovered = false
     },
 
     unmount: () => {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      footnote.host.parentNode!.removeChild(footnote.host)
+      unmountElement(host)
     }
   }
 }

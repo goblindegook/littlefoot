@@ -17,7 +17,7 @@ export type Settings = Readonly<{
 }>
 
 export type Footnote = Readonly<{
-  getId: () => string
+  id: string
   activate: (
     onActivate?: (popover: HTMLElement, button: HTMLElement) => void
   ) => void
