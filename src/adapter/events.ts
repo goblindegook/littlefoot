@@ -4,7 +4,7 @@ import { Core, FootnoteAction } from '../core'
 
 type EventHandler<E extends Event> = (e: E) => void
 
-export const FOOTNOTE_SELECTOR = '[data-footnote-id]'
+const FOOTNOTE_SELECTOR = '[data-footnote-id]'
 
 const CLASS_FULLY_SCROLLED = 'is-fully-scrolled'
 
@@ -58,38 +58,38 @@ function handleEscape(fn: () => void): EventHandler<KeyboardEvent> {
   return event => event.keyCode === 27 && fn()
 }
 
-function scrollHandler(event: WheelEvent): void {
-  const target = event.currentTarget as HTMLElement
+const scrollHandler = (popover: HTMLElement) => (event: WheelEvent): void => {
+  const content = event.currentTarget as HTMLElement
   const delta = -event.deltaY
-  const height = target.clientHeight
-  const popover = closestPopover(target)
 
-  if (
-    popover &&
-    delta <= 0 &&
-    delta < height + target.scrollTop - target.scrollHeight
-  ) {
-    popover.classList.add(CLASS_FULLY_SCROLLED)
-    target.scrollTop = target.scrollHeight
-    event.preventDefault()
-    return
-  }
-
-  if (popover && delta > 0) {
+  if (delta > 0) {
     popover.classList.remove(CLASS_FULLY_SCROLLED)
-
-    if (target.scrollTop < delta) {
-      target.scrollTop = 0
+    if (content.scrollTop < delta) {
+      content.scrollTop = 0
       event.preventDefault()
     }
   }
+
+  if (
+    delta <= 0 &&
+    delta < content.clientHeight + content.scrollTop - content.scrollHeight
+  ) {
+    popover.classList.add(CLASS_FULLY_SCROLLED)
+    content.scrollTop = content.scrollHeight
+    event.preventDefault()
+  }
 }
 
-export function bindContentScrollHandler(contentElement: Element): void {
+export function bindScrollHandler(
+  content: HTMLElement,
+  popover: HTMLElement
+): void {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const throttledScrollHandler = throttle<EventHandler<any>>(scrollHandler)
-  contentElement.addEventListener('mousewheel', throttledScrollHandler)
-  contentElement.addEventListener('wheel', throttledScrollHandler)
+  const throttledScrollHandler = throttle<EventHandler<any>>(
+    scrollHandler(popover)
+  )
+  content.addEventListener('mousewheel', throttledScrollHandler)
+  content.addEventListener('wheel', throttledScrollHandler)
 }
 
 export function addEventListeners({

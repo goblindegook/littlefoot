@@ -3,7 +3,7 @@ import { Settings, Footnote } from '../types'
 import { FootnoteElements } from './types'
 import { createFootnote } from './footnote'
 import { CLASS_CONTENT, CLASS_WRAPPER } from './layout'
-import { bindContentScrollHandler } from './events'
+import { bindScrollHandler } from './events'
 
 type RefBody = readonly [HTMLElement, HTMLElement]
 type RefBodyNumber = readonly [HTMLElement, HTMLElement, number]
@@ -154,7 +154,7 @@ function insertFootnoteElements(
     const wrapper = getFirstElementByClass(popover, CLASS_WRAPPER) || popover
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const content = getFirstElementByClass(popover, CLASS_CONTENT)!
-    bindContentScrollHandler(content)
+    bindScrollHandler(content, popover)
 
     return { id, button, host, popover, content, wrapper }
   }
