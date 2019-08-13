@@ -4,22 +4,20 @@ import { Core, FootnoteAction } from '../core'
 
 type EventHandler<E extends Event> = (e: E) => void
 
-const FOOTNOTE_SELECTOR = '[data-footnote-id]'
-
+const SELECTOR_BUTTON = '[data-footnote-button]'
+const SELECTOR_FOOTNOTE = '[data-footnote-id]'
+const SELECTOR_POPOVER = '[data-footnote-popover]'
 const CLASS_FULLY_SCROLLED = 'is-fully-scrolled'
 
-function closestPopover(target: Element): HTMLElement | null {
-  return target.closest('[data-footnote-popover]') as HTMLElement | null
+function closest<E extends HTMLElement>(
+  element: HTMLElement,
+  selector: string
+): E | undefined {
+  return (element && (element.closest(selector) as E | null)) || undefined
 }
 
-function closestFootnoteId(target: Element): string | null | undefined {
-  const element = target.closest(FOOTNOTE_SELECTOR) as HTMLElement | null
-  return element && element.dataset.footnoteId
-}
-
-function closestButtonId(target: Element): string | null | undefined {
-  const button = target.closest('[data-footnote-button]') as HTMLElement | null
-  return button && button.dataset.footnoteId
+function getFootnoteId(element?: HTMLElement): string | undefined {
+  return element ? element.dataset.footnoteId : undefined
 }
 
 function handleTap(
@@ -28,12 +26,13 @@ function handleTap(
   dismissAll: () => void
 ): EventListener {
   return event => {
-    const id = closestButtonId(event.target as HTMLElement)
+    const element = closest(event.target as HTMLElement, SELECTOR_BUTTON)
+    const id = getFootnoteId(element)
     const footnote = id && get(id)
 
     if (footnote) {
       action(footnote)
-    } else if (!closestPopover(event.target as HTMLElement)) {
+    } else if (!closest(event.target as HTMLElement, SELECTOR_POPOVER)) {
       dismissAll()
     }
   }
@@ -45,7 +44,8 @@ function handleHover(
 ): EventListener {
   return event => {
     event.preventDefault()
-    const id = closestFootnoteId(event.target as HTMLElement)
+    const element = closest(event.target as HTMLElement, SELECTOR_FOOTNOTE)
+    const id = getFootnoteId(element)
     const footnote = id && get(id)
 
     if (footnote) {
@@ -58,25 +58,27 @@ function handleEscape(fn: () => void): EventHandler<KeyboardEvent> {
   return event => event.keyCode === 27 && fn()
 }
 
-const scrollHandler = (popover: HTMLElement) => (event: WheelEvent): void => {
-  const content = event.currentTarget as HTMLElement
-  const delta = -event.deltaY
+function handleScroll(popover: HTMLElement): EventHandler<WheelEvent> {
+  return (event: WheelEvent): void => {
+    const content = event.currentTarget as HTMLElement
+    const delta = -event.deltaY
 
-  if (delta > 0) {
-    popover.classList.remove(CLASS_FULLY_SCROLLED)
-    if (content.scrollTop < delta) {
-      content.scrollTop = 0
+    if (delta > 0) {
+      popover.classList.remove(CLASS_FULLY_SCROLLED)
+      if (content.scrollTop < delta) {
+        content.scrollTop = 0
+        event.preventDefault()
+      }
+    }
+
+    if (
+      delta <= 0 &&
+      delta < content.clientHeight + content.scrollTop - content.scrollHeight
+    ) {
+      popover.classList.add(CLASS_FULLY_SCROLLED)
+      content.scrollTop = content.scrollHeight
       event.preventDefault()
     }
-  }
-
-  if (
-    delta <= 0 &&
-    delta < content.clientHeight + content.scrollTop - content.scrollHeight
-  ) {
-    popover.classList.add(CLASS_FULLY_SCROLLED)
-    content.scrollTop = content.scrollHeight
-    event.preventDefault()
   }
 }
 
@@ -85,11 +87,9 @@ export function bindScrollHandler(
   popover: HTMLElement
 ): void {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const throttledScrollHandler = throttle<EventHandler<any>>(
-    scrollHandler(popover)
-  )
-  content.addEventListener('mousewheel', throttledScrollHandler)
-  content.addEventListener('wheel', throttledScrollHandler)
+  const throttledScroll = throttle<EventHandler<any>>(handleScroll(popover))
+  content.addEventListener('mousewheel', throttledScroll)
+  content.addEventListener('wheel', throttledScroll)
 }
 
 export function addEventListeners({
@@ -114,8 +114,8 @@ export function addEventListeners({
   document.addEventListener('gestureend', throttledReposition)
   window.addEventListener('scroll', throttledReposition)
   window.addEventListener('resize', throttledResize)
-  on('mouseover', FOOTNOTE_SELECTOR, showOnHover)
-  on('mouseout', FOOTNOTE_SELECTOR, hideOnHover)
+  on('mouseover', SELECTOR_FOOTNOTE, showOnHover)
+  on('mouseout', SELECTOR_FOOTNOTE, hideOnHover)
 
   return () => {
     document.removeEventListener('touchend', toggleOnTap)
@@ -124,7 +124,7 @@ export function addEventListeners({
     document.removeEventListener('gestureend', throttledReposition)
     window.removeEventListener('scroll', throttledReposition)
     window.removeEventListener('resize', throttledResize)
-    off('mouseover', FOOTNOTE_SELECTOR, showOnHover)
-    off('mouseout', FOOTNOTE_SELECTOR, hideOnHover)
+    off('mouseover', SELECTOR_FOOTNOTE, showOnHover)
+    off('mouseout', SELECTOR_FOOTNOTE, hideOnHover)
   }
 }
