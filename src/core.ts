@@ -1,43 +1,55 @@
-import { Footnote, Settings } from './types'
+import { Settings } from './settings'
 
-export type Adapter = Readonly<{
-  footnotes: () => readonly Footnote[]
-  unmount: () => void
+export type Footnote = Readonly<{
+  id: string
+  activate: (
+    onActivate?: (popover: HTMLElement, button: HTMLElement) => void
+  ) => void
+  ready: () => void
+  dismiss: () => void
+  remove: () => void
+  reposition: () => void
+  resize: () => void
+  startHovering: () => void
+  stopHovering: () => void
+  isActive: () => boolean
+  isChanging: () => boolean
+  isHovered: () => boolean
+  destroy: () => void
 }>
 
 export type FootnoteAction = (footnote: Footnote, delay?: number) => void
 
 export type Core = Readonly<{
+  findById: (id: string) => Footnote | undefined
   activate: FootnoteAction
   dismiss: FootnoteAction
-  dismissAll: (delay?: number) => void
-  findById: (id: string) => Footnote | undefined
   hover: FootnoteAction
-  repositionAll: () => void
-  resizeAll: () => void
   toggle: FootnoteAction
   unhover: FootnoteAction
+  dismissAll: (delay?: number) => void // FIXME: Remove?
+  repositionAll: () => void // FIXME: Remove?
+  resizeAll: () => void // FIXME: Remove?
   unmount: () => void
 }>
 
-function createActivate(adapter: Adapter, settings: Settings): FootnoteAction {
+interface Adapter {
+  setup: (settings: Settings) => Footnote[]
+  addListeners: (core: Core) => () => void
+  cleanup: () => void
+}
+
+function createActivate(settings: Settings): FootnoteAction {
   return (footnote, delay = settings.activateDelay) => {
     const { activateCallback } = settings
 
     if (!footnote.isChanging()) {
-      footnote.startChanging()
-
       footnote.activate(activateCallback)
-
-      adapter.footnotes().forEach(current => {
-        current.reposition()
-        current.resize()
-      })
+      footnote.reposition()
+      footnote.resize()
 
       setTimeout(() => {
-        // FIXME: reposition and resize here?
         footnote.ready()
-        footnote.stopChanging()
       }, delay)
     }
   }
@@ -46,47 +58,43 @@ function createActivate(adapter: Adapter, settings: Settings): FootnoteAction {
 function createDismiss(settings: Settings): FootnoteAction {
   return (footnote, delay = settings.dismissDelay) => {
     if (!footnote.isChanging()) {
-      footnote.startChanging()
       footnote.dismiss()
 
       setTimeout(() => {
         footnote.remove()
-        footnote.stopChanging()
       }, delay)
     }
   }
 }
 
 export function createCore(adapter: Adapter, settings: Settings): Core {
-  const activate = createActivate(adapter, settings)
+  const footnotes = adapter.setup(settings)
+  const activate = createActivate(settings)
   const dismiss = createDismiss(settings)
 
   function dismissOthers(footnote: Footnote): void {
-    adapter
-      .footnotes()
-      .filter(current => current.id !== footnote.id)
-      .forEach(dismiss)
+    footnotes.filter(current => current.id !== footnote.id).forEach(dismiss)
   }
 
-  return {
-    activate,
+  const core: Core = {
+    activate, // FIXME: Does not dismiss others when allowMultiple = false
 
     dismiss,
 
-    findById: id => adapter.footnotes().find(footnote => footnote.id === id),
+    findById: id => footnotes.find(footnote => footnote.id === id),
 
-    unmount: adapter.unmount,
+    unmount() {},
 
     dismissAll(delay = settings.dismissDelay) {
-      adapter.footnotes().forEach(current => dismiss(current, delay))
+      footnotes.forEach(current => dismiss(current, delay))
     },
 
     repositionAll() {
-      adapter.footnotes().forEach(current => current.reposition())
+      footnotes.forEach(current => current.reposition())
     },
 
     resizeAll() {
-      adapter.footnotes().forEach(current => current.resize())
+      footnotes.forEach(current => current.resize())
     },
 
     toggle(footnote) {
@@ -117,11 +125,22 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
       footnote.stopHovering()
       if (dismissOnUnhover) {
         setTimeout(() => {
-          if (!adapter.footnotes().some(f => f.isHovered())) {
-            adapter.footnotes().forEach(dismiss)
+          if (!footnotes.some(f => f.isHovered())) {
+            footnotes.forEach(dismiss)
           }
         }, delay)
       }
+    }
+  }
+
+  const removeListeners = adapter.addListeners(core)
+
+  return {
+    ...core,
+    unmount() {
+      removeListeners()
+      footnotes.forEach(footnote => footnote.destroy())
+      adapter.cleanup()
     }
   }
 }

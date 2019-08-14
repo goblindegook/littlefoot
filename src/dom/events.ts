@@ -20,7 +20,7 @@ function getFootnoteId(element?: HTMLElement): string | undefined {
   return element ? element.dataset.footnoteId : undefined
 }
 
-function handleTap(
+function handleTouch(
   get: Core['findById'],
   action: FootnoteAction,
   dismissAll: () => void
@@ -92,7 +92,7 @@ export function bindScrollHandler(
   content.addEventListener('wheel', throttledScroll)
 }
 
-export function addEventListeners({
+export function addListeners({
   dismissAll,
   findById,
   hover,
@@ -101,15 +101,15 @@ export function addEventListeners({
   toggle,
   unhover
 }: Core): () => void {
-  const toggleOnTap = handleTap(findById, toggle, dismissAll)
+  const toggleOnTouch = handleTouch(findById, toggle, dismissAll)
   const dismissOnEscape = handleEscape(dismissAll)
   const throttledReposition = throttle(repositionAll)
   const throttledResize = throttle(resizeAll)
   const showOnHover = handleHover(findById, hover)
   const hideOnHover = handleHover(findById, unhover)
 
-  document.addEventListener('touchend', toggleOnTap)
-  document.addEventListener('click', toggleOnTap)
+  document.addEventListener('touchend', toggleOnTouch)
+  document.addEventListener('click', toggleOnTouch)
   document.addEventListener('keyup', dismissOnEscape)
   document.addEventListener('gestureend', throttledReposition)
   window.addEventListener('scroll', throttledReposition)
@@ -118,8 +118,8 @@ export function addEventListeners({
   on('mouseout', SELECTOR_FOOTNOTE, hideOnHover)
 
   return () => {
-    document.removeEventListener('touchend', toggleOnTap)
-    document.removeEventListener('click', toggleOnTap)
+    document.removeEventListener('touchend', toggleOnTouch)
+    document.removeEventListener('click', toggleOnTouch)
     document.removeEventListener('keyup', dismissOnEscape)
     document.removeEventListener('gestureend', throttledReposition)
     window.removeEventListener('scroll', throttledReposition)

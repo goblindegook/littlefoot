@@ -1,8 +1,7 @@
-import { Settings } from './types'
+import { Settings, DEFAULT_SETTINGS } from './settings'
 import { createCore } from './core'
-import { createAdapter } from './adapter'
-import { addEventListeners } from './adapter/events'
-import { CLASS_WRAPPER, CLASS_CONTENT, CLASS_TOOLTIP } from './adapter/layout'
+import { setup, cleanup } from './dom'
+import { addListeners } from './dom/events'
 
 type Littlefoot = Readonly<{
   activate: (id: string) => void
@@ -12,26 +11,9 @@ type Littlefoot = Readonly<{
   updateSetting: <K extends keyof Settings>(key: K, value: Settings[K]) => void
 }>
 
-const DEFAULT_SETTINGS: Settings = {
-  activateDelay: 100,
-  activateOnHover: false,
-  allowDuplicates: true,
-  allowMultiple: false,
-  anchorParentSelector: 'sup',
-  anchorPattern: /(fn|footnote|note)[:\-_\d]/gi,
-  dismissDelay: 100,
-  dismissOnUnhover: false,
-  footnoteSelector: 'li',
-  hoverDelay: 250,
-  contentTemplate: `<aside class="littlefoot-footnote" id="fncontent:<%= id %>" alt="Footnote <%= number %>" aria-live="polite"><div class="${CLASS_WRAPPER}"><div class="${CLASS_CONTENT}" tabindex="0"><%= content %></div></div><div class="${CLASS_TOOLTIP}"></div></aside>`,
-  buttonTemplate: `<button class="littlefoot-footnote__button littlefoot-footnote__button__ellipsis" id="<%= reference %>" title="See Footnote <%= number %>" aria-controls="fncontent:<%= id %>" aria-expanded="false" aria-label="Footnote <%= number %>" rel="footnote"><svg viewbox="0 0 31 6" preserveAspectRatio="xMidYMid"><circle r="3" cx="3" cy="3" fill="white"></circle><circle r="3" cx="15" cy="3" fill="white"></circle><circle r="3" cx="27" cy="3" fill="white"></circle></svg></button>`
-}
-
 export function littlefoot(userSettings: Partial<Settings> = {}): Littlefoot {
   const settings = { ...DEFAULT_SETTINGS, ...userSettings }
-  const adapter = createAdapter(settings)
-  const core = createCore(adapter, settings)
-  const removeEventListeners = addEventListeners(core)
+  const core = createCore({ setup, addListeners, cleanup }, settings)
 
   return {
     activate(id) {
@@ -51,7 +33,6 @@ export function littlefoot(userSettings: Partial<Settings> = {}): Littlefoot {
     },
 
     unmount() {
-      removeEventListeners()
       core.unmount()
     },
 

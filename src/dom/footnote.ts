@@ -6,8 +6,7 @@ import {
   repositionPopover,
   repositionTooltip
 } from './layout'
-import { Footnote } from '../types'
-import { FootnoteElements } from './types'
+import { Footnote } from '../core'
 
 const CLASS_ACTIVE = 'is-active'
 const CLASS_CHANGING = 'is-changing'
@@ -18,6 +17,15 @@ function unmountElement(element: HTMLElement): void {
     element.parentNode.removeChild(element)
   }
 }
+
+export type FootnoteElements = Readonly<{
+  id: string
+  host: HTMLElement
+  button: HTMLElement
+  popover: HTMLElement
+  content: HTMLElement
+  wrapper: HTMLElement
+}>
 
 export function createFootnote({
   id,
@@ -34,7 +42,7 @@ export function createFootnote({
     id,
 
     activate: onActivate => {
-      button.blur()
+      button.classList.add(CLASS_CHANGING)
       button.setAttribute('aria-expanded', 'true')
       button.classList.add(CLASS_ACTIVE)
 
@@ -50,6 +58,7 @@ export function createFootnote({
     },
 
     dismiss: () => {
+      button.classList.add(CLASS_CHANGING)
       button.blur()
       button.setAttribute('aria-expanded', 'false')
       button.classList.remove(CLASS_ACTIVE)
@@ -63,10 +72,12 @@ export function createFootnote({
 
     ready: () => {
       popover.classList.add(CLASS_ACTIVE)
+      button.classList.remove(CLASS_CHANGING)
     },
 
     remove: () => {
       unmountElement(popover)
+      button.classList.remove(CLASS_CHANGING)
     },
 
     reposition: () => {
@@ -102,14 +113,6 @@ export function createFootnote({
       }
     },
 
-    startChanging: () => {
-      button.classList.add(CLASS_CHANGING)
-    },
-
-    stopChanging: () => {
-      button.classList.remove(CLASS_CHANGING)
-    },
-
     startHovering: () => {
       isHovered = true
     },
@@ -118,7 +121,7 @@ export function createFootnote({
       isHovered = false
     },
 
-    unmount: () => {
+    destroy: () => {
       unmountElement(host)
     }
   }

@@ -1,9 +1,9 @@
 import template from 'lodash.template'
-import { Settings, Footnote } from '../types'
-import { FootnoteElements } from './types'
-import { createFootnote } from './footnote'
+import { Settings } from '../settings'
+import { createFootnote, FootnoteElements } from './footnote'
 import { CLASS_CONTENT, CLASS_WRAPPER } from './layout'
 import { bindScrollHandler } from './events'
+import { Footnote } from '../core'
 
 type RefBody = readonly [HTMLElement, HTMLElement]
 type RefBodyNumber = readonly [HTMLElement, HTMLElement, number]
@@ -116,10 +116,7 @@ function hideFootnoteContainer(container: HTMLElement): void {
   }
 }
 
-function insertFootnoteElements(
-  buttonTemplate: string,
-  popoverTemplate: string
-) {
+function createElements(buttonTemplate: string, popoverTemplate: string) {
   const renderButton = template(buttonTemplate)
   const renderPopover = template(popoverTemplate)
 
@@ -167,7 +164,7 @@ function hideOriginalFootnote([reference, body]: RefBody): RefBody {
   return [reference, body]
 }
 
-export function createDocumentFootnotes(settings: Settings): Footnote[] {
+export function setup(settings: Settings): Footnote[] {
   const {
     allowDuplicates,
     anchorParentSelector,
@@ -185,11 +182,11 @@ export function createDocumentFootnotes(settings: Settings): Footnote[] {
     .map(hideOriginalFootnote)
     .map(footnoteNumbers)
     .map(numberResetSelector ? resetNumbers(numberResetSelector) : i => i)
-    .map(insertFootnoteElements(buttonTemplate, contentTemplate))
+    .map(createElements(buttonTemplate, contentTemplate))
     .map(createFootnote)
 }
 
-export function restoreOriginalFootnotes(): void {
+export function cleanup(): void {
   queryAll(document, '.' + CLASS_PRINT_ONLY).forEach(element =>
     element.classList.remove(CLASS_PRINT_ONLY)
   )
