@@ -18,10 +18,11 @@ export type Footnote = Readonly<{
   destroy: () => void
 }>
 
+export type FootnoteLookup = (id: string) => Footnote | undefined
 export type FootnoteAction = (footnote: Footnote, delay?: number) => void
 
-export type Core = Readonly<{
-  findById: (id: string) => Footnote | undefined
+export type CoreDriver = Readonly<{
+  findById: FootnoteLookup
   activate: FootnoteAction
   dismiss: FootnoteAction
   hover: FootnoteAction
@@ -30,12 +31,16 @@ export type Core = Readonly<{
   dismissAll: (delay?: number) => void // FIXME: Remove?
   repositionAll: () => void // FIXME: Remove?
   resizeAll: () => void // FIXME: Remove?
-  unmount: () => void
 }>
+
+export type Core = CoreDriver &
+  Readonly<{
+    unmount: () => void
+  }>
 
 interface Adapter {
   setup: (settings: Settings) => Footnote[]
-  addListeners: (core: Core) => () => void
+  addListeners: (core: CoreDriver) => () => void
   cleanup: () => void
 }
 
@@ -76,14 +81,12 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
     footnotes.filter(current => current.id !== footnote.id).forEach(dismiss)
   }
 
-  const core: Core = {
+  const core: CoreDriver = {
     activate, // FIXME: Does not dismiss others when allowMultiple = false
 
     dismiss,
 
     findById: id => footnotes.find(footnote => footnote.id === id),
-
-    unmount() {},
 
     dismissAll(delay = settings.dismissDelay) {
       footnotes.forEach(current => dismiss(current, delay))

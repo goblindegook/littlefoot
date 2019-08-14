@@ -1,6 +1,6 @@
 import throttle from 'lodash.throttle'
 import { off, on } from 'delegated-events'
-import { Core, FootnoteAction } from '../core'
+import { CoreDriver, FootnoteAction, FootnoteLookup } from '../core'
 
 type EventHandler<E extends Event> = (e: E) => void
 
@@ -21,7 +21,7 @@ function getFootnoteId(element?: HTMLElement): string | undefined {
 }
 
 function handleTouch(
-  get: Core['findById'],
+  get: FootnoteLookup,
   action: FootnoteAction,
   dismissAll: () => void
 ): EventListener {
@@ -39,7 +39,7 @@ function handleTouch(
 }
 
 function handleHover(
-  get: Core['findById'],
+  get: FootnoteLookup,
   action: FootnoteAction
 ): EventListener {
   return event => {
@@ -100,7 +100,7 @@ export function addListeners({
   resizeAll,
   toggle,
   unhover
-}: Core): () => void {
+}: CoreDriver): () => void {
   const toggleOnTouch = handleTouch(findById, toggle, dismissAll)
   const dismissOnEscape = handleEscape(dismissAll)
   const throttledReposition = throttle(repositionAll)
