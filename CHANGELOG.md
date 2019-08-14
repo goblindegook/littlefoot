@@ -1,6 +1,21 @@
 # Changelog
 
-The project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Starting with version 2.0.0, notable changes to this project will be documented in this file.
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## [3.0.0](https://github.com/goblindegook/littlefoot/compare/v2.0.3...v3.0.0) (2019-08-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* This change removes a partial check for existing footnote-like elements in the
+document, which adjusted the ID of new footnotes to prevent collisions (an unlikely scenario).
+
+### Bug Fixes
+
+* footnote detection whose links contain a URL before the fragment ([2e24293](https://github.com/goblindegook/littlefoot/commit/2e24293)), closes [#24](https://github.com/goblindegook/littlefoot/issues/24)
+
+
+* change internal footnote model, create popovers on setup ([728e485](https://github.com/goblindegook/littlefoot/commit/728e485))
 
 ## [2.0.3](https://github.com/goblindegook/littlefoot/compare/v2.0.2...v2.0.3) (2019-07-15)
 
