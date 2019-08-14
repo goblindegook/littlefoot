@@ -40,3 +40,10 @@ test('sets ARIA attributes on button', () => {
   expect(button).toHaveAttribute('aria-expanded', 'false')
   expect(button).toHaveAttribute('aria-label', 'Footnote 1')
 })
+
+test('sets up footnotes with a URL before the fragment', () => {
+  setDocumentBody('filename.html')
+  littlefoot()
+  expect(queryAll('.littlefoot-footnote__host')).toHaveLength(1)
+  expect(getAllButtons()).toHaveLength(1)
+})
