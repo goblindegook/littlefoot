@@ -41,7 +41,7 @@ export type Core = CoreDriver &
 interface Adapter {
   setup: (settings: Settings) => Footnote[]
   addListeners: (core: CoreDriver) => () => void
-  cleanup: () => void
+  cleanup: (footnotes: Footnote[]) => void
 }
 
 function createActivate(settings: Settings): FootnoteAction {
@@ -142,8 +142,7 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
     ...core,
     unmount() {
       removeListeners()
-      footnotes.forEach(footnote => footnote.destroy())
-      adapter.cleanup()
+      adapter.cleanup(footnotes)
     }
   }
 }

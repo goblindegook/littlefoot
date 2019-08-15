@@ -23,8 +23,12 @@ function queryAll<E extends Element>(
 function getFirstElementByClass<E extends HTMLElement>(
   container: HTMLElement,
   className: string
-): E | null {
-  return container.querySelector<E>('.' + className)
+): E {
+  return (
+    container.querySelector<E>('.' + className) ||
+    (container.firstElementChild as E) ||
+    container
+  )
 }
 
 function createElementFromHTML(html: string): HTMLElement {
@@ -148,9 +152,8 @@ function createElements(buttonTemplate: string, popoverTemplate: string) {
     popover.dataset.footnotePopover = ''
     popover.dataset.footnoteId = id
 
-    const wrapper = getFirstElementByClass(popover, CLASS_WRAPPER) || popover
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const content = getFirstElementByClass(popover, CLASS_CONTENT)!
+    const wrapper = getFirstElementByClass(popover, CLASS_WRAPPER)
+    const content = getFirstElementByClass(popover, CLASS_CONTENT)
     bindScrollHandler(content, popover)
 
     return { id, button, host, popover, content, wrapper }
@@ -186,7 +189,8 @@ export function setup(settings: Settings): Footnote[] {
     .map(createFootnote)
 }
 
-export function cleanup(): void {
+export function cleanup(footnotes: Footnote[]): void {
+  footnotes.forEach(footnote => footnote.destroy())
   queryAll(document, '.' + CLASS_PRINT_ONLY).forEach(element =>
     element.classList.remove(CLASS_PRINT_ONLY)
   )
