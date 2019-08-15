@@ -67,3 +67,9 @@ export function repositionTooltip(
     tooltip.style.left = leftRelative * 100 + '%'
   }
 }
+
+export function unmount(element: HTMLElement): void {
+  if (element.parentNode) {
+    element.parentNode.removeChild(element)
+  }
+}

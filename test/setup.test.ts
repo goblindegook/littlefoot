@@ -1,10 +1,12 @@
+import { fireEvent } from '@testing-library/dom'
 import littlefoot from '../src'
 import {
   setDocumentBody,
   getAllButtons,
   getAllActiveButtons,
   queryAll,
-  getButton
+  getButton,
+  getPopover
 } from './helper'
 
 beforeEach(() => {
@@ -46,4 +48,20 @@ test('sets up footnotes with a URL before the fragment', () => {
   littlefoot()
   expect(queryAll('.littlefoot-footnote__host')).toHaveLength(1)
   expect(getAllButtons()).toHaveLength(1)
+})
+
+test('strips backlink and its enclosing tags from the footnote body', () => {
+  setDocumentBody('backlink.html')
+  littlefoot({ activateDelay: 1 })
+  fireEvent.click(getButton('1'))
+  expect(getPopover('1').querySelector('sup')).toBeNull()
+})
+
+test('wraps bare footnote body in a paragraph tag', () => {
+  setDocumentBody('barebody.html')
+  littlefoot({ activateDelay: 1 })
+  fireEvent.click(getButton('1'))
+  expect(getPopover('1').querySelector('p').innerHTML).toBe(
+    'The original footnote body is bare.'
+  )
 })

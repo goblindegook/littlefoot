@@ -1,12 +1,19 @@
 import template from 'lodash.template'
 import { Settings } from '../settings'
 import { createFootnote, FootnoteElements } from './footnote'
-import { CLASS_CONTENT, CLASS_WRAPPER } from './layout'
+import { CLASS_CONTENT, CLASS_WRAPPER, unmount } from './layout'
 import { bindScrollHandler } from './events'
 import { Footnote } from '../core'
 
+type TemplateData = Readonly<{
+  number: number
+  id: string
+  content: string
+  reference: string
+}>
+
 type RefBody = readonly [HTMLElement, HTMLElement]
-type RefBodyNumber = readonly [HTMLElement, HTMLElement, number]
+type RefData = readonly [HTMLElement, TemplateData]
 
 const CLASS_PRINT_ONLY = 'footnote-print-only'
 const CLASS_HOST = 'littlefoot-footnote__host'
@@ -79,37 +86,6 @@ function findRefBody(
   }
 }
 
-function prepareContent(content: string, reference: string): string {
-  const pattern = reference.trim().replace(/\s+/g, '|')
-  const regex = new RegExp(
-    '(\\s|&nbsp;)*<\\s*a[^#<]*#(' + pattern + ')[^>]*>(.*?)<\\s*/\\s*a>',
-    'g'
-  )
-
-  const preparedContent = content
-    .trim()
-    .replace(regex, '')
-    .replace('[]', '')
-
-  return preparedContent.startsWith('<')
-    ? preparedContent
-    : '<p>' + preparedContent + '</p>'
-}
-
-const resetNumbers = (resetSelector: string) => (
-  [ref, body, n]: RefBodyNumber,
-  idx: number,
-  footnotes: RefBodyNumber[]
-): RefBodyNumber => {
-  const previousNumber = n ? footnotes[n - 1][2] : 0
-  return [ref, body, ref.closest(resetSelector) ? 1 : previousNumber + 1]
-}
-
-const footnoteNumbers = (
-  [reference, body]: RefBody,
-  idx: number
-): RefBodyNumber => [reference, body, 1 + idx]
-
 function hideFootnoteContainer(container: HTMLElement): void {
   const visibleElements = children(container, `:not(.${CLASS_PRINT_ONLY})`)
   const visibleSeparators = visibleElements.filter(el => el.tagName === 'HR')
@@ -120,21 +96,49 @@ function hideFootnoteContainer(container: HTMLElement): void {
   }
 }
 
+function hideOriginalFootnote([reference, body]: RefBody): RefBody {
+  setPrintOnly(reference)
+  setPrintOnly(body)
+  hideFootnoteContainer(body.parentElement as HTMLElement)
+  return [reference, body]
+}
+
+function prepareTemplateData([reference, body]: RefBody, idx: number): RefData {
+  const content = body.cloneNode(true) as HTMLElement
+  queryAll<HTMLElement>(content, '[href$="#' + reference.id + '"]').forEach(
+    unmount
+  )
+  content.innerHTML = content.innerHTML.trim().replace('[]', '')
+  queryAll<HTMLElement>(content, '*:empty').forEach(unmount)
+
+  const data: TemplateData = {
+    id: `${idx + 1}`,
+    number: idx + 1,
+    reference: reference.id,
+    content: content.innerHTML.startsWith('<')
+      ? content.innerHTML
+      : '<p>' + content.innerHTML + '</p>'
+  }
+
+  return [reference, data]
+}
+
+const resetNumbers = (resetSelector: string) => (
+  [ref, data]: RefData,
+  idx: number,
+  footnotes: RefData[]
+): RefData => {
+  const reset = ref.closest(resetSelector)
+  const previousNumber = data.number ? footnotes[data.number - 1][1].number : 0
+  return [ref, { ...data, number: reset ? 1 : previousNumber + 1 }]
+}
+
 function createElements(buttonTemplate: string, popoverTemplate: string) {
   const renderButton = template(buttonTemplate)
   const renderPopover = template(popoverTemplate)
 
-  return (
-    [reference, body, n]: RefBodyNumber,
-    index: number
-  ): FootnoteElements => {
-    const id = `${index + 1}`
-    const data = {
-      number: n,
-      id,
-      content: prepareContent(body.innerHTML, reference.id),
-      reference: reference.id
-    }
+  return ([reference, data]: RefData): FootnoteElements => {
+    const id = data.id
 
     reference.insertAdjacentHTML(
       'beforebegin',
@@ -146,7 +150,7 @@ function createElements(buttonTemplate: string, popoverTemplate: string) {
     const button = host.firstElementChild as HTMLElement
     button.dataset.footnoteButton = ''
     button.dataset.footnoteId = id
-    button.dataset.footnoteNumber = `${n}`
+    button.dataset.footnoteNumber = `${data.number}`
 
     const popover = createElementFromHTML(renderPopover(data))
     popover.dataset.footnotePopover = ''
@@ -158,13 +162,6 @@ function createElements(buttonTemplate: string, popoverTemplate: string) {
 
     return { id, button, host, popover, content, wrapper }
   }
-}
-
-function hideOriginalFootnote([reference, body]: RefBody): RefBody {
-  setPrintOnly(reference)
-  setPrintOnly(body)
-  hideFootnoteContainer(body.parentElement as HTMLElement)
-  return [reference, body]
 }
 
 export function setup(settings: Settings): Footnote[] {
@@ -183,7 +180,7 @@ export function setup(settings: Settings): Footnote[] {
     .map(findRefBody(allowDuplicates, anchorParentSelector, footnoteSelector))
     .filter(isDefined)
     .map(hideOriginalFootnote)
-    .map(footnoteNumbers)
+    .map(prepareTemplateData)
     .map(numberResetSelector ? resetNumbers(numberResetSelector) : i => i)
     .map(createElements(buttonTemplate, contentTemplate))
     .map(createFootnote)

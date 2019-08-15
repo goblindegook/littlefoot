@@ -4,19 +4,14 @@ import {
   getAvailableRoom,
   getAvailableHeight,
   repositionPopover,
-  repositionTooltip
+  repositionTooltip,
+  unmount
 } from './layout'
 import { Footnote } from '../core'
 
 const CLASS_ACTIVE = 'is-active'
 const CLASS_CHANGING = 'is-changing'
 const CLASS_SCROLLABLE = 'is-scrollable'
-
-function unmountElement(element: HTMLElement): void {
-  if (element.parentNode) {
-    element.parentNode.removeChild(element)
-  }
-}
 
 export type FootnoteElements = Readonly<{
   id: string
@@ -76,7 +71,7 @@ export function createFootnote({
     },
 
     remove: () => {
-      unmountElement(popover)
+      unmount(popover)
       button.classList.remove(CLASS_CHANGING)
     },
 
@@ -122,7 +117,7 @@ export function createFootnote({
     },
 
     destroy: () => {
-      unmountElement(host)
+      unmount(host)
     }
   }
 }
