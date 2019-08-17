@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.2](https://github.com/goblindegook/littlefoot/compare/v3.1.1...v3.1.2) (2019-08-17)
+
+
+### Bug Fixes
+
+* improved backlink reference detection ([21941d1](https://github.com/goblindegook/littlefoot/commit/21941d1)), closes [#25](https://github.com/goblindegook/littlefoot/issues/25)
+
 ### [3.1.1](https://github.com/goblindegook/littlefoot/compare/v3.1.0...v3.1.1) (2019-08-17)
 
 
