@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.1.0](https://github.com/goblindegook/littlefoot/compare/v3.0.0...v3.1.0) (2019-08-17)
+
+
+### Bug Fixes
+
+* preserves empty tags and [] in footnote body ([90bee24](https://github.com/goblindegook/littlefoot/commit/90bee24)), closes [#25](https://github.com/goblindegook/littlefoot/issues/25)
+
+
+### Features
+
+* strips backlink and its enclosing tags from the footnote body ([4ff80af](https://github.com/goblindegook/littlefoot/commit/4ff80af)), closes [#25](https://github.com/goblindegook/littlefoot/issues/25)
+
 ## [3.0.0](https://github.com/goblindegook/littlefoot/compare/v2.0.3...v3.0.0) (2019-08-14)
 
 
