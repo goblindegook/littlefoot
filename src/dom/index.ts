@@ -103,13 +103,19 @@ function hideOriginalFootnote([reference, body]: RefBody): RefBody {
   return [reference, body]
 }
 
+function unmountRecursive(element: HTMLElement) {
+  const parent = element.parentElement
+  unmount(element)
+  if (parent && !parent.innerHTML.trim().replace('[]', '')) {
+    unmountRecursive(parent)
+  }
+}
+
 function prepareTemplateData([reference, body]: RefBody, idx: number): RefData {
   const content = body.cloneNode(true) as HTMLElement
   queryAll<HTMLElement>(content, '[href$="#' + reference.id + '"]').forEach(
-    unmount
+    unmountRecursive
   )
-  content.innerHTML = content.innerHTML.trim().replace('[]', '')
-  queryAll<HTMLElement>(content, '*:empty').forEach(unmount)
 
   const data: TemplateData = {
     id: `${idx + 1}`,

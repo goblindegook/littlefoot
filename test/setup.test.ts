@@ -57,11 +57,22 @@ test('strips backlink and its enclosing tags from the footnote body', () => {
   expect(getPopover('1').querySelector('sup')).toBeNull()
 })
 
+test('preserves empty tags and square brackets elsewhere in the footnote body', () => {
+  setDocumentBody('backlink.html')
+  littlefoot({ activateDelay: 1 })
+  fireEvent.click(getButton('1'))
+  const content = getPopover('1').querySelector('.littlefoot-footnote__content')
+  expect(content.querySelector('hr')).not.toBeNull()
+  expect(content).toContainHTML(
+    `This footnote has a backlink wrapped in [] and an element.`
+  )
+})
+
 test('wraps bare footnote body in a paragraph tag', () => {
   setDocumentBody('barebody.html')
   littlefoot({ activateDelay: 1 })
   fireEvent.click(getButton('1'))
-  expect(getPopover('1').querySelector('p').innerHTML).toBe(
+  expect(getPopover('1').querySelector('p')).toContainHTML(
     'The original footnote body is bare.'
   )
 })
