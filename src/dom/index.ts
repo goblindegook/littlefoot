@@ -12,7 +12,7 @@ type TemplateData = Readonly<{
   reference: string
 }>
 
-type RefBody = readonly [HTMLElement, HTMLElement]
+type RefBody = readonly [HTMLElement, string, HTMLElement]
 type RefData = readonly [HTMLElement, TemplateData]
 
 const CLASS_PRINT_ONLY = 'footnote-print-only'
@@ -69,7 +69,6 @@ function findRefBody(
   footnoteSelector: string
 ) {
   const processed: Element[] = []
-
   return (link: HTMLAnchorElement): RefBody | undefined => {
     const fragment = link.href.split('#')[1]
     const selector = '#' + fragment.replace(/[:.+~*[\]]/g, '\\$&')
@@ -80,8 +79,9 @@ function findRefBody(
 
     if (body) {
       processed.push(body)
-      const reference = link.closest(anchorParentSelector) as HTMLElement
-      return [reference || link, body]
+      const parent = link.closest(anchorParentSelector) as HTMLElement | null
+      const reference = parent || link
+      return [reference, reference.id ? reference.id : link.id, body]
     }
   }
 }
@@ -96,14 +96,14 @@ function hideFootnoteContainer(container: HTMLElement): void {
   }
 }
 
-function hideOriginalFootnote([reference, body]: RefBody): RefBody {
+function hideOriginalFootnote([reference, refId, body]: RefBody): RefBody {
   setPrintOnly(reference)
   setPrintOnly(body)
   hideFootnoteContainer(body.parentElement as HTMLElement)
-  return [reference, body]
+  return [reference, refId, body]
 }
 
-function unmountRecursive(element: HTMLElement) {
+function recursiveUnmount(element: HTMLElement) {
   const parent = element.parentElement
   unmount(element)
   const html =
@@ -113,20 +113,23 @@ function unmountRecursive(element: HTMLElement) {
       .replace('&nbsp;', ' ')
       .trim()
   if (parent && !html) {
-    unmountRecursive(parent)
+    recursiveUnmount(parent)
   }
 }
 
-function prepareTemplateData([reference, body]: RefBody, idx: number): RefData {
+function prepareTemplateData(
+  [reference, referenceId, body]: RefBody,
+  idx: number
+): RefData {
   const content = body.cloneNode(true) as HTMLElement
-  queryAll<HTMLElement>(content, '[href$="#' + reference.id + '"]').forEach(
-    unmountRecursive
+  queryAll<HTMLElement>(content, '[href$="#' + referenceId + '"]').forEach(
+    recursiveUnmount
   )
 
   const data: TemplateData = {
     id: `${idx + 1}`,
     number: idx + 1,
-    reference: reference.id,
+    reference: referenceId,
     content: content.innerHTML.startsWith('<')
       ? content.innerHTML
       : '<p>' + content.innerHTML + '</p>'
