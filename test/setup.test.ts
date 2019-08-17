@@ -57,6 +57,13 @@ test('strips backlink and its enclosing tags from the footnote body', () => {
   expect(getPopover('1').querySelector('sup')).toBeNull()
 })
 
+test('strips backlink and its enclosing tags when they contain whitespace', () => {
+  setDocumentBody('backlink.html')
+  littlefoot({ activateDelay: 1 })
+  fireEvent.click(getButton('2'))
+  expect(getPopover('2').querySelector('sup')).toBeNull()
+})
+
 test('preserves empty tags and square brackets elsewhere in the footnote body', () => {
   setDocumentBody('backlink.html')
   littlefoot({ activateDelay: 1 })

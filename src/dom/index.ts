@@ -106,7 +106,13 @@ function hideOriginalFootnote([reference, body]: RefBody): RefBody {
 function unmountRecursive(element: HTMLElement) {
   const parent = element.parentElement
   unmount(element)
-  if (parent && !parent.innerHTML.trim().replace('[]', '')) {
+  const html =
+    parent &&
+    parent.innerHTML
+      .replace('[]', '')
+      .replace('&nbsp;', ' ')
+      .trim()
+  if (parent && !html) {
     unmountRecursive(parent)
   }
 }
