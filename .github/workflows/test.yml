@@ -4,21 +4,20 @@ on: [push]
 
 jobs:
   build:
-  
     runs-on: ubuntu-latest
-    
+
     strategy:
       matrix:
-        node-version: [8, 10, 12, latest]
-        
+        node-version: [8, 10, 12]
+
     steps:
-    - uses: actions/checkout@v1
-    - name: Setup Node ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: Build and test
-      run: |
-        yarn
-        yarn build
-        yarn test
+      - uses: actions/checkout@v1
+      - name: Setup Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Build and test
+        run: |
+          yarn
+          yarn build
+          yarn test
