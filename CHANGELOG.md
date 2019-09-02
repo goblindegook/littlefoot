@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.3](https://github.com/goblindegook/littlefoot/compare/v3.1.2...v3.1.3) (2019-09-02)
+
+
+### Bug Fixes
+
+* use initial font-style in footnote content ([c843357](https://github.com/goblindegook/littlefoot/commit/c843357))
+
 ### [3.1.2](https://github.com/goblindegook/littlefoot/compare/v3.1.1...v3.1.2) (2019-08-17)
 
 
