@@ -6,7 +6,7 @@ context('Scroll', () => {
   })
 
   it('repositions popover above or below the button', () => {
-    cy.getByTitle('See Footnote 1').click()
+    cy.findByTitle('See Footnote 1').click()
 
     cy.scrollTo('top')
     cy.get('.littlefoot-footnote').should(
@@ -24,7 +24,7 @@ context('Scroll', () => {
   })
 
   it('scrolls popover content', () => {
-    cy.getByTitle('See Footnote 1').click()
+    cy.findByTitle('See Footnote 1').click()
 
     cy.get('.littlefoot-footnote')
       .should('have.class', 'is-scrollable')

@@ -6,10 +6,10 @@ context('Scroll', () => {
   })
 
   it('allows clicking links in popovers', () => {
-    cy.getByTitle('See Footnote 1').click()
-    cy.getAllByText('a link')
+    cy.findByTitle('See Footnote 1').click()
+    cy.findAllByText('a link')
       .first()
       .click()
-    cy.getByText('OK')
+    cy.findByText('OK')
   })
 })
