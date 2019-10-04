@@ -27,14 +27,11 @@ function queryAll<E extends Element>(
   return Array.from(container.querySelectorAll<E>(selector))
 }
 
-function getFirstElementByClass<E extends HTMLElement>(
-  container: HTMLElement,
-  className: string
-): E {
+function queryByClass(element: HTMLElement, className: string): HTMLElement {
   return (
-    container.querySelector<E>('.' + className) ||
-    (container.firstElementChild as E) ||
-    container
+    element.querySelector<HTMLElement>('.' + className) ||
+    (element.firstElementChild as HTMLElement) ||
+    element
   )
 }
 
@@ -75,13 +72,13 @@ function findRefBody(
     const related = queryAll(document, selector).find(
       footnote => allowDuplicates || !processed.includes(footnote)
     )
-    const body = related && (related.closest(footnoteSelector) as HTMLElement)
+    const body = related && related.closest<HTMLElement>(footnoteSelector)
 
     if (body) {
       processed.push(body)
-      const parent = link.closest(anchorParentSelector) as HTMLElement | null
+      const parent = link.closest<HTMLElement>(anchorParentSelector)
       const reference = parent || link
-      return [reference, reference.id ? reference.id : link.id, body]
+      return [reference, reference.id || link.id, body]
     }
   }
 }
@@ -92,14 +89,16 @@ function hideFootnoteContainer(container: HTMLElement): void {
 
   if (visibleElements.length === visibleSeparators.length) {
     visibleSeparators.concat(container).forEach(setPrintOnly)
-    hideFootnoteContainer(container.parentNode as HTMLElement)
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    hideFootnoteContainer(container.parentElement!)
   }
 }
 
 function hideOriginalFootnote([reference, refId, body]: RefBody): RefBody {
   setPrintOnly(reference)
   setPrintOnly(body)
-  hideFootnoteContainer(body.parentElement as HTMLElement)
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  hideFootnoteContainer(body.parentElement!)
   return [reference, refId, body]
 }
 
@@ -171,8 +170,8 @@ function createElements(buttonTemplate: string, popoverTemplate: string) {
     popover.dataset.footnotePopover = ''
     popover.dataset.footnoteId = id
 
-    const wrapper = getFirstElementByClass(popover, CLASS_WRAPPER)
-    const content = getFirstElementByClass(popover, CLASS_CONTENT)
+    const wrapper = queryByClass(popover, CLASS_WRAPPER)
+    const content = queryByClass(popover, CLASS_CONTENT)
     bindScrollHandler(content, popover)
 
     return { id, button, host, popover, content, wrapper }

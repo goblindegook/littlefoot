@@ -9,44 +9,41 @@ const SELECTOR_FOOTNOTE = '[data-footnote-id]'
 const SELECTOR_POPOVER = '[data-footnote-popover]'
 const CLASS_FULLY_SCROLLED = 'is-fully-scrolled'
 
-function closest<E extends HTMLElement>(
-  element: HTMLElement,
-  selector: string
-): E | undefined {
-  return (element && (element.closest(selector) as E | null)) || undefined
+function target(event: Event) {
+  return event.target as HTMLElement
 }
 
-function getFootnoteId(element?: HTMLElement): string | undefined {
+function getFootnoteId(element?: HTMLElement | null): string | undefined {
   return element ? element.dataset.footnoteId : undefined
 }
 
 function handleTouch(
-  get: FootnoteLookup,
+  lookup: FootnoteLookup,
   action: FootnoteAction,
   dismissAll: () => void
 ): EventListener {
   return event => {
-    const element = closest(event.target as HTMLElement, SELECTOR_BUTTON)
+    const element = target(event).closest<HTMLElement>(SELECTOR_BUTTON)
     const id = getFootnoteId(element)
-    const footnote = id && get(id)
+    const footnote = id && lookup(id)
 
     if (footnote) {
       action(footnote)
-    } else if (!closest(event.target as HTMLElement, SELECTOR_POPOVER)) {
+    } else if (!target(event).closest<HTMLElement>(SELECTOR_POPOVER)) {
       dismissAll()
     }
   }
 }
 
 function handleHover(
-  get: FootnoteLookup,
+  lookup: FootnoteLookup,
   action: FootnoteAction
 ): EventListener {
   return event => {
     event.preventDefault()
-    const element = closest(event.target as HTMLElement, SELECTOR_FOOTNOTE)
+    const element = target(event).closest<HTMLElement>(SELECTOR_FOOTNOTE)
     const id = getFootnoteId(element)
-    const footnote = id && get(id)
+    const footnote = id && lookup(id)
 
     if (footnote) {
       action(footnote)
@@ -59,7 +56,7 @@ function handleEscape(fn: () => void): EventHandler<KeyboardEvent> {
 }
 
 function handleScroll(popover: HTMLElement): EventHandler<WheelEvent> {
-  return (event: WheelEvent): void => {
+  return event => {
     const content = event.currentTarget as HTMLElement
     const delta = -event.deltaY
 
@@ -94,19 +91,19 @@ export function bindScrollHandler(
 
 export function addListeners({
   dismissAll,
-  findById,
+  lookup,
   hover,
   repositionAll,
   resizeAll,
   toggle,
   unhover
 }: CoreDriver): () => void {
-  const toggleOnTouch = handleTouch(findById, toggle, dismissAll)
+  const toggleOnTouch = handleTouch(lookup, toggle, dismissAll)
   const dismissOnEscape = handleEscape(dismissAll)
   const throttledReposition = throttle(repositionAll)
   const throttledResize = throttle(resizeAll)
-  const showOnHover = handleHover(findById, hover)
-  const hideOnHover = handleHover(findById, unhover)
+  const showOnHover = handleHover(lookup, hover)
+  const hideOnHover = handleHover(lookup, unhover)
 
   document.addEventListener('touchend', toggleOnTouch)
   document.addEventListener('click', toggleOnTouch)

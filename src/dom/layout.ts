@@ -69,7 +69,5 @@ export function repositionTooltip(
 }
 
 export function unmount(element: HTMLElement): void {
-  if (element.parentNode) {
-    element.parentNode.removeChild(element)
-  }
+  element.parentNode && element.parentNode.removeChild(element)
 }

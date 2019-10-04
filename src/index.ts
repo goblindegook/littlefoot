@@ -13,28 +13,29 @@ type Littlefoot = Readonly<{
 
 export function littlefoot(userSettings: Partial<Settings> = {}): Littlefoot {
   const settings = { ...DEFAULT_SETTINGS, ...userSettings }
-  const core = createCore({ setup, addListeners, cleanup }, settings)
+  const { lookup, activate, dismiss, dismissAll, unmount } = createCore(
+    { setup, addListeners, cleanup },
+    settings
+  )
 
   return {
     activate(id) {
-      const footnote = core.findById(id)
+      const footnote = lookup(id)
       if (footnote) {
-        core.activate(footnote)
+        activate(footnote)
       }
     },
 
     dismiss(id, delay) {
-      const footnote = id && core.findById(id)
+      const footnote = id && lookup(id)
       if (footnote) {
-        core.dismiss(footnote, delay)
+        dismiss(footnote, delay)
       } else {
-        core.dismissAll(delay)
+        dismissAll(delay)
       }
     },
 
-    unmount() {
-      core.unmount()
-    },
+    unmount,
 
     getSetting(key) {
       return settings[key]

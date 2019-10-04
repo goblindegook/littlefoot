@@ -1,71 +1,14 @@
 {
-  "parser": "@typescript-eslint/parser",
-  "extends": [
-    "standard",
-    "plugin:@typescript-eslint/recommended",
-    "prettier/standard",
-    "prettier/@typescript-eslint",
-    "plugin:prettier/recommended",
-    "plugin:cypress/recommended"
-  ],
-  "plugins": ["@typescript-eslint", "prettier", "cypress"],
+  "extends": ["@pacote/eslint-config", "plugin:cypress/recommended"],
+  "plugins": ["cypress"],
   "env": {
     "commonjs": true,
     "es6": true,
+    "jest": true,
     "cypress/globals": true
   },
   "parserOptions": {
-    "ecmaVersion": 2018,
+    "ecmaVersion": 2019,
     "sourceType": "module"
-  },
-  "rules": {
-    "@typescript-eslint/explicit-function-return-type": "off",
-    "no-console": "warn",
-    "no-eval": "error",
-    "no-implied-eval": "error",
-    "no-param-reassign": "error",
-    "no-return-assign": "error",
-    "no-return-await": "warn",
-    "no-self-compare": "error",
-    "radix": "error"
-  },
-  "overrides": [
-    {
-      "files": ["**/*.test.ts"],
-      "env": {
-        "jest": true
-      },
-      "rules": {
-        "no-restricted-globals": [
-          "error",
-          {
-            "name": "fit",
-            "message": "Use it instead."
-          },
-          {
-            "name": "fdescribe",
-            "message": "Use describe instead."
-          }
-        ],
-        "no-restricted-properties": [
-          "error",
-          {
-            "object": "describe",
-            "property": "only",
-            "message": "Use describe instead."
-          },
-          {
-            "object": "it",
-            "property": "only",
-            "message": "Use it instead."
-          },
-          {
-            "object": "test",
-            "property": "only",
-            "message": "Use test instead."
-          }
-        ]
-      }
-    }
-  ]
+  }
 }

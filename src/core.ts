@@ -22,7 +22,7 @@ export type FootnoteLookup = (id: string) => Footnote | undefined
 export type FootnoteAction = (footnote: Footnote, delay?: number) => void
 
 export type CoreDriver = Readonly<{
-  findById: FootnoteLookup
+  lookup: FootnoteLookup
   activate: FootnoteAction
   dismiss: FootnoteAction
   hover: FootnoteAction
@@ -44,12 +44,13 @@ interface Adapter {
   cleanup: (footnotes: Footnote[]) => void
 }
 
-function createActivate(settings: Settings): FootnoteAction {
-  return (footnote, delay = settings.activateDelay) => {
-    const { activateCallback } = settings
-
+function createActivate(
+  defaultDelay: number,
+  callback?: (popover: HTMLElement, button: HTMLElement) => void
+): FootnoteAction {
+  return (footnote, delay = defaultDelay) => {
     if (!footnote.isChanging()) {
-      footnote.activate(activateCallback)
+      footnote.activate(callback)
       footnote.reposition()
       footnote.resize()
 
@@ -60,8 +61,8 @@ function createActivate(settings: Settings): FootnoteAction {
   }
 }
 
-function createDismiss(settings: Settings): FootnoteAction {
-  return (footnote, delay = settings.dismissDelay) => {
+function createDismiss(defaultDelay: number): FootnoteAction {
+  return (footnote, delay = defaultDelay) => {
     if (!footnote.isChanging()) {
       footnote.dismiss()
 
@@ -73,9 +74,11 @@ function createDismiss(settings: Settings): FootnoteAction {
 }
 
 export function createCore(adapter: Adapter, settings: Settings): Core {
+  const { activateDelay, activateCallback, dismissDelay, hoverDelay } = settings
+
   const footnotes = adapter.setup(settings)
-  const activate = createActivate(settings)
-  const dismiss = createDismiss(settings)
+  const activate = createActivate(activateDelay, activateCallback)
+  const dismiss = createDismiss(dismissDelay)
 
   function dismissOthers(footnote: Footnote): void {
     footnotes.filter(current => current.id !== footnote.id).forEach(dismiss)
@@ -86,9 +89,9 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
 
     dismiss,
 
-    findById: id => footnotes.find(footnote => footnote.id === id),
+    lookup: id => footnotes.find(footnote => footnote.id === id),
 
-    dismissAll(delay = settings.dismissDelay) {
+    dismissAll(delay = dismissDelay) {
       footnotes.forEach(current => dismiss(current, delay))
     },
 
@@ -112,7 +115,7 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
       }
     },
 
-    hover(footnote, delay = settings.hoverDelay) {
+    hover(footnote, delay = hoverDelay) {
       const { activateOnHover, allowMultiple } = settings
       footnote.startHovering()
       if (activateOnHover && !footnote.isActive()) {
@@ -123,7 +126,7 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
       }
     },
 
-    unhover(footnote, delay = settings.hoverDelay) {
+    unhover(footnote, delay = hoverDelay) {
       const { dismissOnUnhover } = settings
       footnote.stopHovering()
       if (dismissOnUnhover) {
