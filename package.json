@@ -86,7 +86,6 @@
     "@testing-library/jest-dom": "^4.0.0",
     "@types/delegated-events": "^1.0.0",
     "@types/jest": "^24.0.5",
-    "@types/lodash.template": "^4.4.5",
     "@types/lodash.throttle": "^4.1.5",
     "@types/node": "^12.0.0",
     "@typescript-eslint/eslint-plugin": "^2.3.2",
@@ -122,7 +121,6 @@
     "@pacote/get-style": "^1.0.0",
     "@pacote/pixels": "^1.0.0",
     "delegated-events": "^1.0.10",
-    "lodash.template": "^4.4.0",
     "lodash.throttle": "^4.1.1"
   },
   "config": {

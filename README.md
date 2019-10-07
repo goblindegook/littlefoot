@@ -204,25 +204,25 @@ Default: `undefined`
 
 ### `contentTemplate`
 
-A [Lodash template](https://lodash.com/docs#template) for the markup of the footnote content popovers. It's best not to change this too much; the script relies on the class names and hierarchy of the default markup to do its work. However, you can add information to the rendered markup by adding string literals or one or more of the following variables:
+A template for the markup of the footnote content popovers. It's best not to change this too much; the library relies on the class names and hierarchy of the default markup to do its work. However, you can add information to the rendered markup by adding string literals or one or more of the following variables:
 
 - `content`: The HTML markup of the original footnote.
 - `number`: The footnote number (sequential ordering of all footnotes within an element matching the `numberResetSelector` option).
 - `id`: The footnote identifier (sequential ordering of all footnotes on the page, starting from 1).
 
-Variables should be added between interpolation delimiters. For example, `<%= content %>`.
+Variables should be added between interpolation delimiters. For example, `<% content %>`.
 
 Default:
 
 ```html
 <aside
-  alt="Footnote <%= number %>"
+  alt="Footnote <% number %>"
   class="littlefoot-footnote is-positioned-bottom"
-  id="fncontent:<%= id %>"
+  id="fncontent:<% id %>"
 >
   <div class="littlefoot-footnote__wrapper">
     <div class="littlefoot-footnote__content">
-      <%= content %>
+      <% content %>
     </div>
   </div>
   <div class="littlefoot-footnote__tooltip"></div>
@@ -231,26 +231,26 @@ Default:
 
 ### `buttonTemplate`
 
-A [Lodash template](https://lodash.com/docs#template) for the markup of the footnote button. Again, try not to remove any elements from the markup, but add as much as you like.
+A template for the markup of the footnote button. Again, try not to remove any elements from the markup, but add as much as you like.
 
 - `content`: The escaped HTML markup of the original footnote.
 - `id`: The footnote identifier (sequential ordering of all footnotes on the page, starting from 1).
 - `number`: The footnote number (sequential ordering of all footnotes within an element matching the `numberResetSelector` option).
 - `reference`: The footnote reference used to populate the ID attribute.
 
-Variables should be added between interpolation delimiters. For example, `<%= content %>`.
+Variables should be added between interpolation delimiters. For example, `<% content %>`.
 
 Default:
 
 ```html
 <button
-  aria-controls="fncontent:<%= id %>"
+  aria-controls="fncontent:<% id %>"
   aria-expanded="false"
-  aria-label="Footnote <%= number %>"
+  aria-label="Footnote <% number %>"
   class="littlefoot-footnote__button littlefoot-footnote__button__ellipsis"
-  id="<%= reference %>"
+  id="<% reference %>"
   rel="footnote"
-  title="See Footnote <%= number %>"
+  title="See Footnote <% number %>"
 >
   <svg viewbox="0 0 31 6" preserveAspectRatio="xMidYMid">
     <circle r="3" cx="3" cy="3" fill="white"></circle>
@@ -266,15 +266,15 @@ To display the footnote number instead of an ellipsis, provide the following `bu
 
 ```html
 <button
-  aria-controls="fncontent:<%= id %>"
+  aria-controls="fncontent:<% id %>"
   aria-expanded="false"
-  aria-label="Footnote <%= number %>"
+  aria-label="Footnote <% number %>"
   class="littlefoot-footnote__button"
-  id="<%= reference %>"
+  id="<% reference %>"
   rel="footnote"
-  title="See Footnote <%= number %>"
+  title="See Footnote <% number %>"
 />
-  <%= number %>
+  <% number %>
 </button>
 ```
 

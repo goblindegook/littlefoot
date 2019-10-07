@@ -1,4 +1,3 @@
-import template from 'lodash.template'
 import { Settings } from '../settings'
 import { createFootnote, FootnoteElements } from './footnote'
 import { CLASS_CONTENT, CLASS_WRAPPER, unmount } from './layout'
@@ -147,9 +146,17 @@ const resetNumbers = (resetSelector: string) => (
   return [ref, { ...data, number: reset ? 1 : previousNumber + 1 }]
 }
 
+function interpolate(template: string) {
+  const pattern = /<%=?\s*(\w+)\s*%>/g
+  return (replacement: TemplateData) =>
+    template.replace(pattern, (_, key: keyof TemplateData) =>
+      replacement[key] !== undefined ? `${replacement[key]}` : ''
+    )
+}
+
 function createElements(buttonTemplate: string, popoverTemplate: string) {
-  const renderButton = template(buttonTemplate)
-  const renderPopover = template(popoverTemplate)
+  const renderButton = interpolate(buttonTemplate)
+  const renderPopover = interpolate(popoverTemplate)
 
   return ([reference, data]: RefData): FootnoteElements => {
     const id = data.id

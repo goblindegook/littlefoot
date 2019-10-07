@@ -18,7 +18,7 @@ test('default buttonTemplate', () => {
   })
 })
 
-test('custom buttonTemplate', () => {
+test('custom buttonTemplate using <%= %> delimiters', () => {
   littlefoot({
     buttonTemplate: `<button
       title="Footnote <%= number %>"
@@ -26,6 +26,29 @@ test('custom buttonTemplate', () => {
       data-test-id="<%= id %>"
       data-test-number="<%= number %>"
       data-test-reference="<%= reference %>"
+    />`
+  })
+
+  const button = getByTitle(document.body, 'Footnote 1')
+  expect(button.dataset).toMatchObject({
+    footnoteButton: '',
+    footnoteId: '1',
+    footnoteNumber: '1',
+    testContent: /This is the document's only footnote\./,
+    testId: '1',
+    testNumber: '1',
+    testReference: 'fnref:1'
+  })
+})
+
+test('custom buttonTemplate using <% %> delimiters', () => {
+  littlefoot({
+    buttonTemplate: `<button
+      title="Footnote <% number %>"
+      data-test-content="<% content %>"
+      data-test-id="<% id %>"
+      data-test-number="<% number %>"
+      data-test-reference="<% reference %>"
     />`
   })
 
