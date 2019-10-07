@@ -1,6 +1,16 @@
-import throttle from 'lodash.throttle'
+import debounce from 'lodash.debounce'
 import { off, on } from 'delegated-events'
 import { CoreDriver, FootnoteAction, FootnoteLookup } from '../core'
+
+const FRAME = 16
+
+function throttle<T extends (...args: any) => any>(fn: T): T {
+  return debounce<T>(fn, FRAME, {
+    maxWait: FRAME,
+    leading: true,
+    trailing: true
+  })
+}
 
 type EventHandler<E extends Event> = (e: E) => void
 
