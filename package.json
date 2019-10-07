@@ -94,7 +94,7 @@
     "babelify": "^10.0.0",
     "browserify": "^16.2.2",
     "codecov": "^3.6.1",
-    "concurrently": "^4.0.1",
+    "concurrently": "^5.0.0",
     "cypress": "^3.1.5",
     "cz-conventional-changelog": "3.0.2",
     "eslint": "^6.5.1",
