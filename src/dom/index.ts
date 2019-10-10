@@ -147,10 +147,10 @@ const resetNumbers = (resetSelector: string) => (
 }
 
 function interpolate(template: string) {
-  const pattern = /<%=?\s*(\w+)\s*%>/g
+  const pattern = /<%=?\s*(\w+?)\s*%>/g
   return (replacement: TemplateData) =>
     template.replace(pattern, (_, key: keyof TemplateData) =>
-      replacement[key] !== undefined ? `${replacement[key]}` : ''
+      replacement[key] !== undefined ? String(replacement[key]) : ''
     )
 }
 
