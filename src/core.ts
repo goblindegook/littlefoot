@@ -13,7 +13,7 @@ export type Footnote = Readonly<{
   startHovering: () => void
   stopHovering: () => void
   isActive: () => boolean
-  isChanging: () => boolean
+  isReady: () => boolean
   isHovered: () => boolean
   destroy: () => void
 }>
@@ -49,7 +49,7 @@ function createActivate(
   callback?: (popover: HTMLElement, button: HTMLElement) => void
 ): FootnoteAction {
   return (footnote, delay = defaultDelay) => {
-    if (!footnote.isChanging()) {
+    if (footnote.isReady()) {
       footnote.activate(callback)
       footnote.reposition()
       footnote.resize()
@@ -63,7 +63,7 @@ function createActivate(
 
 function createDismiss(defaultDelay: number): FootnoteAction {
   return (footnote, delay = defaultDelay) => {
-    if (!footnote.isChanging()) {
+    if (footnote.isReady()) {
       footnote.dismiss()
 
       setTimeout(() => {

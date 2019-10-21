@@ -59,7 +59,7 @@ export function repositionPopover(popover: HTMLElement, room: Room): void {
 
 export function repositionTooltip(
   popover: HTMLElement,
-  leftRelative = 0.5
+  leftRelative: number
 ): void {
   const tooltip = popover.querySelector<HTMLElement>('.' + CLASS_TOOLTIP)
 

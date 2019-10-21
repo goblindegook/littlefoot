@@ -61,7 +61,7 @@ export function createFootnote({
 
     isActive: () => button.classList.contains(CLASS_ACTIVE),
 
-    isChanging: () => button.classList.contains(CLASS_CHANGING),
+    isReady: () => !button.classList.contains(CLASS_CHANGING),
 
     isHovered: () => isHovered,
 
