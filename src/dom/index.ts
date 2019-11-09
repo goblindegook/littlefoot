@@ -54,9 +54,10 @@ function findFootnoteLinks(
   pattern: RegExp,
   scope = ''
 ): readonly HTMLAnchorElement[] {
-  return queryAll<HTMLAnchorElement>(document, scope + ' a[href*="#"]').filter(
-    link => (link.href + link.rel).match(pattern)
-  )
+  return queryAll<HTMLAnchorElement>(
+    document,
+    scope + ' a[href*="#"]'
+  ).filter(link => (link.href + link.rel).match(pattern))
 }
 
 function findRefBody(
@@ -71,7 +72,8 @@ function findRefBody(
     const related = queryAll(document, selector).find(
       footnote => allowDuplicates || !processed.includes(footnote)
     )
-    const body = related && related.closest<HTMLElement>(footnoteSelector)
+    // eslint-disable-next-line no-undef
+    const body = related?.closest<HTMLElement>(footnoteSelector)
 
     if (body) {
       processed.push(body)
@@ -104,12 +106,12 @@ function hideOriginalFootnote([reference, refId, body]: RefBody): RefBody {
 function recursiveUnmount(element: HTMLElement) {
   const parent = element.parentElement
   unmount(element)
-  const html =
-    parent &&
-    parent.innerHTML
-      .replace('[]', '')
-      .replace('&nbsp;', ' ')
-      .trim()
+  /* eslint-disable no-undef */
+  const html = parent?.innerHTML
+    .replace('[]', '')
+    .replace('&nbsp;', ' ')
+    .trim()
+  /* eslint-enable no-undef */
   if (parent && !html) {
     recursiveUnmount(parent)
   }
