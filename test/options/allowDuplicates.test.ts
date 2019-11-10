@@ -16,5 +16,5 @@ test('ignore duplicate footnote references', () => {
 test('create all buttons when footnotes are in different containers', () => {
   setDocumentBody('multiple.html')
   littlefoot({ allowDuplicates: false })
-  expect(getAllButtons()).toHaveLength(4)
+  expect(getAllButtons()).toHaveLength(5)
 })
