@@ -11,14 +11,14 @@ type TemplateData = Readonly<{
   reference: string
 }>
 
-interface Reference {
-  element: HTMLElement
-  id: string
+interface Original {
+  reference: HTMLElement
+  referenceId: string
   body: HTMLElement
 }
 
-interface ReferenceData {
-  reference: Reference
+interface OriginalData {
+  original: Original
   data: TemplateData
 }
 
@@ -76,7 +76,7 @@ function findReference(
   footnoteSelector: string
 ) {
   const processed: Element[] = []
-  return (link: HTMLAnchorElement): Reference | undefined => {
+  return (link: HTMLAnchorElement): Original | undefined => {
     const fragment = link.href.split('#')[1]
     const selector = '#' + fragment.replace(/[:.+~*[\]]/g, '\\$&')
     const related = queryAll(document, selector).find(
@@ -87,9 +87,9 @@ function findReference(
 
     if (body) {
       processed.push(body)
-      const element = link.closest<HTMLElement>(anchorParentSelector) || link
-      const id = element.id || link.id
-      return { element, id, body }
+      const reference = link.closest<HTMLElement>(anchorParentSelector) || link
+      const referenceId = reference.id || link.id
+      return { reference, referenceId, body }
     }
   }
 }
@@ -119,18 +119,17 @@ function recursiveUnmount(element: HTMLElement) {
   }
 }
 
-function prepareTemplateData(reference: Reference, idx: number): ReferenceData {
-  const content = reference.body.cloneNode(true) as HTMLElement
-  queryAll<HTMLElement>(content, '[href$="#' + reference.id + '"]').forEach(
-    recursiveUnmount
-  )
+function prepareTemplateData(original: Original, idx: number): OriginalData {
+  const content = original.body.cloneNode(true) as HTMLElement
+  const backlinkSelector = '[href$="#' + original.referenceId + '"]'
+  queryAll<HTMLElement>(content, backlinkSelector).forEach(recursiveUnmount)
 
   return {
-    reference,
+    original,
     data: {
       id: `${idx + 1}`,
       number: idx + 1,
-      reference: reference.id,
+      reference: original.referenceId,
       content: content.innerHTML.startsWith('<')
         ? content.innerHTML
         : '<p>' + content.innerHTML + '</p>'
@@ -139,15 +138,13 @@ function prepareTemplateData(reference: Reference, idx: number): ReferenceData {
 }
 
 const resetNumbers = (resetSelector: string) => {
-  let previousNumber = 1
-  let previousResetElement: Element | null = null
-  return ({ reference, data }: ReferenceData): ReferenceData => {
-    const resetElement = reference.element.closest(resetSelector)
-    const shouldResetNumber = previousResetElement !== resetElement
-    const currentNumber = shouldResetNumber ? 1 : previousNumber + 1
-    previousResetElement = resetElement
-    previousNumber = currentNumber
-    return { reference, data: { ...data, number: currentNumber } }
+  let current = 0
+  let previousParent: Element | null = null
+  return ({ original, data }: OriginalData): OriginalData => {
+    const parent = original.reference.closest(resetSelector)
+    current = previousParent !== parent ? 1 : current + 1
+    previousParent = parent
+    return { original, data: { ...data, number: current } }
   }
 }
 
@@ -164,9 +161,9 @@ function createElements(buttonTemplate: string, popoverTemplate: string) {
   const renderPopover = interpolate(popoverTemplate)
 
   return ({
-    reference,
+    original,
     data
-  }: ReferenceData): ReferenceData & FootnoteElements => {
+  }: OriginalData): OriginalData & FootnoteElements => {
     const id = data.id
 
     const host = createElementFromHTML(
@@ -186,7 +183,7 @@ function createElements(buttonTemplate: string, popoverTemplate: string) {
     const content = queryByClass(popover, CLASS_CONTENT)
     bindScrollHandler(content, popover)
 
-    return { reference, data, id, button, host, popover, content, wrapper }
+    return { original, data, id, button, host, popover, content, wrapper }
   }
 }
 
@@ -220,12 +217,12 @@ export function setup(settings: Settings): Footnote[] {
     .map(numberResetSelector ? resetNumbers(numberResetSelector) : i => i)
     .map(createElements(buttonTemplate, contentTemplate))
 
-  footnoteElements.forEach(({ reference, host }) => {
-    setPrintOnly(reference.element)
-    setPrintOnly(reference.body)
+  footnoteElements.forEach(({ original, host }) => {
+    setPrintOnly(original.reference)
+    setPrintOnly(original.body)
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    recursiveHideFootnoteContainer(reference.body.parentElement!)
-    attachFootnote(reference.element, host)
+    recursiveHideFootnoteContainer(original.body.parentElement!)
+    attachFootnote(original.reference, host)
   })
 
   return footnoteElements.map(createFootnote)
