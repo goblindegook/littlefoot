@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.6](https://github.com/goblindegook/littlefoot/compare/v3.1.5...v3.1.6) (2019-11-10)
+
+
+### Bug Fixes
+
+* correctly reset numbers on numberResetSelector [#29](https://github.com/goblindegook/littlefoot/issues/29) ([13d02b4](https://github.com/goblindegook/littlefoot/commit/13d02b4c562fea09f46737ad6f464fd400f930a1))
+
 ### [3.1.5](https://github.com/goblindegook/littlefoot/compare/v3.1.4...v3.1.5) (2019-10-07)
 
 ### [3.1.4](https://github.com/goblindegook/littlefoot/compare/v3.1.3...v3.1.4) (2019-10-07)
