@@ -24,7 +24,8 @@ function target(event: Event) {
 }
 
 function getFootnoteId(element?: HTMLElement | null): string | undefined {
-  return element ? element.dataset.footnoteId : undefined
+  // eslint-disable-next-line no-undef
+  return element?.dataset.footnoteId
 }
 
 function handleTouch(

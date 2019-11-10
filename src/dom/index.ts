@@ -142,7 +142,7 @@ const resetNumbers = (resetSelector: string) => {
   let previousParent: Element | null = null
   return ({ original, data }: OriginalData): OriginalData => {
     const parent = original.reference.closest(resetSelector)
-    current = previousParent !== parent ? 1 : current + 1
+    current = previousParent === parent ? current + 1 : 1
     previousParent = parent
     return { original, data: { ...data, number: current } }
   }
@@ -152,7 +152,7 @@ function interpolate(template: string) {
   const pattern = /<%=?\s*(\w+?)\s*%>/g
   return (replacement: TemplateData) =>
     template.replace(pattern, (_, key: keyof TemplateData) =>
-      replacement[key] !== undefined ? String(replacement[key]) : ''
+      String(replacement[key] ?? '')
     )
 }
 
