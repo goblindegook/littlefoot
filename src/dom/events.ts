@@ -23,8 +23,7 @@ function target(event: Event) {
   return event.target as HTMLElement
 }
 
-function getFootnoteId(element?: HTMLElement | null): string | undefined {
-  // eslint-disable-next-line no-undef
+function getFootnoteId(element: HTMLElement | null): string | undefined {
   return element?.dataset.footnoteId
 }
 

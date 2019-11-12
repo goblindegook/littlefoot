@@ -69,6 +69,6 @@ export function repositionTooltip(
 }
 
 export function unmount(element: HTMLElement): void {
-  // eslint-disable-next-line no-undef, no-unused-expressions
+  // eslint-disable-next-line no-unused-expressions
   element.parentNode?.removeChild(element)
 }

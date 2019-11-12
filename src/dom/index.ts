@@ -82,7 +82,7 @@ function findReference(
     const related = queryAll(document, selector).find(
       footnote => allowDuplicates || !processed.includes(footnote)
     )
-    // eslint-disable-next-line no-undef
+
     const body = related?.closest<HTMLElement>(footnoteSelector)
 
     if (body) {
@@ -108,7 +108,6 @@ function recursiveHideFootnoteContainer(container: HTMLElement): void {
 function recursiveUnmount(element: HTMLElement) {
   const parent = element.parentElement
   unmount(element)
-  /* eslint-disable no-undef */
   const html = parent?.innerHTML
     .replace('[]', '')
     .replace('&nbsp;', ' ')
