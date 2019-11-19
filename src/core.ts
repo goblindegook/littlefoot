@@ -1,10 +1,8 @@
-import { Settings } from './settings'
+import { Settings, ActivateCallback } from './settings'
 
 export type Footnote = Readonly<{
   id: string
-  activate: (
-    onActivate?: (popover: HTMLElement, button: HTMLElement) => void
-  ) => void
+  activate: (onActivate?: ActivateCallback) => void
   ready: () => void
   dismiss: () => void
   remove: () => void
@@ -26,7 +24,7 @@ export type CoreDriver = Readonly<{
   activate: (
     footnote: Footnote,
     delay: number,
-    onActivate?: (popover: HTMLElement, button: HTMLElement) => void
+    onActivate?: ActivateCallback
   ) => void
   dismiss: (footnote: Footnote, delay: number) => void
   hover: FootnoteAction
@@ -51,7 +49,7 @@ interface Adapter {
 function activate(
   footnote: Footnote,
   delay: number,
-  callback?: (popover: HTMLElement, button: HTMLElement) => void
+  callback?: ActivateCallback
 ): void {
   if (footnote.isReady()) {
     footnote.activate(callback)
@@ -103,42 +101,34 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
     },
 
     toggle(footnote) {
-      const { allowMultiple, dismissDelay } = settings
       if (footnote.isActive()) {
-        dismiss(footnote, dismissDelay)
+        dismiss(footnote, settings.dismissDelay)
       } else {
-        if (!allowMultiple) {
-          dismissOthers(footnote, dismissDelay)
+        if (!settings.allowMultiple) {
+          dismissOthers(footnote, settings.dismissDelay)
         }
         activate(footnote, settings.activateDelay, settings.activateCallback)
       }
     },
 
     hover(footnote) {
-      const {
-        activateOnHover,
-        allowMultiple,
-        dismissDelay,
-        hoverDelay
-      } = settings
       footnote.startHovering()
-      if (activateOnHover && !footnote.isActive()) {
-        if (!allowMultiple) {
-          dismissOthers(footnote, dismissDelay)
+      if (settings.activateOnHover && !footnote.isActive()) {
+        if (!settings.allowMultiple) {
+          dismissOthers(footnote, settings.dismissDelay)
         }
-        activate(footnote, hoverDelay)
+        activate(footnote, settings.hoverDelay)
       }
     },
 
     unhover(footnote) {
-      const { dismissOnUnhover, dismissDelay, hoverDelay } = settings
       footnote.stopHovering()
-      if (dismissOnUnhover) {
+      if (settings.dismissOnUnhover) {
         setTimeout(() => {
           if (!footnotes.some(f => f.isHovered())) {
-            footnotes.forEach(f => dismiss(f, dismissDelay))
+            footnotes.forEach(f => dismiss(f, settings.dismissDelay))
           }
-        }, hoverDelay)
+        }, settings.hoverDelay)
       }
     }
   }
