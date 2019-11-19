@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.7](https://github.com/goblindegook/littlefoot/compare/v3.1.6...v3.1.7) (2019-11-19)
+
+
+### Bug Fixes
+
+* delay and callback settings can be changed after init ([#30](https://github.com/goblindegook/littlefoot/issues/30)) ([b157923](https://github.com/goblindegook/littlefoot/commit/b1579232eae92d854c56b2f73d26d678f1e5840a))
+
 ### [3.1.6](https://github.com/goblindegook/littlefoot/compare/v3.1.5...v3.1.6) (2019-11-10)
 
 
