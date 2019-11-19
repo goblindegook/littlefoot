@@ -22,16 +22,16 @@ export function littlefoot(userSettings: Partial<Settings> = {}): Littlefoot {
     activate(id) {
       const footnote = lookup(id)
       if (footnote) {
-        activate(footnote)
+        activate(footnote, settings.activateDelay, settings.activateCallback)
       }
     },
 
-    dismiss(id, delay) {
+    dismiss(id, delay = settings.dismissDelay) {
       const footnote = id && lookup(id)
       if (footnote) {
         dismiss(footnote, delay)
       } else {
-        dismissAll(delay)
+        dismissAll()
       }
     },
 

@@ -11,16 +11,19 @@ beforeEach(() => {
   setDocumentBody('default.html')
 })
 
-test('disallow multiple activations', async () => {
-  littlefoot({ activateDelay: 1, allowMultiple: false })
+afterEach(jest.useRealTimers)
+
+test('disallow multiple activations', () => {
+  jest.useFakeTimers()
+  littlefoot({ allowMultiple: false })
 
   const one = getButton('1')
   fireEvent.click(one)
-  await waitForChange(one)
+  jest.advanceTimersByTime(100)
 
   const two = getButton('2')
   fireEvent.click(two)
-  await waitForChange(two)
+  jest.advanceTimersByTime(100)
 
   expect(getAllActiveButtons()).toHaveLength(1)
 })
