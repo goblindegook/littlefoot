@@ -20,11 +20,7 @@ export function littlefoot(userSettings: Partial<Settings> = {}): Littlefoot {
     activate(id) {
       const footnote = core.lookup(id)
       if (footnote) {
-        core.activate(
-          footnote,
-          settings.activateDelay,
-          settings.activateCallback
-        )
+        core.activate(footnote, settings.activateDelay)
       }
     },
 

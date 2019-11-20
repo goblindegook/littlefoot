@@ -18,21 +18,18 @@ export type Footnote = Readonly<{
 
 export type FootnoteLookup = (id: string) => Footnote | undefined
 export type FootnoteAction = (footnote: Footnote) => void
+export type DelayedFootnoteAction = (footnote: Footnote, delay: number) => void
 
 export type CoreDriver = Readonly<{
   lookup: FootnoteLookup
-  activate: (
-    footnote: Footnote,
-    delay: number,
-    onActivate?: ActivateCallback
-  ) => void
-  dismiss: (footnote: Footnote, delay: number) => void
+  activate: DelayedFootnoteAction
+  dismiss: DelayedFootnoteAction
   hover: FootnoteAction
   toggle: FootnoteAction
   unhover: FootnoteAction
-  dismissAll: () => void // FIXME: Remove?
-  repositionAll: () => void // FIXME: Remove?
-  resizeAll: () => void // FIXME: Remove?
+  dismissAll: () => void
+  repositionAll: () => void
+  resizeAll: () => void
 }>
 
 export type Core = CoreDriver &
@@ -44,22 +41,6 @@ interface Adapter {
   setup: (settings: Settings) => Footnote[]
   addListeners: (core: CoreDriver) => () => void
   cleanup: (footnotes: Footnote[]) => void
-}
-
-function activate(
-  footnote: Footnote,
-  delay: number,
-  callback?: ActivateCallback
-): void {
-  if (footnote.isReady()) {
-    footnote.activate(callback)
-    footnote.reposition()
-    footnote.resize()
-
-    setTimeout(() => {
-      footnote.ready()
-    }, delay)
-  }
 }
 
 function dismiss(footnote: Footnote, delay: number): void {
@@ -75,14 +56,26 @@ function dismiss(footnote: Footnote, delay: number): void {
 export function createCore(adapter: Adapter, settings: Settings): Core {
   const footnotes = adapter.setup(settings)
 
-  function dismissOthers(footnote: Footnote, delay: number): void {
-    footnotes
-      .filter(current => current.id !== footnote.id)
-      .forEach(footnote => dismiss(footnote, delay))
+  function activate(footnote: Footnote, delay: number): void {
+    if (!settings.allowMultiple) {
+      footnotes
+        .filter(current => current.id !== footnote.id)
+        .forEach(footnote => dismiss(footnote, settings.dismissDelay))
+    }
+
+    if (footnote.isReady()) {
+      footnote.activate(settings.activateCallback)
+      footnote.reposition()
+      footnote.resize()
+
+      setTimeout(() => {
+        footnote.ready()
+      }, delay)
+    }
   }
 
   const core: CoreDriver = {
-    activate, // FIXME: Does not dismiss others when allowMultiple = false
+    activate,
 
     dismiss,
 
@@ -104,19 +97,13 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
       if (footnote.isActive()) {
         dismiss(footnote, settings.dismissDelay)
       } else {
-        if (!settings.allowMultiple) {
-          dismissOthers(footnote, settings.dismissDelay)
-        }
-        activate(footnote, settings.activateDelay, settings.activateCallback)
+        activate(footnote, settings.activateDelay)
       }
     },
 
     hover(footnote) {
       footnote.startHovering()
       if (settings.activateOnHover && !footnote.isActive()) {
-        if (!settings.allowMultiple) {
-          dismissOthers(footnote, settings.dismissDelay)
-        }
         activate(footnote, settings.hoverDelay)
       }
     },

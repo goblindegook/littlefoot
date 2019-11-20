@@ -22,5 +22,4 @@ test('dismissDelay can be set after initialisation', async () => {
   jest.advanceTimersByTime(100)
 
   expect(button).not.toHaveClass('is-changing')
-  expect(button).not.toHaveClass('is-active')
 })

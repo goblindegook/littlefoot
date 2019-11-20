@@ -20,5 +20,4 @@ test('activateDelay can be set after initialisation', () => {
   jest.advanceTimersByTime(100)
 
   expect(button).not.toHaveClass('is-changing')
-  expect(button).toHaveClass('is-active')
 })

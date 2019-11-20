@@ -33,7 +33,7 @@ test('hides all footnotes', () => {
 
 test('starts with no active footnotes', () => {
   littlefoot()
-  expect(getAllActiveButtons()).toHaveLength(0)
+  expect(getAllActiveButtons()).toEqual([])
 })
 
 test('sets ARIA attributes on button', () => {
