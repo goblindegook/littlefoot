@@ -104,19 +104,25 @@ performance.
 1. Add the required footnote stylesheet at the top of your HTML file, inside the
    `<head>` tag:
 
-    ```html
-    <link rel="stylesheet" href="https://unpkg.com/littlefoot/dist/littlefoot.css">
-    ```
+   ```html
+   <link
+     rel="stylesheet"
+     href="https://unpkg.com/littlefoot/dist/littlefoot.css"
+   />
+   ```
 
 2. Add the following script tags at the end of the document, just before the
    closing `</body>` tag:
 
-    ```html
-    <script src="https://unpkg.com/littlefoot/dist/littlefoot.min.js" type="application/javascript"></script>
-    <script type="application/javascript">
-      littlefoot.default()
-    </script>
-    ```
+   ```html
+   <script
+     src="https://unpkg.com/littlefoot/dist/littlefoot.min.js"
+     type="application/javascript"
+   ></script>
+   <script type="application/javascript">
+     littlefoot.default()
+   </script>
+   ```
 
 See [an example on CodePen](https://codepen.io/goblindegook/pen/oPNzGE).
 
@@ -286,9 +292,12 @@ Running the function will return an object that can be stored and used to manipu
 
 This function will close the popover matching the footnote ID. If omitted, all popovers are dismissed. `timeout` specifies the amount of time after the footnote's active class is removed before the element itself is removed. If excluded, `timeout` will default to the `dismissDelay` option.
 
-### `activate(footnoteId)`
+### `activate(footnoteId[, timeout])`
 
-This will activate the footnote button (and its associated popover) matching the footnote ID.
+This will activate the footnote button (and its associated popover) matching the
+footnote ID. `timeout` specifies the amount of time before the footnote's active
+class is applied. If excluded, `timeout` will default to the `activateDelay`
+option.
 
 ### `getSetting(key)`
 
@@ -296,7 +305,8 @@ Returns the instance setting matching the provided string key.
 
 ### `updateSetting(key, value)`
 
-Updates the littlefoot instance settings for the provided string key with a new value.
+Updates the littlefoot instance settings for the provided string key with a new
+value.
 
 ### `unmount()`
 

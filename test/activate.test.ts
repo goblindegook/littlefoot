@@ -13,6 +13,8 @@ beforeEach(() => {
   setDocumentBody('single.html')
 })
 
+afterEach(jest.useRealTimers)
+
 test('activate footnote when clicking the button', async () => {
   littlefoot(TEST_SETTINGS)
   const button = getButton('1')
@@ -25,16 +27,33 @@ test('activate footnote when clicking the button', async () => {
   getPopoverByText(/This is the document's only footnote./)
 })
 
-test('activate footnote by ID when calling .activate()', async () => {
-  const instance = littlefoot(TEST_SETTINGS)
+test('activate footnote by ID when calling .activate()', () => {
+  jest.useFakeTimers()
+  const instance = littlefoot({ activateDelay: 200 })
   const button = getButton('1')
 
   instance.activate('1')
 
+  jest.advanceTimersByTime(50)
   expect(button).toHaveClass('is-changing')
-  await waitForChange(button)
+
+  jest.advanceTimersByTime(50)
   expect(button).toHaveClass('is-active')
   getPopoverByText(/This is the document's only footnote./)
+})
+
+test('activate footnote by ID when calling .activate() with a timeout', () => {
+  jest.useFakeTimers()
+  const instance = littlefoot({ activateDelay: 200 })
+  const button = getButton('1')
+
+  instance.activate('1', 100)
+
+  jest.advanceTimersByTime(50)
+  expect(button).toHaveClass('is-changing')
+
+  jest.advanceTimersByTime(50)
+  expect(button).toHaveClass('is-active')
 })
 
 test('activation with unknown ID does not activate any popovers', () => {

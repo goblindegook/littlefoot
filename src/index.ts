@@ -4,7 +4,7 @@ import { setup, cleanup } from './dom'
 import { addListeners } from './dom/events'
 
 type Littlefoot = Readonly<{
-  activate: (id: string) => void
+  activate: (id: string, delay?: number) => void
   dismiss: (id?: string, delay?: number) => void
   unmount: () => void
   getSetting: <K extends keyof Settings>(key: K) => Settings[K]
@@ -17,10 +17,10 @@ export function littlefoot(userSettings: Partial<Settings> = {}): Littlefoot {
   const core = createCore({ setup, addListeners, cleanup }, settings)
 
   return {
-    activate(id) {
+    activate(id, delay = settings.activateDelay) {
       const footnote = core.lookup(id)
       if (footnote) {
-        core.activate(footnote, settings.activateDelay)
+        core.activate(footnote, delay)
       }
     },
 
