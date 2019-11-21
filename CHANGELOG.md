@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0](https://github.com/goblindegook/littlefoot/compare/v3.1.7...v3.2.0) (2019-11-21)
+
+
+### Features
+
+* allow passing a timeout to activate() ([13563e0](https://github.com/goblindegook/littlefoot/commit/13563e0dc554123bfb6e01cb32ba2ca6a7331cad))
+
+
+### Bug Fixes
+
+* dismissing popovers on activation ([#31](https://github.com/goblindegook/littlefoot/issues/31)) ([9d73d37](https://github.com/goblindegook/littlefoot/commit/9d73d37ec218474a67446f43fce0c7c856a39a44))
+
 ### [3.1.7](https://github.com/goblindegook/littlefoot/compare/v3.1.6...v3.1.7) (2019-11-19)
 
 
