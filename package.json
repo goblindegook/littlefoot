@@ -96,7 +96,7 @@
     "browserify": "16.5.0",
     "codecov": "3.6.1",
     "concurrently": "5.0.0",
-    "cypress": "3.6.1",
+    "cypress": "3.7.0",
     "cz-conventional-changelog": "3.0.2",
     "eslint": "6.6.0",
     "eslint-config-prettier": "6.7.0",
