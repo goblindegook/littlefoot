@@ -112,9 +112,9 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
       footnote.stopHovering()
       if (settings.dismissOnUnhover) {
         setTimeout(() => {
-          if (!footnotes.some(f => f.isHovered())) {
-            footnotes.forEach(f => dismiss(f, settings.dismissDelay))
-          }
+          footnotes
+            .filter(f => !f.isHovered())
+            .forEach(f => dismiss(f, settings.dismissDelay))
         }, settings.hoverDelay)
       }
     }
