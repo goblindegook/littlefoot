@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.2.1](https://github.com/goblindegook/littlefoot/compare/v3.2.0...v3.2.1) (2019-12-03)
+
+
+### Bug Fixes
+
+* only dismiss unhovered footnotes ([#45](https://github.com/goblindegook/littlefoot/issues/45)) ([73c83a2](https://github.com/goblindegook/littlefoot/commit/73c83a2ff49c0089f8a6359326f2dc8c4a29159d))
+
 ## [3.2.0](https://github.com/goblindegook/littlefoot/compare/v3.1.7...v3.2.0) (2019-11-21)
 
 
