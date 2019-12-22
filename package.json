@@ -115,7 +115,7 @@
     "prettier": "1.19.1",
     "standard-version": "7.0.1",
     "tinyify": "2.5.2",
-    "typescript": "3.7.3",
+    "typescript": "3.7.4",
     "uglify-js": "3.7.2",
     "watchify": "3.11.1"
   },
