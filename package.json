@@ -89,7 +89,7 @@
     "@types/delegated-events": "1.1.0",
     "@types/jest": "24.0.24",
     "@types/lodash.debounce": "4.0.6",
-    "@types/node": "12.12.21",
+    "@types/node": "12.12.22",
     "@typescript-eslint/eslint-plugin": "2.13.0",
     "@typescript-eslint/parser": "2.13.0",
     "babelify": "10.0.0",
