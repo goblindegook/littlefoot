@@ -1,7 +1,9 @@
 {
   "name": "littlefoot",
-  "version": "3.2.1",
   "description": "Footnotes without the footprint.",
+  "version": "3.2.1",
+  "sideEffect": false,
+  "license": "MIT",
   "repository": "goblindegook/littlefoot",
   "scripts": {
     "clean": "rm -rf coverage dist",
@@ -63,7 +65,6 @@
     "email": "hello@goblindegook.net",
     "url": "https://goblindegook.com/"
   },
-  "license": "MIT",
   "main": "dist/littlefoot.min.js",
   "jsnext:main": "dist/littlefoot.js",
   "typings": "dist/index.d.ts",
