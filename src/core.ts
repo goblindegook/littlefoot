@@ -37,11 +37,11 @@ export type Core = CoreDriver &
     unmount: () => void
   }>
 
-interface Adapter {
+type Adapter = Readonly<{
   setup: (settings: Settings) => Footnote[]
   addListeners: (core: CoreDriver) => () => void
   cleanup: (footnotes: Footnote[]) => void
-}
+}>
 
 function dismiss(footnote: Footnote, delay: number): void {
   if (footnote.isReady()) {

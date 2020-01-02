@@ -11,16 +11,16 @@ type TemplateData = Readonly<{
   reference: string
 }>
 
-interface Original {
+type Original = Readonly<{
   reference: HTMLElement
   referenceId: string
   body: HTMLElement
-}
+}>
 
-interface OriginalData {
+type OriginalData = Readonly<{
   original: Original
   data: TemplateData
-}
+}>
 
 const CLASS_PRINT_ONLY = 'footnote-print-only'
 const CLASS_HOST = 'littlefoot-footnote__host'
@@ -61,7 +61,7 @@ function isDefined<T>(value?: T): value is T {
 function findFootnoteLinks(
   document: Document,
   pattern: RegExp,
-  scope = ''
+  scope: string
 ): readonly HTMLAnchorElement[] {
   return queryAll<HTMLAnchorElement>(
     document,
