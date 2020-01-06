@@ -83,7 +83,7 @@
     "@commitlint/cli": "8.3.4",
     "@commitlint/config-conventional": "8.3.4",
     "@cypress/browserify-preprocessor": "2.1.1",
-    "@pacote/eslint-config": "1.0.3",
+    "@pacote/eslint-config": "2.0.0",
     "@testing-library/cypress": "5.0.2",
     "@testing-library/dom": "6.11.0",
     "@testing-library/jest-dom": "4.2.4",

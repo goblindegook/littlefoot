@@ -1906,10 +1906,10 @@
     "@nodelib/fs.scandir" "2.1.3"
     fastq "^1.6.0"
 
-"@pacote/eslint-config@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@pacote/eslint-config/-/eslint-config-1.0.3.tgz#a2e379312fa9c94a12604cf00b0d4e406d4cc572"
-  integrity sha512-TzCN6mr7AgZ8CumDuSwDpU1cTx0Sze6sKuuJHrfEwQRPrTnf7zYUD1pZ1In5I3KDUOiwKHZ9o9iofNPZcAxneQ==
+"@pacote/eslint-config@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@pacote/eslint-config/-/eslint-config-2.0.0.tgz#a460bac706e0fa2ec0ec95b7eb11a2c6bd3d25e0"
+  integrity sha512-15tDKgfsbmTHziW/EAnd/CxSRvHDUOJ1SIRWq8kf64j96OoHxwV3q475JsY9UrqD/HfalIziGw9NJMG6/z8neg==
 
 "@pacote/get-style@^1.0.0", "@pacote/get-style@^1.1.0":
   version "1.1.0"
