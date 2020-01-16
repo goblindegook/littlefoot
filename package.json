@@ -112,7 +112,7 @@
     "jest": "24.9.0",
     "jest-environment-jsdom-fifteen": "1.0.2",
     "lint-staged": "9.5.0",
-    "node-sass": "4.13.0",
+    "node-sass": "4.13.1",
     "prettier": "1.19.1",
     "standard-version": "7.0.1",
     "tinyify": "2.5.2",
