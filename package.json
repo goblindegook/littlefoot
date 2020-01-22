@@ -114,7 +114,7 @@
     "lint-staged": "10.0.1",
     "node-sass": "4.13.1",
     "prettier": "1.19.1",
-    "standard-version": "7.0.1",
+    "standard-version": "7.1.0",
     "tinyify": "2.5.2",
     "typescript": "3.7.5",
     "uglify-js": "3.7.5",
