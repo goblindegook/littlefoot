@@ -88,7 +88,7 @@
     "@testing-library/dom": "6.11.0",
     "@testing-library/jest-dom": "5.0.2",
     "@types/delegated-events": "1.1.0",
-    "@types/jest": "24.9.0",
+    "@types/jest": "24.9.1",
     "@types/lodash.debounce": "4.0.6",
     "@types/node": "12.12.25",
     "@typescript-eslint/eslint-plugin": "2.17.0",
