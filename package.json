@@ -111,7 +111,7 @@
     "husky": "4.2.1",
     "jest": "25.1.0",
     "jest-environment-jsdom-fifteen": "1.0.2",
-    "lint-staged": "10.0.6",
+    "lint-staged": "10.0.7",
     "node-sass": "4.13.1",
     "prettier": "1.19.1",
     "standard-version": "7.1.0",
