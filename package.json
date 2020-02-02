@@ -123,8 +123,8 @@
   "dependencies": {
     "@pacote/get-style": "^1.0.0",
     "@pacote/pixels": "^1.0.0",
-    "delegated-events": "^1.0.10",
-    "lodash.debounce": "^4.0.8"
+    "@pacote/throttle": "^1.0.0",
+    "delegated-events": "^1.0.10"
   },
   "config": {
     "commitizen": {

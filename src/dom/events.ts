@@ -1,16 +1,8 @@
-import debounce from 'lodash.debounce'
+import { throttle } from '@pacote/throttle'
 import { off, on } from 'delegated-events'
 import { CoreDriver, FootnoteAction, FootnoteLookup } from '../core'
 
 const FRAME = 16
-
-function throttle<T extends (...args: any) => any>(fn: T): T {
-  return debounce<T>(fn, FRAME, {
-    maxWait: FRAME,
-    leading: true,
-    trailing: true
-  })
-}
 
 type EventHandler<E extends Event> = (e: E) => void
 
@@ -94,8 +86,7 @@ export function bindScrollHandler(
   popover: HTMLElement
 ): void {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const throttledScroll = throttle<EventHandler<any>>(handleScroll(popover))
-  content.addEventListener('mousewheel', throttledScroll)
+  const throttledScroll = throttle(handleScroll(popover), FRAME)
   content.addEventListener('wheel', throttledScroll)
 }
 
@@ -110,8 +101,8 @@ export function addListeners({
 }: CoreDriver): () => void {
   const toggleOnTouch = handleTouch(lookup, toggle, dismissAll)
   const dismissOnEscape = handleEscape(dismissAll)
-  const throttledReposition = throttle(repositionAll)
-  const throttledResize = throttle(resizeAll)
+  const throttledReposition = throttle(repositionAll, FRAME)
+  const throttledResize = throttle(resizeAll, FRAME)
   const showOnHover = handleHover(lookup, hover)
   const hideOnHover = handleHover(lookup, unhover)
 
