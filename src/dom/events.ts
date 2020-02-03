@@ -3,13 +3,13 @@ import { off, on } from 'delegated-events'
 import { CoreDriver, FootnoteAction, FootnoteLookup } from '../core'
 
 const FRAME = 16
-
 type EventHandler<E extends Event> = (e: E) => void
 
 const SELECTOR_BUTTON = '[data-footnote-button]'
 const SELECTOR_FOOTNOTE = '[data-footnote-id]'
 const SELECTOR_POPOVER = '[data-footnote-popover]'
 const CLASS_FULLY_SCROLLED = 'is-fully-scrolled'
+const CLASS_NO_SCROLL = 'littlefoot-no-scroll'
 
 function target(event: Event) {
   return event.target as HTMLElement
@@ -59,24 +59,19 @@ function handleEscape(fn: () => void): EventHandler<KeyboardEvent> {
 
 function handleScroll(popover: HTMLElement): EventHandler<WheelEvent> {
   return event => {
-    const content = event.currentTarget as HTMLElement
+    const content = event.currentTarget as HTMLElement | null
     const delta = -event.deltaY
 
     if (delta > 0) {
       popover.classList.remove(CLASS_FULLY_SCROLLED)
-      if (content.scrollTop < delta) {
-        content.scrollTop = 0
-        event.preventDefault()
-      }
     }
 
     if (
+      content &&
       delta <= 0 &&
       delta < content.clientHeight + content.scrollTop - content.scrollHeight
     ) {
       popover.classList.add(CLASS_FULLY_SCROLLED)
-      content.scrollTop = content.scrollHeight
-      event.preventDefault()
     }
   }
 }
@@ -85,9 +80,13 @@ export function bindScrollHandler(
   content: HTMLElement,
   popover: HTMLElement
 ): void {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const throttledScroll = throttle(handleScroll(popover), FRAME)
-  content.addEventListener('wheel', throttledScroll)
+  content.addEventListener('wheel', throttle(handleScroll(popover), FRAME))
+  content.addEventListener('mouseover', () => {
+    document.body.classList.add(CLASS_NO_SCROLL)
+  })
+  content.addEventListener('mouseout', () => {
+    document.body.classList.remove(CLASS_NO_SCROLL)
+  })
 }
 
 export function addListeners({
