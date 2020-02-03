@@ -43,7 +43,7 @@ export function createFootnote({
 
       button.insertAdjacentElement('afterend', popover)
 
-      popover.style.maxWidth = `${document.body.clientWidth}px`
+      popover.style.maxWidth = document.body.clientWidth + 'px'
       const contentMaxHeight = getStyle(content, 'maxHeight')
       maxHeight = Math.round(pixels(contentMaxHeight, content))
 

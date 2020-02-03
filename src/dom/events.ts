@@ -1,4 +1,5 @@
 import { throttle } from '@pacote/throttle'
+import { getStyle } from '@pacote/get-style'
 import { off, on } from 'delegated-events'
 import { CoreDriver, FootnoteAction, FootnoteLookup } from '../core'
 
@@ -9,7 +10,6 @@ const SELECTOR_BUTTON = '[data-footnote-button]'
 const SELECTOR_FOOTNOTE = '[data-footnote-id]'
 const SELECTOR_POPOVER = '[data-footnote-popover]'
 const CLASS_FULLY_SCROLLED = 'is-fully-scrolled'
-const CLASS_NO_SCROLL = 'littlefoot-no-scroll'
 
 function target(event: Event) {
   return event.target as HTMLElement
@@ -17,6 +17,32 @@ function target(event: Event) {
 
 function getFootnoteId(element: HTMLElement | null): string | undefined {
   return element?.dataset.footnoteId
+}
+
+let initialBodyStyleOverflow: string | undefined
+let initialBodyPadding: string | undefined
+
+function lockBodyScroll(): void {
+  if (initialBodyStyleOverflow === undefined) {
+    initialBodyPadding = getStyle(document.body, 'paddingRight')
+    initialBodyStyleOverflow = getStyle(document.body, 'overflow')
+    const scrollBarWidth =
+      window.innerWidth - document.documentElement.clientWidth
+    document.body.style.overflow = 'hidden'
+    document.body.style.paddingRight = scrollBarWidth + 'px'
+  }
+}
+
+function unlockBodyScroll(): void {
+  if (initialBodyStyleOverflow) {
+    document.body.style.overflow = initialBodyStyleOverflow
+    initialBodyStyleOverflow = undefined
+  }
+
+  if (initialBodyPadding) {
+    document.body.style.paddingRight = initialBodyPadding
+    initialBodyPadding = undefined
+  }
 }
 
 function handleTouch(
@@ -54,7 +80,12 @@ function handleHover(
 }
 
 function handleEscape(fn: () => void): EventHandler<KeyboardEvent> {
-  return event => event.keyCode === 27 && fn()
+  return event => {
+    if (event.keyCode === 27) {
+      unlockBodyScroll()
+      fn()
+    }
+  }
 }
 
 function handleScroll(popover: HTMLElement): EventHandler<WheelEvent> {
@@ -81,12 +112,8 @@ export function bindScrollHandler(
   popover: HTMLElement
 ): void {
   content.addEventListener('wheel', throttle(handleScroll(popover), FRAME))
-  content.addEventListener('mouseover', () => {
-    document.body.classList.add(CLASS_NO_SCROLL)
-  })
-  content.addEventListener('mouseout', () => {
-    document.body.classList.remove(CLASS_NO_SCROLL)
-  })
+  content.addEventListener('mouseover', lockBodyScroll)
+  content.addEventListener('mouseout', unlockBodyScroll)
 }
 
 export function addListeners({

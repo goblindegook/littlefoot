@@ -14,10 +14,6 @@
 // @state .is-positioned-top    - The popover is above the button.
 // @state .is-positioned-bottom - The popover is below the button.
 
-.littlefoot-no-scroll {
-  overflow: hidden;
-}
-
 .littlefoot-footnote {
   background: $popover-color-background;
   border-radius: $popover-border-radius;
