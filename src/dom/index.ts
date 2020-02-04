@@ -112,7 +112,7 @@ function recursiveUnmount(element: HTMLElement) {
     .replace('[]', '')
     .replace('&nbsp;', ' ')
     .trim()
-  /* eslint-enable no-undef */
+
   if (parent && !html) {
     recursiveUnmount(parent)
   }
