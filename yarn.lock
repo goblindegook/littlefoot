@@ -588,7 +588,7 @@
     "@babel/helper-plugin-utils" "^7.8.3"
     babel-plugin-dynamic-import-node "^2.3.0"
 
-"@babel/plugin-transform-modules-commonjs@^7.4.4", "@babel/plugin-transform-modules-commonjs@^7.8.3":
+"@babel/plugin-transform-modules-commonjs@7.8.3", "@babel/plugin-transform-modules-commonjs@^7.4.4", "@babel/plugin-transform-modules-commonjs@^7.8.3":
   version "7.8.3"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-modules-commonjs/-/plugin-transform-modules-commonjs-7.8.3.tgz#df251706ec331bd058a34bdd72613915f82928a5"
   integrity sha512-JpdMEfA15HZ/1gNuB9XEDlZM1h/gF/YOH7zaZzQu2xCFRfwc01NXBMHHSTT6hRjlXJJs5x/bfODM3LiCk94Sxg==
@@ -1100,19 +1100,19 @@
   dependencies:
     find-up "^4.0.0"
 
-"@cypress/browserify-preprocessor@2.1.1":
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/@cypress/browserify-preprocessor/-/browserify-preprocessor-2.1.1.tgz#93e7c1228fee9dea9e80a1ccf0dd8cca1ffcbad8"
-  integrity sha512-S+0bzZbRsiFbrLkEygu5D0958z4ejio7hWxnO5MoSqD7SmZOmGRpjuZ9RaGcDmL6RWnklNjn8DkpP2s368qCKA==
+"@cypress/browserify-preprocessor@2.1.3":
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/@cypress/browserify-preprocessor/-/browserify-preprocessor-2.1.3.tgz#abbb8ba52ff33d70745c056e8fc675db2276a539"
+  integrity sha512-vZskc/EKejnmdm4fMGB1Fm39WelsF4HJHeI5q8I0LvGnrdvxSiCbn27TbhCM5Enq6Fkinf3f7oiHS/m2OUgzdA==
   dependencies:
     "@babel/core" "7.4.5"
     "@babel/plugin-proposal-class-properties" "7.3.0"
     "@babel/plugin-proposal-object-rest-spread" "7.3.2"
+    "@babel/plugin-transform-modules-commonjs" "7.8.3"
     "@babel/plugin-transform-runtime" "7.2.0"
     "@babel/preset-env" "7.4.5"
     "@babel/preset-react" "7.0.0"
     "@babel/runtime" "7.3.1"
-    babel-plugin-add-module-exports "1.0.0"
     babelify "10.0.0"
     bluebird "3.5.3"
     browserify "16.2.3"
@@ -2051,13 +2051,6 @@ babel-jest@^25.1.0:
     chalk "^3.0.0"
     slash "^3.0.0"
 
-babel-plugin-add-module-exports@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-add-module-exports/-/babel-plugin-add-module-exports-1.0.0.tgz#72b5424d941a336c6a35357f373d8b8366263031"
-  integrity sha512-m0sMxPL4FaN2K69GQgaRJa4Ny15qKSdoknIcpN+gz+NaJlAW9pge/povs13tPYsKDboflrEQC+/3kfIsONBTaw==
-  optionalDependencies:
-    chokidar "^2.0.4"
-
 babel-plugin-dynamic-import-node@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-dynamic-import-node/-/babel-plugin-dynamic-import-node-2.3.0.tgz#f00f507bdaa3c3e3ff6e7e5e98d90a7acab96f7f"
@@ -2669,7 +2662,7 @@ check-more-types@2.24.0:
   resolved "https://registry.yarnpkg.com/check-more-types/-/check-more-types-2.24.0.tgz#1420ffb10fd444dcfc79b43891bbfffd32a84600"
   integrity sha1-FCD/sQ/URNz8ebQ4kbv//TKoRgA=
 
-chokidar@^2.0.4, chokidar@^2.1.1, chokidar@^2.1.8:
+chokidar@^2.1.1, chokidar@^2.1.8:
   version "2.1.8"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-2.1.8.tgz#804b3a7b6a99358c3c5c61e71d8728f041cff917"
   integrity sha512-ZmZUazfOzf0Nve7duiCKD23PFSCs4JPoYyccjUFF3aQkQadqBhfzhjkwBH2mNOG9cTBwhamM37EIsIkZw3nRgg==
