@@ -1,17 +1,17 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "es2015", "es2016", "es2017", "es2018"],
-    "module": "system",
-    "moduleResolution": "node",
+    "target": "ES5",
+    "lib": ["DOM", "ESNext"],
+    "module": "ESNext",
+    "moduleResolution": "Node",
     "declaration": true,
-    "declarationDir": "./dist",
     "outDir": "./dist",
     "strict": true,
     "esModuleInterop": true,
-    "allowJs": false,
+    "noEmitOnError": false,
+    "allowJs": true,
     "checkJs": false,
-    "skipLibCheck": true,
+    "skipLibCheck": false,
     "incremental": true
   },
   "include": ["./src"]
