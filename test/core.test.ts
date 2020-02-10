@@ -1,12 +1,16 @@
-import { createCore, Footnote } from '../src/core'
+import { createCore, Adapter, Footnote } from '../src/core'
 import { DEFAULT_SETTINGS } from '../src/settings'
 
 afterEach(jest.useRealTimers)
 
-function createAdapter(overrides = {}) {
+function createAdapter(overrides = {}): Adapter {
   return {
-    addListeners: () => undefined,
-    cleanup: () => undefined,
+    addListeners: () => () => {
+      /* noop */
+    },
+    cleanup: () => {
+      /* noop */
+    },
     setup: () => [],
     ...overrides
   }

@@ -37,7 +37,7 @@ export type Core = CoreDriver &
     unmount: () => void
   }>
 
-type Adapter = Readonly<{
+export type Adapter = Readonly<{
   setup: (settings: Settings) => Footnote[]
   addListeners: (core: CoreDriver) => () => void
   cleanup: (footnotes: Footnote[]) => void

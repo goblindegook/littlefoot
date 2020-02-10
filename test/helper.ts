@@ -20,11 +20,13 @@ export function setDocumentBody(fixture: string): void {
 }
 
 export function getButton(id: string): HTMLElement {
-  return getByTitle(document.body, `See Footnote ${id}`)
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  return getByTitle(document.body, `See Footnote ${id}`)!
 }
 
 export function getPopover(id: string): HTMLElement {
-  return document.querySelector(`aside[data-footnote-id="${id}"]`)
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  return document.querySelector<HTMLElement>(`aside[data-footnote-id="${id}"]`)!
 }
 
 export function getAllButtons(): HTMLInputElement[] {

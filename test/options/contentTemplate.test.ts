@@ -12,13 +12,13 @@ test('setup with default contentTemplate', async () => {
   await waitForChange(button)
 
   const footnote = document.querySelector<HTMLElement>('aside')
-  expect(footnote.dataset).toMatchObject({
+  expect(footnote?.dataset).toMatchObject({
     footnoteId: '1',
     footnotePopover: '',
     footnotePosition: 'bottom'
   })
 
-  const content = footnote.querySelector('.littlefoot-footnote__content')
+  const content = footnote?.querySelector('.littlefoot-footnote__content')
   expect(content).toContainHTML(`This is the document's only footnote.`)
 })
 
@@ -44,7 +44,7 @@ test('setup with custom contentTemplate using <%= %> delimiters', async () => {
   await waitForChange(button)
 
   const footnote = document.querySelector<HTMLElement>('aside.custom')
-  expect(footnote.dataset).toMatchObject({
+  expect(footnote?.dataset).toMatchObject({
     footnoteId: '1',
     footnotePopover: '',
     footnotePosition: 'bottom',
@@ -52,7 +52,7 @@ test('setup with custom contentTemplate using <%= %> delimiters', async () => {
     testNumber: '1'
   })
 
-  const content = footnote.querySelector('.littlefoot-footnote__content')
+  const content = footnote?.querySelector('.littlefoot-footnote__content')
   expect(content).toContainHTML(`This is the document's only footnote.`)
 })
 
@@ -78,7 +78,7 @@ test('setup with custom contentTemplate using <% %> delimiters', async () => {
   await waitForChange(button)
 
   const footnote = document.querySelector<HTMLElement>('aside.custom')
-  expect(footnote.dataset).toMatchObject({
+  expect(footnote?.dataset).toMatchObject({
     footnoteId: '1',
     footnotePopover: '',
     footnotePosition: 'bottom',
@@ -86,6 +86,6 @@ test('setup with custom contentTemplate using <% %> delimiters', async () => {
     testNumber: '1'
   })
 
-  const content = footnote.querySelector('.littlefoot-footnote__content')
+  const content = footnote?.querySelector('.littlefoot-footnote__content')
   expect(content).toContainHTML(`This is the document's only footnote.`)
 })
