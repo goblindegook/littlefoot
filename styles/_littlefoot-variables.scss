@@ -29,9 +29,9 @@ $popover-scroll-indicator-icon: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iM
 
 // POPOVER
 $popover-margin-top: 0.1em !default;
-$popover-padding-content-horizontal: 1.3em !default;
-$popover-padding-content-top: 1.1em !default;
-$popover-padding-content-bottom: 1.2em !default;
+$popover-padding-content-horizontal: 1.4em !default;
+$popover-padding-content-top: 0.6em !default;
+$popover-padding-content-bottom: 1.4em !default;
 $popover-z-index: 10 !default; // Set the base so that it's above the other body children
 $popover-initial-transform-origin: 50% 0 !default;
 
