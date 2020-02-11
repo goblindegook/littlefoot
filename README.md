@@ -61,7 +61,7 @@ The script will work with a wide array of markup, but you will need to make sure
 Once you've set up the appropriate markup, all you need to do is include the following in your code:
 
 ```javascript
-var littlefoot = require('littlefoot').default
+const { littlefoot } = require('littlefoot')
 
 littlefoot()
 ```
@@ -69,9 +69,9 @@ littlefoot()
 You can also configure the available options by passing an object literal, and you can store the return object to make use of some of the methods it makes available:
 
 ```javascript
-var littlefoot = require('littlefoot').default
+const { littlefoot } = require('littlefoot')
 
-var lf = littlefoot({
+const lf = littlefoot({
   activateOnHover: true,
   hoverDelay: 250
 })
@@ -116,7 +116,7 @@ performance.
 
    ```html
    <script
-     src="https://unpkg.com/littlefoot/dist/littlefoot.min.js"
+     src="https://unpkg.com/littlefoot/dist/littlefoot.js"
      type="application/javascript"
    ></script>
    <script type="application/javascript">

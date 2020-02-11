@@ -25,8 +25,7 @@ export default [
     output: {
       name: 'littlefoot',
       file: pkg.browser,
-      format: 'umd',
-      exports: 'named'
+      format: 'umd'
     }
   },
   {
@@ -37,13 +36,11 @@ export default [
     output: [
       {
         file: pkg.main,
-        format: 'cjs',
-        exports: 'named'
+        format: 'cjs'
       },
       {
         file: pkg.module,
-        format: 'es',
-        exports: 'named'
+        format: 'es'
       }
     ]
   }
