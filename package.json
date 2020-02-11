@@ -7,11 +7,11 @@
   "repository": "goblindegook/littlefoot",
   "scripts": {
     "clean": "rm -rf coverage dist",
-    "build:scripts": "rollup -c",
+    "build:scripts": "rollup --config",
     "build:styles": "node-sass --output-style compressed --include-path styles -o dist/ styles/",
     "build:types": "tsc --emitDeclarationOnly",
     "build": "yarn clean && mkdir -p dist && concurrently 'yarn build:types' 'yarn build:scripts' 'yarn build:styles'",
-    "watch:scripts": "rollup -c -w",
+    "watch:scripts": "rollup --config --watch",
     "watch:styles": "node-sass --watch --output-style compressed --include-path styles -o dist/ styles/",
     "format": "prettier --write '{cypress,src,test}/**/*.{js,jsx,ts,tsx,json,css,md}'",
     "lint": "eslint '{cypress,src,test}/**/*.ts'",
