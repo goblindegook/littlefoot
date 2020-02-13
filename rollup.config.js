@@ -31,7 +31,15 @@ export default [
   {
     input: 'src/index.ts',
     external: Object.keys(pkg.dependencies),
-    plugins: [typescript(), production && terser()],
+    plugins: [
+      typescript(),
+      production &&
+        terser({
+          output: {
+            comments: false
+          }
+        })
+    ],
     context: 'window',
     output: [
       {
