@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.2.2](https://github.com/goblindegook/littlefoot/compare/v3.2.1...v3.2.2) (2020-02-13)
+
+
+### Bug Fixes
+
+* **styles:** popover content padding tweaks ([7f99b66](https://github.com/goblindegook/littlefoot/commit/7f99b66b88597fd7de0557cd80949606e8eb1705))
+* better locking of body scroll ([d9b609c](https://github.com/goblindegook/littlefoot/commit/d9b609cd5168848e840b20acee7b98bc16def229))
+* prevent page scroll when scrolling footnote content ([3192512](https://github.com/goblindegook/littlefoot/commit/3192512b8d2eea53fb00ba707a21ea33b56975d1))
+* remove deprecated mousewheel event ([4b17eb6](https://github.com/goblindegook/littlefoot/commit/4b17eb6cc325cba8486c008cccfec3da13bbc3b6))
+
 ### [3.2.1](https://github.com/goblindegook/littlefoot/compare/v3.2.0...v3.2.1) (2019-12-03)
 
 
