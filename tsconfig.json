@@ -12,7 +12,7 @@
     "allowJs": true,
     "checkJs": false,
     "skipLibCheck": false,
-    "incremental": true
+    "incremental": false
   },
   "include": ["./src"]
 }
