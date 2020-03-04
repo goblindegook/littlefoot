@@ -1227,7 +1227,19 @@
     "@testing-library/dom" "^6.12.2"
     "@types/testing-library__cypress" "^5.0.2"
 
-"@testing-library/dom@6.12.2", "@testing-library/dom@^6.12.2":
+"@testing-library/dom@6.13.0":
+  version "6.13.0"
+  resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-6.13.0.tgz#8509d3cceaebd900c193e9598b911e4690608fe3"
+  integrity sha512-kF1mnDK3eOCtOGapkbQK0fXXL4/mFydTSbyqNTtUHEf9tO9Dt33fwZyVNqeVdGiXRP6r9Ti1Fc56cX7fGr5ZJg==
+  dependencies:
+    "@babel/runtime" "^7.6.2"
+    "@sheerun/mutationobserver-shim" "^0.3.2"
+    "@types/testing-library__dom" "^6.0.0"
+    aria-query "3.0.0"
+    pretty-format "^24.9.0"
+    wait-for-expect "^3.0.0"
+
+"@testing-library/dom@^6.12.2":
   version "6.12.2"
   resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-6.12.2.tgz#5d549acf43f2e0c23b2abfd4e36d65594c3b2741"
   integrity sha512-KCnvHra5fV+wDxg3wJObGvZFxq7v1DJt829GNFLuRDjKxVNc/B5AdsylNF5PMHFbWMXDsHwM26d2NZcZO9KjbQ==
