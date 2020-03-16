@@ -5,6 +5,7 @@
     "module": "ESNext",
     "moduleResolution": "Node",
     "declaration": true,
+    "declarationDir": "dist",
     "strict": true,
     "esModuleInterop": true,
     "noEmitOnError": false,
