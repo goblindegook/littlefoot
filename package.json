@@ -9,7 +9,7 @@
     "clean": "rm -rf coverage dist",
     "build:scripts": "rollup --config",
     "build:styles": "node-sass --output-style compressed --include-path styles -o dist/ styles/",
-    "build:types": "tsc --emitDeclarationOnly",
+    "build:types": "tsc --emitDeclarationOnly --outDir dist",
     "build": "yarn clean && mkdir -p dist && concurrently 'yarn build:types' 'yarn build:scripts' 'yarn build:styles'",
     "watch:scripts": "rollup --config --watch",
     "watch:styles": "node-sass --watch --output-style compressed --include-path styles -o dist/ styles/",
