@@ -25,7 +25,7 @@ export function getAvailableRoom(element: HTMLElement): Room {
   return {
     top,
     bottom: window.innerHeight - top,
-    leftRelative: left / window.innerWidth
+    leftRelative: left / window.innerWidth,
   }
 }
 

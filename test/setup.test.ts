@@ -6,7 +6,7 @@ import {
   getAllActiveButtons,
   queryAll,
   getButton,
-  getPopover
+  getPopover,
 } from './helper'
 
 beforeEach(() => {

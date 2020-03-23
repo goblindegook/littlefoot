@@ -3,7 +3,7 @@ import {
   setDocumentBody,
   waitForChange,
   getPopoverByText,
-  getButton
+  getButton,
 } from './helper'
 import littlefoot from '../src'
 

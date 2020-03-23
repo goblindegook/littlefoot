@@ -9,13 +9,13 @@ export function queryAll<E extends Element>(selector: string): E[] {
 
 export function getPopoverByText(matcher: string | RegExp): HTMLElement {
   return getByText(document.body, matcher, {
-    selector: '.littlefoot-footnote *'
+    selector: '.littlefoot-footnote *',
   })
 }
 
 export function setDocumentBody(fixture: string): void {
   document.body.innerHTML = readFileSync(join(__dirname, 'fixtures', fixture), {
-    encoding: 'utf8'
+    encoding: 'utf8',
   })
 }
 

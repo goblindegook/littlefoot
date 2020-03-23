@@ -3,7 +3,7 @@ import {
   setDocumentBody,
   waitForChange,
   getPopoverByText,
-  getButton
+  getButton,
 } from './helper'
 import littlefoot from '../src'
 
@@ -26,7 +26,7 @@ test('dismiss footnote when clicking the button again', async () => {
   await waitForChange(button)
   expect(
     queryByText(document.body, /This is the document's only footnote./, {
-      selector: '.littlefoot-footnote *'
+      selector: '.littlefoot-footnote *',
     })
   ).not.toBeInTheDocument()
   expect(button).not.toHaveClass('is-active')

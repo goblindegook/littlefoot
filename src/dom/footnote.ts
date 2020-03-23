@@ -5,7 +5,7 @@ import {
   getAvailableHeight,
   repositionPopover,
   repositionTooltip,
-  unmount
+  unmount,
 } from './layout'
 import { Footnote } from '../core'
 
@@ -28,7 +28,7 @@ export function createFootnote({
   content,
   host,
   popover,
-  wrapper
+  wrapper,
 }: FootnoteElements): Footnote {
   let isHovered = false
   let maxHeight = 0
@@ -36,7 +36,7 @@ export function createFootnote({
   return {
     id,
 
-    activate: onActivate => {
+    activate: (onActivate) => {
       button.classList.add(CLASS_CHANGING)
       button.setAttribute('aria-expanded', 'true')
       button.classList.add(CLASS_ACTIVE)
@@ -118,6 +118,6 @@ export function createFootnote({
 
     destroy: () => {
       unmount(host)
-    }
+    },
   }
 }

@@ -50,7 +50,7 @@ function createElementFromHTML(html: string): HTMLElement {
 
 function children(element: Element, selector?: string): Element[] {
   return Array.from(element.children).filter(
-    child => child.nodeType !== 8 && (!selector || child.matches(selector))
+    (child) => child.nodeType !== 8 && (!selector || child.matches(selector))
   )
 }
 
@@ -66,7 +66,7 @@ function findFootnoteLinks(
   return queryAll<HTMLAnchorElement>(
     document,
     scope + ' a[href*="#"]'
-  ).filter(link => (link.href + link.rel).match(pattern))
+  ).filter((link) => (link.href + link.rel).match(pattern))
 }
 
 function findReference(
@@ -80,7 +80,7 @@ function findReference(
     const fragment = link.href.split('#')[1]
     const selector = '#' + fragment.replace(/[:.+~*[\]]/g, '\\$&')
     const related = queryAll(document, selector).find(
-      footnote => allowDuplicates || !processed.includes(footnote)
+      (footnote) => allowDuplicates || !processed.includes(footnote)
     )
 
     const body = related?.closest<HTMLElement>(footnoteSelector)
@@ -96,7 +96,7 @@ function findReference(
 
 function recursiveHideFootnoteContainer(container: HTMLElement): void {
   const visibleElements = children(container, `:not(.${CLASS_PRINT_ONLY})`)
-  const visibleSeparators = visibleElements.filter(el => el.tagName === 'HR')
+  const visibleSeparators = visibleElements.filter((el) => el.tagName === 'HR')
 
   if (visibleElements.length === visibleSeparators.length) {
     visibleSeparators.concat(container).forEach(setPrintOnly)
@@ -108,10 +108,7 @@ function recursiveHideFootnoteContainer(container: HTMLElement): void {
 function recursiveUnmount(element: HTMLElement) {
   const parent = element.parentElement
   unmount(element)
-  const html = parent?.innerHTML
-    .replace('[]', '')
-    .replace('&nbsp;', ' ')
-    .trim()
+  const html = parent?.innerHTML.replace('[]', '').replace('&nbsp;', ' ').trim()
 
   if (parent && !html) {
     recursiveUnmount(parent)
@@ -131,8 +128,8 @@ function prepareTemplateData(original: Original, idx: number): OriginalData {
       reference: original.referenceId,
       content: content.innerHTML.startsWith('<')
         ? content.innerHTML
-        : '<p>' + content.innerHTML + '</p>'
-    }
+        : '<p>' + content.innerHTML + '</p>',
+    },
   }
 }
 
@@ -161,7 +158,7 @@ function createElements(buttonTemplate: string, popoverTemplate: string) {
 
   return ({
     original,
-    data
+    data,
   }: OriginalData): OriginalData & FootnoteElements => {
     const id = data.id
 
@@ -199,7 +196,7 @@ export function setup(settings: Settings): Footnote[] {
     contentTemplate,
     footnoteSelector,
     numberResetSelector,
-    scope
+    scope,
   } = settings
 
   const footnoteElements = findFootnoteLinks(document, anchorPattern, scope)
@@ -213,7 +210,7 @@ export function setup(settings: Settings): Footnote[] {
     )
     .filter(isDefined)
     .map(prepareTemplateData)
-    .map(numberResetSelector ? resetNumbers(numberResetSelector) : i => i)
+    .map(numberResetSelector ? resetNumbers(numberResetSelector) : (i) => i)
     .map(createElements(buttonTemplate, contentTemplate))
 
   footnoteElements.forEach(({ original, host }) => {
@@ -228,8 +225,8 @@ export function setup(settings: Settings): Footnote[] {
 }
 
 export function cleanup(footnotes: Footnote[]): void {
-  footnotes.forEach(footnote => footnote.destroy())
-  queryAll(document, '.' + CLASS_PRINT_ONLY).forEach(element =>
+  footnotes.forEach((footnote) => footnote.destroy())
+  queryAll(document, '.' + CLASS_PRINT_ONLY).forEach((element) =>
     element.classList.remove(CLASS_PRINT_ONLY)
   )
 }

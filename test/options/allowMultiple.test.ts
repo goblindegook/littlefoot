@@ -3,7 +3,7 @@ import {
   setDocumentBody,
   waitForChange,
   getAllActiveButtons,
-  getButton
+  getButton,
 } from '../helper'
 import littlefoot from '../../src'
 
@@ -77,7 +77,7 @@ test('dismiss multiple buttons when calling .dismiss()', async () => {
   const instance = littlefoot({
     activateDelay: 1,
     dismissDelay: 1,
-    allowMultiple: true
+    allowMultiple: true,
   })
 
   const one = getButton('1')
@@ -100,7 +100,7 @@ test('programmatic activation dismisses others when multiples are disallowed', a
   const instance = littlefoot({
     activateDelay: 1,
     dismissDelay: 1,
-    allowMultiple: false
+    allowMultiple: false,
   })
 
   const one = getButton('1')

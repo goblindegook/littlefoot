@@ -12,7 +12,7 @@ function createAdapter(overrides = {}): Adapter {
       /* noop */
     },
     setup: () => [],
-    ...overrides
+    ...overrides,
   }
 }
 
@@ -31,7 +31,7 @@ function createFootnote(overrides: Partial<Footnote> = {}): Footnote {
     resize: () => undefined,
     startHovering: () => undefined,
     stopHovering: () => undefined,
-    ...overrides
+    ...overrides,
   }
 }
 
@@ -40,7 +40,7 @@ test('footnote repositioning', () => {
   const two = { reposition: jest.fn() }
 
   const adapter = createAdapter({
-    setup: () => [one, two]
+    setup: () => [one, two],
   })
 
   const core = createCore(adapter, DEFAULT_SETTINGS)
@@ -56,7 +56,7 @@ test('footnote resizing', () => {
   const two = { resize: jest.fn() }
 
   const adapter = createAdapter({
-    setup: () => [one, two]
+    setup: () => [one, two],
   })
 
   const core = createCore(adapter, DEFAULT_SETTINGS)
@@ -76,18 +76,18 @@ test('footnote activation on hover', () => {
     isReady: () => true,
     ready: jest.fn(),
     reposition: jest.fn(),
-    resize: jest.fn()
+    resize: jest.fn(),
   })
 
   const adapter = createAdapter({
-    setup: () => [footnote]
+    setup: () => [footnote],
   })
 
   const core = createCore(adapter, {
     ...DEFAULT_SETTINGS,
     activateCallback: () => undefined,
     activateOnHover: true,
-    hoverDelay: 100
+    hoverDelay: 100,
   })
 
   core.hover(footnote)
@@ -108,11 +108,11 @@ test('footnote dismissal on unhover', () => {
     dismiss: jest.fn(),
     isHovered: () => false,
     isReady: () => true,
-    remove: jest.fn()
+    remove: jest.fn(),
   })
 
   const adapter = createAdapter({
-    setup: () => [footnote]
+    setup: () => [footnote],
   })
 
   const core = createCore(adapter, {
@@ -120,7 +120,7 @@ test('footnote dismissal on unhover', () => {
     activateCallback: () => undefined,
     dismissDelay: 100,
     dismissOnUnhover: true,
-    hoverDelay: 50
+    hoverDelay: 50,
   })
 
   core.unhover(footnote)
@@ -141,18 +141,18 @@ test('only unhovered footnotes are dismissed', () => {
     dismiss: jest.fn(),
     isHovered: () => false,
     isReady: () => true,
-    remove: jest.fn()
+    remove: jest.fn(),
   })
 
   const hoveredFootnote = createFootnote({
     dismiss: jest.fn(),
     isHovered: () => true,
     isReady: () => true,
-    remove: jest.fn()
+    remove: jest.fn(),
   })
 
   const adapter = createAdapter({
-    setup: () => [unhoveredFootnote, hoveredFootnote]
+    setup: () => [unhoveredFootnote, hoveredFootnote],
   })
 
   const core = createCore(adapter, {
@@ -160,7 +160,7 @@ test('only unhovered footnotes are dismissed', () => {
     activateCallback: () => undefined,
     dismissDelay: 100,
     dismissOnUnhover: true,
-    hoverDelay: 50
+    hoverDelay: 50,
   })
 
   core.unhover(unhoveredFootnote)

@@ -50,7 +50,7 @@ function handleTouch(
   action: FootnoteAction,
   dismissAll: () => void
 ): EventListener {
-  return event => {
+  return (event) => {
     const element = target(event).closest<HTMLElement>(SELECTOR_BUTTON)
     const id = getFootnoteId(element)
     const footnote = id && lookup(id)
@@ -67,7 +67,7 @@ function handleHover(
   lookup: FootnoteLookup,
   action: FootnoteAction
 ): EventListener {
-  return event => {
+  return (event) => {
     event.preventDefault()
     const element = target(event).closest<HTMLElement>(SELECTOR_FOOTNOTE)
     const id = getFootnoteId(element)
@@ -80,7 +80,7 @@ function handleHover(
 }
 
 function handleEscape(fn: () => void): EventHandler<KeyboardEvent> {
-  return event => {
+  return (event) => {
     if (event.keyCode === 27) {
       unlockBodyScroll()
       fn()
@@ -89,7 +89,7 @@ function handleEscape(fn: () => void): EventHandler<KeyboardEvent> {
 }
 
 function handleScroll(popover: HTMLElement): EventHandler<WheelEvent> {
-  return event => {
+  return (event) => {
     const content = event.currentTarget as HTMLElement | null
     const delta = -event.deltaY
 
@@ -123,7 +123,7 @@ export function addListeners({
   repositionAll,
   resizeAll,
   toggle,
-  unhover
+  unhover,
 }: CoreDriver): () => void {
   const toggleOnTouch = handleTouch(lookup, toggle, dismissAll)
   const dismissOnEscape = handleEscape(dismissAll)

@@ -3,7 +3,7 @@ import {
   setDocumentBody,
   waitForChange,
   getButton,
-  getPopover
+  getPopover,
 } from '../helper'
 import littlefoot from '../../src'
 
@@ -15,7 +15,7 @@ test('dismiss on button unhover', async () => {
     activateOnHover: true,
     dismissDelay: 1,
     dismissOnUnhover: true,
-    hoverDelay: 1
+    hoverDelay: 1,
   })
 
   const button = getButton('1')
@@ -37,7 +37,7 @@ test('dismiss on popover unhover', async () => {
     activateOnHover: true,
     dismissDelay: 1,
     dismissOnUnhover: true,
-    hoverDelay: 1
+    hoverDelay: 1,
   })
 
   const button = getButton('1')

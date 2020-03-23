@@ -14,7 +14,7 @@ test('default buttonTemplate', () => {
   expect(button.dataset).toMatchObject({
     footnoteButton: '',
     footnoteId: '1',
-    footnoteNumber: '1'
+    footnoteNumber: '1',
   })
 })
 
@@ -26,7 +26,7 @@ test('custom buttonTemplate using <%= %> delimiters', () => {
       data-test-id="<%= id %>"
       data-test-number="<%= number %>"
       data-test-reference="<%= reference %>"
-    />`
+    />`,
   })
 
   const button = getByTitle(document.body, 'Footnote 1')
@@ -37,7 +37,7 @@ test('custom buttonTemplate using <%= %> delimiters', () => {
     testContent: /This is the document's only footnote\./,
     testId: '1',
     testNumber: '1',
-    testReference: 'fnref:1'
+    testReference: 'fnref:1',
   })
 })
 
@@ -49,7 +49,7 @@ test('custom buttonTemplate using <% %> delimiters', () => {
       data-test-id="<% id %>"
       data-test-number="<% number %>"
       data-test-reference="<% reference %>"
-    />`
+    />`,
   })
 
   const button = getByTitle(document.body, 'Footnote 1')
@@ -60,6 +60,6 @@ test('custom buttonTemplate using <% %> delimiters', () => {
     testContent: /This is the document's only footnote\./,
     testId: '1',
     testNumber: '1',
-    testReference: 'fnref:1'
+    testReference: 'fnref:1',
   })
 })

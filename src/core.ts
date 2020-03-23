@@ -59,8 +59,8 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
   function activate(footnote: Footnote, delay: number): void {
     if (!settings.allowMultiple) {
       footnotes
-        .filter(current => current.id !== footnote.id)
-        .forEach(footnote => dismiss(footnote, settings.dismissDelay))
+        .filter((current) => current.id !== footnote.id)
+        .forEach((footnote) => dismiss(footnote, settings.dismissDelay))
     }
 
     if (footnote.isReady()) {
@@ -79,18 +79,18 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
 
     dismiss,
 
-    lookup: id => footnotes.find(footnote => footnote.id === id),
+    lookup: (id) => footnotes.find((footnote) => footnote.id === id),
 
     dismissAll() {
-      footnotes.forEach(current => dismiss(current, settings.dismissDelay))
+      footnotes.forEach((current) => dismiss(current, settings.dismissDelay))
     },
 
     repositionAll() {
-      footnotes.forEach(current => current.reposition())
+      footnotes.forEach((current) => current.reposition())
     },
 
     resizeAll() {
-      footnotes.forEach(current => current.resize())
+      footnotes.forEach((current) => current.resize())
     },
 
     toggle(footnote) {
@@ -113,11 +113,11 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
       if (settings.dismissOnUnhover) {
         setTimeout(() => {
           footnotes
-            .filter(f => !f.isHovered())
-            .forEach(f => dismiss(f, settings.dismissDelay))
+            .filter((f) => !f.isHovered())
+            .forEach((f) => dismiss(f, settings.dismissDelay))
         }, settings.hoverDelay)
       }
-    }
+    },
   }
 
   const removeListeners = adapter.addListeners(core)
@@ -127,6 +127,6 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
     unmount() {
       removeListeners()
       adapter.cleanup(footnotes)
-    }
+    },
   }
 }

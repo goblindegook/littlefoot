@@ -41,7 +41,7 @@ export function littlefoot(userSettings: Partial<Settings> = {}): Littlefoot {
 
     updateSetting(key, value) {
       settings[key] = value
-    }
+    },
   }
 }
 
