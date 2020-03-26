@@ -1,5 +1,4 @@
 import { throttle } from '@pacote/throttle'
-import { getStyle } from '@pacote/get-style'
 import { off, on } from 'delegated-events'
 import { CoreDriver, FootnoteAction, FootnoteLookup } from '../core'
 
@@ -17,32 +16,6 @@ function target(event: Event) {
 
 function getFootnoteId(element: HTMLElement | null): string | undefined {
   return element?.dataset.footnoteId
-}
-
-let initialBodyStyleOverflow: string | undefined
-let initialBodyPadding: string | undefined
-
-function lockBodyScroll(): void {
-  if (initialBodyStyleOverflow === undefined) {
-    initialBodyPadding = getStyle(document.body, 'paddingRight')
-    initialBodyStyleOverflow = getStyle(document.body, 'overflow')
-    const scrollBarWidth =
-      window.innerWidth - document.documentElement.clientWidth
-    document.body.style.overflow = 'hidden'
-    document.body.style.paddingRight = scrollBarWidth + 'px'
-  }
-}
-
-function unlockBodyScroll(): void {
-  if (initialBodyStyleOverflow) {
-    document.body.style.overflow = initialBodyStyleOverflow
-    initialBodyStyleOverflow = undefined
-  }
-
-  if (initialBodyPadding) {
-    document.body.style.paddingRight = initialBodyPadding
-    initialBodyPadding = undefined
-  }
 }
 
 function handleTouch(
@@ -82,7 +55,6 @@ function handleHover(
 function handleEscape(fn: () => void): EventHandler<KeyboardEvent> {
   return (event) => {
     if (event.keyCode === 27) {
-      unlockBodyScroll()
       fn()
     }
   }
@@ -112,8 +84,6 @@ export function bindScrollHandler(
   popover: HTMLElement
 ): void {
   content.addEventListener('wheel', throttle(handleScroll(popover), FRAME))
-  content.addEventListener('mouseover', lockBodyScroll)
-  content.addEventListener('mouseout', unlockBodyScroll)
 }
 
 export function addListeners({
