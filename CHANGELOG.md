@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.2.4](https://github.com/goblindegook/littlefoot/compare/v3.2.3...v3.2.4) (2020-03-26)
+
+
+### Bug Fixes
+
+* remove body scroll locking over content shifting issues ([0ce0369](https://github.com/goblindegook/littlefoot/commit/0ce0369194285265a42051ff1fc6d5d072a8fa6b))
+
 ### [3.2.3](https://github.com/goblindegook/littlefoot/compare/v3.2.2...v3.2.3) (2020-02-13)
 
 
