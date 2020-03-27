@@ -1236,11 +1236,6 @@
   dependencies:
     any-observable "^0.3.0"
 
-"@sheerun/mutationobserver-shim@^0.3.2":
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/@sheerun/mutationobserver-shim/-/mutationobserver-shim-0.3.2.tgz#8013f2af54a2b7d735f71560ff360d3a8176a87b"
-  integrity sha512-vTCdPp/T/Q3oSqwHmZ5Kpa9oI7iLtGl3RQaA/NyLHikvcrPxACkkKVr/XzkSPJWXHRhKGzVvb0urJsbMlRxi1Q==
-
 "@sinonjs/commons@^1.7.0":
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/@sinonjs/commons/-/commons-1.7.0.tgz#f90ffc52a2e519f018b13b6c4da03cbff36ebed6"
@@ -1257,18 +1252,16 @@
     "@testing-library/dom" "^7.0.2"
     "@types/testing-library__cypress" "^5.0.3"
 
-"@testing-library/dom@6.16.0":
-  version "6.16.0"
-  resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-6.16.0.tgz#04ada27ed74ad4c0f0d984a1245bb29b1fd90ba9"
-  integrity sha512-lBD88ssxqEfz0wFL6MeUyyWZfV/2cjEZZV3YRpb2IoJRej/4f1jB0TzqIOznTpfR1r34CNesrubxwIlAQ8zgPA==
+"@testing-library/dom@7.1.2":
+  version "7.1.2"
+  resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-7.1.2.tgz#0942e3751beeea9820e14dd4bf685f1f1767353a"
+  integrity sha512-U0wLMbND1NUMUB65E9VmfuehT1GUSIHnT2zK7rjpDIdFNDbMtjDzbdaZXBYDp5lWzHJwUdPQozMd1GHp3O9gow==
   dependencies:
-    "@babel/runtime" "^7.8.4"
-    "@sheerun/mutationobserver-shim" "^0.3.2"
-    "@types/testing-library__dom" "^6.12.1"
+    "@babel/runtime" "^7.9.2"
+    "@types/testing-library__dom" "^7.0.0"
     aria-query "^4.0.2"
-    dom-accessibility-api "^0.3.0"
+    dom-accessibility-api "^0.4.2"
     pretty-format "^25.1.0"
-    wait-for-expect "^3.0.2"
 
 "@testing-library/dom@^7.0.2":
   version "7.0.4"
@@ -1464,6 +1457,13 @@
   integrity sha512-cgqnEjxKk31tQt29j4baSWaZPNjQf3bHalj2gcHQTpW5SuHRal76gOpF0vypeEo6o+sS5inOvvNdzLY0B3FB2A==
   dependencies:
     pretty-format "^24.3.0"
+
+"@types/testing-library__dom@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@types/testing-library__dom/-/testing-library__dom-7.0.0.tgz#c0fb7d1c2495a3d26f19342102142d47500f0319"
+  integrity sha512-1TEPWyqQ6IQ7R1hCegZmFSA3KrBQjdzJW7yC9ybpRcFst5XuPOqBGNr0mTAKbxwI/TrTyc1skeyLJrpcvAf93w==
+  dependencies:
+    pretty-format "^25.1.0"
 
 "@types/testing-library__jest-dom@^5.0.2":
   version "5.0.2"
@@ -3430,6 +3430,11 @@ dom-accessibility-api@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/dom-accessibility-api/-/dom-accessibility-api-0.3.0.tgz#511e5993dd673b97c87ea47dba0e3892f7e0c983"
   integrity sha512-PzwHEmsRP3IGY4gv/Ug+rMeaTIyTJvadCb+ujYXYeIylbHJezIyNToe8KfEgHTCEYyC+/bUghYOGg8yMGlZ6vA==
+
+dom-accessibility-api@^0.4.2:
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/dom-accessibility-api/-/dom-accessibility-api-0.4.3.tgz#93ca9002eb222fd5a343b6e5e6b9cf5929411c4c"
+  integrity sha512-JZ8iPuEHDQzq6q0k7PKMGbrIdsgBB7TRrtVOUm4nSMCExlg5qQG4KXWTH2k90yggjM4tTumRGwTKJSldMzKyLA==
 
 domain-browser@^1.2.0:
   version "1.2.0"
@@ -8902,11 +8907,6 @@ w3c-xmlserializer@^1.1.2:
     domexception "^1.0.1"
     webidl-conversions "^4.0.2"
     xml-name-validator "^3.0.0"
-
-wait-for-expect@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/wait-for-expect/-/wait-for-expect-3.0.2.tgz#d2f14b2f7b778c9b82144109c8fa89ceaadaa463"
-  integrity sha512-cfS1+DZxuav1aBYbaO/kE06EOS8yRw7qOFoD3XtjTkYvCvh3zUvNST8DXK/nPaeqIzIv3P3kL3lRJn8iwOiSag==
 
 walker@^1.0.7, walker@~1.0.5:
   version "1.0.7"
