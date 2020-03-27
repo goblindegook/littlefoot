@@ -1227,7 +1227,7 @@
     "@testing-library/dom" "^7.0.2"
     "@types/testing-library__cypress" "^5.0.3"
 
-"@testing-library/dom@^7.0.2", "@testing-library/dom@^7.1.2":
+"@testing-library/dom@7.1.2", "@testing-library/dom@^7.0.2":
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-7.1.2.tgz#0942e3751beeea9820e14dd4bf685f1f1767353a"
   integrity sha512-U0wLMbND1NUMUB65E9VmfuehT1GUSIHnT2zK7rjpDIdFNDbMtjDzbdaZXBYDp5lWzHJwUdPQozMd1GHp3O9gow==
