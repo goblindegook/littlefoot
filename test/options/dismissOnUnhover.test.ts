@@ -1,7 +1,8 @@
 import { fireEvent } from '@testing-library/dom'
 import {
   setDocumentBody,
-  waitForChange,
+  waitToStartChanging,
+  waitToStopChanging,
   getButton,
   getPopover,
 } from '../helper'
@@ -21,10 +22,11 @@ test('dismiss on button unhover', async () => {
   const button = getButton('1')
 
   fireEvent.mouseOver(button)
-  await waitForChange(button)
+  await waitToStopChanging(button)
 
   fireEvent.mouseOut(button)
-  await waitForChange(button)
+  await waitToStartChanging(button)
+  await waitToStopChanging(button)
 
   expect(button).not.toHaveClass('is-active')
 })
@@ -43,14 +45,15 @@ test('dismiss on popover unhover', async () => {
   const button = getButton('1')
 
   fireEvent.mouseOver(button)
-  await waitForChange(button)
+  await waitToStopChanging(button)
 
   const popover = getPopover('1')
 
   fireEvent.mouseOut(button)
   fireEvent.mouseOver(popover)
   fireEvent.mouseOut(popover)
-  await waitForChange(button)
+  await waitToStartChanging(button)
+  await waitToStopChanging(button)
 
   expect(button).not.toHaveClass('is-active')
 })

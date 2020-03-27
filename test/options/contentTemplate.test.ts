@@ -1,5 +1,5 @@
 import { fireEvent } from '@testing-library/dom'
-import { setDocumentBody, waitForChange, getButton } from '../helper'
+import { setDocumentBody, waitToStopChanging, getButton } from '../helper'
 import littlefoot from '../../src'
 
 test('setup with default contentTemplate', async () => {
@@ -9,7 +9,7 @@ test('setup with default contentTemplate', async () => {
 
   const button = getButton('1')
   fireEvent.click(button)
-  await waitForChange(button)
+  await waitToStopChanging(button)
 
   const footnote = document.querySelector<HTMLElement>('aside')
   expect(footnote?.dataset).toMatchObject({
@@ -41,7 +41,7 @@ test('setup with custom contentTemplate using <%= %> delimiters', async () => {
 
   const button = getButton('1')
   fireEvent.click(button)
-  await waitForChange(button)
+  await waitToStopChanging(button)
 
   const footnote = document.querySelector<HTMLElement>('aside.custom')
   expect(footnote?.dataset).toMatchObject({
@@ -75,7 +75,7 @@ test('setup with custom contentTemplate using <% %> delimiters', async () => {
 
   const button = getButton('1')
   fireEvent.click(button)
-  await waitForChange(button)
+  await waitToStopChanging(button)
 
   const footnote = document.querySelector<HTMLElement>('aside.custom')
   expect(footnote?.dataset).toMatchObject({

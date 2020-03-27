@@ -1,7 +1,7 @@
 import { fireEvent } from '@testing-library/dom'
 import {
   setDocumentBody,
-  waitForChange,
+  waitToStopChanging,
   getPopoverByText,
   getButton,
 } from './helper'
@@ -22,7 +22,7 @@ test('activate footnote when clicking the button', async () => {
   fireEvent.click(button)
 
   expect(button).toHaveClass('is-changing')
-  await waitForChange(button)
+  await waitToStopChanging(button)
   expect(button).toHaveClass('is-active')
   getPopoverByText(/This is the document's only footnote./)
 })
@@ -68,7 +68,7 @@ test('popup ARIA properties', async () => {
 
   fireEvent.click(button)
 
-  await waitForChange(button)
+  await waitToStopChanging(button)
 
   const popover = document.querySelector('.littlefoot-footnote')
   expect(button).toHaveAttribute('aria-controls', popover?.id)
@@ -82,7 +82,7 @@ test('popup layout dimensions', async () => {
 
   fireEvent.click(button)
 
-  await waitForChange(button)
+  await waitToStopChanging(button)
 
   const popover = document.querySelector('.littlefoot-footnote')
   expect(popover).toHaveStyle(`max-width: ${document.body.clientWidth}px`)

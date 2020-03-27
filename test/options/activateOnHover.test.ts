@@ -1,5 +1,5 @@
 import littlefoot from '../../src'
-import { setDocumentBody, waitForChange, getButton } from '../helper'
+import { setDocumentBody, waitToStopChanging, getButton } from '../helper'
 import { fireEvent } from '@testing-library/dom'
 
 test('activate on hover', async () => {
@@ -8,7 +8,7 @@ test('activate on hover', async () => {
 
   const button = getButton('1')
   fireEvent.mouseOver(button)
-  await waitForChange(button)
+  await waitToStopChanging(button)
 
   expect(button).toHaveClass('is-active')
 })

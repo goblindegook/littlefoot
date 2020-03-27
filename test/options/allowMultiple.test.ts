@@ -1,7 +1,7 @@
 import { fireEvent } from '@testing-library/dom'
 import {
   setDocumentBody,
-  waitForChange,
+  waitToStopChanging,
   getAllActiveButtons,
   getButton,
 } from '../helper'
@@ -33,11 +33,11 @@ test('activate multiple footnotes on click', async () => {
 
   const one = getButton('1')
   fireEvent.click(one)
-  await waitForChange(one)
+  await waitToStopChanging(one)
 
   const two = getButton('2')
   fireEvent.click(two)
-  await waitForChange(two)
+  await waitToStopChanging(two)
 
   expect(getAllActiveButtons()).toEqual([one, two])
 })
@@ -47,11 +47,11 @@ test('activate multiple footnotes on hover', async () => {
 
   const one = getButton('1')
   fireEvent.mouseOver(one)
-  await waitForChange(one)
+  await waitToStopChanging(one)
 
   const two = getButton('2')
   fireEvent.mouseOver(two)
-  await waitForChange(two)
+  await waitToStopChanging(two)
 
   expect(getAllActiveButtons()).toEqual([one, two])
 })
@@ -66,9 +66,9 @@ test('activate multiple buttons when calling .activate()', async () => {
   instance.activate('1')
   instance.activate('2')
   instance.activate('3')
-  await waitForChange(b1)
-  await waitForChange(b2)
-  await waitForChange(b3)
+  await waitToStopChanging(b1)
+  await waitToStopChanging(b2)
+  await waitToStopChanging(b3)
 
   expect(getAllActiveButtons()).toEqual([b1, b2, b3])
 })
@@ -82,16 +82,16 @@ test('dismiss multiple buttons when calling .dismiss()', async () => {
 
   const one = getButton('1')
   fireEvent.click(one)
-  await waitForChange(one)
+  await waitToStopChanging(one)
 
   const two = getButton('2')
   fireEvent.click(two)
-  await waitForChange(two)
+  await waitToStopChanging(two)
 
   instance.dismiss()
 
-  await waitForChange(one)
-  await waitForChange(two)
+  await waitToStopChanging(one)
+  await waitToStopChanging(two)
 
   expect(getAllActiveButtons()).toEqual([])
 })
@@ -107,10 +107,10 @@ test('programmatic activation dismisses others when multiples are disallowed', a
   const two = getButton('2')
 
   instance.activate('1')
-  await waitForChange(one)
+  await waitToStopChanging(one)
 
   instance.activate('2')
-  await waitForChange(two)
+  await waitToStopChanging(two)
 
   expect(getAllActiveButtons()).toEqual([two])
 })

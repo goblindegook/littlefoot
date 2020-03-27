@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom/extend-expect'
-import { wait, getByText, getByTitle } from '@testing-library/dom'
+import { waitFor, getByText, getByTitle } from '@testing-library/dom'
 import { join } from 'path'
 import { readFileSync } from 'fs'
 
@@ -37,6 +37,10 @@ export function getAllActiveButtons(): HTMLInputElement[] {
   return queryAll('button[data-footnote-button].is-active')
 }
 
-export async function waitForChange(button: Element): Promise<void> {
-  await wait(() => expect(button).not.toHaveClass('is-changing'))
+export async function waitToStartChanging(button: Element): Promise<void> {
+  await waitFor(() => expect(button).toHaveClass('is-changing'))
+}
+
+export async function waitToStopChanging(button: Element): Promise<void> {
+  await waitFor(() => expect(button).not.toHaveClass('is-changing'))
 }
