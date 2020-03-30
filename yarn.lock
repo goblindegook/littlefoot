@@ -1227,10 +1227,10 @@
     "@testing-library/dom" "^7.0.2"
     "@types/testing-library__cypress" "^5.0.3"
 
-"@testing-library/dom@7.1.3":
-  version "7.1.3"
-  resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-7.1.3.tgz#422073afb5ae9bdb910651ac4d51c9ed4382a2f9"
-  integrity sha512-wFMQdKrTwTTlTe6n0KN+KjOtgOV0viIyfr+f+7Csq+1pD0o+ho7FrjCjkNpx6NEsx8jHDtZ4WU3cGOuLc9LvQg==
+"@testing-library/dom@7.1.4":
+  version "7.1.4"
+  resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-7.1.4.tgz#affb29bd303b01eb0937debbbc5671dac640086b"
+  integrity sha512-eifMaV8NW4xk/moC4+ga8Jpl6MNLNjQgBgimDBqmcZPVyDPcWYsapAMcp1HIGpVsTNAXBVB8ILza3uyu86v4ig==
   dependencies:
     "@babel/runtime" "^7.9.2"
     "@types/testing-library__dom" "^7.0.0"
