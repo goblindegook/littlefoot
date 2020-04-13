@@ -60,7 +60,7 @@
     "@commitlint/config-conventional": "8.3.4",
     "@cypress/browserify-preprocessor": "2.2.1",
     "@pacote/eslint-config": "2.0.0",
-    "@rollup/plugin-commonjs": "11.0.2",
+    "@rollup/plugin-commonjs": "11.1.0",
     "@rollup/plugin-node-resolve": "7.1.1",
     "@rollup/plugin-typescript": "4.0.0",
     "@testing-library/cypress": "6.0.0",
