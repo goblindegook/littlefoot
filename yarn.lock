@@ -1331,13 +1331,12 @@
     "@testing-library/dom" "^7.0.2"
     "@types/testing-library__cypress" "^5.0.3"
 
-"@testing-library/dom@7.4.0":
-  version "7.4.0"
-  resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-7.4.0.tgz#0c2ac09f209c1141324eb5117ff1e9e04978bbce"
-  integrity sha512-47Zy7msjFXpQAHuqNNEeBm1wHn5vJGQKzMN9RA5O3KkPYGXMgBtCg16z7ihhFg5AarJIZxGX17CjTzNzDsfKUw==
+"@testing-library/dom@7.5.1":
+  version "7.5.1"
+  resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-7.5.1.tgz#c3537e2b970576072ea4083e603463843c8a8d2b"
+  integrity sha512-c9iQWyFtdsqaVScIlOdgdG3HXWkYvGzin02nJ4LUnzNXKyxqeqq9KPIAAjnmfrSApbRc8mK1l6esiCeEredfRw==
   dependencies:
     "@babel/runtime" "^7.9.6"
-    "@types/testing-library__dom" "^7.0.2"
     aria-query "^4.0.2"
     dom-accessibility-api "^0.4.3"
     pretty-format "^26.0.1"
@@ -1544,13 +1543,6 @@
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@types/testing-library__dom/-/testing-library__dom-7.0.0.tgz#c0fb7d1c2495a3d26f19342102142d47500f0319"
   integrity sha512-1TEPWyqQ6IQ7R1hCegZmFSA3KrBQjdzJW7yC9ybpRcFst5XuPOqBGNr0mTAKbxwI/TrTyc1skeyLJrpcvAf93w==
-  dependencies:
-    pretty-format "^25.1.0"
-
-"@types/testing-library__dom@^7.0.2":
-  version "7.0.2"
-  resolved "https://registry.yarnpkg.com/@types/testing-library__dom/-/testing-library__dom-7.0.2.tgz#2906f8a0dce58b0746c6ab606f786bd06fe6940e"
-  integrity sha512-8yu1gSwUEAwzg2OlPNbGq+ixhmSviGurBu1+ivxRKq1eRcwdjkmlwtPvr9VhuxTq2fNHBWN2po6Iem3Xt5A6rg==
   dependencies:
     pretty-format "^25.1.0"
 
