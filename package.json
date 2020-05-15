@@ -95,7 +95,7 @@
     "rollup-plugin-uglify": "6.0.4",
     "standard-version": "8.0.0",
     "ts-jest": "25.5.1",
-    "tslib": "1.13.0",
+    "tslib": "2.0.0",
     "typescript": "3.9.2"
   },
   "dependencies": {
