@@ -1,4 +1,4 @@
-import { fireEvent, screen } from '@testing-library/dom'
+import { fireEvent } from '@testing-library/dom'
 import {
   setDocumentBody,
   waitToStopChanging,
