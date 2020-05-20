@@ -15,18 +15,18 @@ export default [
       commonjs({
         namedExports: {
           tslib: ['__assign'],
-          'delegated-events': ['off', 'on']
-        }
+          'delegated-events': ['off', 'on'],
+        },
       }),
       typescript(),
-      production && uglify()
+      production && uglify(),
     ],
     context: 'window',
     output: {
       name: 'littlefoot',
       file: pkg.browser,
-      format: 'umd'
-    }
+      format: 'umd',
+    },
   },
   {
     input: 'src/index.ts',
@@ -36,20 +36,22 @@ export default [
       production &&
         terser({
           output: {
-            comments: false
-          }
-        })
+            comments: false,
+          },
+        }),
     ],
     context: 'window',
     output: [
       {
+        exports: 'named',
         file: pkg.main,
-        format: 'cjs'
+        format: 'cjs',
       },
       {
+        exports: 'named',
         file: pkg.module,
-        format: 'es'
-      }
-    ]
-  }
+        format: 'es',
+      },
+    ],
+  },
 ]

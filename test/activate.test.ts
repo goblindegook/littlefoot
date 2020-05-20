@@ -1,4 +1,4 @@
-import { fireEvent } from '@testing-library/dom'
+import { fireEvent, screen } from '@testing-library/dom'
 import {
   setDocumentBody,
   waitToStopChanging,
@@ -25,6 +25,17 @@ test('activate footnote when clicking the button', async () => {
   await waitToStopChanging(button)
   expect(button).toHaveClass('is-active')
   getPopoverByText(/This is the document's only footnote./)
+})
+
+test('does not insert empty paragraphs in the footnote content (#187)', async () => {
+  littlefoot(TEST_SETTINGS)
+  const button = getButton('1')
+  fireEvent.click(button)
+  await waitToStopChanging(button)
+  const paragraphs = document.querySelectorAll(
+    '.littlefoot-footnote__content p'
+  )
+  expect(paragraphs).toHaveLength(1)
 })
 
 test('activate footnote by ID when calling .activate()', () => {

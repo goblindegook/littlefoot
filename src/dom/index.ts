@@ -116,9 +116,10 @@ function recursiveUnmount(element: HTMLElement) {
 }
 
 function prepareTemplateData(original: Original, idx: number): OriginalData {
-  const content = original.body.cloneNode(true) as HTMLElement
+  const content = createElementFromHTML(original.body.outerHTML)
   const backlinkSelector = '[href$="#' + original.referenceId + '"]'
   queryAll<HTMLElement>(content, backlinkSelector).forEach(recursiveUnmount)
+  const html = content.innerHTML.trim()
 
   return {
     original,
@@ -126,9 +127,7 @@ function prepareTemplateData(original: Original, idx: number): OriginalData {
       id: `${idx + 1}`,
       number: idx + 1,
       reference: original.referenceId,
-      content: content.innerHTML.startsWith('<')
-        ? content.innerHTML
-        : '<p>' + content.innerHTML + '</p>',
+      content: html.startsWith('<') ? html : '<p>' + html + '</p>',
     },
   }
 }
