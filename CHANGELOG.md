@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.2.5](https://github.com/goblindegook/littlefoot/compare/v3.2.4...v3.2.5) (2020-05-20)
+
+
+### Bug Fixes
+
+* fixes empty paragraph injection in footnote content ([98fa7df](https://github.com/goblindegook/littlefoot/commit/98fa7dfcbc7a59bae3b77a060c91b273889ceecb)), closes [#187](https://github.com/goblindegook/littlefoot/issues/187)
+
 ### [3.2.4](https://github.com/goblindegook/littlefoot/compare/v3.2.3...v3.2.4) (2020-03-26)
 
 
