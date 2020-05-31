@@ -1343,10 +1343,10 @@
     "@testing-library/dom" "^7.0.2"
     "@types/testing-library__cypress" "^5.0.3"
 
-"@testing-library/dom@7.7.0":
-  version "7.7.0"
-  resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-7.7.0.tgz#3567f4669f64b10c546c2fc42adec5a0cc84b956"
-  integrity sha512-Mlq+5hLGyitcoKrvKCnUNm8euM0+QEy2q1AaZzJTxEAaSaujBIut7+exodTSnhKoe+XLUZmlA45O9M4T+kHu9g==
+"@testing-library/dom@7.7.1":
+  version "7.7.1"
+  resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-7.7.1.tgz#b43db5c0c96440fcb51229de34e8111d0ce03c98"
+  integrity sha512-lJTopFmsapwonQ0jrw5xnRWRDdyFQpJrzQzyRem3sXOa/qvXBJHy7QCKa1wZS2fvkBdYWfxCNrQh4t6EZU8s5Q==
   dependencies:
     "@babel/runtime" "^7.9.6"
     aria-query "^4.0.2"
