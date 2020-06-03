@@ -1241,10 +1241,10 @@
     mkdirp "^0.5.1"
     rimraf "^2.5.2"
 
-"@pacote/eslint-config@3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@pacote/eslint-config/-/eslint-config-3.0.0.tgz#794351c7803e38c830b6cd37d9bd42cd0e0fa3cd"
-  integrity sha512-A4gEEr0lqOkvn2s+JC/TLbxEzz2/FM1s219sTqfOkEkkbrr11o1EEi1Gm3JhXJ9BhiKN84+LC+izosH8GVKFXw==
+"@pacote/eslint-config@3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pacote/eslint-config/-/eslint-config-3.0.1.tgz#2334ffcf5bb2e36028f169a4f28a10862f0e9be8"
+  integrity sha512-OWtALC4XU+GSIJXTubtgWvQfcfbd9ASCE2syk4/rdppOfjY8e8b+cuFjiJ+2VS7CQIB5Mr13x+Q4ua+s0hkKEA==
 
 "@pacote/get-style@^1.0.0", "@pacote/get-style@^1.1.1":
   version "1.1.1"
