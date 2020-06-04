@@ -96,7 +96,7 @@
     "standard-version": "8.0.0",
     "ts-jest": "26.1.0",
     "tslib": "2.0.0",
-    "typescript": "3.9.3"
+    "typescript": "3.9.5"
   },
   "dependencies": {
     "@pacote/get-style": "^1.0.0",
