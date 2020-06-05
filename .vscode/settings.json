@@ -1,5 +1,6 @@
 {
   "editor.formatOnSave": true,
   "typescript.tsdk": "node_modules/typescript/lib",
-  "workbench.colorCustomizations": {}
+  "workbench.colorCustomizations": {},
+  "deno.enable": false
 }

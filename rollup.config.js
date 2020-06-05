@@ -12,12 +12,7 @@ export default [
     input: 'src/index.ts',
     plugins: [
       resolve({ mainFields: ['main'] }),
-      commonjs({
-        namedExports: {
-          tslib: ['__assign'],
-          'delegated-events': ['off', 'on'],
-        },
-      }),
+      commonjs(),
       typescript(),
       production && uglify(),
     ],
