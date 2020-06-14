@@ -54,7 +54,6 @@ export function createFootnote({
 
     dismiss: () => {
       button.classList.add(CLASS_CHANGING)
-      button.blur()
       button.setAttribute('aria-expanded', 'false')
       button.classList.remove(CLASS_ACTIVE)
     },
