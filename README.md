@@ -273,6 +273,7 @@ To display the footnote number instead of an ellipsis, provide the following `bu
 ```html
 <button
   aria-controls="fncontent:<% id %>"
+  aria-describedby="fncontent:<% id %>"
   aria-expanded="false"
   aria-label="Footnote <% number %>"
   class="littlefoot-footnote__button"

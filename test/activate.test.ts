@@ -73,18 +73,28 @@ test('activation with unknown ID does not activate any popovers', () => {
   expect(document.querySelector('.littlefoot-footnote')).toBeNull()
 })
 
-test('popup ARIA properties', async () => {
+test('button and popover state reflected on ARIA properties', async () => {
   littlefoot(TEST_SETTINGS)
   const button = getButton('1')
 
   fireEvent.click(button)
+  await waitToStopChanging(button)
 
+  const popover = document.querySelector('.littlefoot-footnote')
+  expect(button).toHaveAttribute('aria-expanded', 'true')
+  expect(popover).toHaveAttribute('aria-live', 'polite')
+})
+
+test('button described by the popover', async () => {
+  littlefoot(TEST_SETTINGS)
+  const button = getButton('1')
+
+  fireEvent.click(button)
   await waitToStopChanging(button)
 
   const popover = document.querySelector('.littlefoot-footnote')
   expect(button).toHaveAttribute('aria-controls', popover?.id)
-  expect(button).toHaveAttribute('aria-expanded', 'true')
-  expect(popover).toHaveAttribute('aria-live', 'polite')
+  expect(button).toHaveAttribute('aria-describedby', popover?.id)
 })
 
 test('popup layout dimensions', async () => {
