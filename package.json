@@ -56,8 +56,8 @@
   "typings": "dist/index.d.ts",
   "style": "dist/littlefoot.css",
   "devDependencies": {
-    "@commitlint/cli": "8.3.5",
-    "@commitlint/config-conventional": "8.3.4",
+    "@commitlint/cli": "9.0.1",
+    "@commitlint/config-conventional": "9.0.1",
     "@cypress/browserify-preprocessor": "3.0.0",
     "@pacote/eslint-config": "3.0.1",
     "@rollup/plugin-commonjs": "13.0.0",
