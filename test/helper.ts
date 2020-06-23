@@ -20,8 +20,7 @@ export function setDocumentBody(fixture: string): void {
 }
 
 export function getButton(id: string): HTMLElement {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  return getByTitle(document.body, `See Footnote ${id}`)!
+  return getByTitle(document.body, `See Footnote ${id}`)
 }
 
 export function getPopover(id: string): HTMLElement {
@@ -37,10 +36,10 @@ export function getAllActiveButtons(): HTMLInputElement[] {
   return queryAll('button[data-footnote-button].is-active')
 }
 
-export async function waitToStartChanging(button: Element): Promise<void> {
+export async function waitToStartChanging(button: HTMLElement): Promise<void> {
   await waitFor(() => expect(button).toHaveClass('is-changing'))
 }
 
-export async function waitToStopChanging(button: Element): Promise<void> {
+export async function waitToStopChanging(button: HTMLElement): Promise<void> {
   await waitFor(() => expect(button).not.toHaveClass('is-changing'))
 }
