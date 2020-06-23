@@ -43,7 +43,7 @@ The script will work with a wide array of markup, but you will need to make sure
 <!-- Links -->
 <p>
   <sup id="fnref:1">
-    <a href="#fn:1" rel="footnote">1</a>
+    <a href="#fn:1">1</a>
   </sup>
 </p>
 
@@ -250,12 +250,10 @@ Default:
 
 ```html
 <button
-  aria-controls="fncontent:<% id %>"
   aria-expanded="false"
   aria-label="Footnote <% number %>"
   class="littlefoot-footnote__button littlefoot-footnote__button__ellipsis"
   id="<% reference %>"
-  rel="footnote"
   title="See Footnote <% number %>"
 >
   <svg viewbox="0 0 31 6" preserveAspectRatio="xMidYMid">
@@ -272,13 +270,10 @@ To display the footnote number instead of an ellipsis, provide the following `bu
 
 ```html
 <button
-  aria-controls="fncontent:<% id %>"
-  aria-describedby="fncontent:<% id %>"
   aria-expanded="false"
   aria-label="Footnote <% number %>"
   class="littlefoot-footnote__button"
   id="<% reference %>"
-  rel="footnote"
   title="See Footnote <% number %>"
 />
   <% number %>
