@@ -80,7 +80,6 @@ test('button and popover state reflected on ARIA properties', async () => {
   fireEvent.click(button)
   await waitToStopChanging(button)
 
-  const popover = document.querySelector('.littlefoot-footnote')
   expect(button).toHaveAttribute('aria-expanded', 'true')
 })
 
