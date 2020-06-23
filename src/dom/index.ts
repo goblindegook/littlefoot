@@ -126,7 +126,7 @@ function prepareTemplateData(original: Original, idx: number): OriginalData {
     data: {
       id: `${idx + 1}`,
       number: idx + 1,
-      reference: original.referenceId,
+      reference: 'lf-' + original.referenceId,
       content: html.startsWith('<') ? html : '<p>' + html + '</p>',
     },
   }
