@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.3.0](https://github.com/goblindegook/littlefoot/compare/v3.2.5...v3.3.0) (2020-06-23)
+
+
+### Features
+
+* aria-describedby attribute ([a9b31ce](https://github.com/goblindegook/littlefoot/commit/a9b31ce1251258f4483cf7e5afc9ddc4f65edc27))
+
+
+### Bug Fixes
+
+* accessibility issues ([#376](https://github.com/goblindegook/littlefoot/issues/376)) ([6d1841c](https://github.com/goblindegook/littlefoot/commit/6d1841c0c107fe4b3809f37f20ead4d367a90d99))
+
 ### [3.2.5](https://github.com/goblindegook/littlefoot/compare/v3.2.4...v3.2.5) (2020-05-20)
 
 
