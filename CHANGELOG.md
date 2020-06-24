@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.3.1](https://github.com/goblindegook/littlefoot/compare/v3.3.0...v3.3.1) (2020-06-24)
+
+
+### Bug Fixes
+
+* **a11y:** allow tabbing to content when it overflows popover ([0ecde14](https://github.com/goblindegook/littlefoot/commit/0ecde148758d013d01d9e2ac415285a57574fa64))
+
 ## [3.3.0](https://github.com/goblindegook/littlefoot/compare/v3.2.5...v3.3.0) (2020-06-23)
 
 
