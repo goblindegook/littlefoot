@@ -30,7 +30,9 @@ context('Scroll', () => {
       .should('have.class', 'is-scrollable')
       .and('not.have.class', 'is-fully-scrolled')
 
-    cy.get('.littlefoot-footnote__content').scrollTo('bottom')
+    cy.get('.littlefoot-footnote__content')
+      .should('have.attr', 'tabindex', '0')
+      .scrollTo('bottom')
 
     // FIXME: Content scroll events not triggering correctly.
     // cy.get('.littlefoot-footnote').should('have.class', 'is-fully-scrolled')

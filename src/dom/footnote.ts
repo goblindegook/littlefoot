@@ -84,8 +84,12 @@ export function createFootnote({
         content.style.maxHeight = minMaxHeight + 'px'
         repositionPopover(popover, room)
 
-        if (popover.offsetHeight <= content.scrollHeight) {
+        if (popover.offsetHeight < content.scrollHeight) {
           popover.classList.add(CLASS_SCROLLABLE)
+          content.setAttribute('tabindex', '0')
+        } else {
+          popover.classList.remove(CLASS_SCROLLABLE)
+          content.removeAttribute('tabindex')
         }
       }
     },
