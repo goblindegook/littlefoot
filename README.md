@@ -73,7 +73,7 @@ const { littlefoot } = require('littlefoot')
 
 const lf = littlefoot({
   activateOnHover: true,
-  hoverDelay: 250
+  hoverDelay: 250,
 })
 ```
 
@@ -317,4 +317,4 @@ Consult the [changelog](CHANGELOG.md#differences-from-bigfootjs).
 
 ## License
 
-MIT © [Chris Sauvé](http://cmsauve.com/projects) and [Luís Rodrigues](https://goblindegook.com).
+MIT © [Chris Sauvé](https://github.com/lemonmade) and [Luís Rodrigues](https://goblindegook.com).
