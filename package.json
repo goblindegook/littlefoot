@@ -93,7 +93,7 @@
     "rollup": "2.21.0",
     "rollup-plugin-terser": "6.1.0",
     "rollup-plugin-uglify": "6.0.4",
-    "standard-version": "8.0.0",
+    "standard-version": "8.0.1",
     "ts-jest": "26.1.1",
     "tslib": "2.0.0",
     "typescript": "3.9.6"
