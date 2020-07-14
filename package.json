@@ -58,7 +58,7 @@
   "devDependencies": {
     "@commitlint/cli": "9.1.1",
     "@commitlint/config-conventional": "9.1.1",
-    "@cypress/browserify-preprocessor": "3.0.0",
+    "@cypress/browserify-preprocessor": "3.0.1",
     "@pacote/eslint-config": "3.0.1",
     "@rollup/plugin-commonjs": "14.0.0",
     "@rollup/plugin-node-resolve": "8.4.0",
