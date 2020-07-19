@@ -40,7 +40,6 @@ test('sets ARIA attributes on button', () => {
   littlefoot()
   const button = getButton('1')
   expect(button).toHaveAttribute('aria-expanded', 'false')
-  expect(button).toHaveAttribute('aria-label', 'Footnote 1')
 })
 
 test('sets up footnotes with a URL before the fragment', () => {
