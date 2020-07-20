@@ -251,12 +251,12 @@ Default:
 ```html
 <button
   aria-expanded="false"
-  aria-label="Footnote <% number %>"
   class="littlefoot-footnote__button littlefoot-footnote__button__ellipsis"
   id="<% reference %>"
   title="See Footnote <% number %>"
 >
-  <svg viewbox="0 0 31 6" preserveAspectRatio="xMidYMid">
+  <svg role="img" aria-labelledby="title-<% reference %>" viewbox="0 0 31 6" preserveAspectRatio="xMidYMid">
+    <title id="title-<% reference %>">Footnote <% number %></title>
     <circle r="3" cx="3" cy="3" fill="white"></circle>
     <circle r="3" cx="15" cy="3" fill="white"></circle>
     <circle r="3" cx="27" cy="3" fill="white"></circle>
