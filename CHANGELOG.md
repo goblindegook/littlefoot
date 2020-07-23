@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.3.2](https://github.com/goblindegook/littlefoot/compare/v3.3.1...v3.3.2) (2020-07-23)
+
+
+### Bug Fixes
+
+* **a11y:** improve button labeling ([#418](https://github.com/goblindegook/littlefoot/issues/418)) ([3f0bf04](https://github.com/goblindegook/littlefoot/commit/3f0bf04a5995e04d629920b9e2a8369e5fdfdec2))
+
 ### [3.3.1](https://github.com/goblindegook/littlefoot/compare/v3.3.0...v3.3.1) (2020-06-24)
 
 
