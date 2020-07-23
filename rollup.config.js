@@ -42,6 +42,24 @@ export default [
         file: pkg.main,
         format: 'cjs',
       },
+    ],
+  },
+  {
+    input: 'src/index.ts',
+    external: Object.keys(pkg.dependencies),
+    plugins: [
+      typescript({
+        target: 'ES6',
+      }),
+      production &&
+        terser({
+          output: {
+            comments: false,
+          },
+        }),
+    ],
+    context: 'window',
+    output: [
       {
         exports: 'named',
         file: pkg.module,

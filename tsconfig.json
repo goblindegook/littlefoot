@@ -1,17 +1,17 @@
 {
   "compilerOptions": {
     "target": "ES5",
-    "lib": ["DOM", "ESNext"],
     "module": "ESNext",
     "moduleResolution": "Node",
     "declaration": false,
     "strict": true,
     "esModuleInterop": true,
     "noEmitOnError": false,
-    "allowJs": true,
+    "allowJs": false,
     "checkJs": false,
     "skipLibCheck": false,
-    "incremental": false
+    "incremental": false,
+    "importHelpers": false
   },
   "include": ["./src"]
 }
