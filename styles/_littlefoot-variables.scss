@@ -75,12 +75,12 @@ $button-left-margin: 0.2em !default; // Margin between the button and the text t
 $button-right-margin: 0.1em !default; // Margin between the button and the text to its right
 $button-vertical-offset: -0.1em !default; // Pushes the buttons along the vertical axis to align it with text as desired
 
-$button-color: rgb(110, 110, 110) !default; // Background color of the button
-$button-hovered-color: $button-color !default; // Background color of the button when being hovered
-$button-activating-color: $button-color !default; // Background color of the button when being clicked
-$button-active-color: $button-color !default; // Background color of the button when active
-$button-standard-opacity: 0.2 !default; // Opacity for when the button is just sittin' there
-$button-hovered-opacity: 0.5 !default; // Opacity for when the button is being hovered over
+$button-color: dimgray !default; // Background color of the button
+$button-hovered-color: blue !default; // Background color of the button when being hovered
+$button-activating-color: $button-hovered-color !default; // Background color of the button when being clicked
+$button-active-color: purple !default; // Background color of the button when active
+$button-standard-opacity: 1 !default; // Opacity for when the button is just sittin' there
+$button-hovered-opacity: 1 !default; // Opacity for when the button is being hovered over
 $button-activating-opacity: $button-hovered-opacity !default; // Opacity for when the button is being clicked
 $button-active-opacity: 1 !default; // Opacity for when the button is active
 $button-active-style-delay: 0.1s !default; // Delay before applying .active styles; this can be used to match to the popover activation transition
