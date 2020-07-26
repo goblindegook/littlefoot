@@ -136,6 +136,12 @@ Specifies a function to call on a footnote popover that is being activated (afte
 
 Default: `undefined`
 
+### `deactivateCallback`
+
+Specifies a function to call on a footnote popover that is being deactivated (just before it is removed from the DOM). The function will be passed one argument: the `popover` DOM element.
+
+Default: `undefined`
+
 ### `activateDelay`
 
 Sets a delay between the activation of the footnote button and the activation of the actual footnote content.
