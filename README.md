@@ -136,9 +136,9 @@ Specifies a function to call on a footnote popover that is being activated (afte
 
 Default: `undefined`
 
-### `deactivateCallback`
+### `dismissCallback`
 
-Specifies a function to call on a footnote popover that is being deactivated (just before it is removed from the DOM). The function will be passed one argument: the `popover` DOM element.
+Specifies a function to call on a footnote popover that is being dismissed (just before it is removed from the DOM). The function will be passed one argument: the `popover` DOM element.
 
 Default: `undefined`
 

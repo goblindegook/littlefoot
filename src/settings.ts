@@ -5,11 +5,11 @@ export type ActivateCallback = (
   button: HTMLElement
 ) => void
 
-export type DeactivateCallback = (popover: HTMLElement) => void
+export type DismissCallback = (popover: HTMLElement) => void
 
 export type Settings = Readonly<{
   activateCallback?: ActivateCallback
-  deactivateCallback?: DeactivateCallback
+  dismissCallback?: DismissCallback
   activateDelay: number
   activateOnHover: boolean
   allowDuplicates: boolean

@@ -1,10 +1,10 @@
-import { Settings, ActivateCallback, DeactivateCallback } from './settings'
+import { Settings, ActivateCallback, DismissCallback } from './settings'
 
 export type Footnote = Readonly<{
   id: string
   activate: (onActivate?: ActivateCallback) => void
   ready: () => void
-  dismiss: (onDeactivate?: DeactivateCallback) => void
+  dismiss: (onDeactivate?: DismissCallback) => void
   remove: () => void
   reposition: () => void
   resize: () => void
@@ -48,7 +48,7 @@ export function createCore(adapter: Adapter, settings: Settings): Core {
 
   function dismiss(footnote: Footnote, delay: number): void {
     if (footnote.isReady()) {
-      footnote.dismiss(settings.deactivateCallback)
+      footnote.dismiss(settings.dismissCallback)
 
       setTimeout(() => {
         footnote.remove()
