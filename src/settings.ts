@@ -1,12 +1,10 @@
 import { CLASS_WRAPPER, CLASS_CONTENT, CLASS_TOOLTIP } from './dom/layout'
 
-export type ActivateCallback = (
-  popover: HTMLElement,
-  button: HTMLElement
-) => void
+export type ActionCallback = (popover: HTMLElement, button: HTMLElement) => void
 
 export type Settings = Readonly<{
-  activateCallback?: ActivateCallback
+  activateCallback?: ActionCallback
+  dismissCallback?: ActionCallback
   activateDelay: number
   activateOnHover: boolean
   allowDuplicates: boolean

@@ -52,10 +52,13 @@ export function createFootnote({
       }
     },
 
-    dismiss: () => {
+    dismiss: (onDismiss) => {
       button.classList.add(CLASS_CHANGING)
       button.setAttribute('aria-expanded', 'false')
       button.classList.remove(CLASS_ACTIVE)
+      if (typeof onDismiss === 'function') {
+        onDismiss(popover, button)
+      }
     },
 
     isActive: () => button.classList.contains(CLASS_ACTIVE),

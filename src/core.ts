@@ -1,10 +1,10 @@
-import { Settings, ActivateCallback } from './settings'
+import { Settings, ActionCallback } from './settings'
 
 export type Footnote = Readonly<{
   id: string
-  activate: (onActivate?: ActivateCallback) => void
+  activate: (onActivate?: ActionCallback) => void
   ready: () => void
-  dismiss: () => void
+  dismiss: (onDeactivate?: ActionCallback) => void
   remove: () => void
   reposition: () => void
   resize: () => void
@@ -43,18 +43,18 @@ export type Adapter = Readonly<{
   cleanup: (footnotes: Footnote[]) => void
 }>
 
-function dismiss(footnote: Footnote, delay: number): void {
-  if (footnote.isReady()) {
-    footnote.dismiss()
-
-    setTimeout(() => {
-      footnote.remove()
-    }, delay)
-  }
-}
-
 export function createCore(adapter: Adapter, settings: Settings): Core {
   const footnotes = adapter.setup(settings)
+
+  function dismiss(footnote: Footnote, delay: number): void {
+    if (footnote.isReady()) {
+      footnote.dismiss(settings.dismissCallback)
+
+      setTimeout(() => {
+        footnote.remove()
+      }, delay)
+    }
+  }
 
   function activate(footnote: Footnote, delay: number): void {
     if (!settings.allowMultiple) {
