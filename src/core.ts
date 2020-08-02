@@ -1,10 +1,10 @@
-import { Settings, ActivateCallback, DismissCallback } from './settings'
+import { Settings, ActionCallback } from './settings'
 
 export type Footnote = Readonly<{
   id: string
-  activate: (onActivate?: ActivateCallback) => void
+  activate: (onActivate?: ActionCallback) => void
   ready: () => void
-  dismiss: (onDeactivate?: DismissCallback) => void
+  dismiss: (onDeactivate?: ActionCallback) => void
   remove: () => void
   reposition: () => void
   resize: () => void

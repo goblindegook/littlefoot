@@ -57,7 +57,7 @@ export function createFootnote({
       button.setAttribute('aria-expanded', 'false')
       button.classList.remove(CLASS_ACTIVE)
       if (typeof onDismiss === 'function') {
-        onDismiss(popover)
+        onDismiss(popover, button)
       }
     },
 

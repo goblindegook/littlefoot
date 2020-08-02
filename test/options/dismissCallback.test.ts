@@ -22,7 +22,7 @@ test('setup with dismissCallback', async () => {
   await waitToStopChanging(button)
 
   expect(dismissCallback).toHaveBeenCalledTimes(1)
-  expect(dismissCallback).toHaveBeenCalledWith(popover)
+  expect(dismissCallback).toHaveBeenCalledWith(popover, button)
 })
 
 test('dismissCallback can be set after initialisation', async () => {
@@ -42,5 +42,5 @@ test('dismissCallback can be set after initialisation', async () => {
   await waitToStopChanging(button)
 
   expect(dismissCallback).toHaveBeenCalledTimes(1)
-  expect(dismissCallback).toHaveBeenCalledWith(popover)
+  expect(dismissCallback).toHaveBeenCalledWith(popover, button)
 })

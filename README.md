@@ -138,7 +138,7 @@ Default: `undefined`
 
 ### `dismissCallback`
 
-Specifies a function to call on a footnote popover that is being dismissed (just before it is removed from the DOM). The function will be passed one argument: the `popover` DOM element.
+Specifies a function to call on a footnote popover that is being dismissed (just before it is removed from the DOM). The function will be passed two arguments: the `popover` DOM element, and the related `button`. This option can be useful for removing classes on the popover.
 
 Default: `undefined`
 
