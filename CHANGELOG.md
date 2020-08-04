@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.4.0](https://github.com/goblindegook/littlefoot/compare/v3.3.2...v3.4.0) (2020-08-04)
+
+
+### Features
+
+* popover dismiss callback (props [@biou](https://github.com/biou), closes [#420](https://github.com/goblindegook/littlefoot/issues/420)) ([2865bd0](https://github.com/goblindegook/littlefoot/commit/2865bd0c2186e5b4b1f2ffb14dda9e8c385d65ca))
+
 ### [3.3.2](https://github.com/goblindegook/littlefoot/compare/v3.3.1...v3.3.2) (2020-07-23)
 
 
