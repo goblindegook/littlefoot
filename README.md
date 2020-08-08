@@ -124,6 +124,8 @@ performance.
    </script>
    ```
 
+To customize, use `littlefoot.littlefoot()` instead and pass the settings there.
+
 See [an example on CodePen](https://codepen.io/goblindegook/pen/oPNzGE).
 
 ## Options
