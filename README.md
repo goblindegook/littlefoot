@@ -120,11 +120,11 @@ performance.
      type="application/javascript"
    ></script>
    <script type="application/javascript">
-     littlefoot.default()
+     littlefoot.littlefoot()  // Pass any littlefoot settings here.
    </script>
    ```
 
-To customize, use `littlefoot.littlefoot()` instead and pass the settings there.
+If you want to use the default options, use `littlefoot.default()` instead.
 
 See [an example on CodePen](https://codepen.io/goblindegook/pen/oPNzGE).
 
