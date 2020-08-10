@@ -124,8 +124,6 @@ performance.
    </script>
    ```
 
-If you want to use the default options, use `littlefoot.default()` instead.
-
 See [an example on CodePen](https://codepen.io/goblindegook/pen/oPNzGE).
 
 ## Options
