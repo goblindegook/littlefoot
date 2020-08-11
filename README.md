@@ -120,7 +120,7 @@ performance.
      type="application/javascript"
    ></script>
    <script type="application/javascript">
-     littlefoot.default()
+     littlefoot.littlefoot()  // Pass any littlefoot settings here.
    </script>
    ```
 
