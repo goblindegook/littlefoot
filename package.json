@@ -61,7 +61,7 @@
     "@cypress/browserify-preprocessor": "3.0.1",
     "@pacote/eslint-config": "3.0.1",
     "@rollup/plugin-commonjs": "14.0.0",
-    "@rollup/plugin-node-resolve": "8.4.0",
+    "@rollup/plugin-node-resolve": "9.0.0",
     "@rollup/plugin-typescript": "5.0.2",
     "@testing-library/cypress": "6.0.0",
     "@testing-library/dom": "7.22.1",
