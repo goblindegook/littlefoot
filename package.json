@@ -103,6 +103,9 @@
     "@pacote/throttle": "^1.0.0",
     "delegated-events": "^1.0.10"
   },
+  "resolutions": {
+    "cypress": "5.0.0"
+  },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
