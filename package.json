@@ -63,7 +63,7 @@
     "@rollup/plugin-node-resolve": "9.0.0",
     "@rollup/plugin-typescript": "5.0.2",
     "@testing-library/cypress": "6.0.1",
-    "@testing-library/dom": "7.22.6",
+    "@testing-library/dom": "7.23.0",
     "@testing-library/jest-dom": "5.11.4",
     "@types/delegated-events": "1.1.0",
     "@types/jest": "26.0.10",
