@@ -87,7 +87,7 @@
     "eslint-plugin-standard": "4.0.1",
     "husky": "4.2.5",
     "jest": "26.4.2",
-    "lint-staged": "10.2.13",
+    "lint-staged": "10.3.0",
     "node-sass": "4.14.1",
     "prettier": "2.1.1",
     "rollup": "2.26.6",
