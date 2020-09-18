@@ -37,7 +37,7 @@ export function createFootnote({
   host,
   popover,
   wrapper,
-}: FootnoteElements): Footnote {
+}: FootnoteElements): Footnote<HTMLElement> {
   let isHovered = false
   let maxHeight = 0
 

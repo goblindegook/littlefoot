@@ -1,27 +1,10 @@
+import { CoreSettings } from './core'
+import { HTMLAdapterSettings } from './dom/document'
 import { CLASS_WRAPPER, CLASS_CONTENT, CLASS_TOOLTIP } from './dom/layout'
 
-export type ActionCallback = (popover: HTMLElement, button: HTMLElement) => void
+export type LittlefootSettings = HTMLAdapterSettings & CoreSettings<HTMLElement>
 
-export type Settings = Readonly<{
-  activateCallback?: ActionCallback
-  dismissCallback?: ActionCallback
-  activateDelay: number
-  activateOnHover: boolean
-  allowDuplicates: boolean
-  allowMultiple: boolean
-  anchorParentSelector: string
-  anchorPattern: RegExp
-  buttonTemplate: string
-  contentTemplate: string
-  dismissDelay: number
-  dismissOnUnhover: boolean
-  footnoteSelector: string
-  hoverDelay: number
-  numberResetSelector: string
-  scope: string
-}>
-
-export const DEFAULT_SETTINGS: Settings = {
+export const DEFAULT_SETTINGS: LittlefootSettings = {
   activateDelay: 100,
   activateOnHover: false,
   allowDuplicates: true,

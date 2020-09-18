@@ -1,8 +1,18 @@
-import { Settings } from '../settings'
+import { bindScrollHandler } from './events'
 import { createFootnote, FootnoteElements } from './footnote'
 import { CLASS_CONTENT, CLASS_WRAPPER, unmount } from './layout'
-import { bindScrollHandler } from './events'
-import { Footnote } from '../core'
+import { Adapter, Footnote } from '../core'
+
+export type HTMLAdapterSettings = Readonly<{
+  allowDuplicates: boolean
+  anchorParentSelector: string
+  anchorPattern: RegExp
+  buttonTemplate: string
+  contentTemplate: string
+  footnoteSelector: string
+  numberResetSelector: string
+  scope: string
+}>
 
 type TemplateData = Readonly<{
   number: number
@@ -186,7 +196,14 @@ function attachFootnote(reference: HTMLElement, host: HTMLElement): void {
   reference.insertAdjacentElement('beforebegin', host)
 }
 
-export function setup(settings: Settings): Footnote[] {
+function cleanup(footnotes: Footnote<HTMLElement>[]): void {
+  footnotes.forEach((footnote) => footnote.destroy())
+  queryAll(document, '.' + CLASS_PRINT_ONLY).forEach((element) =>
+    element.classList.remove(CLASS_PRINT_ONLY)
+  )
+}
+
+export function setup(settings: HTMLAdapterSettings): Adapter<HTMLElement> {
   const {
     allowDuplicates,
     anchorParentSelector,
@@ -220,12 +237,8 @@ export function setup(settings: Settings): Footnote[] {
     attachFootnote(original.reference, host)
   })
 
-  return footnoteElements.map(createFootnote)
-}
-
-export function cleanup(footnotes: Footnote[]): void {
-  footnotes.forEach((footnote) => footnote.destroy())
-  queryAll(document, '.' + CLASS_PRINT_ONLY).forEach((element) =>
-    element.classList.remove(CLASS_PRINT_ONLY)
-  )
+  return {
+    footnotes: footnoteElements.map(createFootnote),
+    cleanup,
+  }
 }

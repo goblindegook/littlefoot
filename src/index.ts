@@ -1,39 +1,45 @@
-import { Settings, DEFAULT_SETTINGS } from './settings'
+import { DEFAULT_SETTINGS, LittlefootSettings } from './settings'
 import { createCore } from './core'
-import { setup, cleanup } from './dom'
+import { setup } from './dom/document'
 import { addListeners } from './dom/events'
 
 type Littlefoot = Readonly<{
   activate: (id: string, delay?: number) => void
   dismiss: (id?: string, delay?: number) => void
   unmount: () => void
-  getSetting: <K extends keyof Settings>(key: K) => Settings[K]
-  updateSetting: <K extends keyof Settings>(key: K, value: Settings[K]) => void
+  getSetting: <K extends keyof LittlefootSettings>(
+    key: K
+  ) => LittlefootSettings[K]
+  updateSetting: <K extends keyof LittlefootSettings>(
+    key: K,
+    value: LittlefootSettings[K]
+  ) => void
 }>
 
-export function littlefoot(userSettings: Partial<Settings> = {}): Littlefoot {
+export function littlefoot(
+  userSettings: Partial<LittlefootSettings> = {}
+): Littlefoot {
   const settings = { ...DEFAULT_SETTINGS, ...userSettings }
-
-  const core = createCore({ setup, addListeners, cleanup }, settings)
+  const core = createCore<HTMLElement>(setup(settings), settings)
+  const removeListeners = addListeners(core)
 
   return {
     activate(id, delay = settings.activateDelay) {
-      const footnote = core.lookup(id)
-      if (footnote) {
-        core.activate(footnote, delay)
-      }
+      core.activate(id, delay)
     },
 
     dismiss(id, delay = settings.dismissDelay) {
-      const footnote = id && core.lookup(id)
-      if (footnote) {
-        core.dismiss(footnote, delay)
-      } else {
+      if (id === undefined) {
         core.dismissAll()
+      } else {
+        core.dismiss(id, delay)
       }
     },
 
-    unmount: core.unmount,
+    unmount() {
+      removeListeners()
+      core.unmount()
+    },
 
     getSetting(key) {
       return settings[key]

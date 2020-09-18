@@ -1,6 +1,6 @@
 import { throttle } from '@pacote/throttle'
 import { off, on } from 'delegated-events'
-import { CoreDriver, FootnoteAction, FootnoteLookup } from '../core'
+import { Core, FootnoteAction } from '../core'
 
 const FRAME = 16
 type EventHandler<E extends Event> = (e: E) => void
@@ -18,41 +18,33 @@ function getFootnoteId(element: HTMLElement | null): string | undefined {
   return element?.dataset.footnoteId
 }
 
-function handleTouch(
-  lookup: FootnoteLookup,
+function touchHandler(
   action: FootnoteAction,
   dismissAll: () => void
 ): EventListener {
   return (event) => {
     const element = target(event).closest<HTMLElement>(SELECTOR_BUTTON)
     const id = getFootnoteId(element)
-    const footnote = id && lookup(id)
-
-    if (footnote) {
-      action(footnote)
+    if (id) {
+      action(id)
     } else if (!target(event).closest<HTMLElement>(SELECTOR_POPOVER)) {
       dismissAll()
     }
   }
 }
 
-function handleHover(
-  lookup: FootnoteLookup,
-  action: FootnoteAction
-): EventListener {
+function hoverHandler(action: FootnoteAction): EventListener {
   return (event) => {
     event.preventDefault()
     const element = target(event).closest<HTMLElement>(SELECTOR_FOOTNOTE)
     const id = getFootnoteId(element)
-    const footnote = id && lookup(id)
-
-    if (footnote) {
-      action(footnote)
+    if (id) {
+      action(id)
     }
   }
 }
 
-function handleEscape(fn: () => void): EventHandler<KeyboardEvent> {
+function escapeHandler(fn: () => void): EventHandler<KeyboardEvent> {
   return (event) => {
     if (event.keyCode === 27) {
       fn()
@@ -60,7 +52,7 @@ function handleEscape(fn: () => void): EventHandler<KeyboardEvent> {
   }
 }
 
-function handleScroll(popover: HTMLElement): EventHandler<WheelEvent> {
+function scrollHandler(popover: HTMLElement): EventHandler<WheelEvent> {
   return (event) => {
     const content = event.currentTarget as HTMLElement | null
     const delta = -event.deltaY
@@ -83,24 +75,16 @@ export function bindScrollHandler(
   content: HTMLElement,
   popover: HTMLElement
 ): void {
-  content.addEventListener('wheel', throttle(handleScroll(popover), FRAME))
+  content.addEventListener('wheel', throttle(scrollHandler(popover), FRAME))
 }
 
-export function addListeners({
-  dismissAll,
-  lookup,
-  hover,
-  repositionAll,
-  resizeAll,
-  toggle,
-  unhover,
-}: CoreDriver): () => void {
-  const toggleOnTouch = handleTouch(lookup, toggle, dismissAll)
-  const dismissOnEscape = handleEscape(dismissAll)
-  const throttledReposition = throttle(repositionAll, FRAME)
-  const throttledResize = throttle(resizeAll, FRAME)
-  const showOnHover = handleHover(lookup, hover)
-  const hideOnHover = handleHover(lookup, unhover)
+export function addListeners(core: Core): () => void {
+  const toggleOnTouch = touchHandler(core.toggle, core.dismissAll)
+  const dismissOnEscape = escapeHandler(core.dismissAll)
+  const throttledReposition = throttle(core.repositionAll, FRAME)
+  const throttledResize = throttle(core.resizeAll, FRAME)
+  const showOnHover = hoverHandler(core.hover)
+  const hideOnHover = hoverHandler(core.unhover)
 
   document.addEventListener('touchend', toggleOnTouch)
   document.addEventListener('click', toggleOnTouch)

@@ -1,22 +1,36 @@
-import { createCore, Adapter, Footnote } from '../src/core'
-import { DEFAULT_SETTINGS } from '../src/settings'
+import { createCore, Adapter, Footnote, CoreSettings } from '../src/core'
 
 afterEach(jest.useRealTimers)
 
-function createAdapter(overrides = {}): Adapter {
+type Test = 'TEST'
+
+function testSettings(
+  overrides?: Partial<CoreSettings<Test>>
+): CoreSettings<Test> {
   return {
-    addListeners: () => () => {
-      /* noop */
-    },
-    cleanup: () => {
-      /* noop */
-    },
-    setup: () => [],
+    activateCallback: () => undefined,
+    activateDelay: 0,
+    activateOnHover: false,
+    allowMultiple: false,
+    dismissCallback: () => undefined,
+    dismissDelay: 0,
+    dismissOnUnhover: false,
+    hoverDelay: 0,
     ...overrides,
   }
 }
 
-function createFootnote(overrides: Partial<Footnote> = {}): Footnote {
+function testAdapter(overrides?: Partial<Adapter<Test>>): Adapter<Test> {
+  return {
+    cleanup: () => {
+      /* noop */
+    },
+    footnotes: [],
+    ...overrides,
+  }
+}
+
+function testFootnote(overrides: Partial<Footnote<Test>> = {}): Footnote<Test> {
   return {
     id: 'id',
     activate: () => undefined,
@@ -36,14 +50,24 @@ function createFootnote(overrides: Partial<Footnote> = {}): Footnote {
 }
 
 test('footnote repositioning', () => {
-  const one = { reposition: jest.fn() }
-  const two = { reposition: jest.fn() }
+  const one = testFootnote({ reposition: jest.fn() })
+  const two = testFootnote({ reposition: jest.fn() })
 
-  const adapter = createAdapter({
-    setup: () => [one, two],
+  const adapter = testAdapter({
+    footnotes: [one, two],
   })
 
-  const core = createCore(adapter, DEFAULT_SETTINGS)
+  const core = createCore(
+    adapter,
+    testSettings({
+      activateDelay: 100,
+      activateOnHover: false,
+      allowMultiple: false,
+      dismissDelay: 100,
+      dismissOnUnhover: false,
+      hoverDelay: 250,
+    })
+  )
 
   core.repositionAll()
 
@@ -52,14 +76,10 @@ test('footnote repositioning', () => {
 })
 
 test('footnote resizing', () => {
-  const one = { resize: jest.fn() }
-  const two = { resize: jest.fn() }
-
-  const adapter = createAdapter({
-    setup: () => [one, two],
-  })
-
-  const core = createCore(adapter, DEFAULT_SETTINGS)
+  const one = testFootnote({ resize: jest.fn() })
+  const two = testFootnote({ resize: jest.fn() })
+  const adapter = testAdapter({ footnotes: [one, two] })
+  const core = createCore(adapter, testSettings())
 
   core.resizeAll()
 
@@ -70,7 +90,8 @@ test('footnote resizing', () => {
 test('footnote activation on hover', () => {
   jest.useFakeTimers()
 
-  const footnote = createFootnote({
+  const footnote = testFootnote({
+    id: 'test-id',
     activate: jest.fn(),
     isActive: () => false,
     isReady: () => true,
@@ -79,18 +100,18 @@ test('footnote activation on hover', () => {
     resize: jest.fn(),
   })
 
-  const adapter = createAdapter({
-    setup: () => [footnote],
-  })
+  const adapter = testAdapter({ footnotes: [footnote] })
 
-  const core = createCore(adapter, {
-    ...DEFAULT_SETTINGS,
-    activateCallback: () => undefined,
-    activateOnHover: true,
-    hoverDelay: 100,
-  })
+  const core = createCore(
+    adapter,
+    testSettings({
+      activateCallback: () => undefined,
+      activateOnHover: true,
+      hoverDelay: 100,
+    })
+  )
 
-  core.hover(footnote)
+  core.hover('test-id')
 
   expect(footnote.activate).toHaveBeenCalledTimes(1)
   expect(footnote.reposition).toHaveBeenCalledTimes(1)
@@ -104,26 +125,27 @@ test('footnote activation on hover', () => {
 test('footnote dismissal on unhover', () => {
   jest.useFakeTimers()
 
-  const footnote = createFootnote({
+  const footnote = testFootnote({
+    id: 'test-id',
     dismiss: jest.fn(),
     isHovered: () => false,
     isReady: () => true,
     remove: jest.fn(),
   })
 
-  const adapter = createAdapter({
-    setup: () => [footnote],
-  })
+  const adapter = testAdapter({ footnotes: [footnote] })
 
-  const core = createCore(adapter, {
-    ...DEFAULT_SETTINGS,
-    activateCallback: () => undefined,
-    dismissDelay: 100,
-    dismissOnUnhover: true,
-    hoverDelay: 50,
-  })
+  const core = createCore(
+    adapter,
+    testSettings({
+      activateCallback: () => undefined,
+      dismissDelay: 100,
+      dismissOnUnhover: true,
+      hoverDelay: 50,
+    })
+  )
 
-  core.unhover(footnote)
+  core.unhover('test-id')
 
   jest.advanceTimersByTime(50)
 
@@ -137,33 +159,37 @@ test('footnote dismissal on unhover', () => {
 test('only unhovered footnotes are dismissed', () => {
   jest.useFakeTimers()
 
-  const unhoveredFootnote = createFootnote({
+  const unhoveredFootnote = testFootnote({
+    id: 'unhovered-id',
     dismiss: jest.fn(),
     isHovered: () => false,
     isReady: () => true,
     remove: jest.fn(),
   })
 
-  const hoveredFootnote = createFootnote({
+  const hoveredFootnote = testFootnote({
+    id: 'hovered-id',
     dismiss: jest.fn(),
     isHovered: () => true,
     isReady: () => true,
     remove: jest.fn(),
   })
 
-  const adapter = createAdapter({
-    setup: () => [unhoveredFootnote, hoveredFootnote],
+  const adapter = testAdapter({
+    footnotes: [unhoveredFootnote, hoveredFootnote],
   })
 
-  const core = createCore(adapter, {
-    ...DEFAULT_SETTINGS,
-    activateCallback: () => undefined,
-    dismissDelay: 100,
-    dismissOnUnhover: true,
-    hoverDelay: 50,
-  })
+  const core = createCore(
+    adapter,
+    testSettings({
+      activateCallback: () => undefined,
+      dismissDelay: 100,
+      dismissOnUnhover: true,
+      hoverDelay: 50,
+    })
+  )
 
-  core.unhover(unhoveredFootnote)
+  core.unhover('unhovered-id')
 
   jest.advanceTimersByTime(50)
 
