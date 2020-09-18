@@ -13,6 +13,14 @@ const CLASS_ACTIVE = 'is-active'
 const CLASS_CHANGING = 'is-changing'
 const CLASS_SCROLLABLE = 'is-scrollable'
 
+function addClass(element: HTMLElement, className: string): void {
+  element.classList.add(className)
+}
+
+function removeClass(element: HTMLElement, className: string): void {
+  element.classList.remove(className)
+}
+
 export type FootnoteElements = Readonly<{
   id: string
   host: HTMLElement
@@ -37,9 +45,9 @@ export function createFootnote({
     id,
 
     activate: (onActivate) => {
-      button.classList.add(CLASS_CHANGING)
+      addClass(button, CLASS_CHANGING)
       button.setAttribute('aria-expanded', 'true')
-      button.classList.add(CLASS_ACTIVE)
+      addClass(button, CLASS_ACTIVE)
 
       button.insertAdjacentElement('afterend', popover)
 
@@ -53,9 +61,10 @@ export function createFootnote({
     },
 
     dismiss: (onDismiss) => {
-      button.classList.add(CLASS_CHANGING)
+      addClass(button, CLASS_CHANGING)
       button.setAttribute('aria-expanded', 'false')
-      button.classList.remove(CLASS_ACTIVE)
+      removeClass(button, CLASS_ACTIVE)
+      removeClass(popover, CLASS_ACTIVE)
       if (typeof onDismiss === 'function') {
         onDismiss(popover, button)
       }
@@ -68,13 +77,13 @@ export function createFootnote({
     isHovered: () => isHovered,
 
     ready: () => {
-      popover.classList.add(CLASS_ACTIVE)
-      button.classList.remove(CLASS_CHANGING)
+      addClass(popover, CLASS_ACTIVE)
+      removeClass(button, CLASS_CHANGING)
     },
 
     remove: () => {
       unmount(popover)
-      button.classList.remove(CLASS_CHANGING)
+      removeClass(button, CLASS_CHANGING)
     },
 
     reposition: () => {
@@ -88,10 +97,10 @@ export function createFootnote({
         repositionPopover(popover, room)
 
         if (popover.offsetHeight < content.scrollHeight) {
-          popover.classList.add(CLASS_SCROLLABLE)
+          addClass(popover, CLASS_SCROLLABLE)
           content.setAttribute('tabindex', '0')
         } else {
-          popover.classList.remove(CLASS_SCROLLABLE)
+          removeClass(popover, CLASS_SCROLLABLE)
           content.removeAttribute('tabindex')
         }
       }
