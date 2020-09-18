@@ -24,7 +24,8 @@ test('activate footnote when clicking the button', async () => {
   expect(button).toHaveClass('is-changing')
   await waitToStopChanging(button)
   expect(button).toHaveClass('is-active')
-  getPopoverByText(/This is the document's only footnote./)
+  const popover = getPopoverByText(/This is the document's only footnote./)
+  expect(popover).toHaveClass('is-active')
 })
 
 test('does not insert empty paragraphs in the footnote content (#187)', async () => {

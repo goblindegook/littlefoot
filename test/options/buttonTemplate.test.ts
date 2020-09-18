@@ -1,4 +1,4 @@
-import { getByTitle } from '@testing-library/dom'
+import { screen } from '@testing-library/dom'
 import { setDocumentBody, getButton } from '../helper'
 import littlefoot from '../../src'
 
@@ -29,7 +29,7 @@ test('custom buttonTemplate using <%= %> delimiters', () => {
     />`,
   })
 
-  const button = getByTitle(document.body, 'Footnote 1')
+  const button = screen.getByTitle('Footnote 1')
   expect(button.dataset).toMatchObject({
     footnoteButton: '',
     footnoteId: '1',
@@ -52,7 +52,7 @@ test('custom buttonTemplate using <% %> delimiters', () => {
     />`,
   })
 
-  const button = getByTitle(document.body, 'Footnote 1')
+  const button = screen.getByTitle('Footnote 1')
   expect(button.dataset).toMatchObject({
     footnoteButton: '',
     footnoteId: '1',

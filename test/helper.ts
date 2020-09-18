@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom/extend-expect'
-import { waitFor, getByText, getByTitle } from '@testing-library/dom'
+import { waitFor, screen } from '@testing-library/dom'
 import { join } from 'path'
 import { readFileSync } from 'fs'
 
@@ -8,9 +8,10 @@ export function queryAll<E extends Element>(selector: string): E[] {
 }
 
 export function getPopoverByText(matcher: string | RegExp): HTMLElement {
-  return getByText(document.body, matcher, {
-    selector: '.littlefoot-footnote *',
-  })
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  return screen
+    .getByText(matcher, { selector: '.littlefoot-footnote *' })
+    .closest<HTMLElement>('[data-footnote-id]')!
 }
 
 export function setDocumentBody(fixture: string): void {
@@ -20,7 +21,7 @@ export function setDocumentBody(fixture: string): void {
 }
 
 export function getButton(id: string): HTMLElement {
-  return getByTitle(document.body, `See Footnote ${id}`)
+  return screen.getByTitle(`See Footnote ${id}`)
 }
 
 export function getPopover(id: string): HTMLElement {
@@ -37,9 +38,13 @@ export function getAllActiveButtons(): HTMLInputElement[] {
 }
 
 export async function waitToStartChanging(button: HTMLElement): Promise<void> {
-  await waitFor(() => expect(button).toHaveClass('is-changing'))
+  await waitFor(() => expect(button).toHaveClass('is-changing'), {
+    container: button,
+  })
 }
 
 export async function waitToStopChanging(button: HTMLElement): Promise<void> {
-  await waitFor(() => expect(button).not.toHaveClass('is-changing'))
+  await waitFor(() => expect(button).not.toHaveClass('is-changing'), {
+    container: button,
+  })
 }

@@ -1,9 +1,10 @@
-import { fireEvent, queryByText } from '@testing-library/dom'
+import { fireEvent, screen } from '@testing-library/dom'
 import {
   setDocumentBody,
   waitToStopChanging,
   getPopoverByText,
   getButton,
+  getPopover,
 } from './helper'
 import littlefoot from '../src'
 
@@ -15,7 +16,6 @@ beforeEach(() => {
 
 test('dismiss footnote when clicking the button again', async () => {
   littlefoot(TEST_SETTINGS)
-
   const button = getButton('1')
   fireEvent.click(button)
   await waitToStopChanging(button)
@@ -25,11 +25,23 @@ test('dismiss footnote when clicking the button again', async () => {
   expect(button).toHaveClass('is-changing')
   await waitToStopChanging(button)
   expect(
-    queryByText(document.body, /This is the document's only footnote./, {
+    screen.queryByText(/This is the document's only footnote./, {
       selector: '.littlefoot-footnote *',
     })
   ).not.toBeInTheDocument()
   expect(button).not.toHaveClass('is-active')
+})
+
+test('deactivate popover when dismissing a footnote', async () => {
+  littlefoot(TEST_SETTINGS)
+  const button = getButton('1')
+  fireEvent.click(button)
+  await waitToStopChanging(button)
+  const popover = getPopover('1')
+
+  fireEvent.click(button)
+
+  expect(popover).not.toHaveClass('is-active')
 })
 
 test('dismiss footnote when clicking the document body', async () => {
@@ -91,7 +103,6 @@ test('dismiss all footnotes when calling .dismiss()', async () => {
 
 test('dismiss footnote when pressing the Escape key', async () => {
   littlefoot(TEST_SETTINGS)
-
   const button = getButton('1')
   fireEvent.click(button)
   await waitToStopChanging(button)
@@ -100,6 +111,18 @@ test('dismiss footnote when pressing the Escape key', async () => {
   await waitToStopChanging(button)
 
   expect(button).not.toHaveClass('is-active')
+})
+
+test('does not dismiss footnote when pressing any other key', async () => {
+  littlefoot(TEST_SETTINGS)
+  const button = getButton('1')
+  fireEvent.click(button)
+  await waitToStopChanging(button)
+
+  fireEvent.keyUp(document.body, { keyCode: 26 })
+  await waitToStopChanging(button)
+
+  expect(button).toHaveClass('is-active')
 })
 
 test('set ARIA expanded state to false', async () => {
