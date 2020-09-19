@@ -1,74 +1,87 @@
 import { getStyle } from '@pacote/get-style'
+import { pixels } from '@pacote/pixels'
+import { addClass, removeClass } from './api'
 
-export const CLASS_CONTENT = 'littlefoot-footnote__content'
 export const CLASS_TOOLTIP = 'littlefoot-footnote__tooltip'
-export const CLASS_WRAPPER = 'littlefoot-footnote__wrapper'
 
 const CLASS_POSITION_PREFIX = 'is-positioned-'
-const BOTTOM = 'bottom'
-const TOP = 'top'
 
-type Room = Readonly<{
-  top: number
-  bottom: number
-  leftRelative: number
-}>
+type Position = 'top' | 'bottom'
 
-export function getAvailableRoom(element: HTMLElement): Room {
+type Room = Readonly<{ [K in Position]: number }>
+
+function getAvailableRoom(element: HTMLElement): Room {
+  const height = element.offsetHeight
+  const top = element.getBoundingClientRect().top + height / 2
+
+  return { top, bottom: window.innerHeight - top }
+}
+
+export function getLeftRelative(element: HTMLElement): number {
   const marginLeft = parseFloat(getStyle(element, 'marginLeft'))
   const width = element.offsetWidth - marginLeft
-  const height = element.offsetHeight
-  const rect = element.getBoundingClientRect()
-  const left = rect.left + width / 2
-  const top = rect.top + height / 2
+  const left = element.getBoundingClientRect().left + width / 2
 
-  return {
-    top,
-    bottom: window.innerHeight - top,
-    leftRelative: left / window.innerWidth,
-  }
+  return left / window.innerWidth
 }
 
-function isPopoverOnTop(footnote: HTMLElement, room: Room): boolean {
+export function getLeftInPixels(
+  content: HTMLElement,
+  button: HTMLElement
+): number {
+  const maxWidth = content.offsetWidth
+  const leftRelative = getLeftRelative(button)
+  const buttonMarginLeft = parseInt(getStyle(button, 'marginLeft'), 10)
+  return -leftRelative * maxWidth + buttonMarginLeft + button.offsetWidth / 2
+}
+
+function popoverPosition(footnote: HTMLElement, room: Room): Position {
   const marginSize = parseInt(getStyle(footnote, 'marginTop'), 10)
   const totalHeight = 2 * marginSize + footnote.offsetHeight
-
-  return room.bottom < totalHeight && room.bottom < room.top
+  return room.bottom < totalHeight && room.bottom < room.top ? 'top' : 'bottom'
 }
 
-export function getAvailableHeight(footnote: HTMLElement, room: Room): number {
-  const isTop = isPopoverOnTop(footnote, room)
+export function getAvailableHeightInPixels(
+  footnote: HTMLElement,
+  button: HTMLElement,
+  maxHeight: number
+): number {
+  const room = getAvailableRoom(button)
+  const position = popoverPosition(footnote, room)
   const marginSize = parseInt(getStyle(footnote, 'marginTop'), 10)
-  return room[isTop ? TOP : BOTTOM] - marginSize - 15
+  return Math.min(maxHeight, room[position] - marginSize - 15)
 }
 
-export function repositionPopover(popover: HTMLElement, room: Room): void {
-  const isTop = isPopoverOnTop(popover, room)
+export function getMaxHeight(element: HTMLElement) {
+  const maxHeight = getStyle(element, 'maxHeight')
+  return Math.round(pixels(maxHeight, element))
+}
+
+export function repositionPopover(
+  popover: HTMLElement,
+  button: HTMLElement
+): void {
+  const room = getAvailableRoom(button)
+  const position = popoverPosition(popover, room)
   const previous = popover.dataset.footnotePosition
-  const position = isTop ? TOP : BOTTOM
 
   if (previous !== position) {
     popover.dataset.footnotePosition = position
-    popover.classList.remove(`${CLASS_POSITION_PREFIX}${previous}`)
-    popover.classList.add(`${CLASS_POSITION_PREFIX}${position}`)
-    popover.style.transformOrigin = `${room.leftRelative * 100}% ${
-      isTop ? '100%' : '0'
-    }`
+    removeClass(popover, `${CLASS_POSITION_PREFIX}${previous}`)
+    addClass(popover, `${CLASS_POSITION_PREFIX}${position}`)
+    const transformX = getLeftRelative(button) * 100 + '%'
+    const transformY = position === 'top' ? '100%' : '0'
+    popover.style.transformOrigin = transformX + ' ' + transformY
   }
 }
 
 export function repositionTooltip(
   popover: HTMLElement,
-  leftRelative: number
+  button: HTMLElement
 ): void {
   const tooltip = popover.querySelector<HTMLElement>('.' + CLASS_TOOLTIP)
 
   if (tooltip) {
-    tooltip.style.left = leftRelative * 100 + '%'
+    tooltip.style.left = getLeftRelative(button) * 100 + '%'
   }
-}
-
-export function unmount(element: HTMLElement): void {
-  // eslint-disable-next-line no-unused-expressions
-  element.parentNode?.removeChild(element)
 }

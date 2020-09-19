@@ -1,25 +1,16 @@
-import { getStyle } from '@pacote/get-style'
-import { pixels } from '@pacote/pixels'
 import {
-  getAvailableRoom,
-  getAvailableHeight,
+  getAvailableHeightInPixels,
   repositionPopover,
   repositionTooltip,
-  unmount,
+  getMaxHeight,
+  getLeftInPixels,
 } from './layout'
 import { Footnote } from '../core'
+import { addClass, removeClass, unmount } from './api'
 
 const CLASS_ACTIVE = 'is-active'
 const CLASS_CHANGING = 'is-changing'
 const CLASS_SCROLLABLE = 'is-scrollable'
-
-function addClass(element: HTMLElement, className: string): void {
-  element.classList.add(className)
-}
-
-function removeClass(element: HTMLElement, className: string): void {
-  element.classList.remove(className)
-}
 
 export type FootnoteElements = Readonly<{
   id: string
@@ -45,29 +36,25 @@ export function createFootnote({
     id,
 
     activate: (onActivate) => {
-      addClass(button, CLASS_CHANGING)
       button.setAttribute('aria-expanded', 'true')
+      addClass(button, CLASS_CHANGING)
       addClass(button, CLASS_ACTIVE)
 
       button.insertAdjacentElement('afterend', popover)
 
       popover.style.maxWidth = document.body.clientWidth + 'px'
-      const contentMaxHeight = getStyle(content, 'maxHeight')
-      maxHeight = Math.round(pixels(contentMaxHeight, content))
+      maxHeight = getMaxHeight(content)
 
-      if (typeof onActivate === 'function') {
-        onActivate(popover, button)
-      }
+      onActivate?.(popover, button)
     },
 
     dismiss: (onDismiss) => {
-      addClass(button, CLASS_CHANGING)
       button.setAttribute('aria-expanded', 'false')
+      addClass(button, CLASS_CHANGING)
       removeClass(button, CLASS_ACTIVE)
       removeClass(popover, CLASS_ACTIVE)
-      if (typeof onDismiss === 'function') {
-        onDismiss(popover, button)
-      }
+
+      onDismiss?.(popover, button)
     },
 
     isActive: () => button.classList.contains(CLASS_ACTIVE),
@@ -88,13 +75,9 @@ export function createFootnote({
 
     reposition: () => {
       if (popover.parentElement) {
-        const room = getAvailableRoom(button)
-        const minMaxHeight = Math.min(
-          maxHeight,
-          getAvailableHeight(popover, room)
-        )
-        content.style.maxHeight = minMaxHeight + 'px'
-        repositionPopover(popover, room)
+        content.style.maxHeight =
+          getAvailableHeightInPixels(popover, button, maxHeight) + 'px'
+        repositionPopover(popover, button)
 
         if (popover.offsetHeight < content.scrollHeight) {
           addClass(popover, CLASS_SCROLLABLE)
@@ -108,18 +91,9 @@ export function createFootnote({
 
     resize: () => {
       if (popover.parentElement) {
-        const room = getAvailableRoom(button)
-        const maxWidth = content.offsetWidth
-        const buttonMarginLeft = parseInt(getStyle(button, 'marginLeft'), 10)
-        const left =
-          -room.leftRelative * maxWidth +
-          buttonMarginLeft +
-          button.offsetWidth / 2
-
-        popover.style.left = left + 'px'
-        wrapper.style.maxWidth = maxWidth + 'px'
-
-        repositionTooltip(popover, room.leftRelative)
+        popover.style.left = getLeftInPixels(content, button) + 'px'
+        wrapper.style.maxWidth = content.offsetWidth + 'px'
+        repositionTooltip(popover, button)
       }
     },
 
@@ -131,8 +105,6 @@ export function createFootnote({
       isHovered = false
     },
 
-    destroy: () => {
-      unmount(host)
-    },
+    destroy: () => unmount(host),
   }
 }

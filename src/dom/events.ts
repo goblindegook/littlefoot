@@ -3,79 +3,40 @@ import { off, on } from 'delegated-events'
 import { Core, FootnoteAction } from '../core'
 
 const FRAME = 16
-type EventHandler<E extends Event> = (e: E) => void
-
 const SELECTOR_BUTTON = '[data-footnote-button]'
 const SELECTOR_FOOTNOTE = '[data-footnote-id]'
 const SELECTOR_POPOVER = '[data-footnote-popover]'
-const CLASS_FULLY_SCROLLED = 'is-fully-scrolled'
 
-function target(event: Event) {
-  return event.target as HTMLElement
-}
+const target = (event: Event) => event.target as HTMLElement
 
-function getFootnoteId(element: HTMLElement | null): string | undefined {
-  return element?.dataset.footnoteId
-}
+const getFootnoteId = (element: HTMLElement | null) =>
+  element?.dataset.footnoteId
 
-function touchHandler(
-  action: FootnoteAction,
-  dismissAll: () => void
-): EventListener {
-  return (event) => {
-    const element = target(event).closest<HTMLElement>(SELECTOR_BUTTON)
-    const id = getFootnoteId(element)
-    if (id) {
-      action(id)
-    } else if (!target(event).closest<HTMLElement>(SELECTOR_POPOVER)) {
-      dismissAll()
-    }
+const touchHandler = (action: FootnoteAction, dismissAll: () => void) => (
+  event: Event
+) => {
+  const element = target(event).closest<HTMLElement>(SELECTOR_BUTTON)
+  const id = getFootnoteId(element)
+  if (id) {
+    action(id)
+  } else if (!target(event).closest<HTMLElement>(SELECTOR_POPOVER)) {
+    dismissAll()
   }
 }
 
-function hoverHandler(action: FootnoteAction): EventListener {
-  return (event) => {
-    event.preventDefault()
-    const element = target(event).closest<HTMLElement>(SELECTOR_FOOTNOTE)
-    const id = getFootnoteId(element)
-    if (id) {
-      action(id)
-    }
+const hoverHandler = (action: FootnoteAction) => (event: Event) => {
+  event.preventDefault()
+  const element = target(event).closest<HTMLElement>(SELECTOR_FOOTNOTE)
+  const id = getFootnoteId(element)
+  if (id) {
+    action(id)
   }
 }
 
-function escapeHandler(fn: () => void): EventHandler<KeyboardEvent> {
-  return (event) => {
-    if (event.keyCode === 27) {
-      fn()
-    }
+const escapeHandler = (fn: () => void) => (event: KeyboardEvent) => {
+  if (event.keyCode === 27 || event.key === 'Escape' || event.key === 'Esc') {
+    fn()
   }
-}
-
-function scrollHandler(popover: HTMLElement): EventHandler<WheelEvent> {
-  return (event) => {
-    const content = event.currentTarget as HTMLElement | null
-    const delta = -event.deltaY
-
-    if (delta > 0) {
-      popover.classList.remove(CLASS_FULLY_SCROLLED)
-    }
-
-    if (
-      content &&
-      delta <= 0 &&
-      delta < content.clientHeight + content.scrollTop - content.scrollHeight
-    ) {
-      popover.classList.add(CLASS_FULLY_SCROLLED)
-    }
-  }
-}
-
-export function bindScrollHandler(
-  content: HTMLElement,
-  popover: HTMLElement
-): void {
-  content.addEventListener('wheel', throttle(scrollHandler(popover), FRAME))
 }
 
 export function addListeners(core: Core): () => void {

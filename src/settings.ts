@@ -1,10 +1,14 @@
 import { CoreSettings } from './core'
-import { HTMLAdapterSettings } from './dom/document'
-import { CLASS_WRAPPER, CLASS_CONTENT, CLASS_TOOLTIP } from './dom/layout'
+import {
+  CLASS_CONTENT,
+  CLASS_WRAPPER,
+  HTMLAdapterSettings,
+} from './dom/document'
+import { CLASS_TOOLTIP } from './dom/layout'
 
-export type LittlefootSettings = HTMLAdapterSettings & CoreSettings<HTMLElement>
+export type Settings = HTMLAdapterSettings & CoreSettings<HTMLElement>
 
-export const DEFAULT_SETTINGS: LittlefootSettings = {
+export const DEFAULT_SETTINGS: Settings = {
   activateDelay: 100,
   activateOnHover: false,
   allowDuplicates: true,
