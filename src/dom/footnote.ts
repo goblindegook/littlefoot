@@ -1,5 +1,5 @@
 import {
-  getAvailableHeightInPixels,
+  getAvailableHeight,
   repositionPopover,
   repositionTooltip,
   getMaxHeight,
@@ -20,6 +20,8 @@ export type FootnoteElements = Readonly<{
   content: HTMLElement
   wrapper: HTMLElement
 }>
+
+const isMounted = (popover: HTMLElement) => !!popover.parentElement
 
 export function createFootnote({
   id,
@@ -74,9 +76,9 @@ export function createFootnote({
     },
 
     reposition: () => {
-      if (popover.parentElement) {
+      if (isMounted(popover)) {
         content.style.maxHeight =
-          getAvailableHeightInPixels(popover, button, maxHeight) + 'px'
+          getAvailableHeight(popover, button, maxHeight) + 'px'
         repositionPopover(popover, button)
 
         if (popover.offsetHeight < content.scrollHeight) {
@@ -90,7 +92,7 @@ export function createFootnote({
     },
 
     resize: () => {
-      if (popover.parentElement) {
+      if (isMounted(popover)) {
         popover.style.left = getLeftInPixels(content, button) + 'px'
         wrapper.style.maxWidth = content.offsetWidth + 'px'
         repositionTooltip(popover, button)

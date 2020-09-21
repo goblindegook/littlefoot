@@ -46,11 +46,11 @@ export type Core = Readonly<{
 
 export interface Adapter<T> {
   readonly footnotes: readonly Footnote<T>[]
-  readonly cleanup: () => void
+  readonly unmount: () => void
 }
 
 export function createCore<T>(
-  adapter: Adapter<T>,
+  { footnotes, unmount }: Adapter<T>,
   settings: CoreSettings<T>
 ): Core {
   const dismiss = (delay: number) => (footnote: Footnote<T>) => {
@@ -62,7 +62,7 @@ export function createCore<T>(
 
   const activate = (delay: number) => (footnote: Footnote<T>) => {
     if (!settings.allowMultiple) {
-      adapter.footnotes
+      footnotes
         .filter((current) => current.id !== footnote.id)
         .forEach(dismiss(settings.dismissDelay))
     }
@@ -76,7 +76,7 @@ export function createCore<T>(
   }
 
   const ifFound = (fn: (footnote: Footnote<T>) => void) => (id: string) => {
-    const footnote = adapter.footnotes.find((footnote) => footnote.id === id)
+    const footnote = footnotes.find((footnote) => footnote.id === id)
     if (footnote) {
       fn(footnote)
     }
@@ -87,12 +87,11 @@ export function createCore<T>(
 
     dismiss: (id, delay) => ifFound(dismiss(delay))(id),
 
-    dismissAll: () => adapter.footnotes.forEach(dismiss(settings.dismissDelay)),
+    dismissAll: () => footnotes.forEach(dismiss(settings.dismissDelay)),
 
-    repositionAll: () =>
-      adapter.footnotes.forEach((current) => current.reposition()),
+    repositionAll: () => footnotes.forEach((current) => current.reposition()),
 
-    resizeAll: () => adapter.footnotes.forEach((current) => current.resize()),
+    resizeAll: () => footnotes.forEach((current) => current.resize()),
 
     toggle: ifFound((footnote) =>
       footnote.isActive()
@@ -112,7 +111,7 @@ export function createCore<T>(
       if (settings.dismissOnUnhover) {
         setTimeout(
           () =>
-            adapter.footnotes
+            footnotes
               .filter((f) => !f.isHovered())
               .forEach(dismiss(settings.dismissDelay)),
           settings.hoverDelay
@@ -120,6 +119,6 @@ export function createCore<T>(
       }
     }),
 
-    unmount: adapter.cleanup,
+    unmount,
   }
 }

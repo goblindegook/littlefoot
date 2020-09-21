@@ -41,7 +41,7 @@ function popoverPosition(footnote: HTMLElement, room: Room): Position {
   return room.bottom < totalHeight && room.bottom < room.top ? 'top' : 'bottom'
 }
 
-export function getAvailableHeightInPixels(
+export function getAvailableHeight(
   footnote: HTMLElement,
   button: HTMLElement,
   maxHeight: number
@@ -53,8 +53,7 @@ export function getAvailableHeightInPixels(
 }
 
 export function getMaxHeight(element: HTMLElement) {
-  const maxHeight = getStyle(element, 'maxHeight')
-  return Math.round(pixels(maxHeight, element))
+  return Math.round(pixels(getStyle(element, 'maxHeight'), element))
 }
 
 export function repositionPopover(

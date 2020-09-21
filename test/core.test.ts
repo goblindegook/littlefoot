@@ -22,9 +22,7 @@ function testSettings(
 
 function testAdapter(overrides?: Partial<Adapter<Test>>): Adapter<Test> {
   return {
-    cleanup: () => {
-      /* noop */
-    },
+    unmount: () => undefined,
     footnotes: [],
     ...overrides,
   }

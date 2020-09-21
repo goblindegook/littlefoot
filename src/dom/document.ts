@@ -238,7 +238,7 @@ export function setup(settings: HTMLAdapterSettings): Adapter<HTMLElement> {
   return {
     footnotes,
 
-    cleanup() {
+    unmount() {
       footnotes.forEach((footnote) => footnote.destroy())
       queryAll(document, '.' + CLASS_PRINT_ONLY).forEach((element) =>
         removeClass(element, CLASS_PRINT_ONLY)
