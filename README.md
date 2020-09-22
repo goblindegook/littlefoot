@@ -3,6 +3,7 @@
 ![version](https://badgen.net/npm/v/littlefoot)
 ![minified + gzip](https://badgen.net/bundlephobia/minzip/littlefoot)
 [![Build Status](https://travis-ci.org/goblindegook/littlefoot.svg?branch=master)](https://travis-ci.org/goblindegook/littlefoot)
+[![codecov](https://codecov.io/gh/goblindegook/littlefoot/branch/master/graph/badge.svg)](https://codecov.io/gh/goblindegook/littlefoot)
 [![Code Climate](https://codeclimate.com/github/goblindegook/littlefoot/badges/gpa.svg)](https://codeclimate.com/github/goblindegook/littlefoot)
 [![Dependency Status](https://david-dm.org/goblindegook/littlefoot.svg)](https://david-dm.org/goblindegook/littlefoot)
 [![devDependency Status](https://david-dm.org/goblindegook/littlefoot/dev-status.svg)](https://david-dm.org/goblindegook/littlefoot#info=devDependencies)
