@@ -7,7 +7,8 @@ const SELECTOR_BUTTON = '[data-footnote-button]'
 const SELECTOR_FOOTNOTE = '[data-footnote-id]'
 const SELECTOR_POPOVER = '[data-footnote-popover]'
 
-const target = (event: Event) => event.target as HTMLElement
+const closestTarget = (event: Event, selector: string) =>
+  (event.target as HTMLElement).closest<HTMLElement>(selector)
 
 const getFootnoteId = (element: HTMLElement | null) =>
   element?.dataset.footnoteId
@@ -15,18 +16,18 @@ const getFootnoteId = (element: HTMLElement | null) =>
 const touchHandler = (action: FootnoteAction, dismissAll: () => void) => (
   event: Event
 ) => {
-  const element = target(event).closest<HTMLElement>(SELECTOR_BUTTON)
+  const element = closestTarget(event, SELECTOR_BUTTON)
   const id = getFootnoteId(element)
   if (id) {
     action(id)
-  } else if (!target(event).closest<HTMLElement>(SELECTOR_POPOVER)) {
+  } else if (!closestTarget(event, SELECTOR_POPOVER)) {
     dismissAll()
   }
 }
 
 const hoverHandler = (action: FootnoteAction) => (event: Event) => {
   event.preventDefault()
-  const element = target(event).closest<HTMLElement>(SELECTOR_FOOTNOTE)
+  const element = closestTarget(event, SELECTOR_FOOTNOTE)
   const id = getFootnoteId(element)
   if (id) {
     action(id)
@@ -39,6 +40,11 @@ const escapeHandler = (fn: () => void) => (event: KeyboardEvent) => {
   }
 }
 
+const onDocument = document.addEventListener
+const offDocument = document.removeEventListener
+const onWindow = window.addEventListener
+const offWindow = window.removeEventListener
+
 export function addListeners(core: Core): () => void {
   const toggleOnTouch = touchHandler(core.toggle, core.dismissAll)
   const dismissOnEscape = escapeHandler(core.dismissAll)
@@ -47,22 +53,22 @@ export function addListeners(core: Core): () => void {
   const showOnHover = hoverHandler(core.hover)
   const hideOnHover = hoverHandler(core.unhover)
 
-  document.addEventListener('touchend', toggleOnTouch)
-  document.addEventListener('click', toggleOnTouch)
-  document.addEventListener('keyup', dismissOnEscape)
-  document.addEventListener('gestureend', throttledReposition)
-  window.addEventListener('scroll', throttledReposition)
-  window.addEventListener('resize', throttledResize)
+  onDocument('touchend', toggleOnTouch)
+  onDocument('click', toggleOnTouch)
+  onDocument('keyup', dismissOnEscape)
+  onDocument('gestureend', throttledReposition)
+  onWindow('scroll', throttledReposition)
+  onWindow('resize', throttledResize)
   on('mouseover', SELECTOR_FOOTNOTE, showOnHover)
   on('mouseout', SELECTOR_FOOTNOTE, hideOnHover)
 
   return () => {
-    document.removeEventListener('touchend', toggleOnTouch)
-    document.removeEventListener('click', toggleOnTouch)
-    document.removeEventListener('keyup', dismissOnEscape)
-    document.removeEventListener('gestureend', throttledReposition)
-    window.removeEventListener('scroll', throttledReposition)
-    window.removeEventListener('resize', throttledResize)
+    offDocument('touchend', toggleOnTouch)
+    offDocument('click', toggleOnTouch)
+    offDocument('keyup', dismissOnEscape)
+    offDocument('gestureend', throttledReposition)
+    offWindow('scroll', throttledReposition)
+    offWindow('resize', throttledResize)
     off('mouseover', SELECTOR_FOOTNOTE, showOnHover)
     off('mouseout', SELECTOR_FOOTNOTE, hideOnHover)
   }
