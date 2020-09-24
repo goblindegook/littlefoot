@@ -1,7 +1,7 @@
 {
   "name": "littlefoot",
   "description": "Footnotes without the footprint.",
-  "version": "3.4.0",
+  "version": "3.4.1",
   "sideEffects": false,
   "license": "MIT",
   "repository": "goblindegook/littlefoot",

@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.4.1](https://github.com/goblindegook/littlefoot/compare/v3.4.0...v3.4.1) (2020-09-24)
+
+
+### Bug Fixes
+
+* clears the is-active class on dismiss (fixes [#505](https://github.com/goblindegook/littlefoot/issues/505)) ([4479cc3](https://github.com/goblindegook/littlefoot/commit/4479cc3fac6dfc382796d336678a31eeffacdfc3))
+
 ## [3.4.0](https://github.com/goblindegook/littlefoot/compare/v3.3.2...v3.4.0) (2020-08-04)
 
 
