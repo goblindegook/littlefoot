@@ -1,3 +1,4 @@
+import 'css.escape'
 import { createFootnote, FootnoteElements } from './footnote'
 import { bindScrollHandler } from './scroll'
 import { Adapter } from '../core'
@@ -91,8 +92,7 @@ function findReference(
   const processed: Element[] = []
   return (link: HTMLAnchorElement): Original | undefined => {
     const fragment = link.href.split('#')[1]
-    const selector = '#' + fragment.replace(/[:.+~*[\]]/g, '\\$&')
-    const related = queryAll(document, selector).find(
+    const related = queryAll(document, '#' + CSS.escape(fragment)).find(
       (footnote) => allowDuplicates || !processed.includes(footnote)
     )
 
@@ -107,23 +107,25 @@ function findReference(
   }
 }
 
-function recursiveHideFootnoteContainer(container: HTMLElement): void {
+function recursiveHideFootnoteContainer(element: HTMLElement): void {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const container = element.parentElement!
   const visibleElements = children(container, `:not(.${CLASS_PRINT_ONLY})`)
   const visibleSeparators = visibleElements.filter((el) => el.tagName === 'HR')
 
   if (visibleElements.length === visibleSeparators.length) {
     visibleSeparators.concat(container).forEach(setPrintOnly)
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    recursiveHideFootnoteContainer(container.parentElement!)
+    recursiveHideFootnoteContainer(container)
   }
 }
 
 function recursiveUnmount(element: HTMLElement) {
-  const parent = element.parentElement
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const parent = element.parentElement!
   unmount(element)
-  const html = parent?.innerHTML.replace('[]', '').replace('&nbsp;', ' ').trim()
+  const html = parent.innerHTML.replace('[]', '').replace('&nbsp;', ' ').trim()
 
-  if (parent && !html) {
+  if (!html) {
     recursiveUnmount(parent)
   }
 }
@@ -228,8 +230,7 @@ export function setup(settings: HTMLAdapterSettings): Adapter<HTMLElement> {
   footnoteElements.forEach(({ original, host }) => {
     setPrintOnly(original.reference)
     setPrintOnly(original.body)
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    recursiveHideFootnoteContainer(original.body.parentElement!)
+    recursiveHideFootnoteContainer(original.body)
     attachFootnote(original.reference, host)
   })
 

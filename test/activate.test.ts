@@ -4,6 +4,7 @@ import {
   waitToStopChanging,
   getPopoverByText,
   getButton,
+  queryAll,
 } from './helper'
 import littlefoot from '../src'
 
@@ -33,9 +34,7 @@ test('does not insert empty paragraphs in the footnote content (#187)', async ()
   const button = getButton('1')
   fireEvent.click(button)
   await waitToStopChanging(button)
-  const paragraphs = document.querySelectorAll(
-    '.littlefoot-footnote__content p'
-  )
+  const paragraphs = queryAll('.littlefoot-footnote__content p')
   expect(paragraphs).toHaveLength(1)
 })
 
