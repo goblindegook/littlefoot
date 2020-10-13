@@ -2,10 +2,15 @@ import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import typescript from '@rollup/plugin-typescript'
 import { terser } from 'rollup-plugin-terser'
-import { uglify } from 'rollup-plugin-uglify'
 import pkg from './package.json'
 
 const production = !process.env.ROLLUP_WATCH
+
+const terserPlugin = terser({
+  output: {
+    comments: false,
+  },
+})
 
 export default [
   {
@@ -14,7 +19,7 @@ export default [
       resolve({ mainFields: ['main'] }),
       commonjs(),
       typescript(),
-      production && uglify(),
+      production && terserPlugin,
     ],
     context: 'window',
     output: {
@@ -26,15 +31,7 @@ export default [
   {
     input: 'src/index.ts',
     external: Object.keys(pkg.dependencies),
-    plugins: [
-      typescript(),
-      production &&
-        terser({
-          output: {
-            comments: false,
-          },
-        }),
-    ],
+    plugins: [typescript(), production && terserPlugin],
     context: 'window',
     output: [
       {
@@ -47,17 +44,7 @@ export default [
   {
     input: 'src/index.ts',
     external: Object.keys(pkg.dependencies),
-    plugins: [
-      typescript({
-        target: 'ES6',
-      }),
-      production &&
-        terser({
-          output: {
-            comments: false,
-          },
-        }),
-    ],
+    plugins: [typescript({ target: 'ES6' }), production && terserPlugin],
     context: 'window',
     output: [
       {
