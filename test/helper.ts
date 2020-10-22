@@ -21,7 +21,7 @@ export function setDocumentBody(fixture: string): void {
 }
 
 export function getButton(id: string): HTMLElement {
-  return screen.getByTitle(`See Footnote ${id}`)
+  return screen.getByRole('button', { name: `See Footnote ${id}` })
 }
 
 export function getPopover(id: string): HTMLElement {

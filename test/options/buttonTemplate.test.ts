@@ -29,7 +29,7 @@ test('custom buttonTemplate using <%= %> delimiters', () => {
     />`,
   })
 
-  const button = screen.getByTitle('Footnote 1')
+  const button = screen.getByRole('button', { name: 'Footnote 1' })
   expect(button.dataset).toMatchObject({
     footnoteButton: '',
     footnoteId: '1',
@@ -52,7 +52,7 @@ test('custom buttonTemplate using <% %> delimiters', () => {
     />`,
   })
 
-  const button = screen.getByTitle('Footnote 1')
+  const button = screen.getByRole('button', { name: 'Footnote 1' })
   expect(button.dataset).toMatchObject({
     footnoteButton: '',
     footnoteId: '1',
