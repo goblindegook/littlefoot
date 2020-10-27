@@ -5,7 +5,7 @@ import littlefoot from '../../src'
 test('hides original footnote anchor parent', () => {
   setDocumentBody('default.html')
   littlefoot({ anchorParentSelector: 'sup' })
-  expect(queryAll('sup.footnote-print-only')).toHaveLength(4)
+  expect(queryAll('sup.littlefoot--print')).toHaveLength(4)
 })
 
 test('uses reference ID from the link', () => {

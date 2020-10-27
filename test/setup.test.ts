@@ -26,9 +26,9 @@ test('processes each called footnote', () => {
 
 test('hides all footnotes', () => {
   littlefoot()
-  expect(queryAll('.footnotes.footnote-print-only')).toHaveLength(1)
-  expect(queryAll('hr.footnote-print-only')).toHaveLength(1)
-  expect(queryAll('li.footnote-print-only')).toHaveLength(3)
+  expect(queryAll('.footnotes.littlefoot--print')).toHaveLength(1)
+  expect(queryAll('hr.littlefoot--print')).toHaveLength(1)
+  expect(queryAll('li.littlefoot--print')).toHaveLength(3)
 })
 
 test('starts with no active footnotes', () => {

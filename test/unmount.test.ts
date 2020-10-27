@@ -15,5 +15,5 @@ test('unmount removes all buttons', () => {
 test('unmount unhides all footnotes', () => {
   const instance = littlefoot()
   instance.unmount()
-  expect(queryAll('.footnote-print-only')).toHaveLength(0)
+  expect(queryAll('.littlefoot--print')).toHaveLength(0)
 })

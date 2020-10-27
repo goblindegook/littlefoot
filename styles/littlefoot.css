@@ -28,19 +28,6 @@
   --littlefoot-transition-timing: ease;
 }
 
-@media not print {
-  .footnote-print-only {
-    display: none !important;
-  }
-}
-
-@media print {
-  .littlefoot,
-  .littlefoot__button {
-    display: none !important;
-  }
-}
-
 .littlefoot__host {
   position: relative;
 }
@@ -241,4 +228,17 @@
 
 .is-position-top .littlefoot__tooltip {
   bottom: calc(var(--littlefoot-tooltip-height) / -2);
+}
+
+@media not print {
+  .littlefoot--print {
+    display: none;
+  }
+}
+
+@media print {
+  .littlefoot,
+  .littlefoot__button {
+    display: none;
+  }
 }

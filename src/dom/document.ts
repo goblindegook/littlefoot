@@ -36,7 +36,7 @@ type OriginalData = Readonly<{
   data: TemplateData
 }>
 
-const CLASS_PRINT_ONLY = 'footnote-print-only'
+const CLASS_PRINT_ONLY = 'littlefoot--print'
 const CLASS_HOST = 'littlefoot__host'
 
 const setPrintOnly = (el: Element) => addClass(el, CLASS_PRINT_ONLY)
