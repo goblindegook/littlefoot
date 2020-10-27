@@ -4,8 +4,8 @@ import { bindScrollHandler } from './scroll'
 import { Adapter } from '../core'
 import { addClass, removeClass, unmount } from './api'
 
-export const CLASS_CONTENT = 'littlefoot-footnote__content'
-export const CLASS_WRAPPER = 'littlefoot-footnote__wrapper'
+export const CLASS_CONTENT = 'littlefoot__content'
+export const CLASS_WRAPPER = 'littlefoot__wrapper'
 
 export type HTMLAdapterSettings = Readonly<{
   allowDuplicates: boolean
@@ -37,7 +37,7 @@ type OriginalData = Readonly<{
 }>
 
 const CLASS_PRINT_ONLY = 'footnote-print-only'
-const CLASS_HOST = 'littlefoot-footnote__host'
+const CLASS_HOST = 'littlefoot__host'
 
 const setPrintOnly = (el: Element) => addClass(el, CLASS_PRINT_ONLY)
 

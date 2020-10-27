@@ -10,7 +10,7 @@ export function queryAll<E extends Element>(selector: string): E[] {
 export function getPopoverByText(matcher: string | RegExp): HTMLElement {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   return screen
-    .getByText(matcher, { selector: '.littlefoot-footnote *' })
+    .getByText(matcher, { selector: '.littlefoot *' })
     .closest<HTMLElement>('[data-footnote-id]')!
 }
 

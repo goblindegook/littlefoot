@@ -34,7 +34,7 @@ test('does not insert empty paragraphs in the footnote content (#187)', async ()
   const button = getButton('1')
   fireEvent.click(button)
   await waitToStopChanging(button)
-  const paragraphs = queryAll('.littlefoot-footnote__content p')
+  const paragraphs = queryAll('.littlefoot__content p')
   expect(paragraphs).toHaveLength(1)
 })
 
@@ -70,7 +70,7 @@ test('activate footnote by ID when calling .activate() with a timeout', () => {
 test('activation with unknown ID does not activate any popovers', () => {
   const instance = littlefoot({ activateDelay: 0 })
   instance.activate('invalid')
-  expect(document.querySelector('.littlefoot-footnote')).toBeNull()
+  expect(document.querySelector('.littlefoot')).toBeNull()
 })
 
 test('button and popover state reflected on ARIA properties', async () => {
@@ -91,9 +91,9 @@ test('popup layout dimensions', async () => {
 
   await waitToStopChanging(button)
 
-  const popover = document.querySelector('.littlefoot-footnote')
+  const popover = document.querySelector('.littlefoot')
   expect(popover).toHaveStyle(`max-width: ${document.body.clientWidth}px`)
 
-  const content = document.querySelector('.littlefoot-footnote__content')
+  const content = document.querySelector('.littlefoot__content')
   expect(content).toHaveProperty('offsetWidth', document.body.clientWidth)
 })

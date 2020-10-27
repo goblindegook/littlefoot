@@ -15,7 +15,7 @@ beforeEach(() => {
 
 test('creates one button and one host per footnote call', () => {
   littlefoot()
-  expect(queryAll('.littlefoot-footnote__host')).toHaveLength(4)
+  expect(queryAll('.littlefoot__host')).toHaveLength(4)
   expect(getAllButtons()).toHaveLength(4)
 })
 
@@ -45,7 +45,7 @@ test('sets ARIA attributes on button', () => {
 test('sets up footnotes with a URL before the fragment', () => {
   setDocumentBody('filename.html')
   littlefoot()
-  expect(queryAll('.littlefoot-footnote__host')).toHaveLength(1)
+  expect(queryAll('.littlefoot__host')).toHaveLength(1)
   expect(getAllButtons()).toHaveLength(1)
 })
 
@@ -67,7 +67,7 @@ test('preserves empty tags and square brackets elsewhere in the footnote body', 
   setDocumentBody('backlink.html')
   littlefoot({ activateDelay: 1 })
   fireEvent.click(getButton('1'))
-  const content = getPopover('1').querySelector('.littlefoot-footnote__content')
+  const content = getPopover('1').querySelector('.littlefoot__content')
   expect(content?.querySelector('hr')).not.toBeNull()
   expect(content).toContainHTML(
     `This footnote has a backlink wrapped in [] and an element.`

@@ -2,7 +2,7 @@ import { getStyle } from '@pacote/get-style'
 import { pixels } from '@pacote/pixels'
 import { addClass, removeClass } from './api'
 
-export const CLASS_TOOLTIP = 'littlefoot-footnote__tooltip'
+export const CLASS_TOOLTIP = 'littlefoot__tooltip'
 
 const CLASS_POSITION_PREFIX = 'is-positioned-'
 

@@ -18,7 +18,7 @@ test('setup with default contentTemplate', async () => {
     footnotePosition: 'bottom',
   })
 
-  const content = footnote?.querySelector('.littlefoot-footnote__content')
+  const content = footnote?.querySelector('.littlefoot__content')
   expect(content).toContainHTML(`This is the document's only footnote.`)
 })
 
@@ -31,8 +31,8 @@ test('setup with custom contentTemplate using <%= %> delimiters', async () => {
       data-test-id="<%= id %>"
       data-test-number="<%= number %>"
       >
-      <div class="littlefoot-footnote__wrapper">
-        <div class="littlefoot-footnote__content">
+      <div class="littlefoot__wrapper">
+        <div class="littlefoot__content">
           <%= content %>
         </div>
       </div>
@@ -52,7 +52,7 @@ test('setup with custom contentTemplate using <%= %> delimiters', async () => {
     testNumber: '1',
   })
 
-  const content = footnote?.querySelector('.littlefoot-footnote__content')
+  const content = footnote?.querySelector('.littlefoot__content')
   expect(content).toContainHTML(`This is the document's only footnote.`)
 })
 
@@ -65,8 +65,8 @@ test('setup with custom contentTemplate using <% %> delimiters', async () => {
       data-test-id="<% id %>"
       data-test-number="<% number %>"
       >
-      <div class="littlefoot-footnote__wrapper">
-        <div class="littlefoot-footnote__content">
+      <div class="littlefoot__wrapper">
+        <div class="littlefoot__content">
           <% content %>
         </div>
       </div>
@@ -86,6 +86,6 @@ test('setup with custom contentTemplate using <% %> delimiters', async () => {
     testNumber: '1',
   })
 
-  const content = footnote?.querySelector('.littlefoot-footnote__content')
+  const content = footnote?.querySelector('.littlefoot__content')
   expect(content).toContainHTML(`This is the document's only footnote.`)
 })

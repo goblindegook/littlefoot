@@ -9,14 +9,10 @@ context('Scroll', () => {
     cy.findByTitle('See Footnote 1').click()
 
     cy.scrollTo('top')
-    cy.get('.littlefoot-footnote').should(
-      'have.attr',
-      'data-footnote-position',
-      'top'
-    )
+    cy.get('.littlefoot').should('have.attr', 'data-footnote-position', 'top')
 
     cy.scrollTo('bottom')
-    cy.get('.littlefoot-footnote').should(
+    cy.get('.littlefoot').should(
       'have.attr',
       'data-footnote-position',
       'bottom'
@@ -26,19 +22,19 @@ context('Scroll', () => {
   it('scrolls popover content', () => {
     cy.findByTitle('See Footnote 1').click()
 
-    cy.get('.littlefoot-footnote')
+    cy.get('.littlefoot')
       .should('have.class', 'is-scrollable')
       .and('not.have.class', 'is-fully-scrolled')
 
-    cy.get('.littlefoot-footnote__content')
+    cy.get('.littlefoot__content')
       .should('have.attr', 'tabindex', '0')
       .scrollTo('bottom')
 
     // FIXME: Content scroll events not triggering correctly.
-    // cy.get('.littlefoot-footnote').should('have.class', 'is-fully-scrolled')
+    // cy.get('.littlefoot').should('have.class', 'is-fully-scrolled')
 
-    cy.get('.littlefoot-footnote__content').scrollTo('top')
+    cy.get('.littlefoot__content').scrollTo('top')
 
-    cy.get('.littlefoot-footnote').should('not.have.class', 'is-fully-scrolled')
+    cy.get('.littlefoot').should('not.have.class', 'is-fully-scrolled')
   })
 })

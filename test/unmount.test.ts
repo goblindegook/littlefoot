@@ -8,7 +8,7 @@ beforeEach(() => {
 test('unmount removes all buttons', () => {
   const instance = littlefoot()
   instance.unmount()
-  expect(queryAll('.littlefoot-footnote__host')).toHaveLength(0)
+  expect(queryAll('.littlefoot__host')).toHaveLength(0)
   expect(getAllButtons()).toHaveLength(0)
 })
 

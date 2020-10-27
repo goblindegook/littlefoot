@@ -230,15 +230,15 @@ Default:
 ```html
 <aside
   alt="Footnote <% number %>"
-  class="littlefoot-footnote is-positioned-bottom"
+  class="littlefoot is-positioned-bottom"
   id="fncontent:<% id %>"
 >
-  <div class="littlefoot-footnote__wrapper">
-    <div class="littlefoot-footnote__content">
+  <div class="littlefoot__wrapper">
+    <div class="littlefoot__content">
       <% content %>
     </div>
   </div>
-  <div class="littlefoot-footnote__tooltip"></div>
+  <div class="littlefoot__tooltip"></div>
 </aside>
 ```
 
@@ -258,7 +258,7 @@ Default:
 ```html
 <button
   aria-expanded="false"
-  class="littlefoot-footnote__button littlefoot-footnote__button__ellipsis"
+  class="littlefoot__button littlefoot__button__ellipsis"
   id="<% reference %>"
   title="See Footnote <% number %>"
 >
@@ -279,7 +279,7 @@ To display the footnote number instead of an ellipsis, provide the following `bu
 <button
   aria-expanded="false"
   aria-label="Footnote <% number %>"
-  class="littlefoot-footnote__button"
+  class="littlefoot__button"
   id="<% reference %>"
   title="See Footnote <% number %>"
 />
