@@ -8,11 +8,9 @@ function testSettings(
   overrides?: Partial<CoreSettings<Test>>
 ): CoreSettings<Test> {
   return {
-    activateCallback: () => undefined,
     activateDelay: 0,
     activateOnHover: false,
     allowMultiple: false,
-    dismissCallback: () => undefined,
     dismissDelay: 0,
     dismissOnUnhover: false,
     hoverDelay: 0,
