@@ -169,7 +169,7 @@
     left: 0;
     position: absolute;
     width: 100%;
-    height: calc(2.5 * var(--littlefoot-popover-padding-vertical));
+    height: calc(2.5 * var(--littlefoot-popover-vertical-padding));
     z-index: 3;
   }
 
