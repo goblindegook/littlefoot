@@ -42,10 +42,10 @@ const CLASS_HOST = 'littlefoot-footnote__host'
 const setPrintOnly = (el: Element) => addClass(el, CLASS_PRINT_ONLY)
 
 function queryAll<E extends Element>(
-  container: Document | Element,
+  parent: ParentNode,
   selector: string
 ): readonly E[] {
-  return Array.from(container.querySelectorAll<E>(selector))
+  return Array.from(parent.querySelectorAll<E>(selector))
 }
 
 function queryByClass(element: HTMLElement, className: string): HTMLElement {
