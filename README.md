@@ -230,7 +230,7 @@ Default:
 ```html
 <aside
   alt="Footnote <% number %>"
-  class="littlefoot is-positioned-bottom"
+  class="littlefoot is-position-bottom"
   id="fncontent:<% id %>"
 >
   <div class="littlefoot__wrapper">
@@ -258,7 +258,7 @@ Default:
 ```html
 <button
   aria-expanded="false"
-  class="littlefoot__button littlefoot__button__ellipsis"
+  class="littlefoot__button"
   id="<% reference %>"
   title="See Footnote <% number %>"
 >

@@ -6,16 +6,16 @@
   --littlefoot-button-text-active-color: #fafafa;
   --littlefoot-button-border-radius: calc(var(--littlefoot-button-height) / 2);
   --littlefoot-button-height: 1rem;
-  --littlefoot-button-horizontal-margin: 0.1rem;
-  --littlefoot-button-horizontal-padding: 0.6rem;
+  --littlefoot-button-margin: 0 0.1rem;
+  --littlefoot-button-padding: 0 0.6rem;
   --littlefoot-button-transition: background-color, color;
   --littlefoot-popover-background-color: #f5f5f5;
   --littlefoot-popover-text-color: #111;
   --littlefoot-popover-border-radius: 0.5rem;
   --littlefoot-popover-max-height: 15em;
   --littlefoot-popover-max-width: 90%;
-  --littlefoot-popover-padding-horizontal: 1.4rem;
-  --littlefoot-popover-padding-vertical: 0.6rem;
+  --littlefoot-popover-horizontal-padding: 1.4rem;
+  --littlefoot-popover-vertical-padding: 0.6rem;
   --littlefoot-popover-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
   --littlefoot-popover-transform-origin: 50% 0;
   --littlefoot-popover-transform-state-active: scale(1) translateZ(0);
@@ -56,8 +56,8 @@
   font-size: 0.75rem;
   font-weight: 700;
   height: var(--littlefoot-button-height);
-  margin: 0 var(--littlefoot-button-horizontal-margin);
-  padding: 0 var(--littlefoot-button-horizontal-padding);
+  margin: var(--littlefoot-button-margin);
+  padding: var(--littlefoot-button-padding);
   text-decoration: none;
   transition-duration: var(--littlefoot-transition-duration);
   transition-property: var(--littlefoot-button-transition);
@@ -98,7 +98,7 @@
   width: var(--littlefoot-popover-width);
   z-index: 2;
 
-  &.is-positioned-top {
+  &.is-position-top {
     bottom: 0;
     top: auto;
   }
@@ -112,9 +112,9 @@
     color: var(--littlefoot-scroll-indicator-color);
     content: '\21E3';
     display: block;
-    width: var(--littlefoot-popover-padding-horizontal);
+    width: var(--littlefoot-popover-horizontal-padding);
     left: 0;
-    margin: var(--littlefoot-popover-padding-vertical) 0;
+    margin: var(--littlefoot-popover-vertical-padding) 0;
     opacity: 1;
     position: absolute;
     text-align: center;
@@ -209,8 +209,8 @@
   line-height: normal;
   max-height: var(--littlefoot-popover-max-height);
   overflow: auto;
-  padding: var(--littlefoot-popover-padding-vertical)
-    var(--littlefoot-popover-padding-horizontal);
+  padding: var(--littlefoot-popover-vertical-padding)
+    var(--littlefoot-popover-horizontal-padding);
   position: relative;
   z-index: 1;
 
@@ -235,10 +235,10 @@
   z-index: 3;
 }
 
-.is-positioned-bottom .littlefoot__tooltip {
+.is-position-bottom .littlefoot__tooltip {
   top: calc(var(--littlefoot-tooltip-height) / -2);
 }
 
-.is-positioned-top .littlefoot__tooltip {
+.is-position-top .littlefoot__tooltip {
   bottom: calc(var(--littlefoot-tooltip-height) / -2);
 }

@@ -4,7 +4,7 @@ import { addClass, removeClass } from './api'
 
 export const CLASS_TOOLTIP = 'littlefoot__tooltip'
 
-const CLASS_POSITION_PREFIX = 'is-positioned-'
+const CLASS_POSITION_PREFIX = 'is-position-'
 
 type Position = 'top' | 'bottom'
 
