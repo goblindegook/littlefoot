@@ -200,11 +200,16 @@
   -webkit-overflow-scrolling: touch;
   background-color: var(--littlefoot-popover-background-color);
   border-radius: var(--littlefoot-popover-border-radius);
+  box-sizing: inherit;
+  font-size: initial;
+  font-style: initial;
+  font-weight: initial;
+  line-height: normal;
   max-height: var(--littlefoot-popover-max-height);
   overflow: auto;
-  position: relative;
   padding: var(--littlefoot-popover-padding-vertical)
     var(--littlefoot-popover-padding-horizontal);
+  position: relative;
   z-index: 1;
 
   & img {
