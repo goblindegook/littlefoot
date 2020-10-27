@@ -21,6 +21,7 @@
   --littlefoot-popover-transform-state-initial: scale(0.1) translateZ(0);
   --littlefoot-popover-transition: opacity, transform;
   --littlefoot-popover-width: 22em;
+  --littlefoot-scroll-indicator-color: rgba(110, 110, 110, 1);
   --littlefoot-tooltip-height: 1rem;
   --littlefoot-transition-duration: 0.25s;
   --littlefoot-transition-timing: ease;
@@ -110,6 +111,27 @@
 
   &.is-active {
     transform: var(--littlefoot-popover-transform-state-active);
+  }
+
+  &.is-scrollable::after {
+    bottom: 0;
+    color: var(--littlefoot-scroll-indicator-color);
+    content: '\21E3';
+    display: block;
+    width: var(--littlefoot-popover-padding-horizontal);
+    left: 0;
+    margin: var(--littlefoot-popover-padding-vertical) 0;
+    opacity: 1;
+    position: absolute;
+    text-align: center;
+    transition-duration: var(--littlefoot-transition-duration);
+    transition-property: opacity;
+    transition-timing-function: var(--littlefoot-transition-timing);
+    z-index: 4;
+  }
+
+  &.is-fully-scrolled::after {
+    opacity: 0;
   }
 }
 
