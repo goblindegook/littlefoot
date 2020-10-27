@@ -51,6 +51,8 @@
   color: white;
   cursor: pointer;
   display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
   height: var(--littlefoot-button-height);
   margin: 0 var(--littlefoot-button-horizontal-margin);
   padding: 0 var(--littlefoot-button-horizontal-padding);
@@ -69,27 +71,10 @@
   &.is-active {
     background-color: var(--littlefoot-button-background-active-color);
   }
-}
 
-.littlefoot-footnote__button__ellipsis {
   & svg {
     float: left;
     height: 0.3rem;
-  }
-}
-
-.littlefoot-footnote__button__number {
-  &::after {
-    color: white;
-    content: attr(data-footnote-number);
-    display: block;
-    font-size: calc(var(--littlefoot-button-height) * 0.9);
-    font-weight: bold;
-    left: 50%;
-    padding: 0 var(--littlefoot-button-horizontal-padding);
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
   }
 }
 
