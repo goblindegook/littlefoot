@@ -12,7 +12,7 @@
     "build:types": "tsc --declaration --emitDeclarationOnly --declarationDir dist",
     "build": "yarn clean && mkdir -p dist && concurrently 'yarn build:types' 'yarn build:scripts' 'yarn build:styles'",
     "watch:scripts": "rollup --config --watch",
-    "watch:styles": "yarn build:css --watch",
+    "watch:styles": "yarn build:styles --watch",
     "format": "prettier --write '{cypress,src,test}/**/*.{js,jsx,ts,tsx,json,css,md}'",
     "lint": "eslint '{cypress,src,test}/**/*.ts'",
     "pretest": "yarn lint",
