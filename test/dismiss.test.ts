@@ -26,7 +26,7 @@ test('dismiss footnote when clicking the button again', async () => {
   await waitToStopChanging(button)
   expect(
     screen.queryByText(/This is the document's only footnote./, {
-      selector: '.littlefoot *',
+      selector: '.littlefoot__popover *',
     })
   ).not.toBeInTheDocument()
   expect(button).not.toHaveClass('is-active')

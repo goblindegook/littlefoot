@@ -1,5 +1,7 @@
 :root {
   --littlefoot-breakpoint: 720px;
+  --littlefoot-transition-duration: 0.25s;
+  --littlefoot-transition-timing: ease;
   --littlefoot-button-background-color: #949494;
   --littlefoot-button-background-active-color: #4c4c4c;
   --littlefoot-button-text-color: #fafafa;
@@ -22,10 +24,8 @@
   --littlefoot-popover-transform-state-initial: scale(0.1) translateZ(0);
   --littlefoot-popover-transition: opacity, transform;
   --littlefoot-popover-width: 22em;
-  --littlefoot-scroll-indicator-color: #4c4c4c;
-  --littlefoot-tooltip-height: 1rem;
-  --littlefoot-transition-duration: 0.25s;
-  --littlefoot-transition-timing: ease;
+  --littlefoot-popover-scroll-indicator-color: #4c4c4c;
+  --littlefoot-popover-tooltip-height: 1rem;
 }
 
 .littlefoot__host {
@@ -65,13 +65,14 @@
   }
 }
 
-.littlefoot {
+.littlefoot__popover {
   border-radius: var(--littlefoot-popover-border-radius);
   box-shadow: var(--littlefoot-popover-shadow);
   box-sizing: border-box;
   left: 0;
   margin: calc(
-      (0.7 * var(--littlefoot-tooltip-height)) + var(--littlefoot-button-height)
+      (0.7 * var(--littlefoot-popover-tooltip-height)) +
+        var(--littlefoot-button-height)
     )
     0;
   max-width: var(--littlefoot-popover-max-width);
@@ -96,7 +97,7 @@
 
   &.is-scrollable::after {
     bottom: 0;
-    color: var(--littlefoot-scroll-indicator-color);
+    color: var(--littlefoot-popover-scroll-indicator-color);
     content: '\21E3';
     display: block;
     width: var(--littlefoot-popover-horizontal-padding);
@@ -117,7 +118,7 @@
 }
 
 @media (max-width: 720px) {
-  .littlefoot {
+  .littlefoot__popover {
     border-radius: 0;
     border-width: 1px 0 0;
     bottom: 0;
@@ -214,20 +215,20 @@
   background-color: var(--littlefoot-popover-background-color);
   box-shadow: var(--littlefoot-popover-shadow);
   box-sizing: border-box;
-  height: var(--littlefoot-tooltip-height);
-  margin-left: calc(var(--littlefoot-tooltip-height) / -2);
+  height: var(--littlefoot-popover-tooltip-height);
+  margin-left: calc(var(--littlefoot-popover-tooltip-height) / -2);
   position: absolute;
   transform: rotate(45deg);
-  width: var(--littlefoot-tooltip-height);
+  width: var(--littlefoot-popover-tooltip-height);
   z-index: 3;
 }
 
 .is-position-bottom .littlefoot__tooltip {
-  top: calc(var(--littlefoot-tooltip-height) / -2);
+  top: calc(var(--littlefoot-popover-tooltip-height) / -2);
 }
 
 .is-position-top .littlefoot__tooltip {
-  bottom: calc(var(--littlefoot-tooltip-height) / -2);
+  bottom: calc(var(--littlefoot-popover-tooltip-height) / -2);
 }
 
 @media not print {
@@ -237,7 +238,7 @@
 }
 
 @media print {
-  .littlefoot,
+  .littlefoot__popover,
   .littlefoot__button {
     display: none;
   }

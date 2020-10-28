@@ -70,7 +70,7 @@ test('activate footnote by ID when calling .activate() with a timeout', () => {
 test('activation with unknown ID does not activate any popovers', () => {
   const instance = littlefoot({ activateDelay: 0 })
   instance.activate('invalid')
-  expect(document.querySelector('.littlefoot')).toBeNull()
+  expect(document.querySelector('.littlefoot__popover')).toBeNull()
 })
 
 test('button and popover state reflected on ARIA properties', async () => {
@@ -91,7 +91,7 @@ test('popup layout dimensions', async () => {
 
   await waitToStopChanging(button)
 
-  const popover = document.querySelector('.littlefoot')
+  const popover = document.querySelector('.littlefoot__popover')
   expect(popover).toHaveStyle(`max-width: ${document.body.clientWidth}px`)
 
   const content = document.querySelector('.littlefoot__content')

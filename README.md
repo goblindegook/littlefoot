@@ -230,7 +230,7 @@ Default:
 ```html
 <aside
   alt="Footnote <% number %>"
-  class="littlefoot is-position-bottom"
+  class="littlefoot__popover"
   id="fncontent:<% id %>"
 >
   <div class="littlefoot__wrapper">

@@ -7,7 +7,7 @@ context('Click', () => {
 
   it('allows clicking links in popovers', () => {
     cy.findByTitle('See Footnote 1').click()
-    cy.get('.littlefoot').should('not.have.class', 'is-scrollable')
+    cy.get('.littlefoot__popover').should('not.have.class', 'is-scrollable')
     cy.get('.littlefoot__content').should('not.have.attr', 'tabindex')
     cy.findAllByText('a link').first().click()
     cy.findByText('OK')
@@ -15,7 +15,7 @@ context('Click', () => {
 
   it('reveals popover content that is not scrollable when short', () => {
     cy.findByTitle('See Footnote 1').click()
-    cy.get('.littlefoot').should('not.have.class', 'is-scrollable')
+    cy.get('.littlefoot__popover').should('not.have.class', 'is-scrollable')
     cy.get('.littlefoot__content').should('not.have.attr', 'tabindex')
   })
 })
