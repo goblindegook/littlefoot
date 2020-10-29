@@ -2,9 +2,9 @@
 
 :root {
   --littlefoot-button-background-color: #949494;
-  --littlefoot-button-color: #fafafa;
+  --littlefoot-button-text-color: #fafafa;
   --littlefoot-button-active-background-color: #4c4c4c;
-  --littlefoot-button-active-color: #fafafa;
+  --littlefoot-button-active-text-color: #fafafa;
   --littlefoot-button-border-radius: calc(var(--littlefoot-button-height) / 2);
   --littlefoot-button-height: 1rem;
   --littlefoot-button-margin: 0 0.1rem;
@@ -12,6 +12,7 @@
   --littlefoot-button-transition: background-color 0.25s ease, color 0.25s ease;
   --littlefoot-popover-background-color: #f5f5f5;
   --littlefoot-popover-text-color: #111;
+  --littlefoot-popover-border: 1px solid #949494;
   --littlefoot-popover-border-radius: 0.5rem;
   --littlefoot-popover-max-height: 15em;
   --littlefoot-popover-max-width: 90%;
@@ -24,7 +25,7 @@
   --littlefoot-popover-transition: opacity 0.25s ease, transform 0.25s ease;
   --littlefoot-popover-width: 22em;
   --littlefoot-popover-scroll-indicator-color: #4c4c4c;
-  --littlefoot-popover-tooltip-height: 1rem;
+  --littlefoot-popover-tooltip-size: 0.5rem;
 }
 
 .littlefoot__host {
@@ -34,13 +35,12 @@
 .littlefoot__button {
   background-color: var(--littlefoot-button-background-color);
   border-radius: var(--littlefoot-button-border-radius);
-  border: 0;
-  box-sizing: border-box;
-  color: var(--littlefoot-button-color);
+  border: var(--littlefoot-button-border, 0);
+  color: var(--littlefoot-button-text-color);
   cursor: pointer;
   display: inline-block;
-  font-size: 0.75rem;
-  font-weight: 700;
+  font-size: var(--littlefoot-button-font-size, 0.75rem);
+  font-weight: var(--littlefoot-button-font-weight, initial);
   height: var(--littlefoot-button-height);
   margin: var(--littlefoot-button-margin);
   padding: var(--littlefoot-button-padding);
@@ -52,8 +52,8 @@
   &:focus,
   &:active,
   &.is-active {
-    background-color: var(--littlefoot-button-background-active-color);
-    color: var(--littlefoot-button-text-active-color);
+    background-color: var(--littlefoot-button-active-background-color);
+    color: var(--littlefoot-button-active-text-color);
   }
 
   & svg {
@@ -63,12 +63,12 @@
 }
 
 .littlefoot__popover {
+  border: var(--littlefoot-popover-border);
   border-radius: var(--littlefoot-popover-border-radius);
   box-shadow: var(--littlefoot-popover-shadow);
-  box-sizing: border-box;
   left: 0;
   margin: calc(
-      (0.7 * var(--littlefoot-popover-tooltip-height)) +
+      (1.4 * var(--littlefoot-popover-tooltip-size)) +
         var(--littlefoot-button-height)
     )
     0;
@@ -91,17 +91,16 @@
   }
 
   &.is-scrollable::after {
-    bottom: 0;
+    bottom: calc(var(--littlefoot-popover-vertical-padding) / 2);
     color: var(--littlefoot-popover-scroll-indicator-color);
     content: '\21E3';
     display: block;
-    width: var(--littlefoot-popover-horizontal-padding);
     left: 0;
-    margin: var(--littlefoot-popover-vertical-padding) 0;
     opacity: 1;
     position: absolute;
     text-align: center;
-    transition: var(--littlefoot-button-transition);
+    transition: var(--littlefoot-popover-transition);
+    width: var(--littlefoot-popover-horizontal-padding);
     z-index: 4;
   }
 
@@ -117,11 +116,11 @@
     bottom: 0;
     left: 0 !important;
     margin: 0;
+    max-width: 100% !important;
     position: fixed;
     right: 0;
     top: auto;
     transform: translateY(100%);
-    max-width: 100% !important;
     width: 100%;
 
     &.is-active {
@@ -144,51 +143,17 @@
   border-radius: var(--littlefoot-popover-border-radius);
   position: relative;
   z-index: 4;
-
-  &::before,
-  &::after {
-    content: '';
-    left: 0;
-    position: absolute;
-    width: 100%;
-    height: calc(2.5 * var(--littlefoot-popover-vertical-padding));
-    z-index: 3;
-  }
-
-  &::before {
-    background-image: linear-gradient(
-      to bottom,
-      var(--littlefoot-popover-background-color) 50%,
-      rgba(255, 255, 255, 0) 100%
-    );
-    border-radius: var(--littlefoot-popover-border-radius)
-      var(--littlefoot-popover-border-radius) 0 0;
-    top: -1px;
-  }
-
-  &::after {
-    background-image: linear-gradient(
-      to top,
-      var(--littlefoot-popover-background-color) 50%,
-      rgba(255, 255, 255, 0) 100%
-    );
-    border-radius: 0 0 var(--littlefoot-popover-border-radius)
-      var(--littlefoot-popover-border-radius);
-    bottom: -1px;
-  }
 }
 
 .littlefoot__content {
-  -webkit-font-smoothing: subpixel-antialiased;
   -webkit-overflow-scrolling: touch;
   background-color: var(--littlefoot-popover-background-color);
   border-radius: var(--littlefoot-popover-border-radius);
-  box-sizing: inherit;
   color: var(--littlefoot-popover-text-color);
-  font-size: initial;
-  font-style: initial;
-  font-weight: initial;
-  line-height: normal;
+  font-size: var(--littlefoot-popover-font-family, initial);
+  font-style: var(--littlefoot-popover-font-size, initial);
+  font-weight: var(--littlefoot-popover-font-weight, initial);
+  line-height: var(--littlefoot-popover-line-height, normal);
   max-height: var(--littlefoot-popover-max-height);
   overflow: auto;
   padding: var(--littlefoot-popover-vertical-padding)
@@ -206,31 +171,23 @@
 }
 
 .littlefoot__tooltip {
-  --multiplier: -0.5;
-
   background-color: var(--littlefoot-popover-background-color);
+  border: var(--littlefoot-popover-border);
   box-shadow: var(--littlefoot-popover-shadow);
-  box-sizing: border-box;
-  height: var(--littlefoot-popover-tooltip-height);
-  margin-left: calc(
-    var(--littlefoot-popover-tooltip-height) * var(--multiplier)
-  );
+  height: calc(2 * var(--littlefoot-popover-tooltip-size));
+  margin-left: calc(-1 * var(--littlefoot-popover-tooltip-size));
   position: absolute;
   transform: rotate(45deg);
-  width: var(--littlefoot-popover-tooltip-height);
+  width: calc(2 * var(--littlefoot-popover-tooltip-size));
   z-index: 3;
 }
 
 .is-below .littlefoot__tooltip {
-  --multiplier: -0.5;
-
-  top: calc(var(--littlefoot-popover-tooltip-height) * var(--multiplier));
+  top: calc(-1 * var(--littlefoot-popover-tooltip-size));
 }
 
 .is-above .littlefoot__tooltip {
-  --multiplier: -0.5;
-
-  bottom: calc(var(--littlefoot-popover-tooltip-height) * var(--multiplier));
+  bottom: calc(-1 * var(--littlefoot-popover-tooltip-size));
 }
 
 @media not print {
