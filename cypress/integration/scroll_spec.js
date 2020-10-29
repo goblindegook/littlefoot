@@ -12,14 +12,14 @@ context('Scroll', () => {
     cy.get('.littlefoot__popover').should(
       'have.attr',
       'data-footnote-position',
-      'top'
+      'above'
     )
 
     cy.scrollTo('bottom')
     cy.get('.littlefoot__popover').should(
       'have.attr',
       'data-footnote-position',
-      'bottom'
+      'below'
     )
   })
 

@@ -15,7 +15,7 @@ test('setup with default contentTemplate', async () => {
   expect(footnote?.dataset).toMatchObject({
     footnoteId: '1',
     footnotePopover: '',
-    footnotePosition: 'bottom',
+    footnotePosition: 'below',
   })
 
   const content = footnote?.querySelector('.littlefoot__content')
@@ -47,7 +47,7 @@ test('setup with custom contentTemplate using <%= %> delimiters', async () => {
   expect(footnote?.dataset).toMatchObject({
     footnoteId: '1',
     footnotePopover: '',
-    footnotePosition: 'bottom',
+    footnotePosition: 'below',
     testId: '1',
     testNumber: '1',
   })
@@ -81,7 +81,7 @@ test('setup with custom contentTemplate using <% %> delimiters', async () => {
   expect(footnote?.dataset).toMatchObject({
     footnoteId: '1',
     footnotePopover: '',
-    footnotePosition: 'bottom',
+    footnotePosition: 'below',
     testId: '1',
     testNumber: '1',
   })
