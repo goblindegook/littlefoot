@@ -1,8 +1,6 @@
 @custom-media --littlefoot-breakpoint (width < 768px);
 
 :root {
-  --littlefoot-transition-duration: 0.25s;
-  --littlefoot-transition-timing: ease;
   --littlefoot-button-background-color: #949494;
   --littlefoot-button-color: #fafafa;
   --littlefoot-button-active-background-color: #4c4c4c;
@@ -103,9 +101,7 @@
     opacity: 1;
     position: absolute;
     text-align: center;
-    transition-duration: var(--littlefoot-transition-duration);
-    transition-property: var(--littlefoot-button-transition);
-    transition-timing-function: var(--littlefoot-transition-timing);
+    transition: var(--littlefoot-button-transition);
     z-index: 4;
   }
 
