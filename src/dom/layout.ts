@@ -4,17 +4,17 @@ import { addClass, removeClass } from './api'
 
 export const CLASS_TOOLTIP = 'littlefoot__tooltip'
 
-const CLASS_POSITION_PREFIX = 'is-position-'
+const CLASS_POSITION_PREFIX = 'is-'
 
-type Position = 'top' | 'bottom'
+type Position = 'above' | 'below'
 
 type Room = Readonly<{ [K in Position]: number }>
 
 function getAvailableRoom(element: HTMLElement): Room {
   const height = element.offsetHeight
-  const top = element.getBoundingClientRect().top + height / 2
+  const above = element.getBoundingClientRect().top + height / 2
 
-  return { top, bottom: window.innerHeight - top }
+  return { above, below: window.innerHeight - above }
 }
 
 export function getLeftRelative(element: HTMLElement): number {
@@ -38,7 +38,7 @@ export function getLeftInPixels(
 function popoverPosition(footnote: HTMLElement, room: Room): Position {
   const marginSize = parseInt(getStyle(footnote, 'marginTop'), 10)
   const totalHeight = 2 * marginSize + footnote.offsetHeight
-  return room.bottom < totalHeight && room.bottom < room.top ? 'top' : 'bottom'
+  return room.below < totalHeight && room.below < room.above ? 'above' : 'below'
 }
 
 export function getAvailableHeight(
@@ -69,7 +69,7 @@ export function repositionPopover(
     removeClass(popover, `${CLASS_POSITION_PREFIX}${previous}`)
     addClass(popover, `${CLASS_POSITION_PREFIX}${position}`)
     const transformX = getLeftRelative(button) * 100 + '%'
-    const transformY = position === 'top' ? '100%' : '0'
+    const transformY = position === 'above' ? '100%' : '0'
     popover.style.transformOrigin = transformX + ' ' + transformY
   }
 }

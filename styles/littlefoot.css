@@ -81,7 +81,7 @@
   width: var(--littlefoot-popover-width);
   z-index: 2;
 
-  &.is-position-top {
+  &.is-above {
     bottom: 0;
     top: auto;
   }
@@ -221,13 +221,13 @@
   z-index: 3;
 }
 
-.is-position-bottom .littlefoot__tooltip {
+.is-below .littlefoot__tooltip {
   --multiplier: -0.5;
 
   top: calc(var(--littlefoot-popover-tooltip-height) * var(--multiplier));
 }
 
-.is-position-top .littlefoot__tooltip {
+.is-above .littlefoot__tooltip {
   --multiplier: -0.5;
 
   bottom: calc(var(--littlefoot-popover-tooltip-height) * var(--multiplier));
