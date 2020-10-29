@@ -5,7 +5,7 @@
   --littlefoot-button-text-color: #fafafa;
   --littlefoot-button-active-background-color: #4c4c4c;
   --littlefoot-button-active-text-color: #fafafa;
-  --littlefoot-button-border-radius: calc(var(--littlefoot-button-height) / 2);
+  --littlefoot-button-border-radius: 0.5rem;
   --littlefoot-button-height: 1rem;
   --littlefoot-button-margin: 0 0.1rem;
   --littlefoot-button-padding: 0 0.6rem;
