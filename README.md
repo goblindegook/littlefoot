@@ -323,7 +323,9 @@ in the littlefoot instance will stop working, requiring you to call the
 
 ## Theming
 
-littlefoot supports theming through [CSS custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties). The following properties are available in browsers or CSS precompilation tools that support them.
+littlefoot supports theming through [CSS custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties). The following properties are available in browsers or [CSS precompilation tools](https://preset-env.cssdb.org/) that support them.
+
+### Buttons
 
 | Button properties                             | Default value                                   | Purpose                         |
 | :-------------------------------------------- | :---------------------------------------------- | :------------------------------ |
@@ -336,6 +338,8 @@ littlefoot supports theming through [CSS custom properties](https://developer.mo
 | `--littlefoot-button-padding`                 | `0 0.6rem`                                      | Button padding                  |
 | `--littlefoot-button-text-color`              | `#fafafa`                                       | Button text color.              |
 | `--littlefoot-button-transition`              | `background-color 0.25s ease, color 0.25s ease` | Button transition animation.    |
+
+### Popovers
 
 | Popover properties                            | Default value                              | Purpose                         |
 | :-------------------------------------------- | :----------------------------------------- | :------------------------------ |
@@ -361,7 +365,9 @@ littlefoot supports theming through [CSS custom properties](https://developer.mo
 | `--littlefoot-popover-vertical-padding`       | `0.6rem`                                   | Popover vertical padding.       |
 | `--littlefoot-popover-width`                  | `22em`                                     | Popover width.                  |
 
-Browsers that don't support CSS custom properties will receive the default values. The appearance of littlefoot elements may still be overridden through normal CSS definitions.
+### Backwards compatibility
+
+Browsers that don't support CSS custom properties will receive the default values. The appearance of elements may still be overridden through normal CSS definitions as in previous versions of littlefoot.
 
 ## Changes from Bigfoot.js
 
