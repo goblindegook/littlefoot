@@ -323,7 +323,7 @@ in the littlefoot instance will stop working, requiring you to call the
 
 ## Theming
 
-littlefoot supports theming through [CSS custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties). The following properties are available in browsers or CSS precompilation tools that support them:
+littlefoot supports theming through [CSS custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties). The following properties are available in browsers or CSS precompilation tools that support them.
 
 | Button properties                             | Default value                                   | Purpose                         |
 | :-------------------------------------------- | :---------------------------------------------- | :------------------------------ |
@@ -360,6 +360,8 @@ littlefoot supports theming through [CSS custom properties](https://developer.mo
 | `--littlefoot-popover-transition`             | `opacity 0.25s ease, transform 0.25s ease` | Popover transition animation.   |
 | `--littlefoot-popover-vertical-padding`       | `0.6rem`                                   | Popover vertical padding.       |
 | `--littlefoot-popover-width`                  | `22em`                                     | Popover width.                  |
+
+Browsers that don't support CSS custom properties will receive the default values. The appearance of littlefoot elements may still be overridden through normal CSS definitions.
 
 ## Changes from Bigfoot.js
 
