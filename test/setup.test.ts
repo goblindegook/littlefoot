@@ -1,5 +1,5 @@
 import { fireEvent } from '@testing-library/dom'
-import littlefoot from '../src'
+import littlefoot from '../src/littlefoot'
 import {
   setDocumentBody,
   getAllButtons,

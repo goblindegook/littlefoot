@@ -8,7 +8,7 @@
   "scripts": {
     "clean": "rm -rf coverage dist",
     "build:scripts": "rollup --config",
-    "build:styles": "postcss styles/littlefoot.css --output dist/littlefoot.css",
+    "build:styles": "postcss src/littlefoot.css --output dist/littlefoot.css",
     "build:types": "tsc --declaration --emitDeclarationOnly --declarationDir dist",
     "build": "yarn clean && mkdir -p dist && concurrently 'yarn build:types' 'yarn build:scripts' 'yarn build:styles'",
     "watch:scripts": "rollup --config --watch",
@@ -53,7 +53,7 @@
   "browser": "dist/littlefoot.js",
   "main": "dist/littlefoot.cjs.js",
   "module": "dist/littlefoot.mjs",
-  "typings": "dist/index.d.ts",
+  "typings": "dist/littlefoot.d.ts",
   "style": "dist/littlefoot.css",
   "browserslist": [
     "defaults"

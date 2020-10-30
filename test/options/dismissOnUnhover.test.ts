@@ -6,7 +6,7 @@ import {
   getButton,
   getPopover,
 } from '../helper'
-import littlefoot from '../../src'
+import littlefoot from '../../src/littlefoot'
 
 test('dismiss on button unhover', async () => {
   setDocumentBody('single.html')

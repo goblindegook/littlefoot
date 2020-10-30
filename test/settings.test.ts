@@ -1,4 +1,4 @@
-import littlefoot from '../src'
+import littlefoot from '../src/littlefoot'
 
 test('allows getting default values', () => {
   const instance = littlefoot()

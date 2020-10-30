@@ -6,7 +6,7 @@ import {
   getButton,
   queryAll,
 } from './helper'
-import littlefoot from '../src'
+import littlefoot from '../src/littlefoot'
 
 const TEST_SETTINGS = { activateDelay: 1 }
 

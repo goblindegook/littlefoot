@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/dom'
 import { setDocumentBody, getButton } from '../helper'
-import littlefoot from '../../src'
+import littlefoot from '../../src/littlefoot'
 
 beforeEach(() => {
   setDocumentBody('single.html')

@@ -1,4 +1,4 @@
-import littlefoot from '../../src'
+import littlefoot from '../../src/littlefoot'
 import { setDocumentBody, getAllButtons } from '../helper'
 
 test('create one button per footnote reference', () => {

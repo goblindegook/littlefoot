@@ -1,6 +1,6 @@
 import { fireEvent } from '@testing-library/dom'
 import { setDocumentBody, getPopover, getButton } from '../helper'
-import littlefoot from '../../src'
+import littlefoot from '../../src/littlefoot'
 
 test('setup with activateCallback', () => {
   setDocumentBody('single.html')

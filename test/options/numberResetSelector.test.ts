@@ -1,5 +1,5 @@
 import { setDocumentBody, getAllButtons } from '../helper'
-import littlefoot from '../../src'
+import littlefoot from '../../src/littlefoot'
 
 beforeEach(() => {
   setDocumentBody('multiple.html')

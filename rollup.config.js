@@ -14,7 +14,7 @@ const terserPlugin = terser({
 
 export default [
   {
-    input: 'src/index.ts',
+    input: 'src/littlefoot.ts',
     plugins: [
       resolve({ mainFields: ['main'] }),
       commonjs(),
@@ -29,7 +29,7 @@ export default [
     },
   },
   {
-    input: 'src/index.ts',
+    input: 'src/littlefoot.ts',
     external: Object.keys(pkg.dependencies),
     plugins: [typescript(), production && terserPlugin],
     context: 'window',
@@ -42,7 +42,7 @@ export default [
     ],
   },
   {
-    input: 'src/index.ts',
+    input: 'src/littlefoot.ts',
     external: Object.keys(pkg.dependencies),
     plugins: [typescript({ target: 'ES6' }), production && terserPlugin],
     context: 'window',

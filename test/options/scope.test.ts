@@ -1,5 +1,5 @@
 import { setDocumentBody, queryAll } from '../helper'
-import littlefoot from '../../src'
+import littlefoot from '../../src/littlefoot'
 
 test('creates buttons for all footnotes when scope is body', () => {
   setDocumentBody('default.html')

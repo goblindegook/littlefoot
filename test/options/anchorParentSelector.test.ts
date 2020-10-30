@@ -1,6 +1,6 @@
 import { fireEvent } from '@testing-library/dom'
 import { setDocumentBody, queryAll, getButton, getPopover } from '../helper'
-import littlefoot from '../../src'
+import littlefoot from '../../src/littlefoot'
 
 test('hides original footnote anchor parent', () => {
   setDocumentBody('default.html')

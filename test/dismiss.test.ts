@@ -6,7 +6,7 @@ import {
   getButton,
   getPopover,
 } from './helper'
-import littlefoot from '../src'
+import littlefoot from '../src/littlefoot'
 
 const TEST_SETTINGS = { activateDelay: 0, dismissDelay: 0 }
 

@@ -1,6 +1,6 @@
 import { fireEvent } from '@testing-library/dom'
 import { setDocumentBody, waitToStopChanging, getButton } from '../helper'
-import littlefoot from '../../src'
+import littlefoot from '../../src/littlefoot'
 
 test('setup with default contentTemplate', async () => {
   setDocumentBody('single.html')
