@@ -132,8 +132,9 @@
   background-color: var(--littlefoot-popover-background-color);
   border-radius: var(--littlefoot-popover-border-radius);
   color: var(--littlefoot-popover-text-color);
-  font-size: var(--littlefoot-popover-font-family, initial);
-  font-style: var(--littlefoot-popover-font-size, initial);
+  font-family: var(--littlefoot-popover-font-family, initial);
+  font-size: var(--littlefoot-popover-font-size, initial);
+  font-style: var(--littlefoot-popover-font-style, initial);
   font-weight: var(--littlefoot-popover-font-weight, initial);
   line-height: var(--littlefoot-popover-line-height, normal);
   max-height: var(--littlefoot-popover-max-height);
@@ -172,11 +173,15 @@
 }
 
 .littlefoot__tooltip {
+  --littlefoot-s: -1;
+
   background-color: var(--littlefoot-popover-background-color);
   border: var(--littlefoot-popover-border);
   box-shadow: var(--littlefoot-popover-shadow);
   height: calc(2 * var(--littlefoot-popover-tooltip-size));
-  margin-left: calc(-1 * var(--littlefoot-popover-tooltip-size));
+  margin-left: calc(
+    var(--littlefoot-s) * var(--littlefoot-popover-tooltip-size)
+  );
   position: absolute;
   transform: rotate(45deg);
   width: calc(2 * var(--littlefoot-popover-tooltip-size));
@@ -184,11 +189,11 @@
 }
 
 .is-below .littlefoot__tooltip {
-  top: calc(-1 * var(--littlefoot-popover-tooltip-size));
+  top: calc(var(--littlefoot-s) * var(--littlefoot-popover-tooltip-size));
 }
 
 .is-above .littlefoot__tooltip {
-  bottom: calc(-1 * var(--littlefoot-popover-tooltip-size));
+  bottom: calc(var(--littlefoot-s) * var(--littlefoot-popover-tooltip-size));
 }
 
 @media not print {
