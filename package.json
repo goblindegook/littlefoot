@@ -23,6 +23,7 @@
     "test:cypress:open": "yarn build && cypress open",
     "test:jest": "jest",
     "release": "standard-version",
+    "prepare": "yarn build",
     "prepublish": "yarn build"
   },
   "husky": {
