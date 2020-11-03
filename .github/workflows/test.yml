@@ -11,4 +11,6 @@ jobs:
       - name: Install
         run: yarn
       - name: Test
-        run: yarn test
+        run: yarn test:coverage
+      - name: Coverage
+        uses: codecov/codecov-action@v1
