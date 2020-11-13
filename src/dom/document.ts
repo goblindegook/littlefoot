@@ -181,6 +181,7 @@ function createElements(buttonTemplate: string, popoverTemplate: string) {
     )
 
     const button = host.firstElementChild as HTMLElement
+    button.setAttribute('aria-expanded', 'false')
     button.dataset.footnoteButton = ''
     button.dataset.footnoteId = id
     button.dataset.footnoteNumber = `${data.number}`

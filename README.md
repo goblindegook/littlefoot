@@ -254,7 +254,6 @@ Default:
 
 ```html
 <button
-  aria-expanded="false"
   class="littlefoot__button"
   id="<% reference %>"
   title="See Footnote <% number %>"
@@ -279,7 +278,6 @@ To display the footnote number instead of an ellipsis, provide the following `bu
 
 ```html
 <button
-  aria-expanded="false"
   aria-label="Footnote <% number %>"
   class="littlefoot__button"
   id="<% reference %>"
