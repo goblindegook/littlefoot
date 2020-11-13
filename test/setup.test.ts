@@ -4,7 +4,6 @@ import {
   setDocumentBody,
   getAllButtons,
   getAllActiveButtons,
-  queryAll,
   getButton,
   getPopover,
 } from './helper'
@@ -15,25 +14,27 @@ beforeEach(() => {
 
 test('creates one button and one host per footnote call', () => {
   littlefoot()
-  expect(queryAll('.littlefoot__host')).toHaveLength(4)
+  expect(document.querySelectorAll('.littlefoot__host')).toHaveLength(4)
   expect(getAllButtons()).toHaveLength(4)
 })
 
 test('processes each called footnote', () => {
   littlefoot()
-  expect(queryAll('.footnotes')).toHaveLength(1)
+  expect(document.querySelectorAll('.footnotes')).toHaveLength(1)
 })
 
 test('hides all footnotes', () => {
   littlefoot()
-  expect(queryAll('.footnotes.littlefoot--print')).toHaveLength(1)
-  expect(queryAll('hr.littlefoot--print')).toHaveLength(1)
-  expect(queryAll('li.littlefoot--print')).toHaveLength(3)
+  expect(
+    document.querySelectorAll('.footnotes.littlefoot--print')
+  ).toHaveLength(1)
+  expect(document.querySelectorAll('hr.littlefoot--print')).toHaveLength(1)
+  expect(document.querySelectorAll('li.littlefoot--print')).toHaveLength(3)
 })
 
 test('starts with no active footnotes', () => {
   littlefoot()
-  expect(getAllActiveButtons()).toEqual([])
+  expect(getAllActiveButtons()).toHaveLength(0)
 })
 
 test('sets ARIA attributes on button', () => {
@@ -45,7 +46,7 @@ test('sets ARIA attributes on button', () => {
 test('sets up footnotes with a URL before the fragment', () => {
   setDocumentBody('filename.html')
   littlefoot()
-  expect(queryAll('.littlefoot__host')).toHaveLength(1)
+  expect(document.querySelectorAll('.littlefoot__host')).toHaveLength(1)
   expect(getAllButtons()).toHaveLength(1)
 })
 

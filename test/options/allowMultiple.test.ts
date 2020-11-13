@@ -93,7 +93,7 @@ test('dismiss multiple buttons when calling .dismiss()', async () => {
   await waitToStopChanging(one)
   await waitToStopChanging(two)
 
-  expect(getAllActiveButtons()).toEqual([])
+  expect(getAllActiveButtons()).toHaveLength(0)
 })
 
 test('programmatic activation dismisses others when multiples are disallowed', async () => {

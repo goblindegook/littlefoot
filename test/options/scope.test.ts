@@ -1,14 +1,17 @@
-import { setDocumentBody, queryAll } from '../helper'
+import { screen } from '@testing-library/dom'
+import { getAllButtons, setDocumentBody } from '../helper'
 import littlefoot from '../../src/littlefoot'
 
 test('creates buttons for all footnotes when scope is body', () => {
   setDocumentBody('default.html')
   littlefoot({ scope: 'body' })
-  expect(queryAll('[data-footnote-button]')).toHaveLength(4)
+  expect(getAllButtons()).toHaveLength(4)
 })
 
 test('creates no footnote buttons when scope is invalid', () => {
   setDocumentBody('default.html')
   littlefoot({ scope: '#invalid' })
-  expect(queryAll('[data-footnote-button]')).toHaveLength(0)
+  expect(
+    screen.queryAllByRole('button', { name: /See Footnote/ })
+  ).toHaveLength(0)
 })

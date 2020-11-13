@@ -4,7 +4,6 @@ import {
   waitToStopChanging,
   getPopoverByText,
   getButton,
-  queryAll,
 } from './helper'
 import littlefoot from '../src/littlefoot'
 
@@ -34,8 +33,7 @@ test('does not insert empty paragraphs in the footnote content (#187)', async ()
   const button = getButton('1')
   fireEvent.click(button)
   await waitToStopChanging(button)
-  const paragraphs = queryAll('.littlefoot__content p')
-  expect(paragraphs).toHaveLength(1)
+  expect(document.querySelectorAll('.littlefoot__content p')).toHaveLength(1)
 })
 
 test('activate footnote by ID when calling .activate()', () => {

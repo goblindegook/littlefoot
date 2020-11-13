@@ -1,11 +1,11 @@
 import { fireEvent } from '@testing-library/dom'
-import { setDocumentBody, queryAll, getButton, getPopover } from '../helper'
+import { setDocumentBody, getButton, getPopover } from '../helper'
 import littlefoot from '../../src/littlefoot'
 
 test('hides original footnote anchor parent', () => {
   setDocumentBody('default.html')
   littlefoot({ anchorParentSelector: 'sup' })
-  expect(queryAll('sup.littlefoot--print')).toHaveLength(4)
+  expect(document.querySelectorAll('sup.littlefoot--print')).toHaveLength(4)
 })
 
 test('uses reference ID from the link', () => {

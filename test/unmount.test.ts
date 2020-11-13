@@ -1,5 +1,6 @@
 import littlefoot from '../src/littlefoot'
-import { setDocumentBody, getAllButtons, queryAll } from './helper'
+import { screen } from '@testing-library/dom'
+import { setDocumentBody } from './helper'
 
 beforeEach(() => {
   setDocumentBody('default.html')
@@ -8,12 +9,14 @@ beforeEach(() => {
 test('unmount removes all buttons', () => {
   const instance = littlefoot()
   instance.unmount()
-  expect(queryAll('.littlefoot__host')).toHaveLength(0)
-  expect(getAllButtons()).toHaveLength(0)
+  expect(document.querySelectorAll('.littlefoot__host')).toHaveLength(0)
+  expect(
+    screen.queryAllByRole('button', { name: /See Footnote/ })
+  ).toHaveLength(0)
 })
 
 test('unmount unhides all footnotes', () => {
   const instance = littlefoot()
   instance.unmount()
-  expect(queryAll('.littlefoot--print')).toHaveLength(0)
+  expect(document.querySelectorAll('.littlefoot--print')).toHaveLength(0)
 })

@@ -3,10 +3,6 @@ import { waitFor, screen } from '@testing-library/dom'
 import { join } from 'path'
 import { readFileSync } from 'fs'
 
-export function queryAll<E extends Element>(selector: string): E[] {
-  return Array.from(document.querySelectorAll<E>(selector))
-}
-
 export function getPopoverByText(matcher: string | RegExp): HTMLElement {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   return screen
@@ -29,22 +25,20 @@ export function getPopover(id: string): HTMLElement {
   return document.querySelector<HTMLElement>(`aside[data-footnote-id="${id}"]`)!
 }
 
-export function getAllButtons(): HTMLInputElement[] {
-  return queryAll('button[data-footnote-button]')
+export function getAllButtons(): HTMLElement[] {
+  return screen.getAllByRole('button', { name: /See Footnote/ })
 }
 
-export function getAllActiveButtons(): HTMLInputElement[] {
-  return queryAll('button[data-footnote-button].is-active')
+export function getAllActiveButtons(): HTMLElement[] {
+  return getAllButtons().filter(
+    (button) => button.getAttribute('aria-expanded') === 'true'
+  )
 }
 
 export async function waitToStartChanging(button: HTMLElement): Promise<void> {
-  await waitFor(() => expect(button).toHaveClass('is-changing'), {
-    container: button,
-  })
+  await waitFor(() => expect(button).toHaveClass('is-changing'))
 }
 
 export async function waitToStopChanging(button: HTMLElement): Promise<void> {
-  await waitFor(() => expect(button).not.toHaveClass('is-changing'), {
-    container: button,
-  })
+  await waitFor(() => expect(button).not.toHaveClass('is-changing'))
 }
