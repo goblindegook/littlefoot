@@ -1,5 +1,9 @@
 {
-  "extends": ["@pacote/eslint-config", "plugin:cypress/recommended"],
+  "extends": [
+    "@pacote/eslint-config",
+    "@pacote/eslint-config-jest",
+    "plugin:cypress/recommended"
+  ],
   "plugins": ["cypress"],
   "env": {
     "commonjs": true,
