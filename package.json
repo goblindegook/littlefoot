@@ -62,7 +62,7 @@
     "@commitlint/cli": "11.0.0",
     "@commitlint/config-conventional": "11.0.0",
     "@cypress/browserify-preprocessor": "3.0.1",
-    "@pacote/eslint-config": "4.0.1",
+    "@pacote/eslint-config": "4.1.0",
     "@pacote/eslint-config-jest": "1.2.0",
     "@rollup/plugin-commonjs": "16.0.0",
     "@rollup/plugin-node-resolve": "10.0.0",
