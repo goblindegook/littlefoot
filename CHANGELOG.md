@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.0-1](https://github.com/goblindegook/littlefoot/compare/v4.0.0-0...v4.0.0-1) (2020-11-22)
+
+
+### Bug Fixes
+
+* remove aria-expanded from default button template ([a2edfa6](https://github.com/goblindegook/littlefoot/commit/a2edfa674202ea155fe004d937ac06b2c66a3536))
+* scope custom properties instead of polluting :root ([88392a3](https://github.com/goblindegook/littlefoot/commit/88392a35676993e9b2ba43afd9657cbd79a44eeb))
+
 ## [4.0.0-0](https://github.com/goblindegook/littlefoot/compare/v3.4.1...v4.0.0-0) (2020-10-30)
 
 ### ⚠ BREAKING CHANGES
