@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.0-2](https://github.com/goblindegook/littlefoot/compare/v4.0.0-1...v4.0.0-2) (2020-11-22)
+
+
+### Bug Fixes
+
+* popover margin ([e246f20](https://github.com/goblindegook/littlefoot/commit/e246f20eb659e53bf578030ab6e26e011414fab6))
+
 ## [4.0.0-1](https://github.com/goblindegook/littlefoot/compare/v4.0.0-0...v4.0.0-1) (2020-11-22)
 
 
