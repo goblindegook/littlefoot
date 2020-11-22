@@ -37,7 +37,7 @@ type OriginalData = Readonly<{
 }>
 
 const CLASS_PRINT_ONLY = 'littlefoot--print'
-const CLASS_HOST = 'littlefoot__host'
+const CLASS_HOST = 'littlefoot'
 
 const setPrintOnly = (el: Element) => addClass(el, CLASS_PRINT_ONLY)
 

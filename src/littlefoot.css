@@ -1,59 +1,57 @@
-@custom-media --littlefoot-breakpoint (width < 768px);
+@custom-media --breakpoint (width < 768px);
 
-:root {
-  --littlefoot-button-background-color: #949494;
-  --littlefoot-button-text-color: #fafafa;
-  --littlefoot-button-active-background-color: #4c4c4c;
-  --littlefoot-button-active-text-color: #fafafa;
-  --littlefoot-button-border-radius: 0.5rem;
-  --littlefoot-button-height: 1rem;
-  --littlefoot-button-margin: 0 0.1rem;
-  --littlefoot-button-padding: 0 0.6rem;
-  --littlefoot-button-transition: background-color 0.25s ease, color 0.25s ease;
-  --littlefoot-popover-background-color: #f5f5f5;
-  --littlefoot-popover-text-color: #111;
-  --littlefoot-popover-border: 1px solid #949494;
-  --littlefoot-popover-border-radius: 0.5rem;
-  --littlefoot-popover-max-height: 15em;
-  --littlefoot-popover-max-width: 90%;
-  --littlefoot-popover-horizontal-padding: 1.4rem;
-  --littlefoot-popover-vertical-padding: 0.6rem;
-  --littlefoot-popover-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
-  --littlefoot-popover-transform-origin: 50% 0;
-  --littlefoot-popover-transform: scale(0.1) translateZ(0);
-  --littlefoot-popover-active-transform: scale(1) translateZ(0);
-  --littlefoot-popover-transition: opacity 0.25s ease, transform 0.25s ease;
-  --littlefoot-popover-width: 22em;
-  --littlefoot-popover-scroll-indicator-color: #4c4c4c;
-  --littlefoot-popover-tooltip-size: 0.5rem;
-}
+.littlefoot {
+  --button-background-color: #949494;
+  --button-text-color: #fafafa;
+  --button-active-background-color: #4c4c4c;
+  --button-active-text-color: #fafafa;
+  --button-border-radius: 0.5rem;
+  --button-height: 1rem;
+  --button-margin: 0 0.1rem;
+  --button-padding: 0 0.6rem;
+  --button-transition: background-color 0.25s ease, color 0.25s ease;
+  --popover-background-color: #f5f5f5;
+  --popover-text-color: #111;
+  --popover-border: 1px solid #949494;
+  --popover-border-radius: 0.5rem;
+  --popover-max-height: 15em;
+  --popover-max-width: 90%;
+  --popover-horizontal-padding: 1.4rem;
+  --popover-vertical-padding: 0.6rem;
+  --popover-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+  --popover-transform-origin: 50% 0;
+  --popover-transform: scale(0.1) translateZ(0);
+  --popover-active-transform: scale(1) translateZ(0);
+  --popover-transition: opacity 0.25s ease, transform 0.25s ease;
+  --popover-width: 22em;
+  --popover-scroll-indicator-color: #4c4c4c;
+  --popover-tooltip-size: 0.5rem;
 
-.littlefoot__host {
   position: relative;
 }
 
 .littlefoot__button {
-  background-color: var(--littlefoot-button-background-color);
-  border-radius: var(--littlefoot-button-border-radius);
-  border: var(--littlefoot-button-border, 0);
-  color: var(--littlefoot-button-text-color);
+  background-color: var(--button-background-color);
+  border-radius: var(--button-border-radius);
+  border: var(--button-border, 0);
+  color: var(--button-text-color);
   cursor: pointer;
   display: inline-block;
-  font-size: var(--littlefoot-button-font-size, 0.75rem);
-  font-weight: var(--littlefoot-button-font-weight, initial);
-  height: var(--littlefoot-button-height);
-  margin: var(--littlefoot-button-margin);
-  padding: var(--littlefoot-button-padding);
+  font-size: var(--button-font-size, 0.75rem);
+  font-weight: var(--button-font-weight, initial);
+  height: var(--button-height);
+  margin: var(--button-margin);
+  padding: var(--button-padding);
   text-decoration: none;
-  transition: var(--littlefoot-button-transition);
+  transition: var(--button-transition);
   vertical-align: middle;
 
   &:hover,
   &:focus,
   &:active,
   &.is-active {
-    background-color: var(--littlefoot-button-active-background-color);
-    color: var(--littlefoot-button-active-text-color);
+    background-color: var(--button-active-background-color);
+    color: var(--button-active-text-color);
   }
 
   & svg {
@@ -63,23 +61,17 @@
 }
 
 .littlefoot__popover {
-  border: var(--littlefoot-popover-border);
-  border-radius: var(--littlefoot-popover-border-radius);
-  box-shadow: var(--littlefoot-popover-shadow);
-  left: 0;
-  margin: calc(
-      (1.4 * var(--littlefoot-popover-tooltip-size)) +
-        var(--littlefoot-button-height)
-    )
-    0;
-  max-width: var(--littlefoot-popover-max-width);
+  border: var(--popover-border);
+  border-radius: var(--popover-border-radius);
+  box-shadow: var(--popover-shadow);
+  margin: calc(2.5 * var(--popover-tooltip-size)) 0;
+  max-width: var(--popover-max-width);
   position: absolute;
   top: 0;
-  transform-origin: var(--littlefoot-popover-transform-origin);
-  transform: var(--littlefoot-popover-transform);
-  transition: var(--littlefoot-popover-transition);
-  width: var(--littlefoot-popover-width);
-  z-index: 1;
+  transform-origin: var(--popover-transform-origin);
+  transform: var(--popover-transform);
+  transition: var(--popover-transition);
+  width: var(--popover-width);
 
   &.is-above {
     bottom: 0;
@@ -87,11 +79,81 @@
   }
 
   &.is-active {
-    transform: var(--littlefoot-popover-active-transform);
+    transform: var(--popover-active-transform);
   }
 }
 
-@media (--littlefoot-breakpoint) {
+.littlefoot__wrapper {
+  border-radius: var(--popover-border-radius);
+  position: relative;
+  z-index: 1;
+}
+
+.littlefoot__content {
+  -webkit-overflow-scrolling: touch;
+  background-color: var(--popover-background-color);
+  border-radius: var(--popover-border-radius);
+  color: var(--popover-text-color);
+  font-family: var(--popover-font-family, initial);
+  font-size: var(--popover-font-size, initial);
+  font-style: var(--popover-font-style, initial);
+  font-weight: var(--popover-font-weight, initial);
+  line-height: var(--popover-line-height, normal);
+  max-height: var(--popover-max-height);
+  overflow: auto;
+  padding: var(--popover-vertical-padding) var(--popover-horizontal-padding);
+  position: relative;
+
+  & img {
+    max-width: 100%;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.is-scrollable {
+  & .littlefoot__content::after {
+    bottom: calc(var(--popover-vertical-padding) / 2);
+    color: var(--popover-scroll-indicator-color);
+    content: '\21E3';
+    display: block;
+    left: 0;
+    opacity: 1;
+    position: fixed;
+    text-align: center;
+    transition: var(--popover-transition);
+    width: var(--popover-horizontal-padding);
+  }
+
+  &.is-fully-scrolled .littlefoot__content::after {
+    opacity: 0;
+  }
+}
+
+.littlefoot__tooltip {
+  --minus-one: -1;
+
+  background-color: var(--popover-background-color);
+  border: var(--popover-border);
+  box-shadow: var(--popover-shadow);
+  height: calc(2 * var(--popover-tooltip-size));
+  margin-left: calc(var(--minus-one) * var(--popover-tooltip-size));
+  position: absolute;
+  transform: rotate(45deg);
+  width: calc(2 * var(--popover-tooltip-size));
+}
+
+.is-below .littlefoot__tooltip {
+  top: calc(var(--minus-one) * var(--popover-tooltip-size));
+}
+
+.is-above .littlefoot__tooltip {
+  bottom: calc(var(--minus-one) * var(--popover-tooltip-size));
+}
+
+@media (--breakpoint) {
   .littlefoot__popover {
     border-radius: 0;
     border-width: 1px 0 0;
@@ -119,81 +181,6 @@
   .littlefoot__tooltip {
     display: none;
   }
-}
-
-.littlefoot__wrapper {
-  border-radius: var(--littlefoot-popover-border-radius);
-  position: relative;
-  z-index: 3;
-}
-
-.littlefoot__content {
-  -webkit-overflow-scrolling: touch;
-  background-color: var(--littlefoot-popover-background-color);
-  border-radius: var(--littlefoot-popover-border-radius);
-  color: var(--littlefoot-popover-text-color);
-  font-family: var(--littlefoot-popover-font-family, initial);
-  font-size: var(--littlefoot-popover-font-size, initial);
-  font-style: var(--littlefoot-popover-font-style, initial);
-  font-weight: var(--littlefoot-popover-font-weight, initial);
-  line-height: var(--littlefoot-popover-line-height, normal);
-  max-height: var(--littlefoot-popover-max-height);
-  overflow: auto;
-  padding: var(--littlefoot-popover-vertical-padding)
-    var(--littlefoot-popover-horizontal-padding);
-  position: relative;
-
-  & img {
-    max-width: 100%;
-  }
-
-  &:focus {
-    outline: none;
-  }
-}
-
-.is-scrollable {
-  & .littlefoot__content::after {
-    bottom: calc(var(--littlefoot-popover-vertical-padding) / 2);
-    color: var(--littlefoot-popover-scroll-indicator-color);
-    content: '\21E3';
-    display: block;
-    left: 0;
-    opacity: 1;
-    position: fixed;
-    text-align: center;
-    transition: var(--littlefoot-popover-transition);
-    width: var(--littlefoot-popover-horizontal-padding);
-    z-index: 3;
-  }
-
-  &.is-fully-scrolled .littlefoot__content::after {
-    opacity: 0;
-  }
-}
-
-.littlefoot__tooltip {
-  --littlefoot-s: -1;
-
-  background-color: var(--littlefoot-popover-background-color);
-  border: var(--littlefoot-popover-border);
-  box-shadow: var(--littlefoot-popover-shadow);
-  height: calc(2 * var(--littlefoot-popover-tooltip-size));
-  margin-left: calc(
-    var(--littlefoot-s) * var(--littlefoot-popover-tooltip-size)
-  );
-  position: absolute;
-  transform: rotate(45deg);
-  width: calc(2 * var(--littlefoot-popover-tooltip-size));
-  z-index: 2;
-}
-
-.is-below .littlefoot__tooltip {
-  top: calc(var(--littlefoot-s) * var(--littlefoot-popover-tooltip-size));
-}
-
-.is-above .littlefoot__tooltip {
-  bottom: calc(var(--littlefoot-s) * var(--littlefoot-popover-tooltip-size));
 }
 
 @media not print {

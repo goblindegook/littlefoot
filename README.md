@@ -320,47 +320,47 @@ in the littlefoot instance will stop working, requiring you to call the
 
 ## Theming
 
-littlefoot supports theming through [CSS custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties). The following properties are available in browsers or [CSS precompilation tools](https://preset-env.cssdb.org/) that support them.
+littlefoot supports theming through [CSS custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties). The following custom properties are available in browsers or [CSS precompilation tools](https://preset-env.cssdb.org/) that support them, and are scoped to the `.littlefoot` class.
 
 ### Buttons
 
-| Button properties                             | Default value                                   | Purpose                         |
-| :-------------------------------------------- | :---------------------------------------------- | :------------------------------ |
-| `--littlefoot-button-background-color`        | `#949494`                                       | Button background color.        |
-| `--littlefoot-button-active-background-color` | `#4c4c4c`                                       | Active button background color. |
-| `--littlefoot-button-border-radius`           | `0.5rem`                                        | Button border radius.           |
-| `--littlefoot-button-active-text-color`       | `#fafafa`                                       | Active button text color.       |
-| `--littlefoot-button-height`                  | `1rem`                                          | Button height.                  |
-| `--littlefoot-button-margin`                  | `0 0.1rem`                                      | Button margin.                  |
-| `--littlefoot-button-padding`                 | `0 0.6rem`                                      | Button padding                  |
-| `--littlefoot-button-text-color`              | `#fafafa`                                       | Button text color.              |
-| `--littlefoot-button-transition`              | `background-color 0.25s ease, color 0.25s ease` | Button transition animation.    |
+| Button properties                  | Default value                                   | Purpose                         |
+| :--------------------------------- | :---------------------------------------------- | :------------------------------ |
+| `--button-background-color`        | `#949494`                                       | Button background color.        |
+| `--button-active-background-color` | `#4c4c4c`                                       | Active button background color. |
+| `--button-border-radius`           | `0.5rem`                                        | Button border radius.           |
+| `--button-active-text-color`       | `#fafafa`                                       | Active button text color.       |
+| `--button-height`                  | `1rem`                                          | Button height.                  |
+| `--button-margin`                  | `0 0.1rem`                                      | Button margin.                  |
+| `--button-padding`                 | `0 0.6rem`                                      | Button padding                  |
+| `--button-text-color`              | `#fafafa`                                       | Button text color.              |
+| `--button-transition`              | `background-color 0.25s ease, color 0.25s ease` | Button transition animation.    |
 
 ### Popovers
 
-| Popover properties                            | Default value                              | Purpose                         |
-| :-------------------------------------------- | :----------------------------------------- | :------------------------------ |
-| `--littlefoot-popover-background-color`       | `#f5f5f5`                                  | Popover background color.       |
-| `--littlefoot-popover-border-radius`          | `0.5rem`                                   | Popover border radius.          |
-| `--littlefoot-popover-border`                 | `1px solid #949494`                        | Popover border.                 |
-| `--littlefoot-popover-font-family`            | `initial`                                  | Popover text font family.       |
-| `--littlefoot-popover-font-size`              | `initial`                                  | Popover text font size.         |
-| `--littlefoot-popover-font-style`             | `initial`                                  | Popover text font style.        |
-| `--littlefoot-popover-font-weight`            | `initial`                                  | Popover text font weight.       |
-| `--littlefoot-popover-horizontal-padding`     | `1.4rem`                                   | Popover horizontal padding.     |
-| `--littlefoot-popover-line-height`            | `normal`                                   | Popover text line height.       |
-| `--littlefoot-popover-max-height`             | `15em`                                     | Maximum popover height.         |
-| `--littlefoot-popover-max-width`              | `90%`                                      | Maximum popover width.          |
-| `--littlefoot-popover-scroll-indicator-color` | `#4c4c4c`                                  | Popover scroll indicator color. |
-| `--littlefoot-popover-shadow`                 | `0 0 8px rgba(0, 0, 0, 0.3)`               | Popover drop shadow.            |
-| `--littlefoot-popover-text-color`             | `#111`                                     | Popover text color.             |
-| `--littlefoot-popover-tooltip-size`           | `0.5rem`                                   | Popover tooltip size.           |
-| `--littlefoot-popover-transform-origin`       | `50% 0`                                    | Popover transform origin.       |
-| `--littlefoot-popover-transform`              | `scale(0.1) translateZ(0)`                 | Initial popover transform.      |
-| `--littlefoot-popover-active-transform`       | `scale(1) translateZ(0)`                   | Activated popover transform.    |
-| `--littlefoot-popover-transition`             | `opacity 0.25s ease, transform 0.25s ease` | Popover transition animation.   |
-| `--littlefoot-popover-vertical-padding`       | `0.6rem`                                   | Popover vertical padding.       |
-| `--littlefoot-popover-width`                  | `22em`                                     | Popover width.                  |
+| Popover properties                 | Default value                              | Purpose                         |
+| :--------------------------------- | :----------------------------------------- | :------------------------------ |
+| `--popover-background-color`       | `#f5f5f5`                                  | Popover background color.       |
+| `--popover-border-radius`          | `0.5rem`                                   | Popover border radius.          |
+| `--popover-border`                 | `1px solid #949494`                        | Popover border.                 |
+| `--popover-font-family`            | `initial`                                  | Popover text font family.       |
+| `--popover-font-size`              | `initial`                                  | Popover text font size.         |
+| `--popover-font-style`             | `initial`                                  | Popover text font style.        |
+| `--popover-font-weight`            | `initial`                                  | Popover text font weight.       |
+| `--popover-horizontal-padding`     | `1.4rem`                                   | Popover horizontal padding.     |
+| `--popover-line-height`            | `normal`                                   | Popover text line height.       |
+| `--popover-max-height`             | `15em`                                     | Maximum popover height.         |
+| `--popover-max-width`              | `90%`                                      | Maximum popover width.          |
+| `--popover-scroll-indicator-color` | `#4c4c4c`                                  | Popover scroll indicator color. |
+| `--popover-shadow`                 | `0 0 8px rgba(0, 0, 0, 0.3)`               | Popover drop shadow.            |
+| `--popover-text-color`             | `#111`                                     | Popover text color.             |
+| `--popover-tooltip-size`           | `0.5rem`                                   | Popover tooltip size.           |
+| `--popover-transform-origin`       | `50% 0`                                    | Popover transform origin.       |
+| `--popover-transform`              | `scale(0.1) translateZ(0)`                 | Initial popover transform.      |
+| `--popover-active-transform`       | `scale(1) translateZ(0)`                   | Activated popover transform.    |
+| `--popover-transition`             | `opacity 0.25s ease, transform 0.25s ease` | Popover transition animation.   |
+| `--popover-vertical-padding`       | `0.6rem`                                   | Popover vertical padding.       |
+| `--popover-width`                  | `22em`                                     | Popover width.                  |
 
 ### Backwards compatibility
 

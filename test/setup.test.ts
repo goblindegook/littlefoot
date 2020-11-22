@@ -14,7 +14,7 @@ beforeEach(() => {
 
 test('creates one button and one host per footnote call', () => {
   littlefoot()
-  expect(document.querySelectorAll('.littlefoot__host')).toHaveLength(4)
+  expect(document.querySelectorAll('.littlefoot')).toHaveLength(4)
   expect(getAllButtons()).toHaveLength(4)
 })
 
@@ -46,7 +46,7 @@ test('sets ARIA attributes on button', () => {
 test('sets up footnotes with a URL before the fragment', () => {
   setDocumentBody('filename.html')
   littlefoot()
-  expect(document.querySelectorAll('.littlefoot__host')).toHaveLength(1)
+  expect(document.querySelectorAll('.littlefoot')).toHaveLength(1)
   expect(getAllButtons()).toHaveLength(1)
 })
 
