@@ -64,7 +64,7 @@
   border: var(--popover-border);
   border-radius: var(--popover-border-radius);
   box-shadow: var(--popover-shadow);
-  margin: calc(2.5 * var(--popover-tooltip-size)) 0;
+  margin: calc(var(--popover-tooltip-size) + var(--button-height)) 0;
   max-width: var(--popover-max-width);
   position: absolute;
   top: 0;
