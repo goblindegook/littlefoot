@@ -2,7 +2,7 @@ import 'css.escape'
 import { createFootnote, FootnoteElements } from './footnote'
 import { bindScrollHandler } from './scroll'
 import { Adapter } from '../core'
-import { addClass, removeClass, unmount } from './api'
+import { addClass, removeClass, unmount } from './element'
 
 export const CLASS_CONTENT = 'littlefoot__content'
 export const CLASS_WRAPPER = 'littlefoot__wrapper'
@@ -139,7 +139,7 @@ function prepareTemplateData(original: Original, idx: number): OriginalData {
   return {
     original,
     data: {
-      id: `${idx + 1}`,
+      id: String(idx + 1),
       number: idx + 1,
       reference: 'lf-' + original.referenceId,
       content: html.startsWith('<') ? html : '<p>' + html + '</p>',
@@ -184,7 +184,7 @@ function createElements(buttonTemplate: string, popoverTemplate: string) {
     button.setAttribute('aria-expanded', 'false')
     button.dataset.footnoteButton = ''
     button.dataset.footnoteId = id
-    button.dataset.footnoteNumber = `${data.number}`
+    button.dataset.footnoteNumber = String(data.number)
 
     const popover = createElementFromHTML(renderPopover(data))
     popover.dataset.footnotePopover = ''
@@ -202,18 +202,16 @@ function attachFootnote(reference: HTMLElement, host: HTMLElement): void {
   reference.insertAdjacentElement('beforebegin', host)
 }
 
-export function setup(settings: HTMLAdapterSettings): Adapter<HTMLElement> {
-  const {
-    allowDuplicates,
-    anchorParentSelector,
-    anchorPattern,
-    buttonTemplate,
-    contentTemplate,
-    footnoteSelector,
-    numberResetSelector,
-    scope,
-  } = settings
-
+export function setup({
+  allowDuplicates,
+  anchorParentSelector,
+  anchorPattern,
+  buttonTemplate,
+  contentTemplate,
+  footnoteSelector,
+  numberResetSelector,
+  scope,
+}: HTMLAdapterSettings): Adapter<HTMLElement> {
   const footnoteElements = findFootnoteLinks(document, anchorPattern, scope)
     .map(
       findReference(

@@ -1,6 +1,6 @@
 import { getStyle } from '@pacote/get-style'
 import { pixels } from '@pacote/pixels'
-import { addClass, removeClass } from './api'
+import { addClass, removeClass } from './element'
 
 export const CLASS_TOOLTIP = 'littlefoot__tooltip'
 
@@ -74,8 +74,8 @@ export function repositionPopover(
 
   if (previous !== position) {
     popover.dataset.footnotePosition = position
-    removeClass(popover, `${CLASS_POSITION_PREFIX}${previous}`)
-    addClass(popover, `${CLASS_POSITION_PREFIX}${position}`)
+    removeClass(popover, CLASS_POSITION_PREFIX + previous)
+    addClass(popover, CLASS_POSITION_PREFIX + position)
     const transformX = getLeftRelative(button) * 100 + '%'
     const transformY = position === Position.Above ? '100%' : '0'
     popover.style.transformOrigin = transformX + ' ' + transformY

@@ -6,7 +6,7 @@ export function removeClass(element: Element, className: string): void {
   element.classList.remove(className)
 }
 
-export function unmount(element: HTMLElement): void {
+export function unmount(element: Element): void {
   // eslint-disable-next-line no-unused-expressions
   element.parentNode?.removeChild(element)
 }
