@@ -322,6 +322,17 @@ in the littlefoot instance will stop working, requiring you to call the
 
 littlefoot supports theming through [CSS custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties). The following custom properties are available in browsers or [CSS precompilation tools](https://preset-env.cssdb.org/) that support them, and are scoped to the `.littlefoot` class.
 
+### Example
+
+Customise littlefoot's appearance by overriding its custom properties in your site's CSS, like so:
+
+```css
+.littlefoot {
+  --button-active-background-color: #d2b450;
+  --button-text-color: #fff;
+}
+```
+
 ### Buttons
 
 | Button properties                  | Default value                                   | Purpose                         |
