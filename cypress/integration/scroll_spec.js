@@ -9,18 +9,10 @@ context('Scroll', () => {
     cy.findByTitle('See Footnote 1').click()
 
     cy.scrollTo('top')
-    cy.get('.littlefoot__popover').should(
-      'have.attr',
-      'data-footnote-position',
-      'above'
-    )
+    cy.get('.littlefoot__popover').should('have.class', 'is-above')
 
     cy.scrollTo('bottom')
-    cy.get('.littlefoot__popover').should(
-      'have.attr',
-      'data-footnote-position',
-      'below'
-    )
+    cy.get('.littlefoot__popover').should('have.class', 'is-below')
   })
 
   it('scrolls popover content', () => {

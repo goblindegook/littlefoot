@@ -4,6 +4,7 @@ import {
   repositionTooltip,
   getMaxHeight,
   getLeftInPixels,
+  Position,
 } from './layout'
 import { Footnote } from '../core'
 import { addClass, removeClass, unmount } from './element'
@@ -33,6 +34,7 @@ export function createFootnote({
 }: FootnoteElements): Footnote<HTMLElement> {
   let isHovered = false
   let maxHeight = 0
+  let position: Position = 'below'
 
   return {
     id,
@@ -79,7 +81,7 @@ export function createFootnote({
       if (isMounted(popover)) {
         content.style.maxHeight =
           getAvailableHeight(popover, button, maxHeight) + 'px'
-        repositionPopover(popover, button)
+        position = repositionPopover(popover, button, position)
 
         if (popover.offsetHeight < content.scrollHeight) {
           addClass(popover, CLASS_SCROLLABLE)
