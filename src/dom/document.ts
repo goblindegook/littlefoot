@@ -184,7 +184,6 @@ function createElements(buttonTemplate: string, popoverTemplate: string) {
     button.setAttribute('aria-expanded', 'false')
     button.dataset.footnoteButton = ''
     button.dataset.footnoteId = id
-    button.dataset.footnoteNumber = String(data.number)
 
     const popover = createElementFromHTML(renderPopover(data))
     popover.dataset.footnotePopover = ''

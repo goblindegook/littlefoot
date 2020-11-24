@@ -14,7 +14,6 @@ test('default buttonTemplate', () => {
   expect(button.dataset).toMatchObject({
     footnoteButton: '',
     footnoteId: '1',
-    footnoteNumber: '1',
   })
 })
 
@@ -33,7 +32,6 @@ test('custom buttonTemplate using <%= %> delimiters', () => {
   expect(button.dataset).toMatchObject({
     footnoteButton: '',
     footnoteId: '1',
-    footnoteNumber: '1',
     testContent: /This is the document's only footnote\./,
     testId: '1',
     testNumber: '1',
@@ -56,7 +54,6 @@ test('custom buttonTemplate using <% %> delimiters', () => {
   expect(button.dataset).toMatchObject({
     footnoteButton: '',
     footnoteId: '1',
-    footnoteNumber: '1',
     testContent: /This is the document's only footnote\./,
     testId: '1',
     testNumber: '1',
