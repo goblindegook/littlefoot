@@ -91,7 +91,8 @@ function findReference(
 ) {
   const processed: Element[] = []
   return (link: HTMLAnchorElement): Original | undefined => {
-    const fragment = link.href.split('#')[1]
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const fragment = link.href.split('#')[1]!
     const related = queryAll(document, '#' + CSS.escape(fragment)).find(
       (footnote) => allowDuplicates || !processed.includes(footnote)
     )
