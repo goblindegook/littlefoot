@@ -34,7 +34,7 @@ export function createFootnote({
 }: FootnoteElements): Footnote<HTMLElement> {
   let isHovered = false
   let maxHeight = 0
-  let position: Position = 'below'
+  let position: Position = 'above'
 
   return {
     id,
