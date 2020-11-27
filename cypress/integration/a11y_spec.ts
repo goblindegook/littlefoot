@@ -1,19 +1,14 @@
 function terminalLog(violations) {
   cy.task(
     'log',
-    `${violations.length} accessibility violation${
-      violations.length === 1 ? '' : 's'
-    } ${violations.length === 1 ? 'was' : 'were'} detected`
+    violations.length === 1
+      ? `1 accessibility violation was detected`
+      : `${violations.length} accessibility violations were detected`
   )
 
   cy.task(
     'table',
-    violations.map(({ id, impact, description, nodes }) => ({
-      id,
-      impact,
-      description,
-      nodes: nodes.length,
-    }))
+    violations.map(({ nodes, ...rest }) => ({ nodes: nodes.length, ...rest }))
   )
 }
 
