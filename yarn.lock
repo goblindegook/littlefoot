@@ -2232,7 +2232,7 @@ aws4@^1.8.0:
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.10.1.tgz#e1e82e4f3e999e2cfd61b161280d16a111f86428"
   integrity sha512-zg7Hz2k5lI8kb7U32998pRRFin7zJlkfezGJjUc2heaD4Pw2wObakCDVzkKztTm/Ln7eiVvYsjqak0Ed4LkMDA==
 
-axe-core@^4.1.1:
+axe-core@4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.1.1.tgz#70a7855888e287f7add66002211a423937063eaf"
   integrity sha512-5Kgy8Cz6LPC9DJcNb3yjAXTu3XihQgEdnIg50c//zOC/MyLP0Clg+Y8Sh9ZjjnvBrDZU4DgXS9C3T9r4/scGZQ==
@@ -3795,7 +3795,7 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
-cypress-axe@^0.12.0:
+cypress-axe@0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/cypress-axe/-/cypress-axe-0.12.0.tgz#2549a55f0a5c8006de240a85a19c8ecf2ce3abf9"
   integrity sha512-NF/bMxU6KaxhSqfJysBtX3Buw92aBgct1kR+eqCTwoU1bmqMjAzxxRZY5UaWTxmxQeVRb7Bv4yXNNzu0JDkK/g==
