@@ -1,6 +1,5 @@
 context('Scroll', () => {
   beforeEach(() => {
-    cy.server()
     cy.viewport(800, 600)
     cy.visit('/cypress/fixtures/scroll.html')
   })
