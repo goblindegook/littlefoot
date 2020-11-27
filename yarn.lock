@@ -861,10 +861,10 @@
   resolved "https://registry.yarnpkg.com/@pacote/eslint-config-jest/-/eslint-config-jest-1.2.0.tgz#42f5aa5b56d5f4f86cd78982233888515dd4c591"
   integrity sha512-NOKmXd7ZFawj6WKk6p1Ycuqr9JYmK9aC1NaB3Wift3id7g4oeml4d5/I8J2bUWYw5mjCsdZp0NoVH61uJm2zuw==
 
-"@pacote/eslint-config@4.1.0":
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/@pacote/eslint-config/-/eslint-config-4.1.0.tgz#551151493dc92a9136e670592398496c426c00f1"
-  integrity sha512-SgKZDOJDdhzhaelZjKvwaCb/yDSf509vUUnJ8liKtJKKcbRCN1CFOLi2fQzLaAll7qvozir9vmwbg7GSMh3r4A==
+"@pacote/eslint-config@^4.1.1":
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/@pacote/eslint-config/-/eslint-config-4.1.1.tgz#14d9bc686f8962f4610729ed3b2ecf4bbce35323"
+  integrity sha512-nO1G+iuL0l6gC4o2N95H8F5m2VMUAnYQfIgED0YknAS9ZKknlhTsblIFj4LrHObiyvYFDPZBDpfQcClgYdggdQ==
 
 "@pacote/get-style@^1.0.0", "@pacote/get-style@^1.1.3":
   version "1.1.3"
@@ -3357,11 +3357,6 @@ eslint-plugin-promise@4.2.1:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/eslint-plugin-promise/-/eslint-plugin-promise-4.2.1.tgz#845fd8b2260ad8f82564c1222fce44ad71d9418a"
   integrity sha512-VoM09vT7bfA7D+upt+FjeBO5eHIJQBUWki1aPvB+vbNiHS3+oGIJGIeyBtKQTME6UPXXy3vV07OL1tHd3ANuDw==
-
-eslint-plugin-standard@4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-standard/-/eslint-plugin-standard-4.1.0.tgz#0c3bf3a67e853f8bbbc580fb4945fbf16f41b7c5"
-  integrity sha512-ZL7+QRixjTR6/528YNGyDotyffm5OQst/sGxKDwGb9Uqs4In5Egi4+jbobhqJoyoCM6/7v/1A5fhQ7ScMtDjaQ==
 
 eslint-plugin-testing-library@3.10.1:
   version "3.10.1"
