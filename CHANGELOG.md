@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.0-4](https://github.com/goblindegook/littlefoot/compare/v4.0.0-3...v4.0.0-4) (2020-11-27)
+
+
+### Bug Fixes
+
+* position is above by default ([45de8ac](https://github.com/goblindegook/littlefoot/commit/45de8ace9de664842541fc56675aa315e7e1e235))
+
 ## [4.0.0-3](https://github.com/goblindegook/littlefoot/compare/v4.0.0-2...v4.0.0-3) (2020-11-24)
 
 ## [4.0.0-2](https://github.com/goblindegook/littlefoot/compare/v4.0.0-1...v4.0.0-2) (2020-11-22)
