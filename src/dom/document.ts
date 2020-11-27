@@ -48,10 +48,10 @@ function queryAll<E extends Element>(
   return Array.from(parent.querySelectorAll<E>(selector))
 }
 
-function queryByClass(element: HTMLElement, className: string): HTMLElement {
+function getByClassName<E extends Element>(element: E, className: string): E {
   return (
-    element.querySelector<HTMLElement>('.' + className) ||
-    (element.firstElementChild as HTMLElement) ||
+    element.querySelector<E>('.' + className) ||
+    (element.firstElementChild as E | null) ||
     element
   )
 }
@@ -62,9 +62,9 @@ function createElementFromHTML(html: string): HTMLElement {
   return container.firstElementChild as HTMLElement
 }
 
-function children(element: Element, selector?: string): Element[] {
+function children(element: Element, selector: string): Element[] {
   return Array.from(element.children).filter(
-    (child) => child.nodeType !== 8 && (!selector || child.matches(selector))
+    (child) => child.nodeType !== 8 && child.matches(selector)
   )
 }
 
@@ -190,8 +190,8 @@ function createElements(buttonTemplate: string, popoverTemplate: string) {
     popover.dataset.footnotePopover = ''
     popover.dataset.footnoteId = id
 
-    const wrapper = queryByClass(popover, CLASS_WRAPPER)
-    const content = queryByClass(popover, CLASS_CONTENT)
+    const wrapper = getByClassName(popover, CLASS_WRAPPER)
+    const content = getByClassName(popover, CLASS_CONTENT)
     bindScrollHandler(content, popover)
 
     return { original, data, id, button, host, popover, content, wrapper }
