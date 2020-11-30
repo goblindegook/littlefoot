@@ -861,7 +861,7 @@
   resolved "https://registry.yarnpkg.com/@pacote/eslint-config-jest/-/eslint-config-jest-1.2.0.tgz#42f5aa5b56d5f4f86cd78982233888515dd4c591"
   integrity sha512-NOKmXd7ZFawj6WKk6p1Ycuqr9JYmK9aC1NaB3Wift3id7g4oeml4d5/I8J2bUWYw5mjCsdZp0NoVH61uJm2zuw==
 
-"@pacote/eslint-config@^4.1.1":
+"@pacote/eslint-config@4.1.1":
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/@pacote/eslint-config/-/eslint-config-4.1.1.tgz#14d9bc686f8962f4610729ed3b2ecf4bbce35323"
   integrity sha512-nO1G+iuL0l6gC4o2N95H8F5m2VMUAnYQfIgED0YknAS9ZKknlhTsblIFj4LrHObiyvYFDPZBDpfQcClgYdggdQ==
@@ -883,10 +883,10 @@
   resolved "https://registry.yarnpkg.com/@pacote/throttle/-/throttle-1.0.4.tgz#d8819feb4a64f63f5d2d70f0e6be68d272f12d47"
   integrity sha512-iKAwXA8h9WQtfw5pRnM7hVMRQuiyKU4eu9pQMyMq1t2uxbEansPYvy/elhH4t0yQpu8JS4IWY/AuI6znHU1mDQ==
 
-"@rollup/plugin-commonjs@16.0.0":
-  version "16.0.0"
-  resolved "https://registry.yarnpkg.com/@rollup/plugin-commonjs/-/plugin-commonjs-16.0.0.tgz#169004d56cd0f0a1d0f35915d31a036b0efe281f"
-  integrity sha512-LuNyypCP3msCGVQJ7ki8PqYdpjfEkE/xtFa5DqlF+7IBD0JsfMZ87C58heSwIMint58sAUZbt3ITqOmdQv/dXw==
+"@rollup/plugin-commonjs@17.0.0":
+  version "17.0.0"
+  resolved "https://registry.yarnpkg.com/@rollup/plugin-commonjs/-/plugin-commonjs-17.0.0.tgz#2ae2228354cf0fbba6cf9f06f30b2c66a974324c"
+  integrity sha512-/omBIJG1nHQc+bgkYDuLpb/V08QyutP9amOrJRUSlYJZP+b/68gM//D8sxJe3Yry2QnYIr3QjR3x4AlxJEN3GA==
   dependencies:
     "@rollup/pluginutils" "^3.1.0"
     commondir "^1.0.1"
