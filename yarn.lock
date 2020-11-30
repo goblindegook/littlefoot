@@ -861,7 +861,7 @@
   resolved "https://registry.yarnpkg.com/@pacote/eslint-config-jest/-/eslint-config-jest-1.2.0.tgz#42f5aa5b56d5f4f86cd78982233888515dd4c591"
   integrity sha512-NOKmXd7ZFawj6WKk6p1Ycuqr9JYmK9aC1NaB3Wift3id7g4oeml4d5/I8J2bUWYw5mjCsdZp0NoVH61uJm2zuw==
 
-"@pacote/eslint-config@^4.1.1":
+"@pacote/eslint-config@4.1.1":
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/@pacote/eslint-config/-/eslint-config-4.1.1.tgz#14d9bc686f8962f4610729ed3b2ecf4bbce35323"
   integrity sha512-nO1G+iuL0l6gC4o2N95H8F5m2VMUAnYQfIgED0YknAS9ZKknlhTsblIFj4LrHObiyvYFDPZBDpfQcClgYdggdQ==
@@ -3325,10 +3325,10 @@ eslint-plugin-import@2.22.1:
     resolve "^1.17.0"
     tsconfig-paths "^3.9.0"
 
-eslint-plugin-jest-dom@3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jest-dom/-/eslint-plugin-jest-dom-3.3.0.tgz#5be14f8c303b7e8551b426bc7ac8a152d01736ae"
-  integrity sha512-/7LqlMPiZh4SHy8YXSHilcx/zy7m5Fb7rl4AlzjIY8+amsGP2nZq9WIbMv0JYYVeq20p5+44GmWO6dCZcdLj4A==
+eslint-plugin-jest-dom@3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jest-dom/-/eslint-plugin-jest-dom-3.4.0.tgz#c04d046757e339c7933c601adb9f572cd4c96e50"
+  integrity sha512-52PBkuFczhhyi/L9JUYbqpZ/yZA45rb/WbplQttGQpUUa0jjLTw5TKz4RlTXnYKGfRPYJfnbyxyJXAaNh3V0Zg==
   dependencies:
     "@babel/runtime" "^7.9.6"
     "@testing-library/dom" "^7.28.1"
