@@ -30,9 +30,10 @@ export function getAllButtons(): HTMLElement[] {
 }
 
 export function getAllActiveButtons(): HTMLElement[] {
-  return getAllButtons().filter(
-    (button) => button.getAttribute('aria-expanded') === 'true'
-  )
+  return screen.queryAllByRole('button', {
+    name: /See Footnote/,
+    expanded: true,
+  })
 }
 
 export async function waitToStartChanging(button: HTMLElement): Promise<void> {

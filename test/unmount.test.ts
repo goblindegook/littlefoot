@@ -11,8 +11,8 @@ test('unmount removes all buttons', () => {
   instance.unmount()
   expect(document.querySelectorAll('.littlefoot')).toHaveLength(0)
   expect(
-    screen.queryAllByRole('button', { name: /See Footnote/ })
-  ).toHaveLength(0)
+    screen.queryByRole('button', { name: /See Footnote/ })
+  ).not.toBeInTheDocument()
 })
 
 test('unmount unhides all footnotes', () => {
