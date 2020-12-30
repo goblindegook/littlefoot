@@ -68,7 +68,7 @@
     "@rollup/plugin-typescript": "8.1.0",
     "@testing-library/cypress": "7.0.2",
     "@testing-library/dom": "7.29.0",
-    "@testing-library/jest-dom": "5.11.6",
+    "@testing-library/jest-dom": "5.11.8",
     "@types/delegated-events": "1.1.0",
     "@types/jest": "26.0.19",
     "@types/jquery": "3.5.5",
