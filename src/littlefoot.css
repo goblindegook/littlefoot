@@ -166,6 +166,7 @@
     top: auto;
     transform: translateY(100%);
     width: 100%;
+    z-index: 1;
 
     &.is-active {
       transform: translateY(0);
