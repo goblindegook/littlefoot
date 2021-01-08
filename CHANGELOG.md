@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.0-5](https://github.com/goblindegook/littlefoot/compare/v4.0.0-4...v4.0.0-5) (2021-01-08)
+
+
+### Bug Fixes
+
+* buttons appearing above the popover on small screens ([#658](https://github.com/goblindegook/littlefoot/issues/658)) ([2805e07](https://github.com/goblindegook/littlefoot/commit/2805e0734349d85e1546463362947e7ce0234197))
+
 ## [4.0.0-4](https://github.com/goblindegook/littlefoot/compare/v4.0.0-3...v4.0.0-4) (2020-11-27)
 
 
