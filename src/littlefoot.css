@@ -2,9 +2,9 @@
 
 .littlefoot {
   --button-background-color: #949494;
-  --button-text-color: #fafafa;
-  --button-active-background-color: #4c4c4c;
-  --button-active-text-color: #fafafa;
+  --button-text-color: #fff;
+  --button-active-background-color: #3f3f3f;
+  --button-active-text-color: #fff;
   --button-border-radius: 0.5rem;
   --button-height: 1rem;
   --button-margin: 0 0.1rem;
@@ -24,7 +24,7 @@
   --popover-active-transform: scale(1) translateZ(0);
   --popover-transition: opacity 0.25s ease, transform 0.25s ease;
   --popover-width: 22em;
-  --popover-scroll-indicator-color: #4c4c4c;
+  --popover-scroll-indicator-color: #3f3f3f;
   --popover-tooltip-size: 0.5rem;
 
   position: relative;
