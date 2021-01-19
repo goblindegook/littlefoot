@@ -103,7 +103,6 @@
   max-height: var(--popover-max-height);
   overflow: auto;
   padding: var(--popover-vertical-padding) var(--popover-horizontal-padding);
-  position: relative;
 
   & img {
     max-width: 100%;
@@ -115,15 +114,20 @@
 }
 
 .is-scrollable {
+  --minus-one: -1;
+
   & .littlefoot__content::after {
-    bottom: calc(var(--popover-vertical-padding) / 2);
+    bottom: 0;
     color: var(--popover-scroll-indicator-color);
     content: '\21E3';
     display: block;
     left: 0;
     opacity: 1;
-    position: fixed;
+    position: sticky;
     text-align: center;
+    transform: translateX(
+      calc(var(--minus-one) * var(--popover-horizontal-padding))
+    );
     transition: var(--popover-transition);
     width: var(--popover-horizontal-padding);
   }
