@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.0-6](https://github.com/goblindegook/littlefoot/compare/v4.0.0-5...v4.0.0-6) (2021-01-19)
+
+
+### Bug Fixes
+
+* improve default button contrast ([#419](https://github.com/goblindegook/littlefoot/issues/419)) ([82492d4](https://github.com/goblindegook/littlefoot/commit/82492d493c9f07c910c7e0b624be83e22233c04b))
+* popover z-index everywhere ([#658](https://github.com/goblindegook/littlefoot/issues/658)) ([be257e7](https://github.com/goblindegook/littlefoot/commit/be257e7bec067383c6d52a673995470299507e3f))
+* sticky scrolling indicator moving on page scroll ([f2c845e](https://github.com/goblindegook/littlefoot/commit/f2c845e5a2860a36320a598913b1abb47b57207e))
+
 ## [4.0.0-5](https://github.com/goblindegook/littlefoot/compare/v4.0.0-4...v4.0.0-5) (2021-01-08)
 
 
