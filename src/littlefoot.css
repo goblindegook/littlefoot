@@ -126,8 +126,9 @@
     position: sticky;
     text-align: center;
     transform: translateX(
-      calc(var(--minus-one) * var(--popover-horizontal-padding))
-    );
+        calc(var(--minus-one) * var(--popover-horizontal-padding))
+      )
+      translateY(calc(var(--popover-vertical-padding) / 2));
     transition: var(--popover-transition);
     width: var(--popover-horizontal-padding);
   }
