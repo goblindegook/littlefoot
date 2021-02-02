@@ -65,7 +65,7 @@
     "@pacote/eslint-config-jest": "1.2.1",
     "@rollup/plugin-commonjs": "17.1.0",
     "@rollup/plugin-node-resolve": "11.1.1",
-    "@rollup/plugin-typescript": "8.1.0",
+    "@rollup/plugin-typescript": "8.1.1",
     "@testing-library/cypress": "7.0.3",
     "@testing-library/dom": "7.29.4",
     "@testing-library/jest-dom": "5.11.9",
