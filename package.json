@@ -102,7 +102,7 @@
     "stylelint-prettier": "1.1.2",
     "ts-jest": "26.5.1",
     "tslib": "2.1.0",
-    "typescript": "4.1.3"
+    "typescript": "4.1.5"
   },
   "dependencies": {
     "@pacote/get-style": "^1.0.0",
