@@ -742,10 +742,10 @@
   resolved "https://registry.yarnpkg.com/@pacote/eslint-config-jest/-/eslint-config-jest-1.2.1.tgz#7daaa3d92a31a72df3329459a814d57d776824ff"
   integrity sha512-TeRamMqDlnlthFz9XvrCvp8yRPpv60s2OzhtzHqxbtrRbt4RN+goqxvwDqTK6arxpEabVCgNPQWfj6Nae/MYLQ==
 
-"@pacote/eslint-config@4.1.2":
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/@pacote/eslint-config/-/eslint-config-4.1.2.tgz#bdfff85c674b6532354c728852d5412713eace0d"
-  integrity sha512-0fbopvkTPsUrYiEn+2sIJNLYNQpZVdd2q5Ws8tBWKKJKnZxuYrlR3kxovhVogMFylgrIdoXlFvloRWMiCQ/5qQ==
+"@pacote/eslint-config@5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@pacote/eslint-config/-/eslint-config-5.0.0.tgz#4a832741c63db578360fc2f631163f0bab0e6669"
+  integrity sha512-VnotPYcxDxqD9MFv2cqA58s81Utg9SCup61cP9tbMzknSHj3oNSurpLK2Hid9kEyG8o5eBenKzVqcKotVce2yA==
 
 "@pacote/get-style@^1.0.0", "@pacote/get-style@^1.1.6":
   version "1.1.6"
