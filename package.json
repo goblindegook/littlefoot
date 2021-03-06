@@ -98,7 +98,7 @@
     "standard-version": "9.1.1",
     "stylelint": "13.11.0",
     "stylelint-config-prettier": "8.0.2",
-    "stylelint-config-standard": "20.0.0",
+    "stylelint-config-standard": "21.0.0",
     "stylelint-prettier": "1.2.0",
     "ts-jest": "26.5.2",
     "tslib": "2.1.0",
