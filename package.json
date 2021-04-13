@@ -70,7 +70,7 @@
     "@typescript-eslint/eslint-plugin": "4.21.0",
     "@typescript-eslint/parser": "4.21.0",
     "axe-core": "4.1.4",
-    "concurrently": "6.0.1",
+    "concurrently": "6.0.2",
     "cssnano": "4.1.11",
     "cypress": "7.0.1",
     "cypress-axe": "0.12.2",
