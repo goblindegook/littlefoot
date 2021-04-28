@@ -1,3 +1,6 @@
+/* eslint-disable testing-library/await-async-query */
+/* eslint-disable testing-library/prefer-screen-queries */
+
 context('Click', () => {
   beforeEach(() => {
     cy.viewport(800, 600)
