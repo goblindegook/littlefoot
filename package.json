@@ -55,8 +55,8 @@
     "defaults"
   ],
   "devDependencies": {
-    "@commitlint/cli": "12.1.1",
-    "@commitlint/config-conventional": "12.1.1",
+    "@commitlint/cli": "12.1.4",
+    "@commitlint/config-conventional": "12.1.4",
     "@pacote/eslint-config": "5.0.0",
     "@pacote/eslint-config-jest": "2.0.0",
     "@rollup/plugin-commonjs": "18.1.0",
