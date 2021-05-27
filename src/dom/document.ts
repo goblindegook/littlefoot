@@ -77,10 +77,9 @@ function findFootnoteLinks(
   pattern: RegExp,
   scope: string
 ): readonly HTMLAnchorElement[] {
-  return queryAll<HTMLAnchorElement>(
-    document,
-    scope + ' a[href*="#"]'
-  ).filter((link) => (link.href + link.rel).match(pattern))
+  return queryAll<HTMLAnchorElement>(document, scope + ' a[href*="#"]').filter(
+    (link) => (link.href + link.rel).match(pattern)
+  )
 }
 
 function findReference(

@@ -13,17 +13,16 @@ const closestTarget = (event: Event, selector: string) =>
 const getFootnoteId = (element: HTMLElement | null) =>
   element?.dataset.footnoteId
 
-const touchHandler = (action: FootnoteAction, dismissAll: () => void) => (
-  event: Event
-) => {
-  const element = closestTarget(event, SELECTOR_BUTTON)
-  const id = getFootnoteId(element)
-  if (id) {
-    action(id)
-  } else if (!closestTarget(event, SELECTOR_POPOVER)) {
-    dismissAll()
+const touchHandler =
+  (action: FootnoteAction, dismissAll: () => void) => (event: Event) => {
+    const element = closestTarget(event, SELECTOR_BUTTON)
+    const id = getFootnoteId(element)
+    if (id) {
+      action(id)
+    } else if (!closestTarget(event, SELECTOR_POPOVER)) {
+      dismissAll()
+    }
   }
-}
 
 const hoverHandler = (action: FootnoteAction) => (event: Event) => {
   event.preventDefault()
