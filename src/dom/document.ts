@@ -62,7 +62,7 @@ function createElementFromHTML(html: string): HTMLElement {
   return container.firstElementChild as HTMLElement
 }
 
-function children(element: Element, selector: string): Element[] {
+function children(element: Element, selector: string): readonly Element[] {
   return Array.from(element.children).filter(
     (child) => child.nodeType !== 8 && child.matches(selector)
   )

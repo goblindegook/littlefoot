@@ -7,6 +7,5 @@ export function removeClass(element: Element, className: string): void {
 }
 
 export function unmount(element: Element): void {
-  // eslint-disable-next-line no-unused-expressions
   element.parentNode?.removeChild(element)
 }
