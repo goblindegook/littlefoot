@@ -89,7 +89,7 @@
     "eslint-plugin-testing-library": "4.6.0",
     "husky": "6.0.0",
     "jest": "^27.0.1",
-    "lint-staged": "10.5.4",
+    "lint-staged": "11.0.0",
     "pixrem": "5.0.0",
     "postcss": "8.3.0",
     "postcss-cli": "8.3.1",
