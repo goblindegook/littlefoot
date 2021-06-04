@@ -88,7 +88,7 @@
     "eslint-plugin-promise": "5.1.0",
     "eslint-plugin-testing-library": "4.6.0",
     "husky": "6.0.0",
-    "jest": "^27.0.1",
+    "jest": "27.0.1",
     "lint-staged": "11.0.0",
     "pixrem": "5.0.0",
     "postcss": "8.3.0",
