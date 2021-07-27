@@ -22,8 +22,6 @@ test('dismiss on button unhover', async () => {
   const button = getButton('1')
 
   fireEvent.mouseOver(button)
-  await waitToStopChanging(button)
-
   fireEvent.mouseOut(button)
   await waitToStartChanging(button)
   await waitToStopChanging(button)
@@ -45,7 +43,6 @@ test('dismiss on popover unhover', async () => {
   const button = getButton('1')
 
   fireEvent.mouseOver(button)
-  await waitToStopChanging(button)
 
   const popover = getPopover('1')
 

@@ -39,7 +39,8 @@
   "jest": {
     "testEnvironment": "jsdom",
     "testURL": "http://localhost",
-    "preset": "ts-jest"
+    "preset": "ts-jest",
+    "timers": "modern"
   },
   "author": {
     "name": "Luís Rodrigues",
