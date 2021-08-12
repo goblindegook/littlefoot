@@ -76,7 +76,7 @@
     "concurrently": "6.2.1",
     "cssnano": "5.0.7",
     "cypress": "8.0.0",
-    "cypress-axe": "0.12.2",
+    "cypress-axe": "0.13.0",
     "cz-conventional-changelog": "3.3.0",
     "eslint": "7.32.0",
     "eslint-config-prettier": "8.3.0",
