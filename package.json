@@ -59,7 +59,7 @@
     "@commitlint/cli": "13.1.0",
     "@commitlint/config-conventional": "13.1.0",
     "@pacote/eslint-config": "5.0.0",
-    "@pacote/eslint-config-jest": "2.0.0",
+    "@pacote/eslint-config-jest": "3.0.0",
     "@rollup/plugin-commonjs": "18.1.0",
     "@rollup/plugin-node-resolve": "13.0.4",
     "@rollup/plugin-typescript": "8.2.5",
