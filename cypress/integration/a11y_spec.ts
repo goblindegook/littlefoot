@@ -1,6 +1,6 @@
-/* eslint-disable testing-library/await-async-query */
 /* eslint-disable testing-library/prefer-screen-queries */
-
+/* eslint-disable testing-library/await-async-query */
+/* eslint-disable jest/expect-expect */
 import { Result, RunOptions } from 'axe-core'
 
 function terminalLog(violations: Result[]) {
