@@ -1514,10 +1514,10 @@ aws4@^1.8.0:
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.11.0.tgz#d61f46d83b2519250e2784daf5b09479a8b41c59"
   integrity sha512-xh1Rl34h6Fi1DC2WWKfxUTVqRsNnr6LsKz2+hfwDxQJWmrx8+c7ylaqBMcHfl1U1r2dsifOvKX3LQuLNZ+XSvA==
 
-axe-core@4.3.2:
-  version "4.3.2"
-  resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.3.2.tgz#fcf8777b82c62cfc69c7e9f32c0d2226287680e7"
-  integrity sha512-5LMaDRWm8ZFPAEdzTYmgjjEdj1YnQcpfrVajO/sn/LhbpGp0Y0H64c2hLZI1gRMxfA+w1S71Uc/nHaOXgcCvGg==
+axe-core@4.3.3:
+  version "4.3.3"
+  resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.3.3.tgz#b55cd8e8ddf659fe89b064680e1c6a4dceab0325"
+  integrity sha512-/lqqLAmuIPi79WYfRpy2i8z+x+vxU3zX2uAm0gs1q52qTuKwolOj1P8XbufpXcsydrpKx2yGn2wzAnxCMV86QA==
 
 babel-jest@^27.0.6:
   version "27.0.6"
