@@ -78,7 +78,7 @@
     "cypress": "8.6.0",
     "cypress-axe": "0.13.0",
     "cz-conventional-changelog": "3.3.0",
-    "eslint": "8.0.1",
+    "eslint": "8.1.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-config-standard": "16.0.3",
     "eslint-plugin-cypress": "2.12.1",
