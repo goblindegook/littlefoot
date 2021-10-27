@@ -72,7 +72,7 @@
     "@types/lodash.debounce": "4.0.6",
     "@typescript-eslint/eslint-plugin": "5.2.0",
     "@typescript-eslint/parser": "5.2.0",
-    "axe-core": "4.3.3",
+    "axe-core": "4.3.4",
     "concurrently": "6.3.0",
     "cssnano": "5.0.8",
     "cypress": "8.7.0",
