@@ -18,7 +18,7 @@
   --popover-max-width: 90%;
   --popover-horizontal-padding: 1.4rem;
   --popover-vertical-padding: 0.6rem;
-  --popover-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+  --popover-shadow: 0 0 8px #0000004d;
   --popover-transform-origin: 50% 0;
   --popover-transform: scale(0.1) translateZ(0);
   --popover-active-transform: scale(1) translateZ(0);
@@ -122,7 +122,7 @@
     content: '\21E3';
     display: block;
     left: 0;
-    opacity: 1;
+    opacity: 100%;
     position: sticky;
     text-align: center;
     transform: translateX(
@@ -134,7 +134,7 @@
   }
 
   &.is-fully-scrolled .littlefoot__content::after {
-    opacity: 0;
+    opacity: 0%;
   }
 }
 

@@ -1,5 +1,3 @@
-/* eslint-disable testing-library/prefer-screen-queries */
-/* eslint-disable testing-library/await-async-query */
 /* eslint-disable jest/expect-expect */
 
 context('Click', () => {
