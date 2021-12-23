@@ -122,7 +122,7 @@
     content: '\21E3';
     display: block;
     left: 0;
-    opacity: 100%;
+    opacity: 1;
     position: sticky;
     text-align: center;
     transform: translateX(
@@ -134,7 +134,7 @@
   }
 
   &.is-fully-scrolled .littlefoot__content::after {
-    opacity: 0%;
+    opacity: 0;
   }
 }
 
