@@ -74,7 +74,7 @@
     "@typescript-eslint/parser": "5.8.0",
     "axe-core": "4.3.5",
     "concurrently": "6.5.1",
-    "cssnano": "5.0.8",
+    "cssnano": "5.0.14",
     "cypress": "9.2.0",
     "cypress-axe": "0.13.0",
     "cz-conventional-changelog": "3.3.0",
