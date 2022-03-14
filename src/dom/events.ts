@@ -1,6 +1,6 @@
 import { throttle } from '@pacote/throttle'
 import { off, on } from 'delegated-events'
-import { Core, FootnoteAction } from '../core'
+import { UseCases, FootnoteAction } from '../use-cases'
 
 const FRAME = 16
 const SELECTOR_BUTTON = '[data-footnote-button]'
@@ -44,13 +44,13 @@ const offDocument = document.removeEventListener
 const onWindow = window.addEventListener
 const offWindow = window.removeEventListener
 
-export function addListeners(core: Core): () => void {
-  const toggleOnTouch = touchHandler(core.toggle, core.dismissAll)
-  const dismissOnEscape = escapeHandler(core.dismissAll)
-  const throttledReposition = throttle(core.repositionAll, FRAME)
-  const throttledResize = throttle(core.resizeAll, FRAME)
-  const showOnHover = hoverHandler(core.hover)
-  const hideOnHover = hoverHandler(core.unhover)
+export function addListeners(useCases: UseCases): () => void {
+  const toggleOnTouch = touchHandler(useCases.toggle, useCases.dismissAll)
+  const dismissOnEscape = escapeHandler(useCases.dismissAll)
+  const throttledReposition = throttle(useCases.repositionAll, FRAME)
+  const throttledResize = throttle(useCases.resizeAll, FRAME)
+  const showOnHover = hoverHandler(useCases.hover)
+  const hideOnHover = hoverHandler(useCases.unhover)
 
   onDocument('touchend', toggleOnTouch)
   onDocument('click', toggleOnTouch)

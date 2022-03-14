@@ -1,5 +1,5 @@
 import { DEFAULT_SETTINGS, Settings } from './settings'
-import { createCore } from './core'
+import { createUseCases } from './use-cases'
 import { setup } from './dom/document'
 import { addListeners } from './dom/events'
 
@@ -13,25 +13,25 @@ type Littlefoot = Readonly<{
 
 export function littlefoot(userSettings: Partial<Settings> = {}): Littlefoot {
   const settings = { ...DEFAULT_SETTINGS, ...userSettings }
-  const core = createCore<HTMLElement>(setup(settings), settings)
-  const removeListeners = addListeners(core)
+  const useCases = createUseCases<HTMLElement>(setup(settings), settings)
+  const removeListeners = addListeners(useCases)
 
   return {
     activate(id, delay = settings.activateDelay) {
-      core.activate(id, delay)
+      useCases.activate(id, delay)
     },
 
     dismiss(id, delay = settings.dismissDelay) {
       if (id === undefined) {
-        core.dismissAll()
+        useCases.dismissAll()
       } else {
-        core.dismiss(id, delay)
+        useCases.dismiss(id, delay)
       }
     },
 
     unmount() {
       removeListeners()
-      core.unmount()
+      useCases.unmount()
     },
 
     getSetting(key) {

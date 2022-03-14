@@ -114,7 +114,8 @@
 }
 
 .is-scrollable {
-  --minus-one: -1;
+  --arrow-x: calc(-1 * var(--popover-horizontal-padding));
+  --arrow-y: calc(var(--popover-vertical-padding) / 2);
 
   & .littlefoot__content::after {
     bottom: 0;
@@ -125,10 +126,7 @@
     opacity: 1;
     position: sticky;
     text-align: center;
-    transform: translateX(
-        calc(var(--minus-one) * var(--popover-horizontal-padding))
-      )
-      translateY(calc(var(--popover-vertical-padding) / 2));
+    transform: translateX(var(--arrow-x)) translateY(var(--arrow-y));
     transition: var(--popover-transition);
     width: var(--popover-horizontal-padding);
   }
@@ -139,24 +137,24 @@
 }
 
 .littlefoot__tooltip {
-  --minus-one: -1;
+  --tooltip-margin: calc(-1 * var(--popover-tooltip-size));
 
   background-color: var(--popover-background-color);
   border: var(--popover-border);
   box-shadow: var(--popover-shadow);
   height: calc(2 * var(--popover-tooltip-size));
-  margin-left: calc(var(--minus-one) * var(--popover-tooltip-size));
+  margin-left: var(--tooltip-margin);
   position: absolute;
   transform: rotate(45deg);
   width: calc(2 * var(--popover-tooltip-size));
 }
 
 .is-below .littlefoot__tooltip {
-  top: calc(var(--minus-one) * var(--popover-tooltip-size));
+  top: var(--tooltip-margin);
 }
 
 .is-above .littlefoot__tooltip {
-  bottom: calc(var(--minus-one) * var(--popover-tooltip-size));
+  bottom: var(--tooltip-margin);
 }
 
 @media (--breakpoint) {

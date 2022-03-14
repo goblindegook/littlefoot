@@ -2,7 +2,7 @@ interface ActionCallback<T> {
   (popover: T, button: T): void
 }
 
-export type CoreSettings<T> = Readonly<{
+export type UseCaseSettings<T> = Readonly<{
   activateCallback?: ActionCallback<T>
   activateDelay: number
   activateOnHover: boolean
@@ -32,7 +32,7 @@ export type Footnote<T> = Readonly<{
 export type FootnoteAction = (id: string) => void
 type DelayedFootnoteAction = (id: string, delay: number) => void
 
-export type Core = Readonly<{
+export type UseCases = Readonly<{
   activate: DelayedFootnoteAction
   dismiss: DelayedFootnoteAction
   dismissAll: () => void
@@ -49,10 +49,10 @@ export interface Adapter<T> {
   readonly unmount: () => void
 }
 
-export function createCore<T>(
+export function createUseCases<T>(
   { footnotes, unmount }: Adapter<T>,
-  settings: CoreSettings<T>
-): Core {
+  settings: UseCaseSettings<T>
+): UseCases {
   const dismiss = (delay: number) => (footnote: Footnote<T>) => {
     if (footnote.isReady()) {
       footnote.dismiss(settings.dismissCallback)
@@ -75,10 +75,10 @@ export function createCore<T>(
     }
   }
 
-  const ifFound = (fn: (footnote: Footnote<T>) => void) => (id: string) => {
+  const ifFound = (action: (footnote: Footnote<T>) => void) => (id: string) => {
     const footnote = footnotes.find((footnote) => footnote.id === id)
     if (footnote) {
-      fn(footnote)
+      action(footnote)
     }
   }
 

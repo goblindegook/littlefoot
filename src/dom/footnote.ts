@@ -6,7 +6,7 @@ import {
   getLeftInPixels,
   Position,
 } from './layout'
-import { Footnote } from '../core'
+import { Footnote } from '../use-cases'
 import { addClass, removeClass, unmount } from './element'
 
 const CLASS_ACTIVE = 'is-active'

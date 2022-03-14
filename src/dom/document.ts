@@ -1,7 +1,7 @@
 import 'css.escape'
 import { createFootnote, FootnoteElements } from './footnote'
 import { bindScrollHandler } from './scroll'
-import { Adapter } from '../core'
+import { Adapter } from '../use-cases'
 import { addClass, removeClass, unmount } from './element'
 
 export const CLASS_CONTENT = 'littlefoot__content'
@@ -110,7 +110,7 @@ function findReference(
 function recursiveHideFootnoteContainer(element: HTMLElement): void {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const container = element.parentElement!
-  const visibleElements = children(container, `:not(.${CLASS_PRINT_ONLY})`)
+  const visibleElements = children(container, ':not(.' + CLASS_PRINT_ONLY + ')')
   const visibleSeparators = visibleElements.filter((el) => el.tagName === 'HR')
 
   if (visibleElements.length === visibleSeparators.length) {

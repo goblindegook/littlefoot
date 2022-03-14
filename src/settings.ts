@@ -1,4 +1,4 @@
-import { CoreSettings } from './core'
+import { UseCaseSettings } from './use-cases'
 import {
   CLASS_CONTENT,
   CLASS_WRAPPER,
@@ -6,7 +6,7 @@ import {
 } from './dom/document'
 import { CLASS_TOOLTIP } from './dom/layout'
 
-export type Settings = HTMLAdapterSettings & CoreSettings<HTMLElement>
+export type Settings = HTMLAdapterSettings & UseCaseSettings<HTMLElement>
 
 export const DEFAULT_SETTINGS: Settings = {
   activateDelay: 100,
