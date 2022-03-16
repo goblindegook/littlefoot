@@ -93,7 +93,7 @@
     "jest": "27.5.1",
     "lint-staged": "12.3.4",
     "pixrem": "5.0.0",
-    "postcss": "8.4.7",
+    "postcss": "8.4.12",
     "postcss-cli": "9.1.0",
     "postcss-preset-env": "6.7.0",
     "prettier": "2.5.1",
