@@ -69,7 +69,7 @@
     "@types/delegated-events": "1.1.0",
     "@types/jest": "27.4.1",
     "@types/jquery": "3.5.14",
-    "@types/lodash.debounce": "4.0.6",
+    "@types/lodash.debounce": "4.0.7",
     "@typescript-eslint/eslint-plugin": "5.20.0",
     "@typescript-eslint/parser": "5.20.0",
     "axe-core": "4.4.1",
