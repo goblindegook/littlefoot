@@ -83,3 +83,11 @@ test('wraps bare footnote body in a paragraph tag', () => {
     'The original footnote body is bare.'
   )
 })
+
+test('footnote button accessibility', async () => {
+  littlefoot()
+  const button = getButton('1')
+
+  expect(button).toHaveAccessibleName()
+  expect(button).toHaveAccessibleDescription()
+})
