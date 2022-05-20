@@ -64,11 +64,10 @@ test('do not dismiss footnote when clicking the popover', async () => {
   const button = getButton('1')
   fireEvent.click(button)
   await waitToStopChanging(button)
-
   const popover = getPopoverByText(/This is the document's only footnote./)
+
   fireEvent.click(popover)
 
-  await waitToStopChanging(button)
   expect(popover).toBeInTheDocument()
   expect(button).toHaveClass('is-active')
 })
@@ -123,7 +122,6 @@ test('does not dismiss footnote when pressing any other key', async () => {
   await waitToStopChanging(button)
 
   fireEvent.keyUp(document.body, { keyCode: 26 })
-  await waitToStopChanging(button)
 
   expect(button).toHaveClass('is-active')
 })

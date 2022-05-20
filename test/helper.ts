@@ -36,10 +36,7 @@ export function getAllActiveButtons(): HTMLElement[] {
   })
 }
 
-export async function waitToStartChanging(button: HTMLElement): Promise<void> {
-  await waitFor(() => expect(button).toHaveClass('is-changing'))
-}
-
 export async function waitToStopChanging(button: HTMLElement): Promise<void> {
+  expect(button).toHaveClass('is-changing')
   await waitFor(() => expect(button).not.toHaveClass('is-changing'))
 }

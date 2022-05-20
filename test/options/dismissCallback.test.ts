@@ -10,7 +10,7 @@ import littlefoot from '../../src/littlefoot'
 test('setup with dismissCallback', async () => {
   setDocumentBody('single.html')
   const dismissCallback = jest.fn()
-  littlefoot({ dismissCallback: dismissCallback })
+  littlefoot({ dismissCallback })
 
   const button = getButton('1')
 
