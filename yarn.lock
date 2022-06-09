@@ -1153,7 +1153,7 @@
   resolved "https://registry.yarnpkg.com/@pacote/eslint-config-jest/-/eslint-config-jest-3.0.1.tgz#ea2cc5e529b75bb65c0f2ef68bf4564efe2d49ff"
   integrity sha512-+2wnOH1b1g8lXQYt3rJiWGimgj21kChqjU0dFZTc2mHemkrTOwuUAVrG9beouHxL1ceGMela++JqaTPgVW330Q==
 
-"@pacote/eslint-config@^6.0.0":
+"@pacote/eslint-config@6.0.0":
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/@pacote/eslint-config/-/eslint-config-6.0.0.tgz#bfa55d6de377f2c93cc9657d4835d90f73fe9dfc"
   integrity sha512-wyXvGwi1BwcDViIIOYUDWEUMR9HXn+2NlW++/z4tdD5VQtxkzlp4rrDVOMvWkseFwNcJj4syQrOnQ1FFTzqNcw==
