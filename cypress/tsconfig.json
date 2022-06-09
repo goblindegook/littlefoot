@@ -3,7 +3,7 @@
     "esModuleInterop": true,
     "target": "es5",
     "lib": ["es5", "dom"],
-    "types": ["cypress", "cypress-axe", "@testing-library/cypress"]
+    "types": ["cypress", "node", "cypress-axe", "@testing-library/cypress"]
   },
   "include": ["**/*.ts"]
 }

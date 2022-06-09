@@ -3,7 +3,7 @@
 context('Scroll', () => {
   beforeEach(() => {
     cy.viewport(800, 600)
-    cy.visit('/cypress/fixtures/scroll.html')
+    cy.visit('/cypress/e2e/fixtures/scroll.html')
   })
 
   it('repositions popover above or below the button', () => {

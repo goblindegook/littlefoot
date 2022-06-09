@@ -3,7 +3,7 @@
 context('Click', () => {
   beforeEach(() => {
     cy.viewport(800, 600)
-    cy.visit('/cypress/fixtures/click.html')
+    cy.visit('/cypress/e2e/fixtures/click.html')
   })
 
   it('allows clicking links in popovers', () => {

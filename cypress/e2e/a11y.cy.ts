@@ -22,7 +22,7 @@ function terminalLog(violations: Result[]) {
 
 context('a11y', () => {
   beforeEach(() => {
-    cy.visit('/cypress/fixtures/scroll.html')
+    cy.visit('/cypress/e2e/fixtures/scroll.html')
     cy.injectAxe()
   })
 
