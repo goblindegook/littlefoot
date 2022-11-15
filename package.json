@@ -73,7 +73,7 @@
     "@types/jquery": "3.5.14",
     "@typescript-eslint/eslint-plugin": "5.43.0",
     "@typescript-eslint/parser": "5.43.0",
-    "axe-core": "4.5.1",
+    "axe-core": "4.5.2",
     "concurrently": "7.5.0",
     "cssnano": "5.1.14",
     "cypress": "11.0.1",
