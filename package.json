@@ -93,7 +93,7 @@
     "husky": "8.0.2",
     "jest": "29.3.1",
     "jest-environment-jsdom": "29.3.1",
-    "lint-staged": "13.0.3",
+    "lint-staged": "13.0.4",
     "pixrem": "5.0.0",
     "postcss": "8.4.19",
     "postcss-cli": "10.0.0",
