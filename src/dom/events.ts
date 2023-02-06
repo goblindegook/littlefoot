@@ -40,11 +40,11 @@ const escapeHandler = (fn: () => void) => (event: KeyboardEvent) => {
 }
 
 const onDocument = document.addEventListener
-const offDocument = document.removeEventListener
 const onWindow = window.addEventListener
-const offWindow = window.removeEventListener
 
 export function addListeners(useCases: UseCases): () => void {
+  const controller = new AbortController()
+  const { signal } = controller
   const toggleOnTouch = touchHandler(useCases.toggle, useCases.dismissAll)
   const dismissOnEscape = escapeHandler(useCases.dismissAll)
   const throttledReposition = throttle(useCases.repositionAll, FRAME)
@@ -52,22 +52,17 @@ export function addListeners(useCases: UseCases): () => void {
   const showOnHover = hoverHandler(useCases.hover)
   const hideOnHover = hoverHandler(useCases.unhover)
 
-  onDocument('touchend', toggleOnTouch)
-  onDocument('click', toggleOnTouch)
-  onDocument('keyup', dismissOnEscape)
-  onDocument('gestureend', throttledReposition)
-  onWindow('scroll', throttledReposition)
-  onWindow('resize', throttledResize)
+  onDocument('touchend', toggleOnTouch, { signal })
+  onDocument('click', toggleOnTouch, { signal })
+  onDocument('keyup', dismissOnEscape, { signal })
+  onDocument('gestureend', throttledReposition, { signal })
+  onWindow('scroll', throttledReposition, { signal })
+  onWindow('resize', throttledResize, { signal })
   on('mouseover', SELECTOR_FOOTNOTE, showOnHover)
   on('mouseout', SELECTOR_FOOTNOTE, hideOnHover)
 
   return () => {
-    offDocument('touchend', toggleOnTouch)
-    offDocument('click', toggleOnTouch)
-    offDocument('keyup', dismissOnEscape)
-    offDocument('gestureend', throttledReposition)
-    offWindow('scroll', throttledReposition)
-    offWindow('resize', throttledResize)
+    controller.abort()
     off('mouseover', SELECTOR_FOOTNOTE, showOnHover)
     off('mouseout', SELECTOR_FOOTNOTE, hideOnHover)
   }
