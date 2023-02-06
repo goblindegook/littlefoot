@@ -32,7 +32,9 @@ test('custom buttonTemplate using <%= %> delimiters', () => {
   expect(button.dataset).toMatchObject({
     footnoteButton: '',
     footnoteId: '1',
-    testContent: /This is the document's only footnote\./,
+    testContent: `<p>
+          This is the document's only footnote.
+        </p>`,
     testId: '1',
     testNumber: '1',
     testReference: 'lf-fnref:1',
@@ -54,7 +56,9 @@ test('custom buttonTemplate using <% %> delimiters', () => {
   expect(button.dataset).toMatchObject({
     footnoteButton: '',
     footnoteId: '1',
-    testContent: /This is the document's only footnote\./,
+    testContent: `<p>
+          This is the document's only footnote.
+        </p>`,
     testId: '1',
     testNumber: '1',
     testReference: 'lf-fnref:1',
