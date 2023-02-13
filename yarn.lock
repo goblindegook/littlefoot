@@ -8264,17 +8264,17 @@ stylelint-config-prettier@9.0.4:
   resolved "https://registry.yarnpkg.com/stylelint-config-prettier/-/stylelint-config-prettier-9.0.4.tgz#1b1dda614d5b3ef6c1f583fa6fa55f88245eb00b"
   integrity sha512-38nIGTGpFOiK5LjJ8Ma1yUgpKENxoKSOhbDNSemY7Ep0VsJoXIW9Iq/2hSt699oB9tReynfWicTAoIHiq8Rvbg==
 
-stylelint-config-recommended@^10.0.0:
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/stylelint-config-recommended/-/stylelint-config-recommended-10.0.0.tgz#b3826821b4abed7b46adf19079630e35ea6635f5"
-  integrity sha512-6Mlt1N1hzswYUGAnw/A/y5BCqWsm1sIE4f8n18lT5HwRf5OCLd1DAczT4uKSXRpcvM3EuY+so2cce8HT21C0zA==
+stylelint-config-recommended@^10.0.1:
+  version "10.0.1"
+  resolved "https://registry.yarnpkg.com/stylelint-config-recommended/-/stylelint-config-recommended-10.0.1.tgz#25a8828acf6cde87dac6db2950c8c4ed82a69ae1"
+  integrity sha512-TQ4xQ48tW4QSlODcti7pgSRqBZcUaBzuh0jPpfiMhwJKBPkqzTIAU+IrSWL/7BgXlOM90DjB7YaNgFpx8QWhuA==
 
-stylelint-config-standard@30.0.0:
-  version "30.0.0"
-  resolved "https://registry.yarnpkg.com/stylelint-config-standard/-/stylelint-config-standard-30.0.0.tgz#da5cc2f2cf75f352f465a22f168b9f7cb44dec10"
-  integrity sha512-CAHLKikQ23IQuqW24hJFTwJmMvU6RYqI4uTIZ892MYOLG3lwsBNbdFEieuWComN2sLYHkvxGtd2HkILhsjZDlg==
+stylelint-config-standard@30.0.1:
+  version "30.0.1"
+  resolved "https://registry.yarnpkg.com/stylelint-config-standard/-/stylelint-config-standard-30.0.1.tgz#a84d57c240c37f7db47023ab9d2e64c49090e1eb"
+  integrity sha512-NbeHOmpRQhjZh5XB1B/S4MLRWvz4xxAxeDBjzl0tY2xEcayNhLbaRGF0ZQzq+DQZLCcPpOHeS2Ru1ydbkhkmLg==
   dependencies:
-    stylelint-config-recommended "^10.0.0"
+    stylelint-config-recommended "^10.0.1"
 
 stylelint-prettier@2.0.0:
   version "2.0.0"
