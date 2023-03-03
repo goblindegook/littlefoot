@@ -33,4 +33,4 @@ function cssEscapePolyfill(ident: string): string {
   return result
 }
 
-export const cssEscape = CSS?.escape ?? cssEscapePolyfill
+export const cssEscape = window.CSS?.escape ?? cssEscapePolyfill
