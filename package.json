@@ -114,7 +114,6 @@
     "@pacote/get-style": "1.1.7",
     "@pacote/pixels": "1.1.7",
     "@pacote/throttle": "1.0.7",
-    "css.escape": "^1.5.1",
     "delegated-events": "^1.0.10"
   },
   "resolutions": {
