@@ -1,3 +1,4 @@
+import { test, expect, beforeEach } from 'vitest'
 import { screen } from '@testing-library/dom'
 import { setDocumentBody, getButton } from '../helper'
 import littlefoot from '../../src/littlefoot'

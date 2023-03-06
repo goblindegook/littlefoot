@@ -1,3 +1,4 @@
+import { test, expect } from 'vitest'
 import littlefoot from '../../src/littlefoot'
 import { setDocumentBody, waitToStopChanging, getButton } from '../helper'
 import { fireEvent } from '@testing-library/dom'

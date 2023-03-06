@@ -1,3 +1,4 @@
+import { test, expect, afterEach, beforeEach, vi } from 'vitest'
 import { fireEvent } from '@testing-library/dom'
 import {
   setDocumentBody,
@@ -13,7 +14,9 @@ beforeEach(() => {
   setDocumentBody('single.html')
 })
 
-afterEach(jest.useRealTimers)
+afterEach(() => {
+  vi.useRealTimers()
+})
 
 test('activate footnote when clicking the button', async () => {
   littlefoot(TEST_SETTINGS)
@@ -37,31 +40,31 @@ test('does not insert empty paragraphs in the footnote content (#187)', async ()
 })
 
 test('activate footnote by ID when calling .activate()', () => {
-  jest.useFakeTimers()
+  vi.useFakeTimers()
   const instance = littlefoot({ activateDelay: 200 })
   const button = getButton('1')
 
   instance.activate('1')
 
-  jest.advanceTimersByTime(50)
+  vi.advanceTimersByTime(50)
   expect(button).toHaveClass('is-changing')
 
-  jest.advanceTimersByTime(50)
+  vi.advanceTimersByTime(50)
   expect(button).toHaveClass('is-active')
   getPopoverByText(/This is the document's only footnote./)
 })
 
 test('activate footnote by ID when calling .activate() with a timeout', () => {
-  jest.useFakeTimers()
+  vi.useFakeTimers()
   const instance = littlefoot({ activateDelay: 200 })
   const button = getButton('1')
 
   instance.activate('1', 100)
 
-  jest.advanceTimersByTime(50)
+  vi.advanceTimersByTime(50)
   expect(button).toHaveClass('is-changing')
 
-  jest.advanceTimersByTime(50)
+  vi.advanceTimersByTime(50)
   expect(button).toHaveClass('is-active')
 })
 

@@ -1,3 +1,4 @@
+import { test, expect } from 'vitest'
 import { fireEvent } from '@testing-library/dom'
 import { setDocumentBody, getButton, getPopover } from '../helper'
 import littlefoot from '../../src/littlefoot'

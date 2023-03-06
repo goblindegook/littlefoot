@@ -1,7 +1,10 @@
-import '@testing-library/jest-dom/extend-expect'
+import { expect } from 'vitest'
+import matchers from '@testing-library/jest-dom/matchers'
 import { waitFor, screen } from '@testing-library/dom'
 import { join } from 'path'
 import { readFileSync } from 'fs'
+
+expect.extend(matchers)
 
 export function getPopoverByText(matcher: string | RegExp): HTMLElement {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

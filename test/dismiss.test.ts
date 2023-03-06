@@ -1,3 +1,4 @@
+import { test, expect, beforeEach } from 'vitest'
 import { fireEvent, screen } from '@testing-library/dom'
 import {
   setDocumentBody,

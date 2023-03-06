@@ -1,5 +1,3 @@
-/* eslint-disable jest/expect-expect */
-
 context('Click', () => {
   beforeEach(() => {
     cy.viewport(800, 600)

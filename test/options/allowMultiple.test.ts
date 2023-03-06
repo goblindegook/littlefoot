@@ -1,3 +1,4 @@
+import { test, expect, afterEach, beforeEach, vi } from 'vitest'
 import { fireEvent } from '@testing-library/dom'
 import {
   setDocumentBody,
@@ -11,19 +12,21 @@ beforeEach(() => {
   setDocumentBody('default.html')
 })
 
-afterEach(jest.useRealTimers)
+afterEach(() => {
+  vi.useRealTimers()
+})
 
 test('disallow multiple activations', () => {
-  jest.useFakeTimers()
+  vi.useFakeTimers()
   littlefoot({ allowMultiple: false })
 
   const one = getButton('1')
   fireEvent.click(one)
-  jest.advanceTimersByTime(100)
+  vi.advanceTimersByTime(100)
 
   const two = getButton('2')
   fireEvent.click(two)
-  jest.advanceTimersByTime(100)
+  vi.advanceTimersByTime(100)
 
   expect(getAllActiveButtons()).toEqual([two])
 })

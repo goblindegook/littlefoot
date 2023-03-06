@@ -1,3 +1,4 @@
+import { test, expect, vi } from 'vitest'
 import { fireEvent } from '@testing-library/dom'
 import {
   setDocumentBody,
@@ -9,7 +10,7 @@ import littlefoot from '../../src/littlefoot'
 
 test('setup with dismissCallback', async () => {
   setDocumentBody('single.html')
-  const dismissCallback = jest.fn()
+  const dismissCallback = vi.fn()
   littlefoot({ dismissCallback })
 
   const button = getButton('1')
@@ -27,7 +28,7 @@ test('setup with dismissCallback', async () => {
 
 test('dismissCallback can be set after initialisation', async () => {
   setDocumentBody('single.html')
-  const dismissCallback = jest.fn()
+  const dismissCallback = vi.fn()
 
   const instance = littlefoot()
   instance.updateSetting('dismissCallback', dismissCallback)

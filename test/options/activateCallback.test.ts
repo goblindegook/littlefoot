@@ -1,10 +1,11 @@
+import { test, expect, vi } from 'vitest'
 import { fireEvent } from '@testing-library/dom'
 import { setDocumentBody, getPopover, getButton } from '../helper'
 import littlefoot from '../../src/littlefoot'
 
 test('setup with activateCallback', () => {
   setDocumentBody('single.html')
-  const activateCallback = jest.fn()
+  const activateCallback = vi.fn()
   littlefoot({ activateCallback })
   const button = getButton('1')
 
@@ -17,7 +18,7 @@ test('setup with activateCallback', () => {
 
 test('activateCallback can be set after initialisation', () => {
   setDocumentBody('single.html')
-  const activateCallback = jest.fn()
+  const activateCallback = vi.fn()
   const instance = littlefoot()
   instance.updateSetting('activateCallback', activateCallback)
   const button = getButton('1')

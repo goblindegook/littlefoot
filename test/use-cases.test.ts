@@ -1,3 +1,4 @@
+import { test, expect, afterEach, vi } from 'vitest'
 import {
   createUseCases,
   Adapter,
@@ -5,7 +6,9 @@ import {
   UseCaseSettings,
 } from '../src/use-cases'
 
-afterEach(jest.useRealTimers)
+afterEach(() => {
+  vi.useRealTimers()
+})
 
 type Test = 'TEST'
 
@@ -51,8 +54,8 @@ function testFootnote(overrides: Partial<Footnote<Test>> = {}): Footnote<Test> {
 }
 
 test('footnote repositioning', () => {
-  const one = testFootnote({ reposition: jest.fn() })
-  const two = testFootnote({ reposition: jest.fn() })
+  const one = testFootnote({ reposition: vi.fn() })
+  const two = testFootnote({ reposition: vi.fn() })
 
   const adapter = testAdapter({
     footnotes: [one, two],
@@ -77,8 +80,8 @@ test('footnote repositioning', () => {
 })
 
 test('footnote resizing', () => {
-  const one = testFootnote({ resize: jest.fn() })
-  const two = testFootnote({ resize: jest.fn() })
+  const one = testFootnote({ resize: vi.fn() })
+  const two = testFootnote({ resize: vi.fn() })
   const adapter = testAdapter({ footnotes: [one, two] })
   const { resizeAll } = createUseCases(adapter, testSettings())
 
@@ -89,15 +92,15 @@ test('footnote resizing', () => {
 })
 
 test('footnote activation on hover', () => {
-  jest.useFakeTimers()
+  vi.useFakeTimers()
   const footnote = testFootnote({
     id: 'test-id',
-    activate: jest.fn(),
+    activate: vi.fn(),
     isActive: () => false,
     isReady: () => true,
-    ready: jest.fn(),
-    reposition: jest.fn(),
-    resize: jest.fn(),
+    ready: vi.fn(),
+    reposition: vi.fn(),
+    resize: vi.fn(),
   })
   const adapter = testAdapter({ footnotes: [footnote] })
   const { hover } = createUseCases(
@@ -114,18 +117,18 @@ test('footnote activation on hover', () => {
   expect(footnote.activate).toHaveBeenCalledTimes(1)
   expect(footnote.reposition).toHaveBeenCalledTimes(1)
   expect(footnote.resize).toHaveBeenCalledTimes(1)
-  jest.advanceTimersByTime(100)
+  vi.advanceTimersByTime(100)
   expect(footnote.ready).toHaveBeenCalledTimes(1)
 })
 
 test('footnote dismissal on unhover', () => {
-  jest.useFakeTimers()
+  vi.useFakeTimers()
   const footnote = testFootnote({
     id: 'test-id',
-    dismiss: jest.fn(),
+    dismiss: vi.fn(),
     isHovered: () => false,
     isReady: () => true,
-    remove: jest.fn(),
+    remove: vi.fn(),
   })
   const adapter = testAdapter({ footnotes: [footnote] })
   const { unhover } = createUseCases(
@@ -140,27 +143,27 @@ test('footnote dismissal on unhover', () => {
 
   unhover('test-id')
 
-  jest.advanceTimersByTime(50)
+  vi.advanceTimersByTime(50)
   expect(footnote.dismiss).toHaveBeenCalledTimes(1)
-  jest.advanceTimersByTime(100)
+  vi.advanceTimersByTime(100)
   expect(footnote.remove).toHaveBeenCalledTimes(1)
 })
 
 test('only unhovered footnotes are dismissed', () => {
-  jest.useFakeTimers()
+  vi.useFakeTimers()
   const unhoveredFootnote = testFootnote({
     id: 'unhovered-id',
-    dismiss: jest.fn(),
+    dismiss: vi.fn(),
     isHovered: () => false,
     isReady: () => true,
-    remove: jest.fn(),
+    remove: vi.fn(),
   })
   const hoveredFootnote = testFootnote({
     id: 'hovered-id',
-    dismiss: jest.fn(),
+    dismiss: vi.fn(),
     isHovered: () => true,
     isReady: () => true,
-    remove: jest.fn(),
+    remove: vi.fn(),
   })
   const adapter = testAdapter({
     footnotes: [unhoveredFootnote, hoveredFootnote],
@@ -177,10 +180,10 @@ test('only unhovered footnotes are dismissed', () => {
 
   unhover('unhovered-id')
 
-  jest.advanceTimersByTime(50)
+  vi.advanceTimersByTime(50)
   expect(unhoveredFootnote.dismiss).toHaveBeenCalledTimes(1)
   expect(hoveredFootnote.dismiss).toHaveBeenCalledTimes(0)
-  jest.advanceTimersByTime(100)
+  vi.advanceTimersByTime(100)
   expect(unhoveredFootnote.remove).toHaveBeenCalledTimes(1)
   expect(hoveredFootnote.remove).toHaveBeenCalledTimes(0)
 })

@@ -1,4 +1,3 @@
-/* eslint-disable jest/expect-expect */
 import { Result, RunOptions } from 'axe-core'
 
 function terminalLog(violations: Result[]) {

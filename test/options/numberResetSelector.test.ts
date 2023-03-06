@@ -1,3 +1,4 @@
+import { test, expect, beforeEach } from 'vitest'
 import { setDocumentBody, getAllButtons } from '../helper'
 import littlefoot from '../../src/littlefoot'
 

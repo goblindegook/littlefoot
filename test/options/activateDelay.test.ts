@@ -1,11 +1,14 @@
+import { test, expect, afterEach, vi } from 'vitest'
 import { fireEvent } from '@testing-library/dom'
 import { setDocumentBody, getButton } from '../helper'
 import littlefoot from '../../src/littlefoot'
 
-afterEach(jest.useRealTimers)
+afterEach(() => {
+  vi.useRealTimers()
+})
 
 test('activateDelay can be set after initialisation', () => {
-  jest.useFakeTimers()
+  vi.useFakeTimers()
   setDocumentBody('single.html')
 
   const instance = littlefoot({ activateDelay: 0 })
@@ -13,11 +16,11 @@ test('activateDelay can be set after initialisation', () => {
 
   const button = getButton('1')
   fireEvent.click(button)
-  jest.advanceTimersByTime(100)
+  vi.advanceTimersByTime(100)
 
   expect(button).toHaveClass('is-changing')
 
-  jest.advanceTimersByTime(100)
+  vi.advanceTimersByTime(100)
 
   expect(button).not.toHaveClass('is-changing')
 })

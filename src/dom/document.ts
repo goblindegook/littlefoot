@@ -197,10 +197,6 @@ function createElements(buttonTemplate: string, popoverTemplate: string) {
   }
 }
 
-function attachFootnote(reference: HTMLElement, host: HTMLElement): void {
-  reference.insertAdjacentElement('beforebegin', host)
-}
-
 export function setup({
   allowDuplicates,
   anchorParentSelector,
@@ -211,7 +207,7 @@ export function setup({
   numberResetSelector,
   scope,
 }: HTMLAdapterSettings): Adapter<HTMLElement> {
-  const footnoteElements = findFootnoteLinks(document, anchorPattern, scope)
+  const footnotes = findFootnoteLinks(document, anchorPattern, scope)
     .map(
       findReference(
         document,
@@ -224,15 +220,14 @@ export function setup({
     .map(prepareTemplateData)
     .map(numberResetSelector ? resetNumbers(numberResetSelector) : (i) => i)
     .map(createElements(buttonTemplate, contentTemplate))
-
-  footnoteElements.forEach(({ original, host }) => {
-    setPrintOnly(original.reference)
-    setPrintOnly(original.body)
-    recursiveHideFootnoteContainer(original.body)
-    attachFootnote(original.reference, host)
-  })
-
-  const footnotes = footnoteElements.map(createFootnote)
+    .map((e) => {
+      setPrintOnly(e.original.reference)
+      setPrintOnly(e.original.body)
+      recursiveHideFootnoteContainer(e.original.body)
+      e.original.reference.insertAdjacentElement('beforebegin', e.host)
+      return e
+    })
+    .map(createFootnote)
 
   return {
     footnotes,
