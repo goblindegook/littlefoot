@@ -4,52 +4,50 @@ All notable changes to this project will be documented in this file. See [standa
 
 ## [4.0.0-9](https://github.com/goblindegook/littlefoot/compare/v4.0.0-8...v4.0.0-9) (2023-03-09)
 
-## [4.0.0-7](https://github.com/goblindegook/littlefoot/compare/v4.0.0-6...v4.0.0-7) (2023-03-06)
+### ⚠ BREAKING CHANGES
 
+Removed built-in `CSS.escape` polyfill. littlefoot will only work on [supported browsers](https://caniuse.com/mdn-api_css_escape) unlesss you provide a polyfill before setting up footnotes.
+
+## [4.0.0-7](https://github.com/goblindegook/littlefoot/compare/v4.0.0-6...v4.0.0-7) (2023-03-06)
 
 ### Bug Fixes
 
-* vertical scrolling indicator position ([9c1d97a](https://github.com/goblindegook/littlefoot/commit/9c1d97acd3d6ef7bc2e06b678783a2c4f442430f))
+- vertical scrolling indicator position ([9c1d97a](https://github.com/goblindegook/littlefoot/commit/9c1d97acd3d6ef7bc2e06b678783a2c4f442430f))
 
 ## [4.0.0-6](https://github.com/goblindegook/littlefoot/compare/v4.0.0-5...v4.0.0-6) (2021-01-19)
 
-
 ### Bug Fixes
 
-* improve default button contrast ([#419](https://github.com/goblindegook/littlefoot/issues/419)) ([82492d4](https://github.com/goblindegook/littlefoot/commit/82492d493c9f07c910c7e0b624be83e22233c04b))
-* popover z-index everywhere ([#658](https://github.com/goblindegook/littlefoot/issues/658)) ([be257e7](https://github.com/goblindegook/littlefoot/commit/be257e7bec067383c6d52a673995470299507e3f))
-* sticky scrolling indicator moving on page scroll ([f2c845e](https://github.com/goblindegook/littlefoot/commit/f2c845e5a2860a36320a598913b1abb47b57207e))
+- improve default button contrast ([#419](https://github.com/goblindegook/littlefoot/issues/419)) ([82492d4](https://github.com/goblindegook/littlefoot/commit/82492d493c9f07c910c7e0b624be83e22233c04b))
+- popover z-index everywhere ([#658](https://github.com/goblindegook/littlefoot/issues/658)) ([be257e7](https://github.com/goblindegook/littlefoot/commit/be257e7bec067383c6d52a673995470299507e3f))
+- sticky scrolling indicator moving on page scroll ([f2c845e](https://github.com/goblindegook/littlefoot/commit/f2c845e5a2860a36320a598913b1abb47b57207e))
 
 ## [4.0.0-5](https://github.com/goblindegook/littlefoot/compare/v4.0.0-4...v4.0.0-5) (2021-01-08)
 
-
 ### Bug Fixes
 
-* buttons appearing above the popover on small screens ([#658](https://github.com/goblindegook/littlefoot/issues/658)) ([2805e07](https://github.com/goblindegook/littlefoot/commit/2805e0734349d85e1546463362947e7ce0234197))
+- buttons appearing above the popover on small screens ([#658](https://github.com/goblindegook/littlefoot/issues/658)) ([2805e07](https://github.com/goblindegook/littlefoot/commit/2805e0734349d85e1546463362947e7ce0234197))
 
 ## [4.0.0-4](https://github.com/goblindegook/littlefoot/compare/v4.0.0-3...v4.0.0-4) (2020-11-27)
 
-
 ### Bug Fixes
 
-* position is above by default ([45de8ac](https://github.com/goblindegook/littlefoot/commit/45de8ace9de664842541fc56675aa315e7e1e235))
+- position is above by default ([45de8ac](https://github.com/goblindegook/littlefoot/commit/45de8ace9de664842541fc56675aa315e7e1e235))
 
 ## [4.0.0-3](https://github.com/goblindegook/littlefoot/compare/v4.0.0-2...v4.0.0-3) (2020-11-24)
 
 ## [4.0.0-2](https://github.com/goblindegook/littlefoot/compare/v4.0.0-1...v4.0.0-2) (2020-11-22)
 
-
 ### Bug Fixes
 
-* popover margin ([e246f20](https://github.com/goblindegook/littlefoot/commit/e246f20eb659e53bf578030ab6e26e011414fab6))
+- popover margin ([e246f20](https://github.com/goblindegook/littlefoot/commit/e246f20eb659e53bf578030ab6e26e011414fab6))
 
 ## [4.0.0-1](https://github.com/goblindegook/littlefoot/compare/v4.0.0-0...v4.0.0-1) (2020-11-22)
 
-
 ### Bug Fixes
 
-* remove aria-expanded from default button template ([a2edfa6](https://github.com/goblindegook/littlefoot/commit/a2edfa674202ea155fe004d937ac06b2c66a3536))
-* scope custom properties instead of polluting :root ([88392a3](https://github.com/goblindegook/littlefoot/commit/88392a35676993e9b2ba43afd9657cbd79a44eeb))
+- remove aria-expanded from default button template ([a2edfa6](https://github.com/goblindegook/littlefoot/commit/a2edfa674202ea155fe004d937ac06b2c66a3536))
+- scope custom properties instead of polluting :root ([88392a3](https://github.com/goblindegook/littlefoot/commit/88392a35676993e9b2ba43afd9657cbd79a44eeb))
 
 ## [4.0.0-0](https://github.com/goblindegook/littlefoot/compare/v3.4.1...v4.0.0-0) (2020-10-30)
 
