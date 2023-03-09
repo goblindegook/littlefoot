@@ -2,7 +2,6 @@ import { createFootnote, FootnoteElements } from './footnote'
 import { bindScrollHandler } from './scroll'
 import { Adapter } from '../use-cases'
 import { addClass, removeClass, unmount } from './element'
-import { cssEscape } from './css-escape'
 
 export const CLASS_CONTENT = 'littlefoot__content'
 export const CLASS_WRAPPER = 'littlefoot__wrapper'
@@ -92,7 +91,7 @@ function findReference(
   return (link: HTMLAnchorElement): Original | undefined => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const fragment = link.href.split('#')[1]!
-    const related = queryAll(document, '#' + cssEscape(fragment)).find(
+    const related = queryAll(document, '#' + window.CSS.escape(fragment)).find(
       (footnote) => allowDuplicates || !processed.includes(footnote)
     )
 
