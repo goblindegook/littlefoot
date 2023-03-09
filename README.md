@@ -4,8 +4,6 @@
 ![minified + gzip](https://badgen.net/bundlephobia/minzip/littlefoot)
 [![codecov](https://codecov.io/gh/goblindegook/littlefoot/branch/main/graph/badge.svg)](https://codecov.io/gh/goblindegook/littlefoot)
 [![Code Climate](https://codeclimate.com/github/goblindegook/littlefoot/badges/gpa.svg)](https://codeclimate.com/github/goblindegook/littlefoot)
-[![Dependency Status](https://david-dm.org/goblindegook/littlefoot.svg)](https://david-dm.org/goblindegook/littlefoot)
-[![devDependency Status](https://david-dm.org/goblindegook/littlefoot/dev-status.svg)](https://david-dm.org/goblindegook/littlefoot#info=devDependencies)
 
 littlefoot is a lightweight JavaScript library that creates exceptional footnotes.
 
