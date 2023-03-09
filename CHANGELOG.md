@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### ⚠ BREAKING CHANGES
 
-Removed built-in `CSS.escape` polyfill. littlefoot will only work on [supported browsers](https://caniuse.com/mdn-api_css_escape) unlesss you provide a polyfill before setting up footnotes.
+Removed built-in `CSS.escape` polyfill. littlefoot will only work on [supported browsers](https://caniuse.com/mdn-api_css_escape) if you provide a polyfill before setting up footnotes.
 
 ## [4.0.0-7](https://github.com/goblindegook/littlefoot/compare/v4.0.0-6...v4.0.0-7) (2023-03-06)
 
