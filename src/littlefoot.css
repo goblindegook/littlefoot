@@ -161,13 +161,10 @@
   .littlefoot__popover {
     border-radius: 0;
     border-width: 1px 0 0;
-    bottom: 0;
-    left: 0 !important;
+    inset: auto 0 0 !important;
     margin: 0;
     max-width: 100% !important;
     position: fixed;
-    right: 0;
-    top: auto;
     transform: translateY(100%);
     width: 100%;
 
