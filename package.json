@@ -50,7 +50,7 @@
     "defaults"
   ],
   "devDependencies": {
-    "@commitlint/cli": "17.5.0",
+    "@commitlint/cli": "17.5.1",
     "@commitlint/config-conventional": "17.4.4",
     "@pacote/eslint-config": "6.0.0",
     "@rollup/plugin-commonjs": "24.0.1",
