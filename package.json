@@ -95,7 +95,7 @@
     "stylelint-config-standard": "31.0.0",
     "stylelint-prettier": "3.0.0",
     "tslib": "2.5.0",
-    "typescript": "5.0.2",
+    "typescript": "5.0.3",
     "vitest": "^0.29.2"
   },
   "dependencies": {
