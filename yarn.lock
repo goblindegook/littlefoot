@@ -826,10 +826,10 @@
   dependencies:
     "@pacote/get-style" "^2.0.0"
 
-"@pacote/throttle@1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@pacote/throttle/-/throttle-1.0.7.tgz#1967f2b56259d1bbaa2c8bcef47311a78b811cad"
-  integrity sha512-7iO/ehc4UFeBcdwRjS5gxJwB/SSbeCzrUVR+R0R2Dxxz96TE2KpKN32UdRuv/4WNc+oRgu1g0Jyq/+U6/mr01A==
+"@pacote/throttle@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@pacote/throttle/-/throttle-2.0.0.tgz#742e1613588a72dd5f4791ec5ef51f12b7586aa8"
+  integrity sha512-RgCSsDwgVhT04FVqxbXnftoW2GIO5scNQ/CrnaYmmFPmldkvHppqbjURyxROhypFO6HcdRQsMiWgkoAjoJD/pw==
 
 "@rollup/plugin-commonjs@24.0.1":
   version "24.0.1"
