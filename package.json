@@ -98,7 +98,7 @@
     "vitest": "^0.29.2"
   },
   "dependencies": {
-    "@pacote/get-style": "1.1.7",
+    "@pacote/get-style": "2.0.0",
     "@pacote/pixels": "2.0.0",
     "@pacote/throttle": "1.0.7",
     "delegated-events": "^1.0.10"
