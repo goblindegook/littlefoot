@@ -68,7 +68,7 @@
     "axe-core": "4.6.3",
     "concurrently": "8.0.1",
     "cssnano": "6.0.0",
-    "cypress": "12.9.0",
+    "cypress": "12.10.0",
     "cypress-axe": "1.4.0",
     "cz-conventional-changelog": "3.3.0",
     "eslint": "8.38.0",
@@ -104,7 +104,7 @@
     "delegated-events": "^1.0.10"
   },
   "resolutions": {
-    "cypress": "12.9.0"
+    "cypress": "12.10.0"
   },
   "config": {
     "commitizen": {
