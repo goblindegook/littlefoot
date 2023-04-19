@@ -22,16 +22,14 @@ context('Scroll', () => {
       .should('have.class', 'is-scrollable')
       .and('not.have.class', 'is-fully-scrolled')
 
-    cy.get('.littlefoot__content')
-      .should('have.attr', 'tabindex', '0')
-      .scrollTo('bottom')
-      .trigger('wheel', { deltaY: 9999 })
+    cy.get('.littlefoot__content').should('have.attr', 'tabindex', '0')
+    cy.get('.littlefoot__content').scrollTo('bottom')
+    cy.get('.littlefoot__content').trigger('wheel', { deltaY: 9999 })
 
     cy.get('.littlefoot__popover').should('have.class', 'is-fully-scrolled')
 
-    cy.get('.littlefoot__content')
-      .scrollTo('top')
-      .trigger('wheel', { deltaY: -1 })
+    cy.get('.littlefoot__content').scrollTo('top')
+    cy.get('.littlefoot__content').trigger('wheel', { deltaY: -1 })
 
     cy.get('.littlefoot__popover').should('not.have.class', 'is-fully-scrolled')
   })
