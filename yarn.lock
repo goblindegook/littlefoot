@@ -809,7 +809,12 @@
   resolved "https://registry.yarnpkg.com/@pacote/eslint-config/-/eslint-config-6.0.0.tgz#bfa55d6de377f2c93cc9657d4835d90f73fe9dfc"
   integrity sha512-wyXvGwi1BwcDViIIOYUDWEUMR9HXn+2NlW++/z4tdD5VQtxkzlp4rrDVOMvWkseFwNcJj4syQrOnQ1FFTzqNcw==
 
-"@pacote/get-style@2.0.0", "@pacote/get-style@^2.0.0":
+"@pacote/get-style@2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@pacote/get-style/-/get-style-2.0.1.tgz#58255745d2d84a583372b48f2d33b2148e0d95db"
+  integrity sha512-3PBiqQvLTuVdSlHAbV14ul+CVS+2xMON9eG5eL7afd7j63HU+MADvEauL7z8pkN/BeN4xKXx2mO2XCEFTRTCKg==
+
+"@pacote/get-style@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@pacote/get-style/-/get-style-2.0.0.tgz#6e33c4e683cbd6572cfa9f612cdce665f34528a9"
   integrity sha512-X5D7GNZ7ldW0Mg/C6LICsqYaB5ZLwpe21+Ix+h4D+0Sdx9Zz87PAnrA5Sci58bS3Q57m7OL/r+CmUcu2ZOs21Q==
