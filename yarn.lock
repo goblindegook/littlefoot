@@ -804,10 +804,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@pacote/eslint-config@6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@pacote/eslint-config/-/eslint-config-6.0.0.tgz#bfa55d6de377f2c93cc9657d4835d90f73fe9dfc"
-  integrity sha512-wyXvGwi1BwcDViIIOYUDWEUMR9HXn+2NlW++/z4tdD5VQtxkzlp4rrDVOMvWkseFwNcJj4syQrOnQ1FFTzqNcw==
+"@pacote/eslint-config@6.0.1":
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/@pacote/eslint-config/-/eslint-config-6.0.1.tgz#238ddf8591430281453594d453dfed9d77473a63"
+  integrity sha512-+zA9bC6k/SvUP7hqzbLx8eXOfK0Z4MqYE6b44qZgwadt79/rZNk+isx2E0b+wcOpBTdl2qJXayyriXzzdsbfsg==
 
 "@pacote/get-style@2.0.0", "@pacote/get-style@^2.0.0":
   version "2.0.0"
