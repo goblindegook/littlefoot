@@ -809,22 +809,17 @@
   resolved "https://registry.yarnpkg.com/@pacote/eslint-config/-/eslint-config-6.0.1.tgz#238ddf8591430281453594d453dfed9d77473a63"
   integrity sha512-+zA9bC6k/SvUP7hqzbLx8eXOfK0Z4MqYE6b44qZgwadt79/rZNk+isx2E0b+wcOpBTdl2qJXayyriXzzdsbfsg==
 
-"@pacote/get-style@2.0.1":
+"@pacote/get-style@2.0.1", "@pacote/get-style@^2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@pacote/get-style/-/get-style-2.0.1.tgz#58255745d2d84a583372b48f2d33b2148e0d95db"
   integrity sha512-3PBiqQvLTuVdSlHAbV14ul+CVS+2xMON9eG5eL7afd7j63HU+MADvEauL7z8pkN/BeN4xKXx2mO2XCEFTRTCKg==
 
-"@pacote/get-style@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@pacote/get-style/-/get-style-2.0.0.tgz#6e33c4e683cbd6572cfa9f612cdce665f34528a9"
-  integrity sha512-X5D7GNZ7ldW0Mg/C6LICsqYaB5ZLwpe21+Ix+h4D+0Sdx9Zz87PAnrA5Sci58bS3Q57m7OL/r+CmUcu2ZOs21Q==
-
-"@pacote/pixels@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@pacote/pixels/-/pixels-2.0.0.tgz#221fcfb3b5b97b19eb3189ddde0f3d5550248876"
-  integrity sha512-j7+4ioxXbpfjHcAoxoMxJEnown+Vs7dk2zgV2I8nYVTsFgqePlO/6UAsoUxO0qOjPjTwnn8w9CtPeUzRWFntyQ==
+"@pacote/pixels@2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@pacote/pixels/-/pixels-2.0.1.tgz#035376c50f37a614c414c7da46643e31130d0b59"
+  integrity sha512-gLIqYdFDy/SY+nTmNmzHuly5N8+HaUVtmZgr0IBMZ8DW9BBec2D2yezi0rjYVYobgxHx145LkmDxUoe1yqxeVA==
   dependencies:
-    "@pacote/get-style" "^2.0.0"
+    "@pacote/get-style" "^2.0.1"
 
 "@pacote/throttle@2.0.0":
   version "2.0.0"
