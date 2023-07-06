@@ -2592,10 +2592,10 @@ cypress-axe@1.4.0:
   resolved "https://registry.yarnpkg.com/cypress-axe/-/cypress-axe-1.4.0.tgz#e67482bfe9e740796bf77c7823f19781a8a2faff"
   integrity sha512-Ut7NKfzjyKm0BEbt2WxuKtLkIXmx6FD2j0RwdvO/Ykl7GmB/qRQkwbKLk3VP35+83hiIr8GKD04PDdrTK5BnyA==
 
-cypress@12.16.0:
-  version "12.16.0"
-  resolved "https://registry.yarnpkg.com/cypress/-/cypress-12.16.0.tgz#d0dcd0725a96497f4c60cf54742242259847924c"
-  integrity sha512-mwv1YNe48hm0LVaPgofEhGCtLwNIQEjmj2dJXnAkY1b4n/NE9OtgPph4TyS+tOtYp5CKtRmDvBzWseUXQTjbTg==
+cypress@12.17.0:
+  version "12.17.0"
+  resolved "https://registry.yarnpkg.com/cypress/-/cypress-12.17.0.tgz#3a907a41c4afbb44be7b84e822e4914d734a6bb0"
+  integrity sha512-nq0ug8Zrjq/2khHU1PTNxg+3/n1oqtmAFCxwQhS6QzkQ4mR6RLitX+cGIOuIMfnEbDAtVub0hZh661FOA16JxA==
   dependencies:
     "@cypress/request" "^2.88.10"
     "@cypress/xvfb" "^1.2.4"
@@ -2634,7 +2634,7 @@ cypress@12.16.0:
     pretty-bytes "^5.6.0"
     proxy-from-env "1.0.0"
     request-progress "^3.0.0"
-    semver "^7.3.2"
+    semver "^7.5.3"
     supports-color "^8.1.1"
     tmp "~0.2.1"
     untildify "^4.0.0"
@@ -6747,7 +6747,7 @@ selector-set@^1.1.5:
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.7.1.tgz#a954f931aeba508d307bbf069eff0c01c96116f7"
   integrity sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==
 
-semver@7.5.2, semver@^7.3.2:
+semver@7.5.2:
   version "7.5.2"
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.5.2.tgz#5b851e66d1be07c1cdaf37dfc856f543325a2beb"
   integrity sha512-SoftuTROv/cRjCze/scjGyiDtcUyxw1rgYQSZY7XTmtR5hX+dm76iDbTH8TkLPHCQmlbQVSSbNZCPM2hb0knnQ==
