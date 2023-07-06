@@ -84,7 +84,7 @@
     "jsdom": "^22.0.0",
     "lint-staged": "13.2.3",
     "pixrem": "5.0.0",
-    "postcss": "8.4.24",
+    "postcss": "8.4.25",
     "postcss-cli": "10.1.0",
     "postcss-preset-env": "9.0.0",
     "prettier": "2.8.8",
