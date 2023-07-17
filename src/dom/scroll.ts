@@ -23,7 +23,7 @@ const scrollHandler = (popover: HTMLElement) => (event: WheelEvent) => {
 
 export function bindScrollHandler(
   content: HTMLElement,
-  popover: HTMLElement
+  popover: HTMLElement,
 ): void {
   content.addEventListener('wheel', throttle(scrollHandler(popover), FRAME))
 }

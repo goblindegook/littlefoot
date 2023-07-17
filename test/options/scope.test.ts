@@ -13,6 +13,6 @@ test('creates no footnote buttons when scope is invalid', () => {
   setDocumentBody('default.html')
   littlefoot({ scope: '#invalid' })
   expect(
-    screen.queryByRole('button', { name: /See Footnote/ })
+    screen.queryByRole('button', { name: /See Footnote/ }),
   ).not.toBeInTheDocument()
 })

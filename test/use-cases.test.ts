@@ -13,7 +13,7 @@ afterEach(() => {
 type Test = 'TEST'
 
 function testSettings(
-  overrides?: Partial<UseCaseSettings<Test>>
+  overrides?: Partial<UseCaseSettings<Test>>,
 ): UseCaseSettings<Test> {
   return {
     activateDelay: 0,
@@ -70,7 +70,7 @@ test('footnote repositioning', () => {
       dismissDelay: 100,
       dismissOnUnhover: false,
       hoverDelay: 250,
-    })
+    }),
   )
 
   repositionAll()
@@ -109,7 +109,7 @@ test('footnote activation on hover', () => {
       activateCallback: () => undefined,
       activateOnHover: true,
       hoverDelay: 100,
-    })
+    }),
   )
 
   hover('test-id')
@@ -138,7 +138,7 @@ test('footnote dismissal on unhover', () => {
       dismissDelay: 100,
       dismissOnUnhover: true,
       hoverDelay: 50,
-    })
+    }),
   )
 
   unhover('test-id')
@@ -175,7 +175,7 @@ test('only unhovered footnotes are dismissed', () => {
       dismissDelay: 100,
       dismissOnUnhover: true,
       hoverDelay: 50,
-    })
+    }),
   )
 
   unhover('unhovered-id')

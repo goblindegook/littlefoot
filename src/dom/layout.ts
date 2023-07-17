@@ -30,7 +30,7 @@ export function getLeftRelative(element: HTMLElement): number {
 
 export function getLeftInPixels(
   content: HTMLElement,
-  button: HTMLElement
+  button: HTMLElement,
 ): number {
   const maxWidth = content.offsetWidth
   const leftRelative = getLeftRelative(button)
@@ -47,7 +47,7 @@ function popoverPosition(footnote: HTMLElement, room: Room): Position {
 export function getAvailableHeight(
   footnote: HTMLElement,
   button: HTMLElement,
-  maxHeight: number
+  maxHeight: number,
 ): number {
   const room = getAvailableRoom(button)
   const position = popoverPosition(footnote, room)
@@ -62,7 +62,7 @@ export function getMaxHeight(element: HTMLElement) {
 export function repositionPopover(
   popover: HTMLElement,
   button: HTMLElement,
-  previous: Position
+  previous: Position,
 ): Position {
   const room = getAvailableRoom(button)
   const position = popoverPosition(popover, room)
@@ -80,7 +80,7 @@ export function repositionPopover(
 
 export function repositionTooltip(
   popover: HTMLElement,
-  button: HTMLElement
+  button: HTMLElement,
 ): void {
   const tooltip = popover.querySelector<HTMLElement>('.' + CLASS_TOOLTIP)
 

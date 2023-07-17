@@ -51,7 +51,7 @@ export interface Adapter<T> {
 
 export function createUseCases<T>(
   { footnotes, unmount }: Adapter<T>,
-  settings: UseCaseSettings<T>
+  settings: UseCaseSettings<T>,
 ): UseCases {
   const dismiss = (delay: number) => (footnote: Footnote<T>) => {
     if (footnote.isReady()) {
@@ -96,7 +96,7 @@ export function createUseCases<T>(
     toggle: ifFound((footnote) =>
       footnote.isActive()
         ? dismiss(settings.dismissDelay)(footnote)
-        : activate(settings.activateDelay)(footnote)
+        : activate(settings.activateDelay)(footnote),
     ),
 
     hover: ifFound((footnote) => {
@@ -114,7 +114,7 @@ export function createUseCases<T>(
             footnotes
               .filter((f) => !f.isHovered())
               .forEach(dismiss(settings.dismissDelay)),
-          settings.hoverDelay
+          settings.hoverDelay,
         )
       }
     }),

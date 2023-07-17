@@ -5,7 +5,7 @@ function terminalLog(violations: Result[]) {
     'log',
     violations.length === 1
       ? `1 accessibility violation was detected`
-      : `${violations.length} accessibility violations were detected`
+      : `${violations.length} accessibility violations were detected`,
   )
 
   cy.task(
@@ -15,7 +15,7 @@ function terminalLog(violations: Result[]) {
       impact,
       description,
       nodes: nodes.length,
-    }))
+    })),
   )
 }
 

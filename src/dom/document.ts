@@ -42,7 +42,7 @@ const setPrintOnly = (el: Element) => addClass(el, CLASS_PRINT_ONLY)
 
 function queryAll<E extends Element>(
   parent: ParentNode,
-  selector: string
+  selector: string,
 ): readonly E[] {
   return Array.from(parent.querySelectorAll<E>(selector))
 }
@@ -63,7 +63,7 @@ function createElementFromHTML(html: string): HTMLElement {
 
 function children(element: Element, selector: string): readonly Element[] {
   return Array.from(element.children).filter(
-    (child) => child.nodeType !== 8 && child.matches(selector)
+    (child) => child.nodeType !== 8 && child.matches(selector),
   )
 }
 
@@ -74,10 +74,10 @@ function isDefined<T>(value?: T): value is T {
 function findFootnoteLinks(
   document: Document,
   pattern: RegExp,
-  scope: string
+  scope: string,
 ): readonly HTMLAnchorElement[] {
   return queryAll<HTMLAnchorElement>(document, scope + ' a[href*="#"]').filter(
-    (link) => (link.href + link.rel).match(pattern)
+    (link) => (link.href + link.rel).match(pattern),
   )
 }
 
@@ -85,14 +85,14 @@ function findReference(
   document: Document,
   allowDuplicates: boolean,
   anchorParentSelector: string,
-  footnoteSelector: string
+  footnoteSelector: string,
 ) {
   const processed: Element[] = []
   return (link: HTMLAnchorElement): Original | undefined => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const fragment = link.href.split('#')[1]!
     const related = queryAll(document, '#' + window.CSS.escape(fragment)).find(
-      (footnote) => allowDuplicates || !processed.includes(footnote)
+      (footnote) => allowDuplicates || !processed.includes(footnote),
     )
 
     const body = related?.closest<HTMLElement>(footnoteSelector)
@@ -161,7 +161,7 @@ function interpolate(template: string) {
   const pattern = /<%=?\s*(\w+?)\s*%>/g
   return (replacement: TemplateData) =>
     template.replace(pattern, (_, key: keyof TemplateData) =>
-      String(replacement[key] ?? '')
+      String(replacement[key] ?? ''),
     )
 }
 
@@ -176,7 +176,7 @@ function createElements(buttonTemplate: string, popoverTemplate: string) {
     const id = data.id
 
     const host = createElementFromHTML(
-      `<span class="${CLASS_HOST}">${renderButton(data)}</span>`
+      `<span class="${CLASS_HOST}">${renderButton(data)}</span>`,
     )
 
     const button = host.firstElementChild as HTMLElement
@@ -212,8 +212,8 @@ export function setup({
         document,
         allowDuplicates,
         anchorParentSelector,
-        footnoteSelector
-      )
+        footnoteSelector,
+      ),
     )
     .filter(isDefined)
     .map(prepareTemplateData)
@@ -234,7 +234,7 @@ export function setup({
     unmount() {
       footnotes.forEach((footnote) => footnote.destroy())
       queryAll(document, '.' + CLASS_PRINT_ONLY).forEach((element) =>
-        removeClass(element, CLASS_PRINT_ONLY)
+        removeClass(element, CLASS_PRINT_ONLY),
       )
     },
   }

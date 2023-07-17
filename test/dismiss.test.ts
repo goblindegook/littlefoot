@@ -28,7 +28,7 @@ test('dismiss footnote when clicking the button again', async () => {
   expect(
     screen.queryByText(/This is the document's only footnote./, {
       selector: '.littlefoot__popover *',
-    })
+    }),
   ).not.toBeInTheDocument()
   expect(button).not.toHaveClass('is-active')
 })
@@ -113,7 +113,7 @@ test.each([[{ keyCode: 27 }, { key: 'Escape' }, { key: 'Esc' }]])(
     await waitToStopChanging(button)
 
     expect(button).not.toHaveClass('is-active')
-  }
+  },
 )
 
 test('does not dismiss footnote when pressing any other key', async () => {
