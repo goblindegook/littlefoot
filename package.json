@@ -90,7 +90,7 @@
     "prettier": "^3.0.0",
     "rollup": "3.26.2",
     "standard-version": "9.5.0",
-    "stylelint": "15.10.1",
+    "stylelint": "15.10.2",
     "stylelint-config-standard": "34.0.0",
     "stylelint-prettier": "^4.0.0",
     "tslib": "2.6.0",
