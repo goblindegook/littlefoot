@@ -100,8 +100,7 @@
   "dependencies": {
     "@pacote/get-style": "2.0.1",
     "@pacote/pixels": "2.0.1",
-    "@pacote/throttle": "2.0.1",
-    "delegated-events": "^1.0.10"
+    "@pacote/throttle": "2.0.1"
   },
   "resolutions": {
     "cypress": "12.17.3"

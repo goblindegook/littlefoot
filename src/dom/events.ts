@@ -1,5 +1,4 @@
 import { throttle } from '@pacote/throttle'
-import { off, on } from 'delegated-events'
 import { UseCases, FootnoteAction } from '../use-cases'
 
 const FRAME = 16
@@ -42,6 +41,21 @@ const escapeHandler = (fn: () => void) => (event: KeyboardEvent) => {
 const onDocument = document.addEventListener
 const onWindow = window.addEventListener
 
+const delegate = (
+  type: string,
+  selector: string,
+  listener: EventListener,
+  options?: AddEventListenerOptions,
+) => {
+  const handler = (event: Event) => {
+    const target = event.target as Element | null
+    if (target?.closest(selector)) {
+      listener.call(event.target, event)
+    }
+  }
+  document.addEventListener(type, handler, options)
+}
+
 export function addListeners(useCases: UseCases): () => void {
   const controller = new AbortController()
   const { signal } = controller
@@ -58,12 +72,10 @@ export function addListeners(useCases: UseCases): () => void {
   onDocument('gestureend', throttledReposition, { signal })
   onWindow('scroll', throttledReposition, { signal })
   onWindow('resize', throttledResize, { signal })
-  on('mouseover', SELECTOR_FOOTNOTE, showOnHover)
-  on('mouseout', SELECTOR_FOOTNOTE, hideOnHover)
+  delegate('mouseover', SELECTOR_FOOTNOTE, showOnHover, { signal })
+  delegate('mouseout', SELECTOR_FOOTNOTE, hideOnHover, { signal })
 
   return () => {
     controller.abort()
-    off('mouseover', SELECTOR_FOOTNOTE, showOnHover)
-    off('mouseout', SELECTOR_FOOTNOTE, hideOnHover)
   }
 }
