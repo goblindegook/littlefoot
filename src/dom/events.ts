@@ -50,10 +50,10 @@ const delegate = (
   const handler = (event: Event) => {
     const target = event.target as Element | null
     if (target?.closest(selector)) {
-      listener.call(event.target, event)
+      listener.call(target, event)
     }
   }
-  document.addEventListener(type, handler, options)
+  onDocument(type, handler, options)
 }
 
 export function addListeners(useCases: UseCases): () => void {
