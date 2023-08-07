@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.0-10](https://github.com/goblindegook/littlefoot/compare/v4.0.0-9...v4.0.0-10) (2023-08-07)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @pacote/get-style to v2 ([#1522](https://github.com/goblindegook/littlefoot/issues/1522)) ([b5a93d2](https://github.com/goblindegook/littlefoot/commit/b5a93d2ce567b0759e604bcf500cbb09e23e05ac))
+* **deps:** update dependency @pacote/get-style to v2.0.1 ([#1537](https://github.com/goblindegook/littlefoot/issues/1537)) ([32a72b0](https://github.com/goblindegook/littlefoot/commit/32a72b054bdd15781c6824d028680eea87db65ff))
+* **deps:** update dependency @pacote/pixels to v2 ([#1523](https://github.com/goblindegook/littlefoot/issues/1523)) ([34de8f2](https://github.com/goblindegook/littlefoot/commit/34de8f2785a2297c0893450bbde8353f5e54c7ad))
+* **deps:** update dependency @pacote/pixels to v2.0.1 ([#1538](https://github.com/goblindegook/littlefoot/issues/1538)) ([c2b470d](https://github.com/goblindegook/littlefoot/commit/c2b470d58e119b83fa63c3ed45e0e80857ac2894))
+* **deps:** update dependency @pacote/throttle to v2 ([#1525](https://github.com/goblindegook/littlefoot/issues/1525)) ([0c71c86](https://github.com/goblindegook/littlefoot/commit/0c71c86fbf24039a4902f6407deca3fe740832c8))
+* **deps:** update dependency @pacote/throttle to v2.0.1 ([#1539](https://github.com/goblindegook/littlefoot/issues/1539)) ([9d6fe90](https://github.com/goblindegook/littlefoot/commit/9d6fe9087367216ce496593e38b03884a6c33752))
+
 ## [4.0.0-9](https://github.com/goblindegook/littlefoot/compare/v4.0.0-8...v4.0.0-9) (2023-03-09)
 
 ### ⚠ BREAKING CHANGES
