@@ -80,7 +80,7 @@
     "eslint-plugin-testing-library": "6.0.0",
     "husky": "8.0.3",
     "jsdom": "^22.0.0",
-    "lint-staged": "13.2.3",
+    "lint-staged": "13.3.0",
     "pixrem": "5.0.0",
     "postcss": "8.4.27",
     "postcss-cli": "10.1.0",
