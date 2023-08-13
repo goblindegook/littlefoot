@@ -1032,13 +1032,6 @@
   resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.3.5.tgz#ae69bcbb1bebb68c4ac0b11e9d8ed04526b3562b"
   integrity sha512-mEo1sAde+UCE6b2hxn332f1g1E8WfYRu6p5SvTKr2ZKC1f7gFJXk4h5PyGP9Dt6gCaG8y8XhwnXWC6Iy2cmBng==
 
-"@types/delegated-events@1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@types/delegated-events/-/delegated-events-1.1.0.tgz#ad16c11af295c151e2aff25c439ebb23b2208aed"
-  integrity sha512-0Li86l73a9BEHnxCbv1RCXyKaWuHsYkhKvksDFe98nQL+9QacdROgNZe6Bi5foquTJroCA4r0Dw/SF/3/2Wyjw==
-  dependencies:
-    delegated-events "*"
-
 "@types/estree@*":
   version "0.0.50"
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-0.0.50.tgz#1e0caa9364d3fccd2931c3ed96fdbeaa5d4cca83"
@@ -2910,13 +2903,6 @@ delayed-stream@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
   integrity sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==
-
-delegated-events@*:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/delegated-events/-/delegated-events-1.1.2.tgz#741a4ba320718096fb8f7db4ddfaadcb0daa5986"
-  integrity sha512-PjEw4Z5mrvXimyf60HGqMJ3BMcqqWZpBqSDGnEMBdkAtF4P7ltoa6N+UJXhbMMUxPLYFtykCmRs6Ra8I8pwzPQ==
-  dependencies:
-    selector-set "^1.1.5"
 
 dependency-graph@^0.11.0:
   version "0.11.0"
@@ -7019,11 +7005,6 @@ saxes@^6.0.0:
   integrity sha512-xAg7SOnEhrm5zI3puOOKyy1OMcMlIJZYNJY7xLBwSze0UjhPLnWfj2GF2EpT0jmzaJKIWKHLsaSSajf35bcYnA==
   dependencies:
     xmlchars "^2.2.0"
-
-selector-set@^1.1.5:
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/selector-set/-/selector-set-1.1.5.tgz#60c135aea482b6f46a2d95ad72058927690a8634"
-  integrity sha512-6SQw6yMew5iOZ8/cDHDEnJWRM4ot2mxP6szZyF5ptrBogw4AcS4EXRj/8BUfgAMwVfdL84qpModlBMOl2NVrsQ==
 
 "semver@2 || 3 || 4 || 5":
   version "5.7.2"
