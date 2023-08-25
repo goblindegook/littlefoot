@@ -847,10 +847,10 @@
   dependencies:
     "@pacote/get-style" "^2.0.1"
 
-"@pacote/throttle@2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@pacote/throttle/-/throttle-2.0.1.tgz#c8f7c265ae62aebe1be77233c0f712f34a07e765"
-  integrity sha512-s6keOigGqlLwSYluya2WwVyCI1z05ltFcJTZzwtwpU8JUSFCGAP03KjSxrG2WOKdQw1t4QA16lIM6RGXgcuw5w==
+"@pacote/throttle@2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@pacote/throttle/-/throttle-2.0.2.tgz#34f8c7f781bb29d4635d31514c917662bb6a39aa"
+  integrity sha512-Yn8SbAAFRTiVXBvh8E0aGG44TUZOueQFtHqjIwfYkoKJHknchc3PjktiMbRFBFUCWZiS68lHP9K1gXdGu/Z1vQ==
 
 "@pkgr/utils@^2.3.1":
   version "2.4.2"
