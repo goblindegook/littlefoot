@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [4.0.1](https://github.com/goblindegook/littlefoot/compare/v4.0.0-11...v4.0.1) (2023-09-19)
 
+### Bug Fixes
+
+* removed `postcss.config.js` from NPM package ([#1702](https://github.com/goblindegook/littlefoot/issues/1709)) ([9c2ec08](https://github.com/goblindegook/littlefoot/commit/9c2ec082b8103a2a42d5dfba0617d3493124526b))
+
 ## [4.0.0](https://github.com/goblindegook/littlefoot/compare/v4.0.0-11...v4.0.0) (2023-09-19)
 
 ## [4.0.0-11](https://github.com/goblindegook/littlefoot/compare/v4.0.0-10...v4.0.0-11) (2023-09-19)
