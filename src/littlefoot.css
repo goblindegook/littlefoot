@@ -94,6 +94,7 @@
   -webkit-overflow-scrolling: touch;
   background-color: var(--popover-background-color);
   border-radius: var(--popover-border-radius);
+  box-sizing: border-box;
   color: var(--popover-text-color);
   font-family: var(--popover-font-family, initial);
   font-size: var(--popover-font-size, initial);
@@ -103,6 +104,7 @@
   max-height: var(--popover-max-height);
   overflow: auto;
   padding: var(--popover-vertical-padding) var(--popover-horizontal-padding);
+  width: 100%;
 
   & img {
     max-width: 100%;
