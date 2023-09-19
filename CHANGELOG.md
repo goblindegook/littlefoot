@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.0-11](https://github.com/goblindegook/littlefoot/compare/v4.0.0-10...v4.0.0-11) (2023-09-19)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @pacote/get-style to v2.0.2 ([#1678](https://github.com/goblindegook/littlefoot/issues/1678)) ([a31708a](https://github.com/goblindegook/littlefoot/commit/a31708a8bc2a943cda791826ec290883596fe701))
+* **deps:** update dependency @pacote/pixels to v2.0.2 ([#1679](https://github.com/goblindegook/littlefoot/issues/1679)) ([ff3a45c](https://github.com/goblindegook/littlefoot/commit/ff3a45ca79b17a498bd4cf6f94d0d636c28c12f4))
+* **deps:** update dependency @pacote/throttle to v2.0.2 ([#1680](https://github.com/goblindegook/littlefoot/issues/1680)) ([6019fa9](https://github.com/goblindegook/littlefoot/commit/6019fa92198575746fff4c0d5c0b6983249f51c1))
+* footnote content occasionally rendered too narrow ([#1702](https://github.com/goblindegook/littlefoot/issues/1702)) ([bae1fa6](https://github.com/goblindegook/littlefoot/commit/bae1fa69cc0dd5329fcc9cdd1e4d8f08baa66504))
+
 ## [4.0.0-10](https://github.com/goblindegook/littlefoot/compare/v4.0.0-9...v4.0.0-10) (2023-08-07)
 
 
