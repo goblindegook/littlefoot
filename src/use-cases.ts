@@ -10,6 +10,7 @@ export type UseCaseSettings<T> = Readonly<{
   dismissCallback?: ActionCallback<T>
   dismissDelay: number
   dismissOnUnhover: boolean
+  dismissOnDocumentTouch: boolean
   hoverDelay: number
 }>
 
@@ -36,6 +37,7 @@ export type UseCases = Readonly<{
   activate: DelayedFootnoteAction
   dismiss: DelayedFootnoteAction
   dismissAll: () => void
+  documentTouch: () => void
   hover: FootnoteAction
   repositionAll: () => void
   resizeAll: () => void
@@ -82,12 +84,20 @@ export function createUseCases<T>(
     }
   }
 
+  const dismissAll = () => footnotes.forEach(dismiss(settings.dismissDelay))
+
   return {
     activate: (id, delay) => ifFound(activate(delay))(id),
 
     dismiss: (id, delay) => ifFound(dismiss(delay))(id),
 
-    dismissAll: () => footnotes.forEach(dismiss(settings.dismissDelay)),
+    dismissAll,
+
+    documentTouch: () => {
+      if (settings.dismissOnDocumentTouch) {
+        dismissAll()
+      }
+    },
 
     repositionAll: () => footnotes.forEach((current) => current.reposition()),
 

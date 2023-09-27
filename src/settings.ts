@@ -17,6 +17,7 @@ export const DEFAULT_SETTINGS: Settings = {
   anchorPattern: /(fn|footnote|note)[:\-_\d]/gi,
   dismissDelay: 100,
   dismissOnUnhover: false,
+  dismissOnDocumentTouch: true,
   footnoteSelector: 'li',
   hoverDelay: 250,
   numberResetSelector: '',
