@@ -37,7 +37,7 @@ export type UseCases = Readonly<{
   activate: DelayedFootnoteAction
   dismiss: DelayedFootnoteAction
   dismissAll: () => void
-  documentTouch: () => void
+  touchOutside: () => void
   hover: FootnoteAction
   repositionAll: () => void
   resizeAll: () => void
@@ -93,7 +93,7 @@ export function createUseCases<T>(
 
     dismissAll,
 
-    documentTouch: () => {
+    touchOutside: () => {
       if (settings.dismissOnDocumentTouch) {
         dismissAll()
       }

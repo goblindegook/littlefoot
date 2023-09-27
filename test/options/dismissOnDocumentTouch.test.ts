@@ -11,7 +11,11 @@ import littlefoot from '../../src/littlefoot'
 
 test('do not dismiss footnote when clicking the document body', async () => {
   setDocumentBody('single.html')
-  littlefoot({ dismissOnDocumentTouch: false, activateDelay: 0, dismissDelay: 0 })
+  littlefoot({
+    dismissOnDocumentTouch: false,
+    activateDelay: 0,
+    dismissDelay: 0,
+  })
 
   const button = getButton('1')
   fireEvent.click(button)
@@ -26,7 +30,11 @@ test('do not dismiss footnote when clicking the document body', async () => {
 
 test('dismiss footnote when clicking the button again', async () => {
   setDocumentBody('single.html')
-  littlefoot({ dismissOnDocumentTouch: false, activateDelay: 0, dismissDelay: 0 })
+  littlefoot({
+    dismissOnDocumentTouch: false,
+    activateDelay: 0,
+    dismissDelay: 0,
+  })
   const button = getButton('1')
   fireEvent.click(button)
   await waitToStopChanging(button)
@@ -42,7 +50,11 @@ test('dismiss footnote when clicking the button again', async () => {
 
 test('disallow multiple activations', async () => {
   setDocumentBody('default.html')
-  littlefoot({ dismissOnDocumentTouch: false, activateDelay: 0, dismissDelay: 0 })
+  littlefoot({
+    dismissOnDocumentTouch: false,
+    activateDelay: 0,
+    dismissDelay: 0,
+  })
 
   const one = getButton('1')
   fireEvent.click(one)

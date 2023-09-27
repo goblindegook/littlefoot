@@ -12,29 +12,12 @@ const closestTarget = (event: Event, selector: string) =>
 const getFootnoteId = (element: HTMLElement | null) =>
   element?.dataset.footnoteId
 
-const touchHandler =
-  (action: FootnoteAction, dismissAll: () => void) => (event: Event) => {
-    const element = closestTarget(event, SELECTOR_BUTTON)
-    const id = getFootnoteId(element)
-    if (id) {
-      action(id)
-    } else if (!closestTarget(event, SELECTOR_POPOVER)) {
-      dismissAll()
-    }
-  }
-
 const hoverHandler = (action: FootnoteAction) => (event: Event) => {
   event.preventDefault()
   const element = closestTarget(event, SELECTOR_FOOTNOTE)
   const id = getFootnoteId(element)
   if (id) {
     action(id)
-  }
-}
-
-const escapeHandler = (fn: () => void) => (event: KeyboardEvent) => {
-  if (event.keyCode === 27 || event.key === 'Escape' || event.key === 'Esc') {
-    fn()
   }
 }
 
@@ -57,14 +40,27 @@ const delegate = (
 }
 
 export function addListeners(useCases: UseCases): () => void {
-  const controller = new AbortController()
-  const { signal } = controller
-  const toggleOnTouch = touchHandler(useCases.toggle, useCases.documentTouch)
-  const dismissOnEscape = escapeHandler(useCases.dismissAll)
+  const toggleOnTouch = (event: Event) => {
+    const element = closestTarget(event, SELECTOR_BUTTON)
+    const id = getFootnoteId(element)
+    if (id) {
+      useCases.toggle(id)
+    } else if (!closestTarget(event, SELECTOR_POPOVER)) {
+      useCases.touchOutside()
+    }
+  }
+  const dismissOnEscape = (event: KeyboardEvent) => {
+    if (event.keyCode === 27 || event.key === 'Escape' || event.key === 'Esc') {
+      useCases.dismissAll()
+    }
+  }
   const throttledReposition = throttle(useCases.repositionAll, FRAME)
   const throttledResize = throttle(useCases.resizeAll, FRAME)
   const showOnHover = hoverHandler(useCases.hover)
   const hideOnHover = hoverHandler(useCases.unhover)
+
+  const controller = new AbortController()
+  const { signal } = controller
 
   onDocument('touchend', toggleOnTouch, { signal })
   onDocument('click', toggleOnTouch, { signal })

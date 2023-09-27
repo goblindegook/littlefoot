@@ -188,9 +188,15 @@ When the footnote content is being removed this option specifies how long after 
 
 Default: `500`
 
+### `dismissOnDocumentTouch`
+
+Determines whether touching the document will dimiss all active footnotes. When `false`, footnotes can be dismissed by touching the button again.
+
+Default: `true`
+
 ### `dismissOnUnhover`
 
-Determines whether footnotes that were presented when hovering on a footnote button are removed once the footnote button or footnote popover is un-hovered.
+Determines whether footnotes that were presented when hovering on a footnote button are dismissed once the footnote button or footnote popover is un-hovered.
 
 Default: `false`
 
@@ -202,7 +208,7 @@ Default: `'li'`
 
 ### `hoverDelay`
 
-If `dismissOnUnhover` is true, this specifies the amount of time (in milliseconds) that must pass after the footnote button/content is un-hovered before the footnote is removed.
+If `dismissOnUnhover` is true, this specifies the amount of time (in milliseconds) that must pass after the footnote button/content is un-hovered before the footnote is dismissed.
 
 Default: `250`
 
