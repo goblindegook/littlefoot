@@ -86,7 +86,7 @@
     "postcss-cli": "10.1.0",
     "postcss-preset-env": "9.1.4",
     "prettier": "^3.0.0",
-    "rollup": "3.29.4",
+    "rollup": "4.0.2",
     "standard-version": "9.5.0",
     "stylelint": "15.10.3",
     "stylelint-config-standard": "34.0.0",
