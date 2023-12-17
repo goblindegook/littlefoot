@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.1.0](https://github.com/goblindegook/littlefoot/compare/v4.0.1...v4.1.0) (2023-12-17)
+
+
+### Features
+
+* dismiss a footnote when touching outside it ([#1692](https://github.com/goblindegook/littlefoot/issues/1692)) ([49a6157](https://github.com/goblindegook/littlefoot/commit/49a61573589816a7770b3e2b971b5f207430745c))
+
 ### [4.0.1](https://github.com/goblindegook/littlefoot/compare/v4.0.0-11...v4.0.1) (2023-09-19)
 
 ### Bug Fixes
