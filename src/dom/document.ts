@@ -1,4 +1,4 @@
-import { createFootnote, FootnoteElements } from './footnote'
+import { footnoteActions, FootnoteElements } from './footnote'
 import { bindScrollHandler } from './scroll'
 import { Adapter } from '../use-cases'
 import { addClass, removeClass, unmount } from './element'
@@ -17,28 +17,18 @@ export type HTMLAdapterSettings = Readonly<{
   scope: string
 }>
 
-type TemplateData = Readonly<{
+type TemplateValues = Readonly<{
   number: number
   id: string
   content: string
   reference: string
 }>
 
-type Original = Readonly<{
-  reference: HTMLElement
-  referenceId: string
-  body: HTMLElement
-}>
-
-type OriginalData = Readonly<{
-  original: Original
-  data: TemplateData
-}>
-
 const CLASS_PRINT_ONLY = 'littlefoot--print'
 const CLASS_HOST = 'littlefoot'
 
-const setPrintOnly = (el: Element) => addClass(el, CLASS_PRINT_ONLY)
+const setAllPrintOnly = (...elements: readonly Element[]) =>
+  elements.forEach((e) => addClass(e, CLASS_PRINT_ONLY))
 
 function queryAll<E extends Element>(
   parent: ParentNode,
@@ -81,45 +71,41 @@ function findFootnoteLinks(
   )
 }
 
-function findReference(
+function findReference<E extends Element>(
   document: Document,
   allowDuplicates: boolean,
   anchorParentSelector: string,
   footnoteSelector: string,
 ) {
-  const processed: Element[] = []
-  return (link: HTMLAnchorElement): Original | undefined => {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const processed: E[] = []
+  return (link: HTMLAnchorElement): [string, Element, E] | undefined => {
     const fragment = link.href.split('#')[1]!
-    const related = queryAll(document, '#' + window.CSS.escape(fragment)).find(
-      (footnote) => allowDuplicates || !processed.includes(footnote),
-    )
-
-    const body = related?.closest<HTMLElement>(footnoteSelector)
+    const related = queryAll<E>(
+      document,
+      '#' + window.CSS.escape(fragment),
+    ).find((footnote) => allowDuplicates || !processed.includes(footnote))
+    const body = related?.closest<E>(footnoteSelector)
 
     if (body) {
       processed.push(body)
-      const reference = link.closest<HTMLElement>(anchorParentSelector) || link
-      const referenceId = reference.id || link.id
-      return { reference, referenceId, body }
+      const reference = link.closest<E>(anchorParentSelector) || link
+      return [reference.id || link.id, reference, body]
     }
   }
 }
 
-function recursiveHideFootnoteContainer(element: HTMLElement): void {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+function recursiveHideFootnoteContainer(element: Element): void {
   const container = element.parentElement!
   const visibleElements = children(container, ':not(.' + CLASS_PRINT_ONLY + ')')
   const visibleSeparators = visibleElements.filter((el) => el.tagName === 'HR')
 
   if (visibleElements.length === visibleSeparators.length) {
-    visibleSeparators.concat(container).forEach(setPrintOnly)
+    setAllPrintOnly(...visibleSeparators.concat(container))
     recursiveHideFootnoteContainer(container)
   }
 }
 
-function recursiveUnmount(element: HTMLElement) {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+function recursiveUnmount(element: Element) {
   const parent = element.parentElement!
   unmount(element)
   const html = parent.innerHTML.replace('[]', '').replace('&nbsp;', ' ').trim()
@@ -129,54 +115,61 @@ function recursiveUnmount(element: HTMLElement) {
   }
 }
 
-function prepareTemplateData(original: Original, idx: number): OriginalData {
-  const content = createElementFromHTML(original.body.outerHTML)
-  const backlinkSelector = '[href$="#' + original.referenceId + '"]'
-  queryAll<HTMLElement>(content, backlinkSelector).forEach(recursiveUnmount)
+function prepareTemplateData<E extends Element>(
+  [id, reference, body]: [string, E, E],
+  index: number,
+): [E, E, TemplateValues] {
+  const content = createElementFromHTML(body.outerHTML)
+  const backlinkSelector = '[href$="#' + id + '"]'
+  queryAll<E>(content, backlinkSelector).forEach(recursiveUnmount)
   const html = content.innerHTML.trim()
 
-  return {
-    original,
-    data: {
-      id: String(idx + 1),
-      number: idx + 1,
-      reference: 'lf-' + original.referenceId,
+  return [
+    reference,
+    body,
+    {
+      id: String(index + 1),
+      number: index + 1,
+      reference: 'lf-' + id,
       content: html.startsWith('<') ? html : '<p>' + html + '</p>',
     },
-  }
+  ]
 }
 
-const resetNumbers = (resetSelector: string) => {
-  let current = 0
-  let previousParent: Element | null = null
-  return ({ original, data }: OriginalData): OriginalData => {
-    const parent = original.reference.closest(resetSelector)
-    current = previousParent === parent ? current + 1 : 1
+function resetNumbers<E extends Element>(resetSelector: string) {
+  let number = 0
+  let previousParent: E | null = null
+  return ([reference, body, values]: [E, E, TemplateValues]): [
+    E,
+    E,
+    TemplateValues,
+  ] => {
+    const parent = reference.closest<E>(resetSelector)
+    number = previousParent === parent ? number + 1 : 1
     previousParent = parent
-    return { original, data: { ...data, number: current } }
+    return [reference, body, { ...values, number }]
   }
 }
 
 function interpolate(template: string) {
-  const pattern = /<%=?\s*(\w+?)\s*%>/g
-  return (replacement: TemplateData) =>
-    template.replace(pattern, (_, key: keyof TemplateData) =>
+  return (replacement: TemplateValues) =>
+    template.replace(/<%=?\s*(\w+?)\s*%>/g, (_, key: keyof TemplateValues) =>
       String(replacement[key] ?? ''),
     )
 }
 
-function createElements(buttonTemplate: string, popoverTemplate: string) {
+function createElements<E extends Element>(
+  buttonTemplate: string,
+  popoverTemplate: string,
+) {
   const renderButton = interpolate(buttonTemplate)
   const renderPopover = interpolate(popoverTemplate)
 
-  return ({
-    original,
-    data,
-  }: OriginalData): OriginalData & FootnoteElements => {
-    const id = data.id
+  return ([reference, values]: [E, TemplateValues]): FootnoteElements => {
+    const id = values.id
 
     const host = createElementFromHTML(
-      `<span class="${CLASS_HOST}">${renderButton(data)}</span>`,
+      `<span class="${CLASS_HOST}">${renderButton(values)}</span>`,
     )
 
     const button = host.firstElementChild as HTMLElement
@@ -184,7 +177,7 @@ function createElements(buttonTemplate: string, popoverTemplate: string) {
     button.dataset.footnoteButton = ''
     button.dataset.footnoteId = id
 
-    const popover = createElementFromHTML(renderPopover(data))
+    const popover = createElementFromHTML(renderPopover(values))
     popover.dataset.footnotePopover = ''
     popover.dataset.footnoteId = id
 
@@ -192,7 +185,9 @@ function createElements(buttonTemplate: string, popoverTemplate: string) {
     const content = getByClassName(popover, CLASS_CONTENT)
     bindScrollHandler(content, popover)
 
-    return { original, data, id, button, host, popover, content, wrapper }
+    reference.insertAdjacentElement('beforebegin', host)
+
+    return { id, button, host, popover, content, wrapper }
   }
 }
 
@@ -218,15 +213,13 @@ export function setup({
     .filter(isDefined)
     .map(prepareTemplateData)
     .map(numberResetSelector ? resetNumbers(numberResetSelector) : (i) => i)
-    .map(createElements(buttonTemplate, contentTemplate))
-    .map((e) => {
-      setPrintOnly(e.original.reference)
-      setPrintOnly(e.original.body)
-      recursiveHideFootnoteContainer(e.original.body)
-      e.original.reference.insertAdjacentElement('beforebegin', e.host)
-      return e
+    .map<[Element, TemplateValues]>(([reference, body, values]) => {
+      setAllPrintOnly(reference, body)
+      recursiveHideFootnoteContainer(body)
+      return [reference, values]
     })
-    .map(createFootnote)
+    .map(createElements(buttonTemplate, contentTemplate))
+    .map(footnoteActions)
 
   return {
     footnotes,

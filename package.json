@@ -13,6 +13,7 @@
     "build": "yarn clean && mkdir -p dist && concurrently 'yarn build:types' 'yarn build:scripts' 'yarn build:styles'",
     "watch:scripts": "rollup --config --bundleConfigAsCjs --watch",
     "watch:styles": "yarn build:styles --watch",
+    "watch:vitest": "vitest",
     "watch": "concurrently 'yarn watch:scripts' 'yarn watch:styles'",
     "format": "prettier --write '{cypress,src,test}/**/*.{js,jsx,ts,tsx,json,css,md}'",
     "lint:scripts": "eslint '{cypress,src,test}/**/*.ts'",

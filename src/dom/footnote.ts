@@ -24,7 +24,7 @@ export type FootnoteElements = Readonly<{
 
 const isMounted = (popover: HTMLElement) => !!popover.parentElement
 
-export function createFootnote({
+export function footnoteActions({
   id,
   button,
   content,
