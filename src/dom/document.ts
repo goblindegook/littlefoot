@@ -105,13 +105,15 @@ function recursiveHideFootnoteContainer(element: Element): void {
   }
 }
 
-function recursiveUnmount(element: Element) {
+function recursiveUnmount(element: Element, stopElement: Element) {
   const parent = element.parentElement!
   unmount(element)
+  if (parent === stopElement)
+    return;
   const html = parent.innerHTML.replace('[]', '').replace('&nbsp;', ' ').trim()
 
   if (!html) {
-    recursiveUnmount(parent)
+    recursiveUnmount(parent, stopElement)
   }
 }
 
@@ -121,7 +123,7 @@ function prepareTemplateData<E extends Element>(
 ): [E, E, TemplateValues] {
   const content = createElementFromHTML(body.outerHTML)
   const backlinkSelector = '[href$="#' + id + '"]'
-  queryAll<E>(content, backlinkSelector).forEach(recursiveUnmount)
+  queryAll<E>(content, backlinkSelector).forEach(bl => recursiveUnmount(bl, content))
   const html = content.innerHTML.trim()
 
   return [
