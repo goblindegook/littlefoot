@@ -20,15 +20,6 @@
     "@jridgewell/gen-mapping" "^0.3.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@asamuzakjp/dom-selector@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@asamuzakjp/dom-selector/-/dom-selector-2.0.1.tgz#26dd05c504faa95a200a780f192fc9ca9feaa67e"
-  integrity sha512-QJAJffmCiymkv6YyQ7voyQb5caCth6jzZsQncYCpHXrJ7RqdYG5y43+is8mnFcYubdOkr7cn1+na9BdFMxqw7w==
-  dependencies:
-    bidi-js "^1.0.3"
-    css-tree "^2.3.1"
-    is-potential-custom-element-name "^1.0.1"
-
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.4":
   version "7.14.5"
   resolved "https://registry.npmjs.org/@babel/code-frame/-/code-frame-7.14.5.tgz"
@@ -1855,13 +1846,6 @@ bcrypt-pbkdf@^1.0.0:
   integrity sha1-pDAdOJtqQ/m2f/PKEaP2Y342Dp4=
   dependencies:
     tweetnacl "^0.14.3"
-
-bidi-js@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/bidi-js/-/bidi-js-1.0.3.tgz#6f8bcf3c877c4d9220ddf49b9bb6930c88f877d2"
-  integrity sha512-RKshQI1R3YQ+n9YJz2QQ147P66ELpa1FQEg20Dk8oW9t2KgLbpDLLp9aGZ7y8WHSshDknG0bknqGw5/tyCs5tw==
-  dependencies:
-    require-from-string "^2.0.2"
 
 big-integer@^1.6.44:
   version "1.6.51"
@@ -5025,12 +5009,11 @@ jsbn@~0.1.0:
   resolved "https://registry.npmjs.org/jsbn/-/jsbn-0.1.1.tgz"
   integrity sha1-peZUwuWi3rXyAdls77yoDA7y9RM=
 
-jsdom@^23.0.0:
-  version "23.2.0"
-  resolved "https://registry.yarnpkg.com/jsdom/-/jsdom-23.2.0.tgz#08083220146d41c467efa1c6969f02b525ba6c1d"
-  integrity sha512-L88oL7D/8ufIES+Zjz7v0aes+oBMh2Xnh3ygWvL0OaICOomKEPKuPnIfBJekiXr+BHbbMjrWn/xqrDQuxFTeyA==
+jsdom@^24.0.0:
+  version "24.0.0"
+  resolved "https://registry.yarnpkg.com/jsdom/-/jsdom-24.0.0.tgz#e2dc04e4c79da368481659818ee2b0cd7c39007c"
+  integrity sha512-UDS2NayCvmXSXVP6mpTj+73JnNQadZlr9N68189xib2tx5Mls7swlTNao26IoHv46BZJFvXygyRtyXd1feAk1A==
   dependencies:
-    "@asamuzakjp/dom-selector" "^2.0.1"
     cssstyle "^4.0.1"
     data-urls "^5.0.0"
     decimal.js "^10.4.3"
@@ -5039,6 +5022,7 @@ jsdom@^23.0.0:
     http-proxy-agent "^7.0.0"
     https-proxy-agent "^7.0.2"
     is-potential-custom-element-name "^1.0.1"
+    nwsapi "^2.2.7"
     parse5 "^7.1.2"
     rrweb-cssom "^0.6.0"
     saxes "^6.0.0"
@@ -5754,6 +5738,11 @@ nth-check@^2.0.1:
   integrity sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==
   dependencies:
     boolbase "^1.0.0"
+
+nwsapi@^2.2.7:
+  version "2.2.7"
+  resolved "https://registry.yarnpkg.com/nwsapi/-/nwsapi-2.2.7.tgz#738e0707d3128cb750dddcfe90e4610482df0f30"
+  integrity sha512-ub5E4+FBPKwAZx0UwIQOjYWGHTEq5sPqHQNRN8Z9e4A7u3Tj1weLJsL59yH9vmvqEtBHaOmT6cYQKIZOxp35FQ==
 
 object-inspect@^1.13.1:
   version "1.13.1"
