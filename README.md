@@ -83,6 +83,10 @@ const lf = littlefoot({
 
 You'll also want to include styles for the button and popovers, a number of which come with the script.
 
+### Usage with [WordPress](https://www.wordpress.org/)
+
+Install the [wp-littlefoot](https://github.com/s3rgiosan/wp-littlefoot) plugin by following the provided instructions.
+
 ### Usage with [Gatsby](https://www.gatsbyjs.org/)
 
 1. [Install littlefoot](#installation) as a dependency in your Gatsby project.
