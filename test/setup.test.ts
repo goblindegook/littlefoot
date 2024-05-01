@@ -92,3 +92,10 @@ test('footnote button accessibility', async () => {
   expect(button).toHaveAccessibleName()
   expect(button).toHaveAccessibleDescription()
 })
+
+test('handles empty footnotes reasonably', () => {
+  setDocumentBody('empty.html')
+  littlefoot()
+  expect(document.querySelectorAll('.littlefoot')).toHaveLength(3)
+  expect(getAllButtons()).toHaveLength(3)
+})
