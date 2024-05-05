@@ -16,7 +16,7 @@
     "watch:vitest": "vitest",
     "watch": "concurrently 'yarn watch:scripts' 'yarn watch:styles'",
     "format": "prettier --write '{cypress,src,test}/**/*.{js,jsx,ts,tsx,json,css,md}'",
-    "lint:scripts": "eslint '{cypress,src,test}/**/*.ts'",
+    "lint:scripts": "ESLINT_USE_FLAT_CONFIG=false eslint '{cypress,src,test}/**/*.ts'",
     "lint:styles": "stylelint 'src/**/*.css'",
     "lint": "concurrently 'yarn lint:scripts' 'yarn lint:styles'",
     "pretest": "yarn lint",
