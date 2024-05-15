@@ -48,7 +48,10 @@ function getByClassName<E extends Element>(element: E, className: string): E {
 function createElementFromHTML(html: string): HTMLElement {
   const container = document.createElement('div')
   container.innerHTML = html
-  return container.firstElementChild as HTMLElement
+  const element = container.firstElementChild as HTMLElement
+  // Remove element from container div.
+  element.remove()
+  return element
 }
 
 function children(element: Element, selector: string): readonly Element[] {
