@@ -44,6 +44,8 @@ export function addListeners(useCases: UseCases): () => void {
     const element = closestTarget(event, SELECTOR_BUTTON)
     const id = getFootnoteId(element)
     if (id) {
+      // Prevent running the handler more than once.
+      event.preventDefault()
       useCases.toggle(id)
     } else if (!closestTarget(event, SELECTOR_POPOVER)) {
       useCases.touchOutside()
