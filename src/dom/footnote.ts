@@ -22,7 +22,7 @@ export type FootnoteElements = Readonly<{
   wrapper: HTMLElement
 }>
 
-const isMounted = (popover: HTMLElement) => !!popover.parentElement
+const isMounted = (popover: HTMLElement) => document.body.contains(popover)
 
 export function footnoteActions({
   id,
