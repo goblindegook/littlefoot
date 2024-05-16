@@ -31,7 +31,7 @@ test('activate footnote when clicking the button', async () => {
   expect(popover).toHaveClass('is-active')
 })
 
-test('activation touch event has preventDefault', async () => {
+test('activation touch event has preventDefault (#57)', async () => {
   littlefoot(TEST_SETTINGS)
   const button = getButton('1')
 
