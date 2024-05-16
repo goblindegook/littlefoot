@@ -1,5 +1,5 @@
 import { test, expect, afterEach, beforeEach, vi } from 'vitest'
-import { fireEvent } from '@testing-library/dom'
+import { fireEvent, createEvent } from '@testing-library/dom'
 import {
   setDocumentBody,
   waitToStopChanging,
@@ -29,6 +29,15 @@ test('activate footnote when clicking the button', async () => {
   expect(button).toHaveClass('is-active')
   const popover = getPopoverByText(/This is the document's only footnote./)
   expect(popover).toHaveClass('is-active')
+})
+
+test('activation touch event has preventDefault (#57)', async () => {
+  littlefoot(TEST_SETTINGS)
+  const button = getButton('1')
+
+  const event = createEvent.touchEnd(button)
+  fireEvent(button, event)
+  expect(event.defaultPrevented).toBe(true)
 })
 
 test('does not insert empty paragraphs in the footnote content (#187)', async () => {
