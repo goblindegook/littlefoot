@@ -64,7 +64,7 @@
     "@typescript-eslint/eslint-plugin": "7.8.0",
     "@typescript-eslint/parser": "7.8.0",
     "@vitest/coverage-v8": "^1.0.1",
-    "axe-core": "4.9.0",
+    "axe-core": "4.9.1",
     "concurrently": "8.2.2",
     "cssnano": "7.0.1",
     "cypress": "13.9.0",
