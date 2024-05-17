@@ -49,7 +49,6 @@ function createElementFromHTML(html: string): HTMLElement {
   const container = document.createElement('div')
   container.innerHTML = html
   const element = container.firstElementChild as HTMLElement
-  // Remove element from container div.
   element.remove()
   return element
 }

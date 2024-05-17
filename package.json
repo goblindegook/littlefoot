@@ -31,7 +31,7 @@
   "lint-staged": {
     "{src,test}/**/*.ts": [
       "prettier --write",
-      "eslint"
+      "ESLINT_USE_FLAT_CONFIG=false eslint"
     ],
     "{src,test/**/*.{js,json,css,md}": [
       "prettier --write"

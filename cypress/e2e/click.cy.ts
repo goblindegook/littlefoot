@@ -21,7 +21,6 @@ context('Click', () => {
   })
 
   it('popover layout upon resizing window before activation (#1702)', () => {
-    // Resize the viewport before any footnotes have been activated.
     cy.viewport(800, DEFAULT_VIEWPORT_HEIGHT + 100)
     cy.findByTitle('See Footnote 1').click()
     cy.get('.littlefoot__content').invoke('width').should('be.greaterThan', 100)

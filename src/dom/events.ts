@@ -29,22 +29,23 @@ const delegate = (
   selector: string,
   listener: EventListener,
   options?: AddEventListenerOptions,
-) => {
-  const handler = (event: Event) => {
-    const target = event.target as Element | null
-    if (target?.closest(selector)) {
-      listener.call(target, event)
-    }
-  }
-  onDocument(type, handler, options)
-}
+) =>
+  onDocument(
+    type,
+    (event) => {
+      const target = event.target as Element | null
+      if (target?.closest(selector)) {
+        listener.call(target, event)
+      }
+    },
+    options,
+  )
 
 export function addListeners(useCases: UseCases): () => void {
   const toggleOnTouch = (event: Event) => {
     const element = closestTarget(event, SELECTOR_BUTTON)
     const id = getFootnoteId(element)
     if (id) {
-      // Prevent running the handler more than once.
       event.preventDefault()
       useCases.toggle(id)
     } else if (!closestTarget(event, SELECTOR_POPOVER)) {
@@ -62,16 +63,16 @@ export function addListeners(useCases: UseCases): () => void {
   const hideOnHover = hoverHandler(useCases.unhover)
 
   const controller = new AbortController()
-  const { signal } = controller
+  const options = { signal: controller.signal }
 
-  onDocument('touchend', toggleOnTouch, { signal })
-  onDocument('click', toggleOnTouch, { signal })
-  onDocument('keyup', dismissOnEscape, { signal })
-  onDocument('gestureend', throttledReposition, { signal })
-  onWindow('scroll', throttledReposition, { signal })
-  onWindow('resize', throttledResize, { signal })
-  delegate('mouseover', SELECTOR_FOOTNOTE, showOnHover, { signal })
-  delegate('mouseout', SELECTOR_FOOTNOTE, hideOnHover, { signal })
+  onDocument('touchend', toggleOnTouch, options)
+  onDocument('click', toggleOnTouch, options)
+  onDocument('keyup', dismissOnEscape, options)
+  onDocument('gestureend', throttledReposition, options)
+  onWindow('scroll', throttledReposition, options)
+  onWindow('resize', throttledResize, options)
+  delegate('mouseover', SELECTOR_FOOTNOTE, showOnHover, options)
+  delegate('mouseout', SELECTOR_FOOTNOTE, hideOnHover, options)
 
   return () => {
     controller.abort()
