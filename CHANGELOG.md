@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.1.1](https://github.com/goblindegook/littlefoot/compare/v4.1.0...v4.1.1) (2024-05-17)
+
+
+### Bug Fixes
+
+* immediately dismissing popovers on iOS ([#1893](https://github.com/goblindegook/littlefoot/issues/1893)) ([98fd2d3](https://github.com/goblindegook/littlefoot/commit/98fd2d38b1257c7856609cbf511154044a712ac0))
+* popover with very narrow text ([#1894](https://github.com/goblindegook/littlefoot/issues/1894)) ([5c7633e](https://github.com/goblindegook/littlefoot/commit/5c7633e4d5f067572bf3b1c8010e98f299aae3bc))
+
 ## [4.1.0](https://github.com/goblindegook/littlefoot/compare/v4.0.1...v4.1.0) (2023-12-17)
 
 
