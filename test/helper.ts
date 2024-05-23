@@ -2,7 +2,7 @@ import { expect } from 'vitest'
 import { waitFor, screen } from '@testing-library/dom'
 import { join } from 'path'
 import { readFileSync } from 'fs'
-import matchers from '@testing-library/jest-dom/matchers'
+import * as matchers from '@testing-library/jest-dom/matchers'
 
 expect.extend(matchers)
 
