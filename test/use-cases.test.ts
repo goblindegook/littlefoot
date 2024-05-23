@@ -20,6 +20,7 @@ function testSettings(
     activateOnHover: false,
     allowMultiple: false,
     dismissDelay: 0,
+    dismissOnDocumentTouch: false,
     dismissOnUnhover: false,
     hoverDelay: 0,
     ...overrides,
