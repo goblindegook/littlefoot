@@ -1,13 +1,13 @@
 import { expect } from 'vitest'
 import { waitFor, screen } from '@testing-library/dom'
-import { join } from 'path'
-import { readFileSync } from 'fs'
+import { join } from 'node:path'
+import { readFileSync } from 'node:fs'
 import * as matchers from '@testing-library/jest-dom/matchers'
 
 expect.extend(matchers)
 
 export function getPopoverByText(matcher: string | RegExp): HTMLElement {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  // biome-ignore lint/style/noNonNullAssertion: <explanation>
   return screen
     .getByText(matcher, { selector: '.littlefoot__popover *' })
     .closest<HTMLElement>('[data-footnote-id]')!
@@ -24,7 +24,7 @@ export function getButton(id: string): HTMLElement {
 }
 
 export function getPopover(id: string): HTMLElement {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  // biome-ignore lint/style/noNonNullAssertion: <explanation>
   return document.querySelector<HTMLElement>(`aside[data-footnote-id="${id}"]`)!
 }
 

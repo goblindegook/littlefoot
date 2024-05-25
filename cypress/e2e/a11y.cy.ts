@@ -1,10 +1,10 @@
-import { Result, RunOptions } from 'axe-core'
+import type { Result, RunOptions } from 'axe-core'
 
 function terminalLog(violations: Result[]) {
   cy.task(
     'log',
     violations.length === 1
-      ? `1 accessibility violation was detected`
+      ? '1 accessibility violation was detected'
       : `${violations.length} accessibility violations were detected`,
   )
 

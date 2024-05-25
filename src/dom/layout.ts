@@ -21,7 +21,7 @@ function getAvailableRoom(element: HTMLElement): Room {
 }
 
 export function getLeftRelative(element: HTMLElement): number {
-  const marginLeft = parseFloat(getStyle(element, 'marginLeft'))
+  const marginLeft = Number.parseFloat(getStyle(element, 'marginLeft'))
   const width = element.offsetWidth - marginLeft
   const left = element.getBoundingClientRect().left + width / 2
 
@@ -34,12 +34,12 @@ export function getLeftInPixels(
 ): number {
   const maxWidth = content.offsetWidth
   const leftRelative = getLeftRelative(button)
-  const buttonMarginLeft = parseInt(getStyle(button, 'marginLeft'), 10)
+  const buttonMarginLeft = Number.parseInt(getStyle(button, 'marginLeft'), 10)
   return -leftRelative * maxWidth + buttonMarginLeft + button.offsetWidth / 2
 }
 
 function popoverPosition(footnote: HTMLElement, room: Room): Position {
-  const marginSize = parseInt(getStyle(footnote, 'marginTop'), 10)
+  const marginSize = Number.parseInt(getStyle(footnote, 'marginTop'), 10)
   const totalHeight = 2 * marginSize + footnote.offsetHeight
   return room.below < totalHeight && room.below < room.above ? 'above' : 'below'
 }
@@ -51,7 +51,7 @@ export function getAvailableHeight(
 ): number {
   const room = getAvailableRoom(button)
   const position = popoverPosition(footnote, room)
-  const marginSize = parseInt(getStyle(footnote, 'marginTop'), 10)
+  const marginSize = Number.parseInt(getStyle(footnote, 'marginTop'), 10)
   return Math.min(maxHeight, room[position] - marginSize - 15)
 }
 

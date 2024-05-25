@@ -1,9 +1,9 @@
 import { test, expect, afterEach, vi } from 'vitest'
 import {
   createUseCases,
-  Adapter,
-  Footnote,
-  UseCaseSettings,
+  type Adapter,
+  type Footnote,
+  type UseCaseSettings,
 } from '../src/use-cases'
 
 afterEach(() => {

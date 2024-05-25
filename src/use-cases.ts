@@ -1,6 +1,4 @@
-interface ActionCallback<T> {
-  (popover: T, button: T): void
-}
+type ActionCallback<T> = (popover: T, button: T) => void
 
 export type UseCaseSettings<T> = Readonly<{
   activateCallback?: ActionCallback<T>

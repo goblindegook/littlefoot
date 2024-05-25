@@ -1,6 +1,6 @@
-import { footnoteActions, FootnoteElements } from './footnote'
+import { footnoteActions, type FootnoteElements } from './footnote'
 import { bindScrollHandler } from './scroll'
-import { Adapter } from '../use-cases'
+import type { Adapter } from '../use-cases'
 import { addClass, removeClass, unmount } from './element'
 
 export const CLASS_CONTENT = 'littlefoot__content'
@@ -81,11 +81,12 @@ function findReference<E extends Element>(
 ) {
   const processed: E[] = []
   return (link: HTMLAnchorElement): [string, Element, E] | undefined => {
-    const fragment = link.href.split('#')[1]!
-    const related = queryAll<E>(
-      document,
-      '#' + window.CSS.escape(fragment),
-    ).find((footnote) => allowDuplicates || !processed.includes(footnote))
+    const fragment = link.href.split('#')[1]
+    const related = fragment
+      ? queryAll<E>(document, '#' + window.CSS.escape(fragment)).find(
+          (footnote) => allowDuplicates || !processed.includes(footnote),
+        )
+      : undefined
     const body = related?.closest<E>(footnoteSelector)
 
     if (body) {
@@ -97,6 +98,7 @@ function findReference<E extends Element>(
 }
 
 function recursiveHideFootnoteContainer(element: Element): void {
+  // biome-ignore lint/style/noNonNullAssertion: <explanation>
   const container = element.parentElement!
   const visibleElements = children(container, ':not(.' + CLASS_PRINT_ONLY + ')')
   const visibleSeparators = visibleElements.filter((el) => el.tagName === 'HR')
@@ -108,6 +110,7 @@ function recursiveHideFootnoteContainer(element: Element): void {
 }
 
 function recursiveUnmount(element: Element, stopElement: Element) {
+  // biome-ignore lint/style/noNonNullAssertion: <explanation>
   const parent = element.parentElement!
   unmount(element)
   if (parent === stopElement) return

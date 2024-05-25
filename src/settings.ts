@@ -1,8 +1,8 @@
-import { UseCaseSettings } from './use-cases'
+import type { UseCaseSettings } from './use-cases'
 import {
   CLASS_CONTENT,
   CLASS_WRAPPER,
-  HTMLAdapterSettings,
+  type HTMLAdapterSettings,
 } from './dom/document'
 import { CLASS_TOOLTIP } from './dom/layout'
 

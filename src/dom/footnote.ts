@@ -4,9 +4,9 @@ import {
   repositionTooltip,
   getMaxHeight,
   getLeftInPixels,
-  Position,
+  type Position,
 } from './layout'
-import { Footnote } from '../use-cases'
+import type { Footnote } from '../use-cases'
 import { addClass, removeClass, unmount } from './element'
 
 const CLASS_ACTIVE = 'is-active'

@@ -72,7 +72,7 @@ test('preserves empty tags and square brackets elsewhere in the footnote body', 
   const content = getPopover('1').querySelector('.littlefoot__content')
   expect(content?.querySelector('hr')).not.toBeNull()
   expect(content).toContainHTML(
-    `This footnote has a backlink wrapped in [] and an element.`,
+    'This footnote has a backlink wrapped in [] and an element.',
   )
 })
 

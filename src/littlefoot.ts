@@ -1,4 +1,4 @@
-import { DEFAULT_SETTINGS, Settings } from './settings'
+import { DEFAULT_SETTINGS, type Settings } from './settings'
 import { createUseCases } from './use-cases'
 import { setup } from './dom/document'
 import { addListeners } from './dom/events'
