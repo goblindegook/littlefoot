@@ -32,11 +32,11 @@
     "prepare": "yarn build"
   },
   "lint-staged": {
-    "{src,test}/**/*.ts": [
+    "{src,test}/**/*.{js,json,ts}": [
       "prettier --write",
-      "ESLINT_USE_FLAT_CONFIG=false eslint"
+      "biome check --apply ."
     ],
-    "{src,test/**/*.{js,json,css,md}": [
+    "{src,test/**/*.{css,md}": [
       "prettier --write"
     ]
   },
