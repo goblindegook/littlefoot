@@ -78,7 +78,7 @@
     "pixrem": "5.0.0",
     "postcss": "8.4.38",
     "postcss-cli": "11.0.0",
-    "postcss-preset-env": "9.5.13",
+    "postcss-preset-env": "9.5.14",
     "prettier": "^3.0.0",
     "rollup": "4.18.0",
     "standard-version": "9.5.0",
