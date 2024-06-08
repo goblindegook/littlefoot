@@ -42,14 +42,11 @@ function testFootnote(overrides: Partial<Footnote<Test>> = {}): Footnote<Test> {
     destroy: () => undefined,
     dismiss: () => undefined,
     isActive: () => false,
-    isHovered: () => false,
     isReady: () => false,
     ready: () => undefined,
     remove: () => undefined,
     reposition: () => undefined,
     resize: () => undefined,
-    startHovering: () => undefined,
-    stopHovering: () => undefined,
     ...overrides,
   }
 }
@@ -127,7 +124,6 @@ test('footnote dismissal on unhover', () => {
   const footnote = testFootnote({
     id: 'test-id',
     dismiss: vi.fn(),
-    isHovered: () => false,
     isReady: () => true,
     remove: vi.fn(),
   })
@@ -155,21 +151,19 @@ test('only unhovered footnotes are dismissed', () => {
   const unhoveredFootnote = testFootnote({
     id: 'unhovered-id',
     dismiss: vi.fn(),
-    isHovered: () => false,
     isReady: () => true,
     remove: vi.fn(),
   })
   const hoveredFootnote = testFootnote({
     id: 'hovered-id',
     dismiss: vi.fn(),
-    isHovered: () => true,
     isReady: () => true,
     remove: vi.fn(),
   })
   const adapter = testAdapter({
     footnotes: [unhoveredFootnote, hoveredFootnote],
   })
-  const { unhover } = createUseCases(
+  const { hover, unhover } = createUseCases(
     adapter,
     testSettings({
       activateCallback: () => undefined,
@@ -179,6 +173,7 @@ test('only unhovered footnotes are dismissed', () => {
     }),
   )
 
+  hover('hovered-id')
   unhover('unhovered-id')
 
   vi.advanceTimersByTime(50)

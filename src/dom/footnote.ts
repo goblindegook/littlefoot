@@ -32,7 +32,6 @@ export function footnoteActions({
   popover,
   wrapper,
 }: FootnoteElements): Footnote<HTMLElement> {
-  let isHovered = false
   let maxHeight = 0
   let position: Position = 'above'
 
@@ -64,8 +63,6 @@ export function footnoteActions({
     isActive: () => button.classList.contains(CLASS_ACTIVE),
 
     isReady: () => !button.classList.contains(CLASS_CHANGING),
-
-    isHovered: () => isHovered,
 
     ready: () => {
       addClass(popover, CLASS_ACTIVE)
@@ -99,14 +96,6 @@ export function footnoteActions({
         wrapper.style.maxWidth = content.offsetWidth + 'px'
         repositionTooltip(popover, button)
       }
-    },
-
-    startHovering: () => {
-      isHovered = true
-    },
-
-    stopHovering: () => {
-      isHovered = false
     },
 
     destroy: () => unmount(host),

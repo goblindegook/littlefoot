@@ -25,7 +25,6 @@ type TemplateValues = Readonly<{
 }>
 
 const CLASS_PRINT_ONLY = 'littlefoot--print'
-const CLASS_HOST = 'littlefoot'
 
 const setAllPrintOnly = (...elements: readonly Element[]) =>
   elements.forEach((e) => addClass(e, CLASS_PRINT_ONLY))
@@ -113,10 +112,10 @@ function recursiveUnmount(element: Element, stopElement: Element) {
   // biome-ignore lint/style/noNonNullAssertion: <explanation>
   const parent = element.parentElement!
   unmount(element)
-  if (parent === stopElement) return
-  const html = parent.innerHTML.replace('[]', '').replace('&nbsp;', ' ').trim()
-
-  if (!html) {
+  if (
+    parent !== stopElement &&
+    !parent.innerHTML.replace('[]', '').replace('&nbsp;', ' ').trim()
+  ) {
     recursiveUnmount(parent, stopElement)
   }
 }
@@ -177,7 +176,7 @@ function createElements<E extends Element>(
     const id = values.id
 
     const host = createElementFromHTML(
-      `<span class="${CLASS_HOST}">${renderButton(values)}</span>`,
+      `<span class="${'littlefoot'}">${renderButton(values)}</span>`,
     )
 
     const button = host.firstElementChild as HTMLElement

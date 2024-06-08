@@ -1,10 +1,7 @@
 import { throttle } from '@pacote/throttle'
 import type { UseCases, FootnoteAction } from '../use-cases'
 
-const FRAME = 16
-const SELECTOR_BUTTON = '[data-footnote-button]'
 const SELECTOR_FOOTNOTE = '[data-footnote-id]'
-const SELECTOR_POPOVER = '[data-footnote-popover]'
 
 const closestTarget = (event: Event, selector: string) =>
   (event.target as HTMLElement).closest<HTMLElement>(selector)
@@ -25,13 +22,13 @@ const onDocument = document.addEventListener
 const onWindow = window.addEventListener
 
 const delegate = (
-  type: string,
+  eventType: string,
   selector: string,
   listener: EventListener,
   options?: AddEventListenerOptions,
 ) =>
   onDocument(
-    type,
+    eventType,
     (event) => {
       const target = event.target as Element | null
       if (target?.closest(selector)) {
@@ -43,12 +40,12 @@ const delegate = (
 
 export function addListeners(useCases: UseCases): () => void {
   const toggleOnTouch = (event: Event) => {
-    const element = closestTarget(event, SELECTOR_BUTTON)
+    const element = closestTarget(event, '[data-footnote-button]')
     const id = getFootnoteId(element)
     if (id) {
       event.preventDefault()
       useCases.toggle(id)
-    } else if (!closestTarget(event, SELECTOR_POPOVER)) {
+    } else if (!closestTarget(event, '[data-footnote-popover]')) {
       useCases.touchOutside()
     }
   }
@@ -57,8 +54,8 @@ export function addListeners(useCases: UseCases): () => void {
       useCases.dismissAll()
     }
   }
-  const throttledReposition = throttle(useCases.repositionAll, FRAME)
-  const throttledResize = throttle(useCases.resizeAll, FRAME)
+  const throttledReposition = throttle(useCases.repositionAll, 16)
+  const throttledResize = throttle(useCases.resizeAll, 16)
   const showOnHover = hoverHandler(useCases.hover)
   const hideOnHover = hoverHandler(useCases.unhover)
 

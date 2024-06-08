@@ -1,7 +1,6 @@
 import { throttle } from '@pacote/throttle'
 import { addClass, removeClass } from './element'
 
-const FRAME = 16
 const CLASS_FULLY_SCROLLED = 'is-fully-scrolled'
 
 const scrollHandler = (popover: HTMLElement) => (event: WheelEvent) => {
@@ -25,5 +24,5 @@ export function bindScrollHandler(
   content: HTMLElement,
   popover: HTMLElement,
 ): void {
-  content.addEventListener('wheel', throttle(scrollHandler(popover), FRAME))
+  content.addEventListener('wheel', throttle(scrollHandler(popover), 16))
 }

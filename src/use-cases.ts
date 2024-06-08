@@ -18,14 +18,11 @@ export type Footnote<T> = Readonly<{
   destroy: () => void
   dismiss: (onDeactivate?: ActionCallback<T>) => void
   isActive: () => boolean
-  isHovered: () => boolean
   isReady: () => boolean
   ready: () => void
   remove: () => void
   reposition: () => void
   resize: () => void
-  startHovering: () => void
-  stopHovering: () => void
 }>
 
 export type FootnoteAction = (id: string) => void
@@ -53,6 +50,8 @@ export function createUseCases<T>(
   { footnotes, unmount }: Adapter<T>,
   settings: UseCaseSettings<T>,
 ): UseCases {
+  let hovered: string | null
+
   const dismiss = (delay: number) => (footnote: Footnote<T>) => {
     if (footnote.isReady()) {
       footnote.dismiss(settings.dismissCallback)
@@ -108,19 +107,21 @@ export function createUseCases<T>(
     ),
 
     hover: ifFound((footnote) => {
-      footnote.startHovering()
+      hovered = footnote.id
       if (settings.activateOnHover && !footnote.isActive()) {
         activate(settings.hoverDelay)(footnote)
       }
     }),
 
     unhover: ifFound((footnote) => {
-      footnote.stopHovering()
+      if (footnote.id === hovered) {
+        hovered = null
+      }
       if (settings.dismissOnUnhover) {
         setTimeout(
           () =>
             footnotes
-              .filter((f) => !f.isHovered())
+              .filter((f) => f.id !== hovered)
               .forEach(dismiss(settings.dismissDelay)),
           settings.hoverDelay,
         )
