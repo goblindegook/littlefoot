@@ -17,8 +17,8 @@ export function setDocumentBody(fixture: string): void {
   })
 }
 
-export function getButton(id: string): HTMLElement {
-  return screen.getByRole('button', { name: `See Footnote ${id}` })
+export function getButton(id: string, index = 0): HTMLElement {
+  return screen.getAllByRole('button', { name: `Footnote ${id}` })[index]
 }
 
 export function getPopover(id: string): HTMLElement {
@@ -27,14 +27,11 @@ export function getPopover(id: string): HTMLElement {
 }
 
 export function getAllButtons(): HTMLElement[] {
-  return screen.getAllByRole('button', { name: /See Footnote/ })
+  return screen.getAllByRole('button')
 }
 
 export function getAllActiveButtons(): HTMLElement[] {
-  return screen.queryAllByRole('button', {
-    name: /See Footnote/,
-    expanded: true,
-  })
+  return screen.queryAllByRole('button', { expanded: true })
 }
 
 export async function waitToStopChanging(button: HTMLElement): Promise<void> {

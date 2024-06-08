@@ -64,11 +64,11 @@ test('activate multiple buttons when calling .activate()', async () => {
 
   const b1 = getButton('1')
   const b2 = getButton('2')
-  const b3 = getButton('3')
+  const b3 = getButton('4')
 
   instance.activate('1')
   instance.activate('2')
-  instance.activate('3')
+  instance.activate('4')
   await waitToStopChanging(b1)
   await waitToStopChanging(b2)
   await waitToStopChanging(b3)
