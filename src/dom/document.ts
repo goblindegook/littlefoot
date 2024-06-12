@@ -93,8 +93,9 @@ function findReference<E extends Element>(
 function recursiveHideFootnoteContainer(element: Element): void {
   // biome-ignore lint/style/noNonNullAssertion: <explanation>
   const container = element.parentElement!
-  const visibleElements = Array.from(
-    container?.querySelectorAll(':scope > :not(.' + CLASS_PRINT_ONLY + ')'),
+  const visibleElements = queryAll(
+    container,
+    ':scope > :not(.' + CLASS_PRINT_ONLY + ')',
   )
   const visibleSeparators = visibleElements.filter((el) => el.tagName === 'HR')
 
