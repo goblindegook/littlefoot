@@ -7,7 +7,7 @@ import {
   type Position,
 } from './layout'
 import type { Footnote } from '../use-cases'
-import { addClass, removeClass, unmount } from './element'
+import { addClass, hasClass, removeClass } from './element'
 
 const CLASS_ACTIVE = 'is-active'
 const CLASS_CHANGING = 'is-changing'
@@ -60,9 +60,9 @@ export function footnoteActions({
       onDismiss?.(popover, button)
     },
 
-    isActive: () => button.classList.contains(CLASS_ACTIVE),
+    isActive: () => hasClass(button, CLASS_ACTIVE),
 
-    isReady: () => !button.classList.contains(CLASS_CHANGING),
+    isReady: () => !hasClass(button, CLASS_CHANGING),
 
     ready: () => {
       addClass(popover, CLASS_ACTIVE)
@@ -70,7 +70,7 @@ export function footnoteActions({
     },
 
     remove: () => {
-      unmount(popover)
+      popover.remove()
       removeClass(button, CLASS_CHANGING)
     },
 
@@ -98,6 +98,6 @@ export function footnoteActions({
       }
     },
 
-    destroy: () => unmount(host),
+    destroy: () => host.remove(),
   }
 }

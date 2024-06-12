@@ -1,7 +1,7 @@
 import { footnoteActions, type FootnoteElements } from './footnote'
 import { bindScrollHandler } from './scroll'
 import type { Adapter } from '../use-cases'
-import { addClass, removeClass, unmount } from './element'
+import { addClass, removeClass } from './element'
 
 export const CLASS_CONTENT = 'littlefoot__content'
 export const CLASS_WRAPPER = 'littlefoot__wrapper'
@@ -52,12 +52,6 @@ function createElementFromHTML(html: string): HTMLElement {
   return element
 }
 
-function children(element: Element, selector: string): readonly Element[] {
-  return Array.from(element.children).filter(
-    (child) => child.nodeType !== 8 && child.matches(selector),
-  )
-}
-
 function isDefined<T>(value?: T): value is T {
   return value !== undefined
 }
@@ -99,7 +93,9 @@ function findReference<E extends Element>(
 function recursiveHideFootnoteContainer(element: Element): void {
   // biome-ignore lint/style/noNonNullAssertion: <explanation>
   const container = element.parentElement!
-  const visibleElements = children(container, ':not(.' + CLASS_PRINT_ONLY + ')')
+  const visibleElements = Array.from(
+    container?.querySelectorAll(':scope > :not(.' + CLASS_PRINT_ONLY + ')'),
+  )
   const visibleSeparators = visibleElements.filter((el) => el.tagName === 'HR')
 
   if (visibleElements.length === visibleSeparators.length) {
@@ -109,12 +105,12 @@ function recursiveHideFootnoteContainer(element: Element): void {
 }
 
 function recursiveUnmount(element: Element, stopElement: Element) {
-  // biome-ignore lint/style/noNonNullAssertion: <explanation>
-  const parent = element.parentElement!
-  unmount(element)
+  const parent = element.parentElement
+  element.remove()
   if (
+    parent &&
     parent !== stopElement &&
-    !parent.innerHTML.replace('[]', '').replace('&nbsp;', ' ').trim()
+    !parent.innerHTML.replace(/(\[\]|&nbsp;|\s)/g, '')
   ) {
     recursiveUnmount(parent, stopElement)
   }
@@ -176,7 +172,7 @@ function createElements<E extends Element>(
     const id = values.id
 
     const host = createElementFromHTML(
-      `<span class="${'littlefoot'}">${renderButton(values)}</span>`,
+      '<span class="littlefoot">' + renderButton(values) + '</span>',
     )
 
     const button = host.firstElementChild as HTMLElement

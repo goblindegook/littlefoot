@@ -6,6 +6,6 @@ export function removeClass(element: Element, className: string): void {
   element.classList.remove(className)
 }
 
-export function unmount(element: Element): void {
-  element.parentNode?.removeChild(element)
+export function hasClass(element: Element, className: string): boolean {
+  return element.classList.contains(className)
 }
