@@ -67,7 +67,7 @@
     "@vitest/coverage-v8": "^1.6.0",
     "axe-core": "4.9.1",
     "concurrently": "8.2.2",
-    "cssnano": "7.0.3",
+    "cssnano": "7.0.4",
     "cypress": "13.13.0",
     "cypress-axe": "1.5.0",
     "cz-conventional-changelog": "3.3.0",
