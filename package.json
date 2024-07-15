@@ -62,7 +62,7 @@
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "11.1.6",
     "@testing-library/cypress": "10.0.2",
-    "@testing-library/dom": "10.3.1",
+    "@testing-library/dom": "10.3.2",
     "@testing-library/jest-dom": "^6.4.6",
     "@vitest/coverage-v8": "^2.0.0",
     "axe-core": "4.9.1",
