@@ -1,5 +1,4 @@
 import {
-  getAvailableHeight,
   repositionPopover,
   repositionTooltip,
   getMaxHeight,
@@ -76,9 +75,10 @@ export function footnoteActions({
 
     reposition: () => {
       if (isMounted(popover)) {
-        content.style.maxHeight =
-          getAvailableHeight(popover, button, maxHeight) + 'px'
-        position = repositionPopover(popover, button, position)
+        const [next, height] = repositionPopover(popover, button, position)
+
+        position = next
+        content.style.maxHeight = Math.min(maxHeight, height) + 'px'
 
         if (popover.offsetHeight < content.scrollHeight) {
           addClass(popover, CLASS_SCROLLABLE)

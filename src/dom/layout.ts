@@ -4,23 +4,9 @@ import { addClass, removeClass } from './element'
 
 export const CLASS_TOOLTIP = 'littlefoot__tooltip'
 
-const CLASS_POSITION_PREFIX = 'is-'
-
 export type Position = 'above' | 'below'
 
-type Room = Readonly<{ [K in Position]: number }>
-
-function getAvailableRoom(element: HTMLElement): Room {
-  const height = element.offsetHeight
-  const above = element.getBoundingClientRect().top + height / 2
-
-  return {
-    above,
-    below: window.innerHeight - above,
-  }
-}
-
-export function getLeftRelative(element: HTMLElement): number {
+function getLeftRelative(element: HTMLElement): number {
   const marginLeft = Number.parseFloat(getStyle(element, 'marginLeft'))
   const width = element.offsetWidth - marginLeft
   const left = element.getBoundingClientRect().left + width / 2
@@ -38,44 +24,40 @@ export function getLeftInPixels(
   return -leftRelative * maxWidth + buttonMarginLeft + button.offsetWidth / 2
 }
 
-function popoverPosition(footnote: HTMLElement, room: Room): Position {
-  const marginSize = Number.parseInt(getStyle(footnote, 'marginTop'), 10)
-  const totalHeight = 2 * marginSize + footnote.offsetHeight
-  return room.below < totalHeight && room.below < room.above ? 'above' : 'below'
-}
-
-export function getAvailableHeight(
-  footnote: HTMLElement,
-  button: HTMLElement,
-  maxHeight: number,
-): number {
-  const room = getAvailableRoom(button)
-  const position = popoverPosition(footnote, room)
-  const marginSize = Number.parseInt(getStyle(footnote, 'marginTop'), 10)
-  return Math.min(maxHeight, room[position] - marginSize - 15)
-}
-
 export function getMaxHeight(element: HTMLElement) {
   return Math.round(pixels(getStyle(element, 'maxHeight'), element))
+}
+
+function getFootnotePosition(
+  button: HTMLElement,
+  popover: HTMLElement,
+): [Position, number] {
+  const marginSize = Number.parseInt(getStyle(popover, 'marginTop'), 10)
+  const popoverHeight = 2 * marginSize + popover.offsetHeight
+  const roomAbove = button.getBoundingClientRect().top + button.offsetHeight / 2
+  const roomBelow = window.innerHeight - roomAbove
+
+  return roomBelow >= popoverHeight || roomBelow >= roomAbove
+    ? ['below', roomBelow - marginSize - 15]
+    : ['above', roomAbove - marginSize - 15]
 }
 
 export function repositionPopover(
   popover: HTMLElement,
   button: HTMLElement,
-  previous: Position,
-): Position {
-  const room = getAvailableRoom(button)
-  const position = popoverPosition(popover, room)
+  current: Position,
+): [Position, number] {
+  const [next, room] = getFootnotePosition(button, popover)
 
-  if (previous !== position) {
-    removeClass(popover, CLASS_POSITION_PREFIX + previous)
-    addClass(popover, CLASS_POSITION_PREFIX + position)
+  if (current !== next) {
+    removeClass(popover, 'is-' + current)
+    addClass(popover, 'is-' + next)
     const transformX = getLeftRelative(button) * 100 + '%'
-    const transformY = position === 'above' ? '100%' : '0'
+    const transformY = next === 'above' ? '100%' : '0'
     popover.style.transformOrigin = transformX + ' ' + transformY
   }
 
-  return position
+  return [next, room]
 }
 
 export function repositionTooltip(
