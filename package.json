@@ -74,7 +74,7 @@
     "git-cz": "^4.9.0",
     "husky": "9.1.5",
     "jsdom": "^25.0.0",
-    "lint-staged": "15.2.9",
+    "lint-staged": "15.2.10",
     "pixrem": "5.0.0",
     "postcss": "8.4.40",
     "postcss-cli": "11.0.0",
