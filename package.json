@@ -54,7 +54,7 @@
     "defaults"
   ],
   "devDependencies": {
-    "@biomejs/biome": "1.8.3",
+    "@biomejs/biome": "1.9.0",
     "@commitlint/cli": "19.5.0",
     "@commitlint/config-conventional": "19.5.0",
     "@rollup/plugin-commonjs": "26.0.1",
