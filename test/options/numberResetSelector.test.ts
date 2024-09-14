@@ -1,6 +1,6 @@
-import { test, expect, beforeEach } from 'vitest'
-import { setDocumentBody, getAllButtons } from '../helper'
+import { beforeEach, expect, test } from 'vitest'
 import littlefoot from '../../src/littlefoot'
+import { getAllButtons, setDocumentBody } from '../helper'
 
 beforeEach(() => {
   setDocumentBody('multiple.html')

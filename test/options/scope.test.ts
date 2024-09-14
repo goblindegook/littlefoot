@@ -1,7 +1,7 @@
-import { test, expect } from 'vitest'
 import { screen } from '@testing-library/dom'
-import { getAllButtons, setDocumentBody } from '../helper'
+import { expect, test } from 'vitest'
 import littlefoot from '../../src/littlefoot'
+import { getAllButtons, setDocumentBody } from '../helper'
 
 test('creates buttons for all footnotes when scope is body', () => {
   setDocumentBody('default.html')

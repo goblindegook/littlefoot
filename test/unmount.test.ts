@@ -1,6 +1,6 @@
-import { test, expect, beforeEach } from 'vitest'
-import littlefoot from '../src/littlefoot'
 import { screen } from '@testing-library/dom'
+import { beforeEach, expect, test } from 'vitest'
+import littlefoot from '../src/littlefoot'
 import { setDocumentBody } from './helper'
 
 beforeEach(() => {

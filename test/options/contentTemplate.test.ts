@@ -1,7 +1,7 @@
-import { test, expect } from 'vitest'
 import { fireEvent } from '@testing-library/dom'
-import { setDocumentBody, waitToStopChanging, getButton } from '../helper'
+import { expect, test } from 'vitest'
 import littlefoot from '../../src/littlefoot'
+import { getButton, setDocumentBody, waitToStopChanging } from '../helper'
 
 test('setup with default contentTemplate', async () => {
   setDocumentBody('single.html')

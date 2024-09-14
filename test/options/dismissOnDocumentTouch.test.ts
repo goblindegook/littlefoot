@@ -1,13 +1,13 @@
-import { test, expect } from 'vitest'
 import { fireEvent } from '@testing-library/dom'
+import { expect, test } from 'vitest'
+import littlefoot from '../../src/littlefoot'
 import {
-  setDocumentBody,
-  getPopover,
-  waitToStopChanging,
   getAllActiveButtons,
   getButton,
+  getPopover,
+  setDocumentBody,
+  waitToStopChanging,
 } from '../helper'
-import littlefoot from '../../src/littlefoot'
 
 test('do not dismiss footnote when clicking the document body', async () => {
   setDocumentBody('single.html')

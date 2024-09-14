@@ -1,12 +1,12 @@
-import { test, expect, vi } from 'vitest'
 import { fireEvent } from '@testing-library/dom'
-import {
-  setDocumentBody,
-  getPopover,
-  waitToStopChanging,
-  getButton,
-} from '../helper'
+import { expect, test, vi } from 'vitest'
 import littlefoot from '../../src/littlefoot'
+import {
+  getButton,
+  getPopover,
+  setDocumentBody,
+  waitToStopChanging,
+} from '../helper'
 
 test('setup with dismissCallback', async () => {
   setDocumentBody('single.html')

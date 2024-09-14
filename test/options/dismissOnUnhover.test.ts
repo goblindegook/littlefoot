@@ -1,7 +1,7 @@
-import { test, expect } from 'vitest'
 import { fireEvent, waitFor } from '@testing-library/dom'
-import { setDocumentBody, getButton, getPopover } from '../helper'
+import { expect, test } from 'vitest'
 import littlefoot from '../../src/littlefoot'
+import { getButton, getPopover, setDocumentBody } from '../helper'
 
 test('dismiss on button unhover', async () => {
   setDocumentBody('single.html')

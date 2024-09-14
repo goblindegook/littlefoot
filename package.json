@@ -16,12 +16,8 @@
     "watch:styles": "npm run build:styles --watch",
     "watch:vitest": "vitest",
     "watch": "concurrently 'npm run watch:scripts' 'npm run watch:styles'",
-    "format": "concurrently 'npm run format:scripts' 'npm run format:styles'",
-    "format:scripts": "biome check --apply .",
-    "format:styles": "prettier --write '{src}/**/*.{css,md}'",
-    "lint": "concurrently 'npm run lint:scripts' 'npm run lint:styles'",
-    "lint:scripts": "biome lint .",
-    "lint:styles": "stylelint 'src/**/*.css'",
+    "format": "biome check --write .",
+    "lint": "biome lint .",
     "pretest": "npm run lint",
     "test": "concurrently 'npm run test:vitest' 'npm run test:cypress'",
     "test:coverage": "concurrently 'npm run test:vitest --coverage' 'npm run test:cypress'",
@@ -32,13 +28,7 @@
     "prepare": "npm run build"
   },
   "lint-staged": {
-    "{src,test}/**/*.{js,json,ts}": [
-      "prettier --write",
-      "biome check --apply ."
-    ],
-    "{src,test/**/*.{css,md}": [
-      "prettier --write"
-    ]
+    "{src,test}/**/*.{js,json,ts}": ["biome check --write ."]
   },
   "author": {
     "name": "Luís Rodrigues",
@@ -50,11 +40,9 @@
   "module": "dist/littlefoot.mjs",
   "typings": "dist/littlefoot.d.ts",
   "style": "dist/littlefoot.css",
-  "browserslist": [
-    "defaults"
-  ],
+  "browserslist": ["defaults"],
   "devDependencies": {
-    "@biomejs/biome": "1.8.3",
+    "@biomejs/biome": "^1.9.0",
     "@commitlint/cli": "19.5.0",
     "@commitlint/config-conventional": "19.5.0",
     "@rollup/plugin-commonjs": "26.0.1",
@@ -79,12 +67,8 @@
     "postcss": "8.4.40",
     "postcss-cli": "11.0.0",
     "postcss-preset-env": "10.0.3",
-    "prettier": "^3.3.2",
     "rollup": "4.21.1",
     "standard-version": "9.5.0",
-    "stylelint": "16.9.0",
-    "stylelint-config-standard": "36.0.1",
-    "stylelint-prettier": "^5.0.0",
     "tslib": "2.7.0",
     "typescript": "5.6.2",
     "vitest": "^2.0.0"

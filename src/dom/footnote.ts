@@ -1,12 +1,12 @@
-import {
-  repositionPopover,
-  repositionTooltip,
-  getMaxHeight,
-  getLeftInPixels,
-  type Position,
-} from './layout'
 import type { Footnote } from '../use-cases'
 import { addClass, hasClass, removeClass } from './element'
+import {
+  type Position,
+  getLeftInPixels,
+  getMaxHeight,
+  repositionPopover,
+  repositionTooltip,
+} from './layout'
 
 const CLASS_ACTIVE = 'is-active'
 const CLASS_CHANGING = 'is-changing'

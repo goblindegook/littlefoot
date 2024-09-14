@@ -122,7 +122,7 @@
   & .littlefoot__content::after {
     bottom: 0;
     color: var(--popover-scroll-indicator-color);
-    content: '\21E3';
+    content: "\21E3";
     display: block;
     left: 0;
     opacity: 1;

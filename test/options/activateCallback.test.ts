@@ -1,7 +1,7 @@
-import { test, expect, vi } from 'vitest'
 import { fireEvent } from '@testing-library/dom'
-import { setDocumentBody, getPopover, getButton } from '../helper'
+import { expect, test, vi } from 'vitest'
 import littlefoot from '../../src/littlefoot'
+import { getButton, getPopover, setDocumentBody } from '../helper'
 
 test('setup with activateCallback', () => {
   setDocumentBody('single.html')

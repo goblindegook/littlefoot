@@ -1,7 +1,7 @@
-import { test, expect, afterEach, vi } from 'vitest'
 import { fireEvent } from '@testing-library/dom'
-import { setDocumentBody, getButton } from '../helper'
+import { afterEach, expect, test, vi } from 'vitest'
 import littlefoot from '../../src/littlefoot'
+import { getButton, setDocumentBody } from '../helper'
 
 afterEach(() => {
   vi.useRealTimers()

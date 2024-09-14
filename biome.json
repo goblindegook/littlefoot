@@ -6,13 +6,15 @@
     "useIgnoreFile": true
   },
   "formatter": {
-    "indentWidth": 2,
-    "indentStyle": "space"
+    "useEditorconfig": true
   },
   "linter": {
     "rules": {
       "complexity": {
         "noForEach": "off"
+      },
+      "correctness": {
+        "noUnknownMediaFeatureName": "warn"
       },
       "style": {
         "useTemplate": "off"

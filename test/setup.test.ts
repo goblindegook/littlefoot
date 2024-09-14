@@ -1,12 +1,12 @@
-import { test, expect, beforeEach } from 'vitest'
 import { fireEvent } from '@testing-library/dom'
+import { beforeEach, expect, test } from 'vitest'
 import littlefoot from '../src/littlefoot'
 import {
-  setDocumentBody,
-  getAllButtons,
   getAllActiveButtons,
+  getAllButtons,
   getButton,
   getPopover,
+  setDocumentBody,
 } from './helper'
 
 beforeEach(() => {

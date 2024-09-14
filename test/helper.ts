@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom/vitest'
-import { expect } from 'vitest'
-import { waitFor, screen } from '@testing-library/dom'
-import { join } from 'node:path'
 import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
+import { screen, waitFor } from '@testing-library/dom'
+import { expect } from 'vitest'
 
 export function getPopoverByText(matcher: string | RegExp): HTMLElement {
   // biome-ignore lint/style/noNonNullAssertion: <explanation>

@@ -1,5 +1,5 @@
 import { throttle } from '@pacote/throttle'
-import type { UseCases, FootnoteAction } from '../use-cases'
+import type { FootnoteAction, UseCases } from '../use-cases'
 
 const SELECTOR_FOOTNOTE = '[data-footnote-id]'
 

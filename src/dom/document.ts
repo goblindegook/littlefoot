@@ -1,7 +1,7 @@
-import { footnoteActions, type FootnoteElements } from './footnote'
-import { bindScrollHandler } from './scroll'
 import type { Adapter } from '../use-cases'
 import { addClass, removeClass } from './element'
+import { type FootnoteElements, footnoteActions } from './footnote'
+import { bindScrollHandler } from './scroll'
 
 export const CLASS_CONTENT = 'littlefoot__content'
 export const CLASS_WRAPPER = 'littlefoot__wrapper'

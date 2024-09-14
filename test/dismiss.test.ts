@@ -1,13 +1,13 @@
-import { test, expect, beforeEach } from 'vitest'
 import { fireEvent, screen } from '@testing-library/dom'
+import { beforeEach, expect, test } from 'vitest'
+import littlefoot from '../src/littlefoot'
 import {
-  setDocumentBody,
-  waitToStopChanging,
-  getPopoverByText,
   getButton,
   getPopover,
+  getPopoverByText,
+  setDocumentBody,
+  waitToStopChanging,
 } from './helper'
-import littlefoot from '../src/littlefoot'
 
 const TEST_SETTINGS = { activateDelay: 0, dismissDelay: 0 }
 

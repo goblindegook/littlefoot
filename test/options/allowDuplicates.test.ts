@@ -1,6 +1,6 @@
-import { test, expect } from 'vitest'
+import { expect, test } from 'vitest'
 import littlefoot from '../../src/littlefoot'
-import { setDocumentBody, getAllButtons } from '../helper'
+import { getAllButtons, setDocumentBody } from '../helper'
 
 test('create one button per footnote reference', () => {
   setDocumentBody('default.html')
