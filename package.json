@@ -64,7 +64,7 @@
     "jsdom": "^25.0.0",
     "lint-staged": "15.2.10",
     "pixrem": "5.0.0",
-    "postcss": "8.4.40",
+    "postcss": "8.4.47",
     "postcss-cli": "11.0.0",
     "postcss-preset-env": "10.0.5",
     "rollup": "4.22.4",
