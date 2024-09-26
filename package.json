@@ -48,7 +48,7 @@
     "@rollup/plugin-commonjs": "26.0.1",
     "@rollup/plugin-node-resolve": "15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
-    "@rollup/plugin-typescript": "11.1.6",
+    "@rollup/plugin-typescript": "12.1.0",
     "@testing-library/cypress": "10.0.2",
     "@testing-library/dom": "10.4.0",
     "@testing-library/jest-dom": "^6.4.6",
