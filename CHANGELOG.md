@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [4.1.2](https://github.com/goblindegook/littlefoot/compare/v4.1.1...v4.1.2) (2024-10-05)
 
+* no significant changes, this release only reduces the compiled bundle size
+
 ### [4.1.1](https://github.com/goblindegook/littlefoot/compare/v4.1.0...v4.1.1) (2024-05-17)
 
 
