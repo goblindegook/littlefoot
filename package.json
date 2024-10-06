@@ -78,7 +78,7 @@
     "vitest": "^2.0.0"
   },
   "dependencies": {
-    "@pacote/get-style": "2.0.2",
+    "@pacote/get-style": "2.0.3",
     "@pacote/pixels": "2.0.2",
     "@pacote/throttle": "2.0.3"
   },
