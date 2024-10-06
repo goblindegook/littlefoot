@@ -21,8 +21,6 @@ export type FootnoteElements = Readonly<{
   wrapper: HTMLElement
 }>
 
-const isMounted = (popover: HTMLElement) => document.body.contains(popover)
-
 export function footnoteActions({
   id,
   button,
@@ -34,6 +32,8 @@ export function footnoteActions({
   let maxHeight = 0
   let position: Position = 'above'
 
+  const isMounted = () => document.body.contains(popover)
+
   return {
     id,
 
@@ -41,12 +41,9 @@ export function footnoteActions({
       button.setAttribute('aria-expanded', 'true')
       addClass(button, CLASS_CHANGING)
       addClass(button, CLASS_ACTIVE)
-
       button.insertAdjacentElement('afterend', popover)
-
       popover.style.maxWidth = document.body.clientWidth + 'px'
       maxHeight = getMaxHeight(content)
-
       onActivate?.(popover, button)
     },
 
@@ -55,7 +52,6 @@ export function footnoteActions({
       addClass(button, CLASS_CHANGING)
       removeClass(button, CLASS_ACTIVE)
       removeClass(popover, CLASS_ACTIVE)
-
       onDismiss?.(popover, button)
     },
 
@@ -74,9 +70,8 @@ export function footnoteActions({
     },
 
     reposition: () => {
-      if (isMounted(popover)) {
+      if (isMounted()) {
         const [next, height] = repositionPopover(popover, button, position)
-
         position = next
         content.style.maxHeight = Math.min(maxHeight, height) + 'px'
 
@@ -91,7 +86,7 @@ export function footnoteActions({
     },
 
     resize: () => {
-      if (isMounted(popover)) {
+      if (isMounted()) {
         popover.style.left = getLeftInPixels(content, button) + 'px'
         wrapper.style.maxWidth = content.offsetWidth + 'px'
         repositionTooltip(popover, button)

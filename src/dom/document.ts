@@ -75,18 +75,16 @@ function findReference<E extends Element>(
   const processed: E[] = []
   return (link: HTMLAnchorElement): [string, Element, E] | undefined => {
     const fragment = link.href.split('#')[1]
-    const related = fragment
-      ? queryAll<E>(document, '#' + window.CSS.escape(fragment)).find(
-          (footnote) => allowDuplicates || !processed.includes(footnote),
-        )
-      : undefined
-    const body = related?.closest<E>(footnoteSelector)
+    if (!fragment) return
 
-    if (body) {
-      processed.push(body)
-      const reference = link.closest<E>(anchorParentSelector) || link
-      return [reference.id || link.id, reference, body]
-    }
+    const body = queryAll<E>(document, '#' + window.CSS.escape(fragment))
+      .find((footnote) => allowDuplicates || !processed.includes(footnote))
+      ?.closest<E>(footnoteSelector)
+    if (!body) return
+
+    processed.push(body)
+    const reference = link.closest<E>(anchorParentSelector) || link
+    return [reference.id || link.id, reference, body]
   }
 }
 
