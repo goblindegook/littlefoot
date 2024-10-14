@@ -1,5 +1,6 @@
 import { throttle } from '@pacote/throttle'
 import type { FootnoteAction, UseCases } from '../use-cases'
+import { dragState } from './dragState'
 
 const SELECTOR_FOOTNOTE = '[data-footnote-id]'
 
@@ -40,13 +41,15 @@ const delegate = (
 
 export function addListeners(useCases: UseCases): () => void {
   const toggleOnTouch = (event: Event) => {
-    const element = closestTarget(event, '[data-footnote-button]')
-    const id = getFootnoteId(element)
+    const element = closestTarget(event, '[data-footnote-button]');
+    const id = getFootnoteId(element);
+
     if (id) {
-      event.preventDefault()
-      useCases.toggle(id)
-    } else if (!closestTarget(event, '[data-footnote-popover]')) {
-      useCases.touchOutside()
+      event.preventDefault();
+      useCases.toggle(id);
+    } else if (!closestTarget(event, '[data-footnote-popover]') && !dragState.isDragging) {
+      // Only call touchOutside if not dragging
+      useCases.touchOutside();
     }
   }
   const dismissOnEscape = (event: KeyboardEvent) => {

@@ -72,7 +72,9 @@
   transform: var(--popover-transform);
   transition: var(--popover-transition);
   width: var(--popover-width);
-  z-index: 1;
+  z-index: 999;
+  cursor: move;
+
 
   &.is-above {
     bottom: 0;
@@ -193,6 +195,7 @@
 }
 
 @media print {
+
   .littlefoot__popover,
   .littlefoot__button {
     display: none;

@@ -2,7 +2,7 @@ import type { Adapter } from '../use-cases'
 import { addClass, removeClass } from './element'
 import { type FootnoteElements, footnoteActions } from './footnote'
 import { bindScrollHandler } from './scroll'
-
+import { dragState } from './dragState';
 export const CLASS_CONTENT = 'littlefoot__content'
 export const CLASS_WRAPPER = 'littlefoot__wrapper'
 
@@ -188,10 +188,74 @@ function createElements<E extends Element>(
     bindScrollHandler(content, popover)
 
     reference.insertAdjacentElement('beforebegin', host)
-
+    makeDraggable(popover)
     return { id, button, host, popover, content, wrapper }
   }
 }
+// Drag-and-drop function
+function makeDraggable(popover: HTMLElement) {
+  let isDragging = false;
+  let startX: number;
+  let startY: number;
+  let startLeft: number;
+  let startTop: number;
+
+  function dragStart(e: MouseEvent) {
+    console.log('Drag start attempted');
+    if (e.target !== popover && !popover.contains(e.target as Node)) {
+      console.log('Drag start ignored: not on popover');
+      return;
+    }
+
+    isDragging = true;
+    startX = e.clientX;
+    startY = e.clientY;
+    startLeft = popover.offsetLeft;
+    startTop = popover.offsetTop;
+
+    console.log('Drag started', { startX, startY, startLeft, startTop });
+
+    // Prevent text selection during drag
+    e.preventDefault();
+  }
+
+  function drag(e: MouseEvent) {
+    if (!isDragging) return;
+
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+
+    const newLeft = startLeft + dx;
+    const newTop = startTop + dy;
+
+    popover.style.left = `${newLeft}px`;
+    popover.style.top = `${newTop}px`;
+
+    console.log('Dragging', { dx, dy, newLeft, newTop });
+
+    // Update dragState
+    dragState.isDragging = true;
+  }
+
+  function dragEnd(e: MouseEvent) {
+    if (!isDragging) return;
+
+    isDragging = false;
+
+
+    console.log('Drag ended');
+  }
+
+  console.log('Adding event listeners to popover', popover);
+  popover.addEventListener("mousedown", dragStart);
+  document.addEventListener("mousemove", drag);
+  document.addEventListener("mouseup", dragEnd);
+
+  // Ensure the popover is positioned absolutely
+  popover.style.position = 'absolute';
+  console.log('Popover position set to absolute');
+}
+
 
 export function setup({
   allowDuplicates,
