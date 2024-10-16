@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Littlefoot Example</title>
+  <link rel="stylesheet" href="/dist/littlefoot.css">
+</head>
+</head>
+
+<body>
+
+  First Footnote <a href="#fn:1" id="fnref:1">1</a>
+
+  Second Footnote <a href="#fn:2" id="fnref:2">2</a>
+
+  <div class="footnotes">
+    <hr>
+    <ol>
+
+      <li class="footnote" id="fn:1">
+        <p>
+
+          This is what is in the first inline footnote bubble...
+
+        </p>
+      </li>
+
+      <li class="footnote" id="fn:2">
+        <p>
+
+          This is what is in the second inline footnote bubble...
+
+        </p>
+      </li>
+    </ol>
+  </div>
+  <script src="/dist/littlefoot.js"></script>
+  <script type="application/javascript">
+    littlefoot.littlefoot();  
+  </script>
+</body>
+
+</html>
