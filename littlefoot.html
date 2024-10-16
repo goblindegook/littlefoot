@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Littlefoot Example</title>
+    <!-- Include Littlefoot CSS for styling footnotes -->
+    <link rel="stylesheet" href="/dist/littlefoot.css" />
+</head>
+<body>
+    <h1>Welcome to Littlefoot Example</h1>
+    <p>This is an example text with a footnote.<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></p>
+    <div class="footnotes">
+        <ol>
+            <li id="fn:1">
+                <p>unning the function will return an object that can be stored and used to manipulate the footnote buttons/content. The following methods are available in this return object:
+
+                    dismiss([footnoteId[, timeout]])
+                    This function will close the popover matching the footnote ID. If omitted, all popovers are dismissed. timeout specifies the amount of time after the footnote’s active class is removed before the element itself is removed. If excluded, timeout will default to the dismissDelay option.<a href="#fnref:1" class="footnote-backref">↩</a></p>
+            </li>
+            <li id="fn:2">
+                <p>hello<p><sup id="fnref:2"><a href="#fn:1" class="footnote">hello hello</a></sup></p></p>
+            </li>
+            <!-- <li>
+                <p><sup id="fnref:2"><a href="#fn:1" class="footnote">hello hello</a></sup></p>
+            </li> -->
+        </ol>
+    </div>
+    <p>This is another example for footnote demo<a href="#fn:2" class="footnote">2</a></p>
+
+    <!-- Include Littlefoot JS -->
+    <script src="dist/littlefoot.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+    <script>
+        // Initialize Littlefoot
+        document.addEventListener('DOMContentLoaded', function () {
+            littlefoot.default(); // Activate Littlefoot on the page
+        });
+    </script>
+</body>
+</html>
