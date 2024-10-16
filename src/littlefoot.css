@@ -1,7 +1,7 @@
 @custom-media --breakpoint (width < 768px);
 
 .littlefoot {
-  --button-background-color: #949494;
+  --button-background-color: #ff4747;
   --button-text-color: #fff;
   --button-active-background-color: #3f3f3f;
   --button-active-text-color: #fff;
@@ -193,6 +193,7 @@
 }
 
 @media print {
+
   .littlefoot__popover,
   .littlefoot__button {
     display: none;
