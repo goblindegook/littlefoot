@@ -45,13 +45,17 @@ export function addListeners(useCases: UseCases): () => void {
     if (id) {
       event.preventDefault()
       useCases.toggle(id)
+      applyBlur()
+ 
     } else if (!closestTarget(event, '[data-footnote-popover]')) {
       useCases.touchOutside()
+      removeBlur()
     }
   }
   const dismissOnEscape = (event: KeyboardEvent) => {
     if (event.keyCode === 27 || event.key === 'Escape' || event.key === 'Esc') {
       useCases.dismissAll()
+      removeBlur()
     }
   }
   const throttledReposition = throttle(useCases.repositionAll, 16)
@@ -75,3 +79,23 @@ export function addListeners(useCases: UseCases): () => void {
     controller.abort()
   }
 }
+
+function createBlurContainer() {
+  const blurContainer = document.createElement('div');
+  blurContainer.classList.add('blur-container');
+  document.body.appendChild(blurContainer);
+}
+
+function applyBlur() {
+  createBlurContainer();
+  document.body.classList.add('blurred');
+}
+
+function removeBlur() {
+  document.body.classList.remove('blurred');
+  const blurContainer = document.querySelector('.blur-container');
+  if (blurContainer) {
+    blurContainer.remove();
+  }
+}
+
