@@ -70,7 +70,7 @@
     "pixrem": "5.0.0",
     "postcss": "8.4.47",
     "postcss-cli": "11.0.0",
-    "postcss-preset-env": "10.0.7",
+    "postcss-preset-env": "10.0.8",
     "rollup": "4.22.4",
     "standard-version": "9.5.0",
     "tslib": "2.7.0",
