@@ -85,7 +85,7 @@ You'll also want to include styles for the button and popovers, a number of whic
 
 ### Usage with [WordPress](https://www.wordpress.org/)
 
-Install the [wp-littlefoot](https://github.com/s3rgiosan/wp-littlefoot) plugin by following the provided instructions.
+Install the [Littlefoot for Footnotes](https://github.com/s3rgiosan/littlefoot) plugin by following the provided instructions.
 
 ### Usage with [Gatsby](https://www.gatsbyjs.org/)
 
