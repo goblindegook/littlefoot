@@ -24,7 +24,7 @@
     "test:cypress": "npm run build && cypress run",
     "test:cypress:open": "npm run build && cypress open",
     "test:vitest": "vitest run",
-    "release": "standard-version",
+    "release": "commit-and-tag-version",
     "prepare": "npm run build"
   },
   "lint-staged": {
@@ -72,7 +72,7 @@
     "postcss-cli": "11.0.0",
     "postcss-preset-env": "10.1.4",
     "rollup": "4.34.8",
-    "standard-version": "9.5.0",
+    "commit-and-tag-version": "9.5.0",
     "tslib": "2.8.1",
     "typescript": "5.7.3",
     "vitest": "^3.0.0"
