@@ -79,7 +79,7 @@
   },
   "dependencies": {
     "@pacote/get-style": "2.0.4",
-    "@pacote/pixels": "2.0.3",
+    "@pacote/pixels": "2.0.4",
     "@pacote/throttle": "2.0.3"
   },
   "resolutions": {
