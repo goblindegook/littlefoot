@@ -65,7 +65,7 @@
     "lint-staged": "15.4.3",
     "pixrem": "5.0.0",
     "postcss": "8.5.3",
-    "postcss-cli": "11.0.0",
+    "postcss-cli": "11.0.1",
     "postcss-preset-env": "10.1.5",
     "rollup": "4.34.9",
     "commit-and-tag-version": "12.5.0",
