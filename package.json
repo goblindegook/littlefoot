@@ -28,9 +28,7 @@
     "prepare": "npm run build"
   },
   "lint-staged": {
-    "{src,test}/**/*.{js,json,ts}": [
-      "biome check --write ."
-    ]
+    "{src,test}/**/*.{css,js,json,ts}": ["biome check --write ."]
   },
   "author": {
     "name": "Luís Rodrigues",
@@ -42,9 +40,7 @@
   "module": "dist/littlefoot.mjs",
   "typings": "dist/littlefoot.d.ts",
   "style": "dist/littlefoot.css",
-  "browserslist": [
-    "defaults"
-  ],
+  "browserslist": ["defaults"],
   "devDependencies": {
     "@biomejs/biome": "^1.9.0",
     "@commitlint/cli": "19.8.0",
