@@ -70,7 +70,7 @@
     "rollup": "4.38.0",
     "commit-and-tag-version": "12.5.0",
     "tslib": "2.8.1",
-    "typescript": "5.8.2",
+    "typescript": "5.8.3",
     "vitest": "^3.0.0"
   },
   "dependencies": {
