@@ -42,7 +42,7 @@
   "style": "dist/littlefoot.css",
   "browserslist": ["defaults"],
   "devDependencies": {
-    "@biomejs/biome": "^1.9.0",
+    "@biomejs/biome": "^2.0.0",
     "@commitlint/cli": "19.8.1",
     "@commitlint/config-conventional": "19.8.1",
     "@rollup/plugin-commonjs": "28.0.3",
