@@ -89,7 +89,7 @@ function findReference<E extends Element>(
 }
 
 function recursiveHideFootnoteContainer(element: Element): void {
-  // biome-ignore lint/style/noNonNullAssertion: <explanation>
+  // biome-ignore lint/style/noNonNullAssertion: never null
   const container = element.parentElement!
   const visibleElements = queryAll(
     container,

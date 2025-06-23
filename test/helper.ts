@@ -5,7 +5,7 @@ import { screen, waitFor } from '@testing-library/dom'
 import { expect } from 'vitest'
 
 export function getPopoverByText(matcher: string | RegExp): HTMLElement {
-  // biome-ignore lint/style/noNonNullAssertion: <explanation>
+  // biome-ignore lint/style/noNonNullAssertion: used in tests, null values are supposed to fail
   return screen
     .getByText(matcher, { selector: '.littlefoot__popover *' })
     .closest<HTMLElement>('[data-footnote-id]')!
@@ -18,11 +18,12 @@ export function setDocumentBody(fixture: string): void {
 }
 
 export function getButton(id: string, index = 0): HTMLElement {
-  return screen.getAllByRole('button', { name: `Footnote ${id}` })[index]
+  // biome-ignore lint/style/noNonNullAssertion: used in tests, null values are supposed to fail
+  return screen.getAllByRole('button', { name: `Footnote ${id}` })[index]!
 }
 
 export function getPopover(id: string): HTMLElement {
-  // biome-ignore lint/style/noNonNullAssertion: <explanation>
+  // biome-ignore lint/style/noNonNullAssertion: used in tests, null values are supposed to fail
   return document.querySelector<HTMLElement>(`aside[data-footnote-id="${id}"]`)!
 }
 
