@@ -74,19 +74,21 @@ export function createUseCases<T>(
     }
   }
 
-  const ifFound = (action: (footnote: Footnote<T>) => void) => (id: string) => {
-    const footnote = footnotes.find((footnote) => footnote.id === id)
-    if (footnote) {
-      action(footnote)
+  const withFootnote =
+    (action: (footnote: Footnote<T>) => void) =>
+    (id: string): void => {
+      const footnote = footnotes.find((footnote) => footnote.id === id)
+      if (footnote) {
+        action(footnote)
+      }
     }
-  }
 
   const dismissAll = () => footnotes.forEach(dismiss(settings.dismissDelay))
 
   return {
-    activate: (id, delay) => ifFound(activate(delay))(id),
+    activate: (id, delay) => withFootnote(activate(delay))(id),
 
-    dismiss: (id, delay) => ifFound(dismiss(delay))(id),
+    dismiss: (id, delay) => withFootnote(dismiss(delay))(id),
 
     dismissAll,
 
@@ -96,24 +98,30 @@ export function createUseCases<T>(
       }
     },
 
-    repositionAll: () => footnotes.forEach((current) => current.reposition()),
+    repositionAll: () =>
+      footnotes.forEach((current) => {
+        current.reposition()
+      }),
 
-    resizeAll: () => footnotes.forEach((current) => current.resize()),
+    resizeAll: () =>
+      footnotes.forEach((current) => {
+        current.resize()
+      }),
 
-    toggle: ifFound((footnote) =>
+    toggle: withFootnote((footnote) =>
       footnote.isActive()
         ? dismiss(settings.dismissDelay)(footnote)
         : activate(settings.activateDelay)(footnote),
     ),
 
-    hover: ifFound((footnote) => {
+    hover: withFootnote((footnote) => {
       hovered = footnote.id
       if (settings.activateOnHover && !footnote.isActive()) {
         activate(settings.hoverDelay)(footnote)
       }
     }),
 
-    unhover: ifFound((footnote) => {
+    unhover: withFootnote((footnote) => {
       if (footnote.id === hovered) {
         hovered = null
       }

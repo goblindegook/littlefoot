@@ -27,7 +27,9 @@ type TemplateValues = Readonly<{
 const CLASS_PRINT_ONLY = 'littlefoot--print'
 
 const setAllPrintOnly = (...elements: readonly Element[]) =>
-  elements.forEach((e) => addClass(e, CLASS_PRINT_ONLY))
+  elements.forEach((e) => {
+    addClass(e, CLASS_PRINT_ONLY)
+  })
 
 function queryAll<E extends Element>(
   parent: ParentNode,
@@ -121,9 +123,9 @@ function prepareTemplateData<E extends Element>(
 ): [E, E, TemplateValues] {
   const content = createElementFromHTML(body.outerHTML)
   const backlinkSelector = '[href$="#' + id + '"]'
-  queryAll<E>(content, backlinkSelector).forEach((bl) =>
-    recursiveUnmount(bl, content),
-  )
+  queryAll<E>(content, backlinkSelector).forEach((bl) => {
+    recursiveUnmount(bl, content)
+  })
   const html = content.innerHTML.trim()
 
   return [
@@ -227,10 +229,12 @@ export function setup({
     footnotes,
 
     unmount() {
-      footnotes.forEach((footnote) => footnote.destroy())
-      queryAll(document, '.' + CLASS_PRINT_ONLY).forEach((element) =>
-        removeClass(element, CLASS_PRINT_ONLY),
-      )
+      footnotes.forEach((footnote) => {
+        footnote.destroy()
+      })
+      queryAll(document, '.' + CLASS_PRINT_ONLY).forEach((element) => {
+        removeClass(element, CLASS_PRINT_ONLY)
+      })
     },
   }
 }
