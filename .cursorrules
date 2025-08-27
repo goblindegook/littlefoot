@@ -1,0 +1,64 @@
+# .cursorrules
+
+## Expertise
+
+- All code must be written in TypeScript, with a focus on DOM, CSS, and testing using Vitest and testing-library.
+
+## Key Principles
+
+- Write concise TypeScript with clear, accurate examples.
+- Prefer iteration and modularization; avoid code duplication.
+- Use descriptive variable names with auxiliary verbs (e.g., isLoading, hasError).
+
+## Naming Conventions
+
+- Use lowercase and dashes for files and directories (e.g., components/auth-wizard).
+
+## TypeScript Style
+
+- Use TypeScript exclusively.
+- Prefer functional and declarative programming; avoid classes.
+- Use `function` for pure functions.
+- Use `const` for impure functions.
+- Favor immutable data structures; only use mutation for significant performance gains.
+- Prefer `type` over `interface`.
+- Avoid enums; use maps instead.
+- Avoid default exports; use named exports.
+- Optimize for minification.
+
+## CSS Style
+
+- Use PostCSS presets.
+- All colors and dimensions must be configurable via CSS variables.
+
+## Architecture
+
+- Refer to library behaviors as "use cases".
+- Decouple logic supporting use cases from technical details (e.g., browser APIs, DOM access, rendering, event management).
+
+## Testing
+
+- All development must be test-driven; when implementing functionality, only do just enough to make the test pass.
+- Run tests after every change set.
+- Test structure should be decoupled from implementation structure.
+- Do not distinguish between "unit" and "integration" tests; treat all as unit tests.
+- Use Vitest and testing-library for all tests.
+- Use jsdom (via Vitest) to simulate the DOM.
+- Use Cypress only for browser-based tests that cannot be covered by faster tests.
+- Drive all tests by user behavior; assert only on visible or user-noticeable outcomes.
+- Test only through the library's public API.
+- Assert only on rendered DOM elements.
+- Never mock internal components.
+- Never assert on internal state.
+
+## Dependencies
+
+- Use Vitest and testing-library for tests.
+- Use Cypress for browser testing.
+- Avoid bundling third-party dependencies.
+- Prefer @pacote/* packages as they are first-party dependencies.
+
+## Version Control
+
+- Only commit code when all tests pass.
+- Use Conventional Commits format for commit messages.
