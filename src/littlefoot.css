@@ -26,6 +26,7 @@
   --popover-width: 22em;
   --popover-scroll-indicator-color: #3f3f3f;
   --popover-tooltip-size: 0.5rem;
+  --popover-z-index: 1;
 
   position: relative;
 }
@@ -72,7 +73,7 @@
   transform: var(--popover-transform);
   transition: var(--popover-transition);
   width: var(--popover-width);
-  z-index: 1;
+  z-index: var(--popover-z-index);
 
   &.is-above {
     bottom: 0;
@@ -87,7 +88,7 @@
 .littlefoot__wrapper {
   border-radius: var(--popover-border-radius);
   position: relative;
-  z-index: 1;
+  z-index: var(--popover-z-index);
 }
 
 .littlefoot__content {
