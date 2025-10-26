@@ -25,6 +25,17 @@ This project includes the script itself and a default style to apply to the foot
 
 littlefoot was forked from [Bigfoot.js](https://github.com/lemonmade/bigfoot/) by [Chris Sauvé](https://github.com/lemonmade). Unlike Bigfoot.js, littlefoot does not require jQuery.
 
+## Browser support
+
+littlefoot runs without additional transpilation or polyfills on the following minimum versions:
+
+- Chromium (Google Chrome, Microsoft Edge): 88+
+- Firefox: 92+
+- Safari: 15.4+
+- Opera: 74+
+
+Older browsers require a transpiled build plus suitable polyfills.
+
 ## Installation
 
 Install using NPM:
