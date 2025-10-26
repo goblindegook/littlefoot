@@ -18,7 +18,7 @@ export default [
     plugins: [
       resolve({ mainFields: ['main'] }),
       commonjs(),
-      typescript(),
+      typescript({ target: 'ES2017' }),
       production && terserPlugin,
     ],
     context: 'window',
@@ -30,8 +30,8 @@ export default [
   },
   {
     input: 'src/littlefoot.ts',
-    external: Object.keys(pkg.dependencies),
-    plugins: [typescript(), production && terserPlugin],
+    external: Object.keys(pkg.dependencies ?? {}),
+    plugins: [typescript({ target: 'ES2017' }), production && terserPlugin],
     context: 'window',
     output: [
       {
@@ -43,8 +43,8 @@ export default [
   },
   {
     input: 'src/littlefoot.ts',
-    external: Object.keys(pkg.dependencies),
-    plugins: [typescript({ target: 'ES6' }), production && terserPlugin],
+    external: Object.keys(pkg.dependencies ?? {}),
+    plugins: [typescript({ target: 'ES2017' }), production && terserPlugin],
     context: 'window',
     output: [
       {
