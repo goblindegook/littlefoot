@@ -1,13 +1,28 @@
-import { getStyle } from '@pacote/get-style'
-import { pixels } from '@pacote/pixels'
 import { addClass, removeClass } from './element'
 
 export const CLASS_TOOLTIP = 'littlefoot__tooltip' as const
 
 export type Position = 'above' | 'below'
 
+function getComputedValue(
+  element: HTMLElement,
+  property: keyof CSSStyleDeclaration | string,
+): string {
+  const view = element.ownerDocument?.defaultView ?? window
+  const style = view.getComputedStyle(element)
+  return style.getPropertyValue(property as string) || ''
+}
+
+function getNumericValue(
+  element: HTMLElement,
+  property: keyof CSSStyleDeclaration | string,
+): number {
+  const value = Number.parseFloat(getComputedValue(element, property))
+  return Number.isNaN(value) ? 0 : value
+}
+
 function getLeftRelative(element: HTMLElement): number {
-  const marginLeft = Number.parseFloat(getStyle(element, 'marginLeft'))
+  const marginLeft = getNumericValue(element, 'margin-left')
   const width = element.offsetWidth - marginLeft
   const left = element.getBoundingClientRect().left + width / 2
 
@@ -20,19 +35,24 @@ export function getLeftInPixels(
 ): number {
   const maxWidth = content.offsetWidth
   const leftRelative = getLeftRelative(button)
-  const buttonMarginLeft = Number.parseInt(getStyle(button, 'marginLeft'), 10)
+  const buttonMarginLeft = getNumericValue(button, 'margin-left')
   return -leftRelative * maxWidth + buttonMarginLeft + button.offsetWidth / 2
 }
 
 export function getMaxHeight(element: HTMLElement) {
-  return Math.round(pixels(getStyle(element, 'maxHeight'), element))
+  const value = getComputedValue(element, 'max-height')
+  if (value === '' || value === 'none') {
+    return Number.POSITIVE_INFINITY
+  }
+  const numeric = Number.parseFloat(value)
+  return Number.isNaN(numeric) ? Number.POSITIVE_INFINITY : Math.round(numeric)
 }
 
 function getFootnotePosition(
   button: HTMLElement,
   popover: HTMLElement,
 ): [Position, number] {
-  const marginSize = Number.parseInt(getStyle(popover, 'marginTop'), 10)
+  const marginSize = getNumericValue(popover, 'margin-top')
   const popoverHeight = 2 * marginSize + popover.offsetHeight
   const roomAbove = button.getBoundingClientRect().top + button.offsetHeight / 2
   const roomBelow = window.innerHeight - roomAbove

@@ -1,5 +1,5 @@
-import { throttle } from '@pacote/throttle'
 import { addClass, removeClass } from './element'
+import { throttle } from './throttle'
 
 const CLASS_FULLY_SCROLLED = 'is-fully-scrolled'
 
