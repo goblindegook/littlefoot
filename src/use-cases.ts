@@ -41,13 +41,13 @@ export type UseCases = Readonly<{
   unmount: () => void
 }>
 
-export interface Adapter<T> {
-  readonly footnotes: readonly Footnote<T>[]
-  readonly unmount: () => void
-}
+type MethodNames<T> = {
+  [K in keyof T]: T[K] extends () => void ? K : never
+}[keyof T]
 
 export function createUseCases<T>(
-  { footnotes, unmount }: Adapter<T>,
+  footnotes: readonly Footnote<T>[],
+  reset: () => void,
   settings: UseCaseSettings<T>,
 ): UseCases {
   let hovered: string | null
@@ -85,6 +85,12 @@ export function createUseCases<T>(
 
   const dismissAll = () => footnotes.forEach(dismiss(settings.dismissDelay))
 
+  const forEach = <T, M extends MethodNames<Footnote<T>>>(method: M) => {
+    footnotes.forEach((footnote) => {
+      footnote[method]()
+    })
+  }
+
   return {
     activate: (id, delay) => withFootnote(activate(delay))(id),
 
@@ -98,15 +104,9 @@ export function createUseCases<T>(
       }
     },
 
-    repositionAll: () =>
-      footnotes.forEach((current) => {
-        current.reposition()
-      }),
+    repositionAll: () => forEach('reposition'),
 
-    resizeAll: () =>
-      footnotes.forEach((current) => {
-        current.resize()
-      }),
+    resizeAll: () => forEach('resize'),
 
     toggle: withFootnote((footnote) =>
       footnote.isActive()
@@ -127,15 +127,15 @@ export function createUseCases<T>(
       }
       if (settings.dismissOnUnhover) {
         setTimeout(
-          () =>
-            footnotes
-              .filter((f) => f.id !== hovered)
-              .forEach(dismiss(settings.dismissDelay)),
+          () => footnotes.filter((f) => f.id !== hovered).forEach(dismiss(settings.dismissDelay)),
           settings.hoverDelay,
         )
       }
     }),
 
-    unmount,
+    unmount: () => {
+      forEach('destroy')
+      reset()
+    },
   }
 }

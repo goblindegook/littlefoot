@@ -1,9 +1,8 @@
 import { afterEach, expect, test, vi } from 'vitest'
 import {
-  type Adapter,
+  createUseCases,
   type Footnote,
   type UseCaseSettings,
-  createUseCases,
 } from '../src/use-cases'
 
 afterEach(() => {
@@ -23,14 +22,6 @@ function testSettings(
     dismissOnDocumentTouch: false,
     dismissOnUnhover: false,
     hoverDelay: 0,
-    ...overrides,
-  }
-}
-
-function testAdapter(overrides?: Partial<Adapter<Test>>): Adapter<Test> {
-  return {
-    unmount: () => undefined,
-    footnotes: [],
     ...overrides,
   }
 }
@@ -55,12 +46,9 @@ test('footnote repositioning', () => {
   const one = testFootnote({ reposition: vi.fn() })
   const two = testFootnote({ reposition: vi.fn() })
 
-  const adapter = testAdapter({
-    footnotes: [one, two],
-  })
-
   const { repositionAll } = createUseCases(
-    adapter,
+    [one, two],
+    vi.fn(),
     testSettings({
       activateDelay: 100,
       activateOnHover: false,
@@ -80,8 +68,7 @@ test('footnote repositioning', () => {
 test('footnote resizing', () => {
   const one = testFootnote({ resize: vi.fn() })
   const two = testFootnote({ resize: vi.fn() })
-  const adapter = testAdapter({ footnotes: [one, two] })
-  const { resizeAll } = createUseCases(adapter, testSettings())
+  const { resizeAll } = createUseCases([one, two], vi.fn(), testSettings())
 
   resizeAll()
 
@@ -100,9 +87,9 @@ test('footnote activation on hover', () => {
     reposition: vi.fn(),
     resize: vi.fn(),
   })
-  const adapter = testAdapter({ footnotes: [footnote] })
   const { hover } = createUseCases(
-    adapter,
+    [footnote],
+    vi.fn(),
     testSettings({
       activateCallback: () => undefined,
       activateOnHover: true,
@@ -127,9 +114,9 @@ test('footnote dismissal on unhover', () => {
     isReady: () => true,
     remove: vi.fn(),
   })
-  const adapter = testAdapter({ footnotes: [footnote] })
   const { unhover } = createUseCases(
-    adapter,
+    [footnote],
+    vi.fn(),
     testSettings({
       activateCallback: () => undefined,
       dismissDelay: 100,
@@ -160,11 +147,9 @@ test('only unhovered footnotes are dismissed', () => {
     isReady: () => true,
     remove: vi.fn(),
   })
-  const adapter = testAdapter({
-    footnotes: [unhoveredFootnote, hoveredFootnote],
-  })
   const { hover, unhover } = createUseCases(
-    adapter,
+    [unhoveredFootnote, hoveredFootnote],
+    vi.fn(),
     testSettings({
       activateCallback: () => undefined,
       dismissDelay: 100,

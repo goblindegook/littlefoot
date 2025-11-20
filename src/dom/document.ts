@@ -1,6 +1,6 @@
-import type { Adapter } from '../use-cases'
+import type { Footnote } from '../use-cases'
 import { addClass, removeClass } from './element'
-import { type FootnoteElements, footnoteActions } from './footnote'
+import { createFootnote, type FootnoteElements } from './footnote'
 import { bindScrollHandler } from './scroll'
 
 export const CLASS_CONTENT = 'littlefoot__content'
@@ -31,18 +31,13 @@ const setAllPrintOnly = (...elements: readonly Element[]) =>
     addClass(e, CLASS_PRINT_ONLY)
   })
 
-function queryAll<E extends Element>(
-  parent: ParentNode,
-  selector: string,
-): readonly E[] {
+function queryAll<E extends Element>(parent: ParentNode, selector: string): readonly E[] {
   return Array.from(parent.querySelectorAll<E>(selector))
 }
 
 function getByClassName<E extends Element>(element: E, className: string): E {
   return (
-    element.querySelector<E>('.' + className) ||
-    (element.firstElementChild as E | null) ||
-    element
+    element.querySelector<E>('.' + className) || (element.firstElementChild as E | null) || element
   )
 }
 
@@ -63,8 +58,8 @@ function findFootnoteLinks(
   pattern: RegExp,
   scope: string,
 ): readonly HTMLAnchorElement[] {
-  return queryAll<HTMLAnchorElement>(document, scope + ' a[href*="#"]').filter(
-    (link) => (link.href + link.rel).match(pattern),
+  return queryAll<HTMLAnchorElement>(document, scope + ' a[href*="#"]').filter((link) =>
+    (link.href + link.rel).match(pattern),
   )
 }
 
@@ -93,10 +88,7 @@ function findReference<E extends Element>(
 function recursiveHideFootnoteContainer(element: Element): void {
   // biome-ignore lint/style/noNonNullAssertion: never null
   const container = element.parentElement!
-  const visibleElements = queryAll(
-    container,
-    ':scope > :not(.' + CLASS_PRINT_ONLY + ')',
-  )
+  const visibleElements = queryAll(container, ':scope > :not(.' + CLASS_PRINT_ONLY + ')')
   const visibleSeparators = visibleElements.filter((el) => el.tagName === 'HR')
 
   if (visibleElements.length === visibleSeparators.length) {
@@ -108,11 +100,7 @@ function recursiveHideFootnoteContainer(element: Element): void {
 function recursiveUnmount(element: Element, stopElement: Element) {
   const parent = element.parentElement
   element.remove()
-  if (
-    parent &&
-    parent !== stopElement &&
-    !parent.innerHTML.replace(/(\[\]|&nbsp;|\s)/g, '')
-  ) {
+  if (parent && parent !== stopElement && !parent.innerHTML.replace(/(\[\]|&nbsp;|\s)/g, '')) {
     recursiveUnmount(parent, stopElement)
   }
 }
@@ -143,11 +131,7 @@ function prepareTemplateData<E extends Element>(
 function resetNumbers<E extends Element>(resetSelector: string) {
   let number = 0
   let previousParent: E | null = null
-  return ([reference, body, values]: [E, E, TemplateValues]): [
-    E,
-    E,
-    TemplateValues,
-  ] => {
+  return ([reference, body, values]: [E, E, TemplateValues]): [E, E, TemplateValues] => {
     const parent = reference.closest<E>(resetSelector)
     number = previousParent === parent ? number + 1 : 1
     previousParent = parent
@@ -162,10 +146,7 @@ function interpolate(template: string) {
     )
 }
 
-function createElements<E extends Element>(
-  buttonTemplate: string,
-  popoverTemplate: string,
-) {
+function renderElements<E extends Element>(buttonTemplate: string, popoverTemplate: string) {
   const renderButton = interpolate(buttonTemplate)
   const renderPopover = interpolate(popoverTemplate)
 
@@ -195,46 +176,30 @@ function createElements<E extends Element>(
   }
 }
 
-export function setup({
-  allowDuplicates,
-  anchorParentSelector,
-  anchorPattern,
-  buttonTemplate,
-  contentTemplate,
-  footnoteSelector,
-  numberResetSelector,
-  scope,
-}: HTMLAdapterSettings): Adapter<HTMLElement> {
-  const footnotes = findFootnoteLinks(document, anchorPattern, scope)
+export function setup(settings: HTMLAdapterSettings): readonly Footnote<HTMLElement>[] {
+  return findFootnoteLinks(document, settings.anchorPattern, settings.scope)
     .map(
       findReference(
         document,
-        allowDuplicates,
-        anchorParentSelector,
-        footnoteSelector,
+        settings.allowDuplicates,
+        settings.anchorParentSelector,
+        settings.footnoteSelector,
       ),
     )
     .filter(isDefined)
     .map(prepareTemplateData)
-    .map(numberResetSelector ? resetNumbers(numberResetSelector) : (i) => i)
+    .map(settings.numberResetSelector ? resetNumbers(settings.numberResetSelector) : (i) => i)
     .map<[Element, TemplateValues]>(([reference, body, values]) => {
       setAllPrintOnly(reference, body)
       recursiveHideFootnoteContainer(body)
       return [reference, values]
     })
-    .map(createElements(buttonTemplate, contentTemplate))
-    .map(footnoteActions)
+    .map(renderElements(settings.buttonTemplate, settings.contentTemplate))
+    .map(createFootnote)
+}
 
-  return {
-    footnotes,
-
-    unmount() {
-      footnotes.forEach((footnote) => {
-        footnote.destroy()
-      })
-      queryAll(document, '.' + CLASS_PRINT_ONLY).forEach((element) => {
-        removeClass(element, CLASS_PRINT_ONLY)
-      })
-    },
-  }
+export function reset(): void {
+  queryAll(document, '.' + CLASS_PRINT_ONLY).forEach((element) => {
+    removeClass(element, CLASS_PRINT_ONLY)
+  })
 }

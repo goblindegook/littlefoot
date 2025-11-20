@@ -1,9 +1,9 @@
 import type { Footnote } from '../use-cases'
 import { addClass, hasClass, removeClass } from './element'
 import {
-  type Position,
   getLeftInPixels,
   getMaxHeight,
+  type Position,
   repositionPopover,
   repositionTooltip,
 } from './layout'
@@ -21,7 +21,7 @@ export type FootnoteElements = Readonly<{
   wrapper: HTMLElement
 }>
 
-export function footnoteActions({
+export function createFootnote({
   id,
   button,
   content,
