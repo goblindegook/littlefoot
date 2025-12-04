@@ -61,7 +61,7 @@
     "commit-and-tag-version": "12.6.0",
     "concurrently": "9.2.1",
     "cssnano": "7.1.2",
-    "cypress": "15.7.0",
+    "cypress": "15.7.1",
     "cypress-axe": "1.7.0",
     "cz-conventional-changelog": "^3.0.1",
     "git-cz": "^4.9.0",
@@ -78,7 +78,7 @@
     "vitest": "^4.0.0"
   },
   "resolutions": {
-    "cypress": "15.7.0"
+    "cypress": "15.7.1"
   },
   "config": {
     "commitizen": {
