@@ -26,9 +26,7 @@ test('processes each called footnote', () => {
 
 test('hides all footnotes', () => {
   littlefoot()
-  expect(
-    document.querySelectorAll('.footnotes.littlefoot--print'),
-  ).toHaveLength(1)
+  expect(document.querySelectorAll('.footnotes.littlefoot--print')).toHaveLength(1)
   expect(document.querySelectorAll('hr.littlefoot--print')).toHaveLength(1)
   expect(document.querySelectorAll('li.littlefoot--print')).toHaveLength(3)
 })
@@ -71,18 +69,14 @@ test('preserves empty tags and square brackets elsewhere in the footnote body', 
   fireEvent.click(getButton('1'))
   const content = getPopover('1').querySelector('.littlefoot__content')
   expect(content?.querySelector('hr')).not.toBeNull()
-  expect(content).toContainHTML(
-    'This footnote has a backlink wrapped in [] and an element.',
-  )
+  expect(content).toContainHTML('This footnote has a backlink wrapped in [] and an element.')
 })
 
 test('wraps bare footnote body in a paragraph tag', () => {
   setDocumentBody('barebody.html')
   littlefoot({ activateDelay: 1 })
   fireEvent.click(getButton('1'))
-  expect(getPopover('1').querySelector('p')).toContainHTML(
-    'The original footnote body is bare.',
-  )
+  expect(getPopover('1').querySelector('p')).toContainHTML('The original footnote body is bare.')
 })
 
 test('footnote button accessibility', async () => {

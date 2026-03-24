@@ -6,8 +6,7 @@ const SELECTOR_FOOTNOTE = '[data-footnote-id]'
 const closestTarget = (event: Event, selector: string) =>
   (event.target as HTMLElement).closest<HTMLElement>(selector)
 
-const getFootnoteId = (element: HTMLElement | null) =>
-  element?.dataset.footnoteId
+const getFootnoteId = (element: HTMLElement | null) => element?.dataset.footnoteId
 
 const hoverHandler = (action: FootnoteAction) => (event: Event) => {
   event.preventDefault()

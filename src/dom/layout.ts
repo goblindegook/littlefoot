@@ -29,10 +29,7 @@ function getLeftRelative(element: HTMLElement): number {
   return left / window.innerWidth
 }
 
-export function getLeftInPixels(
-  content: HTMLElement,
-  button: HTMLElement,
-): number {
+export function getLeftInPixels(content: HTMLElement, button: HTMLElement): number {
   const maxWidth = content.offsetWidth
   const leftRelative = getLeftRelative(button)
   const buttonMarginLeft = getNumericValue(button, 'margin-left')
@@ -48,10 +45,7 @@ export function getMaxHeight(element: HTMLElement) {
   return Number.isNaN(numeric) ? Number.POSITIVE_INFINITY : Math.round(numeric)
 }
 
-function getFootnotePosition(
-  button: HTMLElement,
-  popover: HTMLElement,
-): [Position, number] {
+function getFootnotePosition(button: HTMLElement, popover: HTMLElement): [Position, number] {
   const marginSize = getNumericValue(popover, 'margin-top')
   const popoverHeight = 2 * marginSize + popover.offsetHeight
   const roomAbove = button.getBoundingClientRect().top + button.offsetHeight / 2
@@ -80,10 +74,7 @@ export function repositionPopover(
   return [next, room]
 }
 
-export function repositionTooltip(
-  popover: HTMLElement,
-  button: HTMLElement,
-): void {
+export function repositionTooltip(popover: HTMLElement, button: HTMLElement): void {
   const tooltip = popover.querySelector<HTMLElement>('.' + CLASS_TOOLTIP)
 
   if (tooltip) {

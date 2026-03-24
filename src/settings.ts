@@ -1,8 +1,4 @@
-import {
-  CLASS_CONTENT,
-  CLASS_WRAPPER,
-  type HTMLAdapterSettings,
-} from './dom/document'
+import { CLASS_CONTENT, CLASS_WRAPPER, type HTMLAdapterSettings } from './dom/document'
 import { CLASS_TOOLTIP } from './dom/layout'
 import type { UseCaseSettings } from './use-cases'
 

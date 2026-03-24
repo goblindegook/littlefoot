@@ -5,10 +5,7 @@ export function throttle<T extends Procedure>(fn: T, delay = 0): T {
   let timer: number | undefined
   let lastCall = 0
 
-  return function throttled(
-    this: ThisParameterType<T>,
-    ...args: Parameters<T>
-  ) {
+  return function throttled(this: ThisParameterType<T>, ...args: Parameters<T>) {
     const now = Date.now()
     const remaining = Math.max(0, lastCall + delay - now)
 

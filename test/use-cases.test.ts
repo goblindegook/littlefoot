@@ -1,9 +1,5 @@
 import { afterEach, expect, test, vi } from 'vitest'
-import {
-  createUseCases,
-  type Footnote,
-  type UseCaseSettings,
-} from '../src/use-cases'
+import { createUseCases, type Footnote, type UseCaseSettings } from '../src/use-cases'
 
 afterEach(() => {
   vi.useRealTimers()
@@ -11,9 +7,7 @@ afterEach(() => {
 
 type Test = 'TEST'
 
-function testSettings(
-  overrides?: Partial<UseCaseSettings<Test>>,
-): UseCaseSettings<Test> {
+function testSettings(overrides?: Partial<UseCaseSettings<Test>>): UseCaseSettings<Test> {
   return {
     activateDelay: 0,
     activateOnHover: false,

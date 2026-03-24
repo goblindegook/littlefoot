@@ -1,12 +1,7 @@
 import { fireEvent } from '@testing-library/dom'
 import { afterEach, beforeEach, expect, test, vi } from 'vitest'
 import littlefoot from '../../src/littlefoot'
-import {
-  getAllActiveButtons,
-  getButton,
-  setDocumentBody,
-  waitToStopChanging,
-} from '../helper'
+import { getAllActiveButtons, getButton, setDocumentBody, waitToStopChanging } from '../helper'
 
 beforeEach(() => {
   setDocumentBody('default.html')
