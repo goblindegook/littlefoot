@@ -20,9 +20,12 @@ const scrollHandler = (popover: HTMLElement) => (event: WheelEvent) => {
   }
 }
 
-export function bindScrollHandler(
-  content: HTMLElement,
-  popover: HTMLElement,
-): void {
+function focusContent(content: HTMLElement): void {
+  if (content.hasAttribute('tabindex') && document.activeElement !== content)
+    content.focus({ preventScroll: true })
+}
+
+export function bindScrollHandler(content: HTMLElement, popover: HTMLElement): void {
   content.addEventListener('wheel', throttle(scrollHandler(popover), 16))
+  content.addEventListener('mouseenter', () => focusContent(content))
 }

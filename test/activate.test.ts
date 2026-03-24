@@ -1,12 +1,7 @@
 import { createEvent, fireEvent } from '@testing-library/dom'
 import { afterEach, beforeEach, expect, test, vi } from 'vitest'
 import littlefoot from '../src/littlefoot'
-import {
-  getButton,
-  getPopoverByText,
-  setDocumentBody,
-  waitToStopChanging,
-} from './helper'
+import { getButton, getPopoverByText, setDocumentBody, waitToStopChanging } from './helper'
 
 const TEST_SETTINGS = { activateDelay: 1 }
 
@@ -98,12 +93,40 @@ test('popup layout dimensions', async () => {
   const button = getButton('1')
 
   fireEvent.click(button)
-
   await waitToStopChanging(button)
 
   const popover = document.querySelector('.littlefoot__popover')
   expect(popover).toHaveStyle(`max-width: ${document.body.clientWidth}px`)
-
   const content = document.querySelector('.littlefoot__content')
   expect(content).toHaveProperty('offsetWidth', document.body.clientWidth)
+})
+
+test('focuses scrollable popover content on mouseenter (#23)', async () => {
+  littlefoot(TEST_SETTINGS)
+  const button = getButton('1')
+  fireEvent.click(button)
+  await waitToStopChanging(button)
+  const popover = getPopoverByText(/This is the document's only footnote./)
+  const content = popover.querySelector<HTMLElement>('.littlefoot__content')!
+  content.setAttribute('tabindex', '0')
+
+  button.focus()
+  fireEvent.mouseEnter(content)
+
+  expect(document.activeElement).toBe(content)
+})
+
+test('does not focus non-scrollable popover content on mouseenter', async () => {
+  littlefoot(TEST_SETTINGS)
+  const button = getButton('1')
+  fireEvent.click(button)
+  await waitToStopChanging(button)
+  const popover = getPopoverByText(/This is the document's only footnote./)
+  const content = popover.querySelector<HTMLElement>('.littlefoot__content')!
+  content.removeAttribute('tabindex')
+
+  button.focus()
+  fireEvent.mouseEnter(content)
+
+  expect(document.activeElement).toBe(button)
 })
