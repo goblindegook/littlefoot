@@ -189,7 +189,7 @@ Default: `false`
 
 Specifies the pattern that must be matched by the anchor element's `href` attribute for it to be considered a footnote link. This is used in filtering all links down to just those with a footnote.
 
-Default: `/(fn|footnote|note)[:\-_\d]/gi`
+Default: `/#(fn|footnote|note)[:\-_\d]/gi`
 
 ### `anchorParentSelector`
 

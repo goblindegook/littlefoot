@@ -1,4 +1,4 @@
-import { fireEvent } from '@testing-library/dom'
+import { fireEvent, screen } from '@testing-library/dom'
 import { beforeEach, expect, test } from 'vitest'
 import littlefoot from '../src/littlefoot'
 import {
@@ -92,4 +92,20 @@ test('handles empty footnotes reasonably', () => {
   littlefoot()
   expect(document.querySelectorAll('.littlefoot')).toHaveLength(3)
   expect(getAllButtons()).toHaveLength(3)
+})
+
+test('ignores non-footnote links when URL contains note-like text', () => {
+  document.body.innerHTML = `
+    <article>
+      <a href="#top">top</a>
+      <ul>
+        <li id="top">Top</li>
+      </ul>
+    </article>
+  `
+  window.history.replaceState({}, '', '/note-1/')
+
+  littlefoot()
+
+  expect(screen.queryAllByRole('button')).toHaveLength(0)
 })

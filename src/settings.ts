@@ -10,7 +10,7 @@ export const DEFAULT_SETTINGS: Settings = {
   allowDuplicates: true,
   allowMultiple: false,
   anchorParentSelector: 'sup',
-  anchorPattern: /(fn|footnote|note)[:\-_\d]/gi,
+  anchorPattern: /#(fn|footnote|note)[:\-_\d]/gi,
   dismissDelay: 100,
   dismissOnUnhover: false,
   dismissOnDocumentTouch: true,
