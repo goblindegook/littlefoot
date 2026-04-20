@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [4.1.4](https://github.com/goblindegook/littlefoot/compare/v4.1.3...v4.1.4) (2026-04-20)
+
+
+### Bug Fixes
+
+* autofocus scrollable popovers ([4e3d1bd](https://github.com/goblindegook/littlefoot/commit/4e3d1bda53a19e14d8052b31a60d7bfa6e796d50)), closes [#23](https://github.com/goblindegook/littlefoot/issues/23)
+* default anchor pattern to focus on URL fragments ([64982b7](https://github.com/goblindegook/littlefoot/commit/64982b7f72348ce90f169cf3ac17b16e7bf8bfff)), closes [#1824](https://github.com/goblindegook/littlefoot/issues/1824)
+
 ## [4.1.3](https://github.com/goblindegook/littlefoot/compare/v4.1.2...v4.1.3) (2025-10-26)
 
 
