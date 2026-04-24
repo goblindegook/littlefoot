@@ -1,8 +1,9 @@
-.idea/
-.vscode/
-coverage/
+/.idea/
+/.vscode/
+/coverage/
+/docs/
+/site/
 .DS_Store
 .nyc_output
-sauce.json
 tsconfig.tsbuildinfo
 postcss.config.js
