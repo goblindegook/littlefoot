@@ -272,8 +272,8 @@ button {
 .hero__sub {
   font-size: clamp(18px, 2vw, 22px);
   color: var(--color-text-muted);
-  max-width: 44ch;
-  margin: 0 auto 38px;
+  max-width: 40ch;
+  margin: 40px auto 58px;
   line-height: 1.75;
   text-wrap: pretty;
   position: relative;
@@ -283,7 +283,7 @@ button {
 .hero__actions {
   display: flex;
   gap: 20px;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   margin: 0 auto 8px;
@@ -304,11 +304,13 @@ button {
 }
 
 .hero__demo-link {
-  font-size: 15px;
+  margin-left: 0.35em;
+  font-size: 1em;
   font-weight: 700;
   color: var(--color-text-body);
   border-bottom: 2px solid color-mix(in srgb, var(--color-accent) 35%, var(--color-border) 65%);
   padding-bottom: 2px;
+  white-space: nowrap;
   transition:
     border-color 0.15s,
     color 0.15s;
