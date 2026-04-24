@@ -1,5 +1,4 @@
 import './style.css'
-import { littlefoot } from 'littlefoot'
 import 'littlefoot/dist/littlefoot.css'
 import { initPlayground } from './playground.js'
 
@@ -170,8 +169,3 @@ initTabs()
 initMotion()
 initSectionNavigation()
 initPlayground()
-
-littlefoot({
-  scope: '#api',
-  anchorPattern: /#fn:(button-template-default|content-template-default)$/i,
-})

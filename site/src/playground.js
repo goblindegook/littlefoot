@@ -20,10 +20,13 @@ const NUMERIC_TEMPLATE = `<button
 
 export function initPlayground() {
   const articleEl = document.getElementById('demo-article')
-  if (!articleEl) return
+  if (!articleEl) return null
 
   const state = {
-    scope: '#demo-article',
+    scope: 'body',
+    numberResetSelector: '#demo-article, #api',
+    anchorPattern: /#fn:(?:pg-\d+|button-template-default|content-template-default)$/i,
+    footnoteSelector: '.footnotes li',
     activateOnHover: false,
     allowMultiple: false,
     dismissOnUnhover: false,
@@ -35,7 +38,26 @@ export function initPlayground() {
 
   let lf = littlefoot(state)
 
-  setTimeout(() => lf.activate('fnref:1'), 600)
+  let hasAutoOpened = false
+  const autoOpenFirstPopover = () => {
+    if (hasAutoOpened) return
+    hasAutoOpened = true
+    window.setTimeout(() => lf.activate('1'), 120)
+  }
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+      (entries, currentObserver) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return
+        autoOpenFirstPopover()
+        currentObserver.disconnect()
+      },
+      { threshold: 0.35 },
+    )
+    observer.observe(articleEl)
+  } else {
+    autoOpenFirstPopover()
+  }
 
   function reinit() {
     lf.unmount()
