@@ -1220,6 +1220,24 @@ body.motion-ready:not(.reduced-motion) .hero__actions {
   overflow: visible;
 }
 
+@media (max-width: 640px) {
+  .table-wrap--options {
+    overflow-x: auto;
+  }
+
+  /* Drop Type column — default value conveys type; Description + Option + Default fit */
+  .api-table th:nth-child(2),
+  .api-table td:nth-child(2) {
+    display: none;
+  }
+
+  .api-table th,
+  .api-table td {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
 .api-ref .littlefoot {
   --popover-width: 28rem;
   --popover-max-width: min(82vw, 32rem);
