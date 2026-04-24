@@ -165,7 +165,44 @@ function initSectionNavigation() {
   updateActiveSection()
 }
 
+function initCopyButtons() {
+  const heroPill = document.querySelector('.hero__install')
+  if (heroPill) {
+    heroPill.addEventListener('click', () => {
+      navigator.clipboard?.writeText(heroPill.innerText.trim()).then(() => {
+        heroPill.setAttribute('data-copied', '')
+        setTimeout(() => heroPill.removeAttribute('data-copied'), 1400)
+      }).catch(() => {})
+    })
+  }
+
+  for (const panel of document.querySelectorAll('.tab-panel')) {
+    const pre = panel.querySelector('.code-block')
+    if (!pre) continue
+
+    const wrap = document.createElement('div')
+    wrap.className = 'code-block-wrap'
+    pre.parentNode.insertBefore(wrap, pre)
+    wrap.appendChild(pre)
+
+    const btn = document.createElement('button')
+    btn.className = 'copy-btn'
+    btn.setAttribute('aria-label', 'Copy code')
+    btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`
+    wrap.appendChild(btn)
+
+    btn.addEventListener('click', () => {
+      const text = (pre.querySelector('code') ?? pre).innerText
+      navigator.clipboard?.writeText(text).then(() => {
+        btn.setAttribute('data-copied', '')
+        setTimeout(() => btn.removeAttribute('data-copied'), 1400)
+      }).catch(() => {})
+    })
+  }
+}
+
 initTabs()
 initMotion()
 initSectionNavigation()
 initPlayground()
+initCopyButtons()

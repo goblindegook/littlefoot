@@ -64,42 +64,6 @@ export function initPlayground() {
     lf = littlefoot({ ...state })
   }
 
-  const hintEl = document.querySelector('.playground__hint')
-  const hintBaseText = hintEl?.textContent?.trim() ?? ''
-  const HINT_MESSAGES = [
-    'Live update applied to the demo footnotes.',
-    'Popover behavior updated instantly.',
-    'Nice tune. That setting combo reads cleanly.',
-  ]
-  let hintIndex = 0
-  let hintResetTimer = 0
-
-  if (hintEl) {
-    hintEl.setAttribute('aria-live', 'polite')
-  }
-
-  function popElement(el) {
-    if (!el || document.body.classList.contains('reduced-motion')) return
-    el.classList.remove('delight-pop')
-    void el.offsetHeight
-    el.classList.add('delight-pop')
-    window.setTimeout(() => el.classList.remove('delight-pop'), 300)
-  }
-
-  function nudgeHint() {
-    if (!hintEl || !hintBaseText) return
-    const message = HINT_MESSAGES[hintIndex % HINT_MESSAGES.length]
-    hintIndex += 1
-    hintEl.textContent = message
-    hintEl.classList.add('is-delight')
-
-    if (hintResetTimer) window.clearTimeout(hintResetTimer)
-    hintResetTimer = window.setTimeout(() => {
-      hintEl.textContent = hintBaseText
-      hintEl.classList.remove('is-delight')
-    }, 1700)
-  }
-
   const TOGGLE_KEYS = ['allowMultiple', 'dismissOnDocumentTouch']
 
   for (const key of TOGGLE_KEYS) {
@@ -112,8 +76,6 @@ export function initPlayground() {
       btn.setAttribute('aria-checked', String(next))
       btn.classList.toggle('is-on', next)
       lf.updateSetting(key, next)
-      popElement(btn)
-      nudgeHint()
     })
   }
 
@@ -140,8 +102,6 @@ export function initPlayground() {
     hoverModeBtn.addEventListener('click', () => {
       const next = !(state.activateOnHover && state.dismissOnUnhover)
       setHoverMode(next)
-      popElement(hoverModeBtn)
-      nudgeHint()
     })
   }
 
@@ -177,10 +137,6 @@ export function initPlayground() {
       lf.updateSetting(key, val)
     })
 
-    slider.addEventListener('change', () => {
-      popElement(slider)
-      nudgeHint()
-    })
   }
 
   const buttonStyleButtons = [
@@ -200,8 +156,6 @@ export function initPlayground() {
       }
 
       reinit()
-      popElement(button)
-      nudgeHint()
     })
   }
 
@@ -221,8 +175,6 @@ export function initPlayground() {
         btn.setAttribute('aria-pressed', String(selected))
       }
 
-      popElement(button)
-      nudgeHint()
     })
   }
 

@@ -8,10 +8,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=Manrope:wght@400;500;600;700;800&display=swap" />
-    <script type="module" crossorigin src="./assets/index-DTTX1J5K.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-9gBdS_vF.css">
+    <script type="module" crossorigin src="./assets/index-CnOJG7hm.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-mI397RvE.css">
   </head>
   <body>
+  <a class="skip-link" href="#home">Skip to content</a>
   <nav class="nav" aria-label="Site navigation">
     <a href="/" class="nav__logo" aria-label="littlefoot home">littlefoot</a>
     <ul class="nav__links" role="list">
@@ -35,7 +36,7 @@
       </h1>
       <p class="hero__sub">
         littlefoot replaces clunky footnote links with elegant, accessible popovers.
-        <a href="#demo" class="hero__demo-link">See it in action.</a>
+        <a href="#demo" class="hero__demo-link">See it in action</a>.
       </p>
       <div class="hero__actions">
         <code class="hero__install">npm install littlefoot</code>
@@ -252,7 +253,7 @@
       <h2 class="section-heading">Up and running with three lines of code</h2>
       <p class="install__sub">Optimised for Markdown extended footnote syntax.</p>
 
-      <div class="install__tabs-container" style="max-width: 720px; margin: 0 auto;">
+      <div class="install__tabs-container">
         <div class="tabs" role="tablist" aria-label="Installation method">
           <button
             type="button"
@@ -324,6 +325,7 @@ yarn add littlefoot
 
 <span class="c">&lt;!-- Before &lt;/body&gt; --&gt;</span>
 <span class="k">&lt;script</span> src=<span class="s">"https://unpkg.com/littlefoot/dist/littlefoot.js"</span><span class="k">&gt;&lt;/script&gt;</span>
+<span class="c">// littlefoot is the UMD global namespace</span>
 <span class="k">&lt;script&gt;</span><span class="fn">littlefoot</span>.<span class="fn">littlefoot</span>()<span class="k">&lt;/script&gt;</span></code></pre></div>
       </div>
     </section>
@@ -349,6 +351,7 @@ yarn add littlefoot
               </tr>
             </thead>
             <tbody>
+              <tr class="group-header"><td colspan="4">Common options</td></tr>
               <tr>
                 <td><code class="opt">activateOnHover</code></td>
                 <td><span class="type">boolean</span></td>
@@ -391,6 +394,7 @@ yarn add littlefoot
                 <td><span class="default">250</span></td>
                 <td>Timeout in ms before dismissing a hovered popover.</td>
               </tr>
+              <tr class="group-header"><td colspan="4">Advanced</td></tr>
               <tr>
                 <td><code class="opt">allowDuplicates</code></td>
                 <td><span class="type">boolean</span></td>
