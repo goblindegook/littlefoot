@@ -60,6 +60,7 @@ body {
     var(--color-bg);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 a {
   color: inherit;
@@ -139,6 +140,9 @@ button {
 }
 
 .nav__links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
   font-size: 13px;
   color: var(--color-text-muted);
   font-weight: 600;
@@ -150,6 +154,15 @@ button {
 .nav__links a:hover {
   color: var(--color-text);
   transform: translateY(-1px);
+}
+
+.nav__links a:active {
+  transform: scale(0.96);
+}
+
+.nav__links a.is-current {
+  color: var(--color-accent-strong);
+  text-shadow: 0 0 0.01px currentcolor;
 }
 
 .nav__github {
@@ -175,7 +188,7 @@ button {
 }
 
 .nav__github:active {
-  transform: translateY(0);
+  transform: translateY(0) scale(0.96);
   box-shadow: 0 8px 16px rgb(182 75 51 / 24%);
 }
 
@@ -222,6 +235,7 @@ button {
   color: var(--color-text);
   margin: 0 auto 20px;
   max-width: 980px;
+  text-wrap: balance;
 }
 
 .hero__headline em {
@@ -237,6 +251,7 @@ button {
   max-width: 620px;
   margin: 0 auto 38px;
   line-height: 1.65;
+  text-wrap: pretty;
 }
 
 .hero__actions {
@@ -340,6 +355,7 @@ body.motion-ready:not(.reduced-motion) .hero__meta {
   text-align: center;
   margin-bottom: 48px;
   letter-spacing: -0.03em;
+  text-wrap: balance;
 }
 
 /* ── Features ───────────────────────────────────────────────────── */
@@ -460,6 +476,7 @@ body.motion-ready:not(.reduced-motion) .hero__meta {
   font-size: 14px;
   color: var(--color-text-muted);
   line-height: 1.65;
+  text-wrap: pretty;
 }
 
 .feature-card:nth-child(2) {
@@ -524,6 +541,7 @@ body.motion-ready:not(.reduced-motion) .hero__meta {
   text-align: center;
   margin-top: 0;
   margin-bottom: var(--space-2xl);
+  text-wrap: pretty;
 }
 
 .playground .section-heading,
@@ -557,6 +575,9 @@ body.motion-ready:not(.reduced-motion) .hero__meta {
   font-size: 16px;
   line-height: 1.9;
   color: var(--color-text-body);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 85%) inset,
+    0 12px 24px rgb(57 74 95 / 8%);
 }
 
 .demo-article p + p {
@@ -632,6 +653,9 @@ body.motion-ready:not(.reduced-motion) .hero__meta {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   padding: 20px;
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 82%) inset,
+    0 10px 22px rgb(57 74 95 / 8%);
 }
 
 .settings-panel__title {
@@ -695,6 +719,7 @@ body.motion-ready:not(.reduced-motion) .hero__meta {
   color: var(--color-text-body);
   font-family: var(--font-sans);
   font-weight: 600;
+  font-variant-numeric: tabular-nums;
 }
 
 /* Toggle switch */
@@ -709,7 +734,14 @@ body.motion-ready:not(.reduced-motion) .hero__meta {
   transition:
     background var(--motion-fast) var(--ease-out-quint),
     border-color var(--motion-fast) var(--ease-out-quint),
-    box-shadow var(--motion-fast) var(--ease-out-quint);
+    box-shadow var(--motion-fast) var(--ease-out-quint),
+    transform var(--motion-fast) var(--ease-out-quint);
+}
+
+.toggle::before {
+  content: "";
+  position: absolute;
+  inset: -10px -4px;
 }
 
 .toggle.is-on {
@@ -743,6 +775,10 @@ body.motion-ready:not(.reduced-motion) .hero__meta {
 
 .toggle:active::after {
   transform: scale(0.95);
+}
+
+.toggle:active {
+  transform: scale(0.96);
 }
 
 /* Slider */
@@ -841,12 +877,16 @@ body.motion-ready:not(.reduced-motion) .hero__meta {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 6px;
+  padding: 2px;
+  border-radius: calc(var(--radius-sm) + 4px);
+  background: color-mix(in srgb, var(--color-code-bg) 72%, #fff 28%);
 }
 
 .choice-btn {
+  min-height: 40px;
   padding: 7px 10px;
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
+  border-radius: calc(var(--radius-sm) + 2px);
   background: var(--color-bg);
   font-size: 13px;
   color: var(--color-text-body);
@@ -863,6 +903,10 @@ body.motion-ready:not(.reduced-motion) .hero__meta {
 .choice-btn:hover {
   border-color: #cbd5e1;
   transform: translateY(-1px);
+}
+
+.choice-btn:active {
+  transform: scale(0.96);
 }
 
 .choice-btn.is-active {
@@ -898,6 +942,7 @@ body.motion-ready:not(.reduced-motion) .hero__meta {
   text-align: center;
   margin-top: 0;
   margin-bottom: var(--space-xl);
+  text-wrap: pretty;
 }
 
 .tabs {
@@ -910,6 +955,7 @@ body.motion-ready:not(.reduced-motion) .hero__meta {
 }
 
 .tab {
+  min-height: 40px;
   padding: 9px 22px;
   font-size: 13px;
   font-weight: 500;
@@ -927,6 +973,10 @@ body.motion-ready:not(.reduced-motion) .hero__meta {
 .tab:hover {
   color: var(--color-text);
   transform: translateY(-1px);
+}
+
+.tab:active {
+  transform: scale(0.96);
 }
 
 .tab.is-active {
@@ -979,6 +1029,7 @@ body.motion-ready:not(.reduced-motion) .hero__meta {
   max-width: 42rem;
   margin-left: auto;
   margin-right: auto;
+  text-wrap: pretty;
 }
 
 .api-ref__tables {
@@ -1076,6 +1127,7 @@ body.motion-ready:not(.reduced-motion) .hero__meta {
   vertical-align: top;
   color: var(--color-text-body);
   line-height: 1.65;
+  text-wrap: pretty;
 }
 
 .api-table tr:last-child td {

@@ -5,7 +5,7 @@ const root = normalizePath(resolve(__dirname))
 
 export default defineConfig({
   root: 'site',
-  base: '/',
+  base: './',
   resolve: {
     alias: [
       { find: /^littlefoot\/(.+)$/, replacement: `${root}/$1` },
