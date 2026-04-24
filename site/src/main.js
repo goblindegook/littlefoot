@@ -1,6 +1,7 @@
 import './style.css'
-import './playground.js'
 import { littlefoot } from 'littlefoot'
+import 'littlefoot/dist/littlefoot.css'
+import { initPlayground } from './playground.js'
 
 function initTabs() {
   const tablists = document.querySelectorAll('[role="tablist"]')
@@ -168,6 +169,7 @@ function initSectionNavigation() {
 initTabs()
 initMotion()
 initSectionNavigation()
+initPlayground()
 
 littlefoot({
   scope: '#api',
