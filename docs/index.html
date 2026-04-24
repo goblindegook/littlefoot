@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>littlefoot — Footnotes without the footprint</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦶</text></svg>" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=Manrope:wght@400;500;600;700;800&display=swap" />
+    <script type="module" crossorigin src="/assets/index-C_TqGITO.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-B_glBfur.css">
+  </head>
+  <body>
+  <nav class="nav" aria-label="Site navigation">
+    <a href="/" class="nav__logo" aria-label="littlefoot home">littlefoot</a>
+    <ul class="nav__links" role="list">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#demo">Demo</a></li>
+      <li><a href="#install">Install</a></li>
+      <li><a href="#api">API</a></li>
+    </ul>
+    <a
+      href="https://github.com/goblindegook/littlefoot"
+      class="nav__github"
+      rel="noopener noreferrer"
+    >GitHub ↗</a>
+  </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <h1 class="hero__headline">
+        Footnotes that<br>
+        <em>don’t interrupt</em> reading
+      </h1>
+      <p class="hero__sub">
+        littlefoot replaces clunky footnote links with elegant, accessible popovers.
+        No dependencies. ~3 KB gzipped.
+      </p>
+      <div class="hero__actions">
+        <code class="hero__install">npm install littlefoot</code>
+        <a href="#demo" class="hero__demo-link">See it in action →</a>
+      </div>
+      <ul class="hero__meta" role="list" aria-label="Key facts">
+        <li><span aria-hidden="true">⚡</span> ~3 KB gzipped</li>
+        <li><span aria-hidden="true">🚫</span> No dependencies</li>
+        <li><span aria-hidden="true">♿</span> WCAG compliant</li>
+        <li><span aria-hidden="true">📦</span> ESM · CJS · UMD</li>
+      </ul>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features" id="features">
+      <p class="section-label">Why littlefoot?</p>
+      <h2 class="section-heading">Everything you need, nothing you don’t</h2>
+      <ul class="features__grid" role="list">
+        <li class="feature-card">
+          <span class="feature-card__icon" aria-hidden="true">🎯</span>
+          <h3>Zero dependencies</h3>
+          <p>No dependencies, no surprises.</p>
+        </li>
+        <li class="feature-card">
+          <span class="feature-card__icon" aria-hidden="true">📐</span>
+          <h3>Smart positioning</h3>
+          <p>Popovers reposition automatically to stay on screen — on desktop and mobile.</p>
+        </li>
+        <li class="feature-card">
+          <span class="feature-card__icon" aria-hidden="true">♿</span>
+          <h3>Accessible by default</h3>
+          <p>ARIA labels, keyboard navigation, and full focus management out of the box.</p>
+        </li>
+        <li class="feature-card">
+          <span class="feature-card__icon" aria-hidden="true">🎨</span>
+          <h3>Fully customisable</h3>
+          <p>CSS custom properties for colours, borders, radius. Custom button templates too.</p>
+        </li>
+        <li class="feature-card">
+          <span class="feature-card__icon" aria-hidden="true">📱</span>
+          <h3>Touch-friendly</h3>
+          <p>Dismiss on outside tap, hover mode for desktop, responsive popovers everywhere.</p>
+        </li>
+        <li class="feature-card">
+          <span class="feature-card__icon" aria-hidden="true">🔌</span>
+          <h3>Programmatic API</h3>
+          <p>Open popovers on demand, update settings on the fly, and cleanly unmount — all at runtime.</p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- PLAYGROUND -->
+    <section class="playground" id="demo">
+      <p class="section-label">Interactive demo</p>
+      <h2 class="section-heading">Try it yourself</h2>
+      <p class="playground__hint">Touch the footnote buttons in the article, then tweak the settings panel live.</p>
+
+      <div class="playground__layout">
+
+        <!-- Demo article with real footnotes -->
+        <article class="demo-article" id="demo-article">
+          <p>
+            The invention of the printing press<sup id="fnref:1"><a href="#fn:1">[1]</a></sup>
+            in the fifteenth century marked a turning point in human history.
+            For the first time, information could be reproduced at scale<sup id="fnref:2"><a href="#fn:2">[2]</a></sup>,
+            accelerating the spread of literacy, science, and political thought across Europe and beyond.
+          </p>
+          <p>
+            The consequences for organised religion were profound<sup id="fnref:3"><a href="#fn:3">[3]</a></sup>.
+            Within decades, vernacular Bibles were in circulation, fuelling the Protestant Reformation
+            and permanently fracturing the unity of Western Christendom.
+          </p>
+          <aside class="footnotes">
+            <ol>
+              <li id="fn:1">
+                <p>Johannes Gutenberg developed the press c. 1440 in Mainz, Germany, using movable
+                metal type — a technique adapted from earlier Chinese innovations.
+                <a href="#fnref:1">↩</a></p>
+              </li>
+              <li id="fn:2">
+                <p>By 1500, approximately 20 million books had been produced using the printing press —
+                more than in the previous thousand years of European history combined.
+                <a href="#fnref:2">↩</a></p>
+              </li>
+              <li id="fn:3">
+                <p>Martin Luther’s 95 Theses (1517) spread across Europe within weeks of posting,
+                something impossible before mechanical printing.
+                <a href="#fnref:3">↩</a></p>
+              </li>
+            </ol>
+          </aside>
+        </article>
+
+        <!-- Settings panel -->
+        <aside class="settings-panel" aria-label="Playground settings">
+          <h3 class="settings-panel__title">Settings</h3>
+
+          <div class="setting-row setting-row--column">
+            <span class="setting-name">Theme</span>
+            <div class="choice-group" role="group" aria-label="Theme">
+              <button
+                type="button"
+                id="setting-theme-light"
+                class="choice-btn is-active"
+                aria-pressed="true"
+                data-theme="light"
+              >Light</button>
+              <button
+                type="button"
+                id="setting-theme-dark"
+                class="choice-btn"
+                aria-pressed="false"
+                data-theme="dark"
+              >Dark</button>
+            </div>
+          </div>
+
+          <div class="setting-row setting-row--column">
+            <span class="setting-name">Button style</span>
+            <div class="choice-group" role="group" aria-label="Button style">
+              <button
+                type="button"
+                id="setting-buttonStyle-dots"
+                class="choice-btn is-active"
+                aria-pressed="true"
+                data-button-style="dots"
+              >Dots</button>
+              <button
+                type="button"
+                id="setting-buttonStyle-numeric"
+                class="choice-btn"
+                aria-pressed="false"
+                data-button-style="numeric"
+              >Number</button>
+            </div>
+          </div>
+
+          <div class="setting-row setting-row--column" id="row-activateDelay">
+            <div class="setting-row__header">
+              <label class="setting-name" for="setting-activateDelay">Open delay</label>
+              <span class="setting-type" id="value-activateDelay">100ms</span>
+            </div>
+            <input
+              type="range"
+              id="setting-activateDelay"
+              class="setting-slider"
+              min="0" max="500" value="100"
+              aria-valuenow="100"
+              aria-valuemin="0"
+              aria-valuemax="500"
+              aria-label="Open delay in milliseconds"
+            />
+          </div>
+
+          <div class="setting-row" id="row-allowMultiple">
+            <label class="setting-row__label" id="label-allowMultiple">
+              <span class="setting-name">Allow multiple popovers</span>
+            </label>
+            <button
+              type="button"
+              id="setting-allowMultiple"
+              class="toggle"
+              role="switch"
+              aria-checked="false"
+              aria-labelledby="label-allowMultiple"
+            ><span class="sr-only">Allow multiple popovers</span></button>
+          </div>
+
+          <div class="setting-row" id="row-dismissOnDocumentTouch">
+            <label class="setting-row__label" id="label-dismissOnDocumentTouch">
+              <span class="setting-name">Tap outside to close</span>
+            </label>
+            <button
+              type="button"
+              id="setting-dismissOnDocumentTouch"
+              class="toggle is-on"
+              role="switch"
+              aria-checked="true"
+              aria-labelledby="label-dismissOnDocumentTouch"
+            ><span class="sr-only">Tap outside to close</span></button>
+          </div>
+
+          <div class="setting-row" id="row-hoverMode">
+            <label class="setting-row__label" id="label-hoverMode">
+              <span class="setting-name">Hover mode</span>
+            </label>
+            <button
+              type="button"
+              id="setting-hoverMode"
+              class="toggle"
+              role="switch"
+              aria-checked="false"
+              aria-labelledby="label-hoverMode"
+            ><span class="sr-only">Hover mode</span></button>
+          </div>
+
+          <div class="setting-row setting-row--column" id="row-hoverDelay" hidden>
+            <div class="setting-row__header">
+              <label class="setting-name" for="setting-hoverDelay">Hover close delay</label>
+              <span class="setting-type" id="value-hoverDelay">250ms</span>
+            </div>
+            <input
+              type="range"
+              id="setting-hoverDelay"
+              class="setting-slider"
+              min="0" max="500" value="250"
+              aria-valuenow="250"
+              aria-valuemin="0"
+              aria-valuemax="500"
+              aria-label="Hover close delay in milliseconds"
+              aria-disabled="true"
+            />
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- INSTALL -->
+    <section class="install" id="install">
+      <p class="section-label">Get started</p>
+      <h2 class="section-heading">Up and running with three lines of code</h2>
+      <p class="install__sub">Optimised for Markdown extended footnote syntax.</p>
+
+      <div class="install__tabs-container" style="max-width: 720px; margin: 0 auto;">
+        <div class="tabs" role="tablist" aria-label="Installation method">
+          <button
+            type="button"
+            class="tab is-active"
+            role="tab"
+            id="tab-npm"
+            aria-selected="true"
+            aria-controls="panel-npm"
+          >npm</button>
+          <button
+            type="button"
+            class="tab"
+            role="tab"
+            id="tab-yarn"
+            aria-selected="false"
+            aria-controls="panel-yarn"
+            tabindex="-1"
+          >yarn</button>
+          <button
+            type="button"
+            class="tab"
+            role="tab"
+            id="tab-cdn"
+            aria-selected="false"
+            aria-controls="panel-cdn"
+            tabindex="-1"
+          >CDN</button>
+        </div>
+
+        <div
+          class="tab-panel"
+          role="tabpanel"
+          id="panel-npm"
+          aria-labelledby="tab-npm"
+        ><pre class="code-block"><code><span class="c">// 1. Install</span>
+npm install littlefoot
+
+<span class="c">// 2. Import styles</span>
+<span class="k">import</span> <span class="s">'littlefoot/dist/littlefoot.css'</span>
+
+<span class="c">// 3. Initialize</span>
+<span class="k">import</span> { <span class="fn">littlefoot</span> } <span class="k">from</span> <span class="s">'littlefoot'</span>
+<span class="fn">littlefoot</span>()</code></pre></div>
+
+        <div
+          class="tab-panel"
+          role="tabpanel"
+          id="panel-yarn"
+          aria-labelledby="tab-yarn"
+          hidden
+        ><pre class="code-block"><code><span class="c">// 1. Install</span>
+yarn add littlefoot
+
+<span class="c">// 2. Import styles</span>
+<span class="k">import</span> <span class="s">'littlefoot/dist/littlefoot.css'</span>
+
+<span class="c">// 3. Initialize</span>
+<span class="k">import</span> { <span class="fn">littlefoot</span> } <span class="k">from</span> <span class="s">'littlefoot'</span>
+<span class="fn">littlefoot</span>()</code></pre></div>
+
+        <div
+          class="tab-panel"
+          role="tabpanel"
+          id="panel-cdn"
+          aria-labelledby="tab-cdn"
+          hidden
+        ><pre class="code-block"><code><span class="c">&lt;!-- In your &lt;head&gt; --&gt;</span>
+<span class="k">&lt;link</span> rel=<span class="s">"stylesheet"</span> href=<span class="s">"https://unpkg.com/littlefoot/dist/littlefoot.css"</span> <span class="k">/&gt;</span>
+
+<span class="c">&lt;!-- Before &lt;/body&gt; --&gt;</span>
+<span class="k">&lt;script</span> src=<span class="s">"https://unpkg.com/littlefoot/dist/littlefoot.js"</span><span class="k">&gt;&lt;/script&gt;</span>
+<span class="k">&lt;script&gt;</span><span class="fn">littlefoot</span>.<span class="fn">littlefoot</span>()<span class="k">&lt;/script&gt;</span></code></pre></div>
+      </div>
+    </section>
+
+    <!-- API REFERENCE -->
+    <section class="api-ref" id="api">
+      <p class="section-label">API</p>
+      <h2 class="section-heading">Options</h2>
+      <p class="api-ref__sub">
+        Pass any of these to
+        <code class="inline-code">littlefoot()</code>.
+      </p>
+
+      <div class="api-ref__tables">
+        <div class="table-wrap table-wrap--options">
+          <table class="api-table" aria-label="littlefoot configuration options">
+            <thead>
+              <tr>
+                <th>Option</th>
+                <th>Type</th>
+                <th>Default</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code class="opt">activateOnHover</code></td>
+                <td><span class="type">boolean</span></td>
+                <td><span class="default">false</span></td>
+                <td>Show popovers on mouse hover instead of click.</td>
+              </tr>
+              <tr>
+                <td><code class="opt">allowMultiple</code></td>
+                <td><span class="type">boolean</span></td>
+                <td><span class="default">false</span></td>
+                <td>Allow multiple popovers open at the same time.</td>
+              </tr>
+              <tr>
+                <td><code class="opt">dismissOnUnhover</code></td>
+                <td><span class="type">boolean</span></td>
+                <td><span class="default">false</span></td>
+                <td>Auto-close popovers when the mouse leaves the button.</td>
+              </tr>
+              <tr>
+                <td><code class="opt">dismissOnDocumentTouch</code></td>
+                <td><span class="type">boolean</span></td>
+                <td><span class="default">true</span></td>
+                <td>Close all popovers when the user taps outside of them.</td>
+              </tr>
+              <tr>
+                <td><code class="opt">activateDelay</code></td>
+                <td><span class="type">number</span></td>
+                <td><span class="default">100</span></td>
+                <td>Delay in ms before a popover appears after activation.</td>
+              </tr>
+              <tr>
+                <td><code class="opt">dismissDelay</code></td>
+                <td><span class="type">number</span></td>
+                <td><span class="default">100</span></td>
+                <td>Delay in ms before a popover is removed from the DOM.</td>
+              </tr>
+              <tr>
+                <td><code class="opt">hoverDelay</code></td>
+                <td><span class="type">number</span></td>
+                <td><span class="default">250</span></td>
+                <td>Timeout in ms before dismissing a hovered popover.</td>
+              </tr>
+              <tr>
+                <td><code class="opt">allowDuplicates</code></td>
+                <td><span class="type">boolean</span></td>
+                <td><span class="default">true</span></td>
+                <td>Allow the same footnote to be used by multiple buttons.</td>
+              </tr>
+              <tr>
+                <td><code class="opt">anchorPattern</code></td>
+                <td><span class="type">RegExp</span></td>
+                <td><code class="default">/fn|note/gi</code></td>
+                <td>Regex pattern for detecting footnote anchor links in the document.</td>
+              </tr>
+              <tr>
+                <td><code class="opt">anchorParentSelector</code></td>
+                <td><span class="type">string</span></td>
+                <td><code class="default">'sup'</code></td>
+                <td>CSS selector for the parent of footnote links — usually removed after processing.</td>
+              </tr>
+              <tr>
+                <td><code class="opt">scope</code></td>
+                <td><span class="type">string</span></td>
+                <td><code class="default">''</code></td>
+                <td>CSS selector to limit littlefoot to a specific region of the page.</td>
+              </tr>
+              <tr>
+                <td><code class="opt">numberResetSelector</code></td>
+                <td><span class="type">string</span></td>
+                <td><code class="default">''</code></td>
+                <td>CSS selector for elements where footnote numbering restarts at 1.</td>
+              </tr>
+              <tr>
+                <td><code class="opt">buttonTemplate</code></td>
+                <td><span class="type">string</span></td>
+                <td><sup id="fnref:button-template-default"><a href="#fn:button-template-default">[1]</a></sup></td>
+                <td>HTML template for the footnote button. Supports <code class="inline-code">&lt;% number %&gt;</code>, <code class="inline-code">&lt;% reference %&gt;</code>, <code class="inline-code">&lt;% content %&gt;</code>.</td>
+              </tr>
+              <tr>
+                <td><code class="opt">contentTemplate</code></td>
+                <td><span class="type">string</span></td>
+                <td><sup id="fnref:content-template-default"><a href="#fn:content-template-default">[2]</a></sup></td>
+                <td>HTML template for the popover content. Supports <code class="inline-code">&lt;% content %&gt;</code>, <code class="inline-code">&lt;% id %&gt;</code>, <code class="inline-code">&lt;% number %&gt;</code>.</td>
+              </tr>
+              <tr>
+                <td><code class="opt">activateCallback</code></td>
+                <td><span class="type">function</span></td>
+                <td><span class="default">undefined</span></td>
+                <td>Called after a popover is activated. Receives the popover element.</td>
+              </tr>
+              <tr>
+                <td><code class="opt">dismissCallback</code></td>
+                <td><span class="type">function</span></td>
+                <td><span class="default">undefined</span></td>
+                <td>Called after a popover is dismissed. Receives the popover element.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <aside class="footnotes api-ref__footnotes" id="api-option-defaults">
+          <ol>
+            <li id="fn:button-template-default">
+              <pre class="api-template-default"><code>&lt;button class="littlefoot__button" id="&lt;% reference %&gt;" title="See Footnote &lt;% number %&gt;"&gt;
+  &lt;svg role="img" aria-labelledby="title-&lt;% reference %&gt;" viewbox="0 0 31 6" preserveAspectRatio="xMidYMid"&gt;
+    &lt;title id="title-&lt;% reference %&gt;"&gt;Footnote &lt;% number %&gt;&lt;/title&gt;
+    &lt;circle r="3" cx="3" cy="3" fill="white"&gt;&lt;/circle&gt;
+    &lt;circle r="3" cx="15" cy="3" fill="white"&gt;&lt;/circle&gt;
+    &lt;circle r="3" cx="27" cy="3" fill="white"&gt;&lt;/circle&gt;
+  &lt;/svg&gt;
+&lt;/button&gt;</code></pre>
+              <a href="#fnref:button-template-default">↩</a>
+            </li>
+            <li id="fn:content-template-default">
+              <pre class="api-template-default"><code>&lt;aside class="littlefoot__popover" id="fncontent:&lt;% id %&gt;"&gt;
+  &lt;div class="littlefoot__wrapper"&gt;
+    &lt;div class="littlefoot__content"&gt;&lt;% content %&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="littlefoot__tooltip"&gt;&lt;/div&gt;
+&lt;/aside&gt;</code></pre>
+              <a href="#fnref:content-template-default">↩</a>
+            </li>
+          </ol>
+        </aside>
+
+        <h2 class="section-heading api-ref__methods-heading">Methods</h2>
+        <p class="api-ref__sub api-ref__methods-sub">
+          <code class="inline-code">littlefoot()</code> returns an object with these methods.
+        </p>
+
+        <div class="table-wrap">
+          <table class="api-table" aria-label="littlefoot methods">
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>Signature</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code class="opt">activate</code></td>
+                <td><code class="sig">(id: string, delay?: number) =&gt; void</code></td>
+                <td>Programmatically open a footnote popover by button ID.</td>
+              </tr>
+              <tr>
+                <td><code class="opt">dismiss</code></td>
+                <td><code class="sig">(id?: string, delay?: number) =&gt; void</code></td>
+                <td>Close a specific popover, or all open popovers if <code class="inline-code">id</code> is omitted.</td>
+              </tr>
+              <tr>
+                <td><code class="opt">getSetting</code></td>
+                <td><code class="sig">(key: keyof Settings) =&gt; any</code></td>
+                <td>Read the current value of a setting.</td>
+              </tr>
+              <tr>
+                <td><code class="opt">updateSetting</code></td>
+                <td><code class="sig">(key: keyof Settings, value: any) =&gt; void</code></td>
+                <td>Change a setting after initialisation.</td>
+              </tr>
+              <tr>
+                <td><code class="opt">unmount</code></td>
+                <td><code class="sig">() =&gt; void</code></td>
+                <td>Remove littlefoot and restore the original document.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <span>littlefoot.js.org · MIT License</span>
+      <span>Made by <a href="https://goblindegook.com">@goblindegook</a></span>
+    </footer>
+  </body>
+</html>

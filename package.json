@@ -25,7 +25,9 @@
     "test:cypress:open": "npm run build && cypress open",
     "test:vitest": "vitest run",
     "release": "commit-and-tag-version",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "dev:site": "vite",
+    "build:site": "vite build"
   },
   "lint-staged": {
     "{src,test}/**/*.{css,js,json,ts}": [
@@ -75,6 +77,7 @@
     "rollup": "4.60.2",
     "tslib": "2.8.1",
     "typescript": "6.0.3",
+    "vite": "^8.0.10",
     "vitest": "^4.0.0"
   },
   "resolutions": {
