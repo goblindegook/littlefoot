@@ -286,7 +286,7 @@ button {
   justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
-  margin: 0 auto 40px;
+  margin: 0 auto 8px;
   max-width: 980px;
 }
 
@@ -319,26 +319,6 @@ button {
   color: var(--color-accent-strong);
 }
 
-.hero__meta {
-  display: flex;
-  gap: 10px;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  list-style: none;
-  font-size: 12px;
-  color: var(--color-text-muted);
-  max-width: 980px;
-  margin: 0 auto;
-}
-
-.hero__meta li {
-  border: 1px solid color-mix(in srgb, var(--color-border) 80%, #fff 20%);
-  background: color-mix(in srgb, #fff 62%, var(--color-accent-soft) 38%);
-  border-radius: 999px;
-  padding: 5px 11px;
-  font-weight: 600;
-}
-
 body.motion-ready:not(.reduced-motion) .hero::after {
   animation: motion-orb-drift 13s ease-in-out infinite;
 }
@@ -356,11 +336,6 @@ body.motion-ready:not(.reduced-motion) .hero__sub {
 body.motion-ready:not(.reduced-motion) .hero__actions {
   animation: motion-rise-fade 440ms var(--ease-out-quint) both;
   animation-delay: 230ms;
-}
-
-body.motion-ready:not(.reduced-motion) .hero__meta {
-  animation: motion-rise-fade 420ms var(--ease-out-quart) both;
-  animation-delay: 300ms;
 }
 
 /* ── Shared section layout ──────────────────────────────────────── */
@@ -556,8 +531,7 @@ body.motion-ready:not(.reduced-motion) .hero__meta {
     margin-right: auto;
   }
 
-  .hero__actions,
-  .hero__meta {
+  .hero__actions {
     justify-content: center;
   }
 
