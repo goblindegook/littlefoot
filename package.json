@@ -75,7 +75,7 @@
     "postcss": "8.5.15",
     "postcss-cli": "11.0.1",
     "postcss-preset-env": "11.3.0",
-    "rollup": "4.60.4",
+    "rollup": "4.62.2",
     "tslib": "2.8.1",
     "typescript": "6.0.3",
     "vite": "^8.0.10",
