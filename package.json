@@ -62,7 +62,7 @@
     "@vitest/coverage-v8": "^4.0.0",
     "axe-core": "4.12.1",
     "commit-and-tag-version": "13.1.2",
-    "concurrently": "10.0.3",
+    "concurrently": "10.0.4",
     "cssnano": "8.0.2",
     "cypress": "15.18.1",
     "cypress-axe": "1.7.0",
