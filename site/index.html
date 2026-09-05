@@ -19,6 +19,7 @@
       <li><a href="#features">Features</a></li>
       <li><a href="#install">Install</a></li>
       <li><a href="#api">API</a></li>
+      <li><a href="#recipes">Recipes</a></li>
     </ul>
     <a
       href="https://github.com/goblindegook/littlefoot"
@@ -520,6 +521,54 @@ yarn add littlefoot
             </tbody>
           </table>
         </div>
+      </div>
+    </section>
+
+    <!-- RECIPES -->
+    <section class="recipes" id="recipes">
+      <p class="section-label">Recipes</p>
+      <h2 class="section-heading">Customize littlefoot to your needs</h2>
+      <p class="install__sub">No forks, no patches, only the public API.</p>
+
+      <div class="recipes__list">
+        <article class="recipes__item">
+          <h3 class="recipes__heading">Reflect the open footnote in the URL</h3>
+          <p class="recipes__sub">
+            Point the URL at whatever footnote is open, so readers can share it. Buttons are
+            rendered with the <code class="inline-code">reference</code> template value as their ID,
+            <code class="inline-code">lf-fnref:1</code>.
+          </p>
+          <pre class="code-block"><code><span class="fn">littlefoot</span>({
+  <span class="fn">activateCallback</span>: (popover, button) =&gt; {
+    history.<span class="fn">replaceState</span>(<span class="k">null</span>, <span class="s">''</span>, <span class="s">'#'</span> + button.id)
+  },
+  <span class="fn">dismissCallback</span>: () =&gt; {
+    history.<span class="fn">replaceState</span>(<span class="k">null</span>, <span class="s">''</span>, location.pathname + location.search)
+  },
+})</code></pre>
+        </article>
+
+        <article class="recipes__item">
+          <h3 class="recipes__heading">Activate a footnote from the URL</h3>
+          <p class="recipes__sub">
+            The other direction: a shared <code class="inline-code">/article#lf-fnref:1</code> opens
+            the popover on arrival and on every hash change.
+            <code class="inline-code">replaceState</code> above keeps the two from looping.
+          </p>
+          <pre class="code-block"><code><span class="k">const</span> instance = <span class="fn">littlefoot</span>()
+
+<span class="k">const</span> activateFromHash = () =&gt;
+  instance.<span class="fn">activate</span>(document.<span class="fn">getElementById</span>(location.hash.<span class="fn">slice</span>(1))?.dataset.footnoteId ?? <span class="s">''</span>)
+
+window.<span class="fn">addEventListener</span>(<span class="s">'hashchange'</span>, activateFromHash)
+<span class="fn">activateFromHash</span>()</code></pre>
+          <p class="recipes__note">
+            <code class="inline-code">activate()</code> takes littlefoot's own footnote IDs
+            (<code class="inline-code">"1"</code>, <code class="inline-code">"2"</code>, …), which is
+            what <code class="inline-code">data-footnote-id</code> holds. Any hash that isn't a
+            footnote button does nothing.
+          </p>
+        </article>
       </div>
     </section>
 

@@ -343,6 +343,47 @@ clearing event handlers. Once `unmount()` is called, all other methods provided
 in the littlefoot instance will stop working, requiring you to call the
 `littlefoot()` function again.
 
+## Recipes
+
+Common behaviours built on top of the public API. None of these require changes
+to littlefoot itself: they rely on the programmatic API, callbacks and attributes
+littlefoot sets on every button and popover.
+
+### Reflect the open footnote in the URL
+
+Point the URL at whatever footnote is open, so readers can share it. Buttons are
+rendered with the `reference` template value as their ID, `lf-fnref:1`:
+
+```js
+littlefoot({
+  activateCallback: (popover, button) => {
+    history.replaceState(null, '', '#' + button.id)
+  },
+  dismissCallback: () => {
+    history.replaceState(null, '', location.pathname + location.search)
+  },
+})
+```
+
+### Activate a footnote from the URL
+
+The other direction: a shared `/article#lf-fnref:1` opens the popover on arrival
+and on every hash change. `replaceState` above keeps the two from looping:
+
+```js
+const instance = littlefoot()
+
+const activateFromHash = () =>
+  instance.activate(document.getElementById(location.hash.slice(1))?.dataset.footnoteId ?? '')
+
+window.addEventListener('hashchange', activateFromHash)
+activateFromHash()
+```
+
+`activate()` takes littlefoot's own footnote IDs (`"1"`, `"2"`, …), which is
+what `data-footnote-id` holds. Any hash that isn't a footnote button does
+nothing.
+
 ## Theming
 
 littlefoot supports theming through [CSS custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties). The following custom properties are available in browsers or [CSS precompilation tools](https://preset-env.cssdb.org/) that support them, and are scoped to the `.littlefoot` class.
