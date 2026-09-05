@@ -8,8 +8,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=Manrope:wght@400;500;600;700;800&display=swap" />
-    <script type="module" crossorigin src="./assets/index-B9AVFKQm.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-_KSU-6Hz.css">
+    <script type="module" crossorigin src="./assets/index-BlWjoOCl.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-CXO_DDSm.css">
   </head>
   <body>
   <a class="skip-link" href="#home">Skip to content</a>
@@ -20,6 +20,7 @@
       <li><a href="#features">Features</a></li>
       <li><a href="#install">Install</a></li>
       <li><a href="#api">API</a></li>
+      <li><a href="#recipes">Recipes</a></li>
     </ul>
     <a
       href="https://github.com/goblindegook/littlefoot"
@@ -232,7 +233,7 @@
         <li class="feature-card">
           <span class="feature-card__icon" aria-hidden="true">🎨</span>
           <h3>Fully customisable</h3>
-          <p>CSS custom properties for colours, borders, radius. Custom button templates too.</p>
+          <p>Customise the look and feel of your footnotes. <a href="#recipes">See recipes.</a></p>
         </li>
         <li class="feature-card">
           <span class="feature-card__icon" aria-hidden="true">📱</span>
@@ -242,7 +243,7 @@
         <li class="feature-card">
           <span class="feature-card__icon" aria-hidden="true">🔌</span>
           <h3>Programmatic API</h3>
-          <p>Open popovers on demand, update settings on the fly, and cleanly unmount — all at runtime.</p>
+          <p>Open popovers on demand, update settings on the fly, and cleanly unmount. <a href="#api">See the API reference.</a></p>
         </li>
       </ul>
     </section>
@@ -521,6 +522,71 @@ yarn add littlefoot
             </tbody>
           </table>
         </div>
+      </div>
+    </section>
+
+    <!-- RECIPES -->
+    <section class="recipes" id="recipes">
+      <p class="section-label">Recipes</p>
+      <h2 class="section-heading">Make it yours</h2>
+      <p class="install__sub">Customise littlefoot to your needs. Zero hacks.</p>
+
+      <div class="recipes__list">
+        <article class="recipes__item">
+          <h3 class="recipes__heading">Numeric footnote buttons</h3>
+          <p class="recipes__sub">
+            Show the footnote number instead of the default ellipsis.
+          </p>
+          <pre class="code-block"><code><span class="fn">littlefoot</span>({
+  <span class="c">// Restart numbering per article instead of per page. Drop to number sequentially.</span>
+  <span class="fn">numberResetSelector</span>: <span class="s">'article'</span>,
+  <span class="fn">buttonTemplate</span>: <span class="s">`&lt;button
+    aria-label="Footnote &lt;% number %&gt;"
+    class="littlefoot__button"
+    id="&lt;% reference %&gt;"
+    title="See Footnote &lt;% number %&gt;"
+  &gt;&lt;% number %&gt;&lt;/button&gt;`</span>,
+})</code></pre>
+        </article>
+
+        <article class="recipes__item">
+          <h3 class="recipes__heading">Reflect the open footnote in the URL</h3>
+          <p class="recipes__sub">
+            Point the URL at whatever footnote is open, so readers can share it. Buttons are
+            rendered with the <code class="inline-code">reference</code> template value as their ID,
+            <code class="inline-code">lf-fnref:1</code>.
+          </p>
+          <pre class="code-block"><code><span class="fn">littlefoot</span>({
+  <span class="fn">activateCallback</span>: (popover, button) =&gt; {
+    history.<span class="fn">replaceState</span>(<span class="k">null</span>, <span class="s">''</span>, <span class="s">'#'</span> + button.id)
+  },
+  <span class="fn">dismissCallback</span>: () =&gt; {
+    history.<span class="fn">replaceState</span>(<span class="k">null</span>, <span class="s">''</span>, location.pathname + location.search)
+  },
+})</code></pre>
+        </article>
+
+        <article class="recipes__item">
+          <h3 class="recipes__heading">Activate a footnote from the URL</h3>
+          <p class="recipes__sub">
+            The other direction: a shared <code class="inline-code">/article#lf-fnref:1</code> opens
+            the popover on arrival and on every hash change.
+            <code class="inline-code">replaceState</code> above keeps the two from looping.
+          </p>
+          <pre class="code-block"><code><span class="k">const</span> instance = <span class="fn">littlefoot</span>()
+
+<span class="k">const</span> activateFromHash = () =&gt;
+  instance.<span class="fn">activate</span>(document.<span class="fn">getElementById</span>(location.hash.<span class="fn">slice</span>(1))?.dataset.footnoteId ?? <span class="s">''</span>)
+
+window.<span class="fn">addEventListener</span>(<span class="s">'hashchange'</span>, activateFromHash)
+<span class="fn">activateFromHash</span>()</code></pre>
+          <p class="recipes__note">
+            <code class="inline-code">activate()</code> takes littlefoot's own footnote IDs
+            (<code class="inline-code">"1"</code>, <code class="inline-code">"2"</code>, …), which is
+            what <code class="inline-code">data-footnote-id</code> holds. Any hash that isn't a
+            footnote button does nothing.
+          </p>
+        </article>
       </div>
     </section>
 
