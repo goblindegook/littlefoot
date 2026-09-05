@@ -63,7 +63,7 @@
     "axe-core": "4.13.0",
     "commit-and-tag-version": "13.1.2",
     "concurrently": "10.0.5",
-    "cssnano": "8.0.10",
+    "cssnano": "9.0.3",
     "cypress": "15.21.1",
     "cypress-axe": "1.7.0",
     "cz-conventional-changelog": "^3.0.1",
