@@ -9,3 +9,7 @@ sauce.json
 yarn-error.log
 cypress/screenshots/
 cypress/videos/
+/.claude/settings.local.json
+/.impeccable.md
+/mempalace.yaml
+/entities.json
