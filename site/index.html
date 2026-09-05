@@ -232,7 +232,7 @@
         <li class="feature-card">
           <span class="feature-card__icon" aria-hidden="true">🎨</span>
           <h3>Fully customisable</h3>
-          <p>CSS custom properties for colours, borders, radius. Custom button templates too.</p>
+          <p>Customise the look and feel of your footnotes. <a href="#recipes">See recipes.</a></p>
         </li>
         <li class="feature-card">
           <span class="feature-card__icon" aria-hidden="true">📱</span>
@@ -242,7 +242,7 @@
         <li class="feature-card">
           <span class="feature-card__icon" aria-hidden="true">🔌</span>
           <h3>Programmatic API</h3>
-          <p>Open popovers on demand, update settings on the fly, and cleanly unmount — all at runtime.</p>
+          <p>Open popovers on demand, update settings on the fly, and cleanly unmount. <a href="#api">See the API reference.</a></p>
         </li>
       </ul>
     </section>
@@ -527,10 +527,27 @@ yarn add littlefoot
     <!-- RECIPES -->
     <section class="recipes" id="recipes">
       <p class="section-label">Recipes</p>
-      <h2 class="section-heading">Customize littlefoot to your needs</h2>
-      <p class="install__sub">No forks, no patches, only the public API.</p>
+      <h2 class="section-heading">Make it yours</h2>
+      <p class="install__sub">Customise littlefoot to your needs. Zero hacks.</p>
 
       <div class="recipes__list">
+        <article class="recipes__item">
+          <h3 class="recipes__heading">Numeric footnote buttons</h3>
+          <p class="recipes__sub">
+            Show the footnote number instead of the default ellipsis.
+          </p>
+          <pre class="code-block"><code><span class="fn">littlefoot</span>({
+  <span class="c">// Restart numbering per article instead of per page. Drop to number sequentially.</span>
+  <span class="fn">numberResetSelector</span>: <span class="s">'article'</span>,
+  <span class="fn">buttonTemplate</span>: <span class="s">`&lt;button
+    aria-label="Footnote &lt;% number %&gt;"
+    class="littlefoot__button"
+    id="&lt;% reference %&gt;"
+    title="See Footnote &lt;% number %&gt;"
+  &gt;&lt;% number %&gt;&lt;/button&gt;`</span>,
+})</code></pre>
+        </article>
+
         <article class="recipes__item">
           <h3 class="recipes__heading">Reflect the open footnote in the URL</h3>
           <p class="recipes__sub">

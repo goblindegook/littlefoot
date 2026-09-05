@@ -297,20 +297,7 @@ Default:
 </button>
 ```
 
-#### Numerical footnotes
-
-To display the footnote number instead of an ellipsis, provide the following `buttonTemplate` instead:
-
-```html
-<button
-  aria-label="Footnote <% number %>"
-  class="littlefoot__button"
-  id="<% reference %>"
-  title="See Footnote <% number %>"
-/>
-  <% number %>
-</button>
-```
+See [Numeric footnote buttons](#numeric-footnote-buttons) for a numbered variant.
 
 ## Methods
 
@@ -348,6 +335,23 @@ in the littlefoot instance will stop working, requiring you to call the
 Common behaviours built on top of the public API. None of these require changes
 to littlefoot itself: they rely on the programmatic API, callbacks and attributes
 littlefoot sets on every button and popover.
+
+### Numeric footnote buttons
+
+Show the footnote number instead of the default ellipsis:
+
+```js
+littlefoot({
+  // Restart numbering per article instead of per page. Drop to number sequentially.
+  numberResetSelector: 'article',
+  buttonTemplate: `<button
+    aria-label="Footnote <% number %>"
+    class="littlefoot__button"
+    id="<% reference %>"
+    title="See Footnote <% number %>"
+  ><% number %></button>`,
+})
+```
 
 ### Reflect the open footnote in the URL
 

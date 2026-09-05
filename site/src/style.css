@@ -544,6 +544,20 @@ body.motion-ready:not(.reduced-motion) .hero__actions {
   text-wrap: pretty;
 }
 
+.feature-card p a {
+  color: var(--color-text-body);
+  font-weight: 600;
+  border-bottom: 2px solid color-mix(in srgb, var(--feature-accent) 35%, var(--color-border) 65%);
+  transition:
+    border-color 0.15s,
+    color 0.15s;
+}
+
+.feature-card p a:hover {
+  border-color: var(--feature-accent);
+  color: var(--color-text);
+}
+
 .feature-card:nth-child(2) {
   --feature-accent: #7c6123;
 }

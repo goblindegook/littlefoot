@@ -1,9 +1,9 @@
-import { fireEvent } from '@testing-library/dom'
+import { fireEvent, screen } from '@testing-library/dom'
 import { beforeEach, expect, test } from 'vitest'
 import littlefoot from '../src/littlefoot'
 import { getButton, setDocumentBody, waitToStopChanging } from './helper'
 
-// Recipes documented in README.md ("Activate a footnote from the URL"). Keep in sync.
+// Recipes documented in README.md under "Recipes". Keep in sync.
 
 function activateOnHash(instance: ReturnType<typeof littlefoot>) {
   const activateFromHash = () =>
@@ -16,6 +16,20 @@ function activateOnHash(instance: ReturnType<typeof littlefoot>) {
 beforeEach(() => {
   setDocumentBody('default.html')
   location.hash = ''
+})
+
+test('numeric buttonTemplate renders the footnote number', () => {
+  littlefoot({
+    numberResetSelector: 'article',
+    buttonTemplate: `<button
+    aria-label="Footnote <% number %>"
+    class="littlefoot__button"
+    id="<% reference %>"
+    title="See Footnote <% number %>"
+  ><% number %></button>`,
+  })
+
+  expect(screen.getByRole('button', { name: 'Footnote 3' })).toHaveTextContent('3')
 })
 
 test('activates footnote from the button ID in the hash on load', async () => {
