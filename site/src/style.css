@@ -485,14 +485,6 @@ body.motion-ready:not(.reduced-motion) .hero__actions {
     background-color var(--motion-medium) var(--ease-out-quint);
 }
 
-.feature-card::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto;
-  height: 6px;
-  background: linear-gradient(90deg, var(--feature-accent), color-mix(in srgb, var(--feature-accent) 54%, #fff 46%));
-}
-
 .feature-card::after {
   content: "";
   position: absolute;
@@ -510,23 +502,6 @@ body.motion-ready:not(.reduced-motion) .hero__actions {
   border-color: color-mix(in srgb, var(--feature-accent) 35%, var(--color-border) 65%);
   background: color-mix(in srgb, #fff 92%, var(--feature-accent) 8%);
   box-shadow: 0 24px 44px rgb(57 74 95 / 17%);
-}
-
-.feature-card__icon {
-  width: 40px;
-  height: 40px;
-  display: inline-grid;
-  place-items: center;
-  font-size: 21px;
-  margin-bottom: 14px;
-  border-radius: 11px;
-  border: 1px solid color-mix(in srgb, var(--feature-accent) 36%, #fff 64%);
-  background: color-mix(in srgb, var(--feature-accent) 14%, #fff 86%);
-  transition: transform var(--motion-fast) var(--ease-out-quint);
-}
-
-.feature-card:hover .feature-card__icon {
-  transform: translateY(-1px) rotate(-2deg) scale(1.05);
 }
 
 .feature-card h3 {
