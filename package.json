@@ -60,7 +60,7 @@
     "@testing-library/dom": "10.4.2",
     "@testing-library/jest-dom": "^7.0.0",
     "@vitest/coverage-v8": "^4.0.0",
-    "axe-core": "4.13.0",
+    "axe-core": "4.14.0",
     "commit-and-tag-version": "13.2.1",
     "concurrently": "10.0.6",
     "cssnano": "9.9.0",
