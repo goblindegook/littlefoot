@@ -61,7 +61,7 @@
     "@testing-library/jest-dom": "^8.0.0",
     "@vitest/coverage-v8": "^5.0.0",
     "axe-core": "4.14.1",
-    "commit-and-tag-version": "13.3.0",
+    "commit-and-tag-version": "13.5.0",
     "concurrently": "10.0.7",
     "cssnano": "9.9.0",
     "cypress": "15.21.2",
